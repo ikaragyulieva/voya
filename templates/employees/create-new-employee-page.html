@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo">
+        <h2>Create Employee Account</h2>
+
+        <form method="post" action="{% url 'create-employee' %}">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            <div class="form-section">
+                <h3>Personal Information</h3>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="error">{{ form.title.errors }}</div>
+                {% endif %}
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <div class="error">{{ form.first_name.errors }}</div>
+                {% endif %}
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <div class="error">{{ form.last_name.errors }}</div>
+                {% endif %}
+                {{ form.job_title }}
+                {% if form.job_title.errors %}
+                    <div class="error">{{ form.job_title.errors }}</div>
+                {% endif %}
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                    <div class="error">{{ form.phone_number.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-section">
+                <h3>Account Details</h3>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error">{{ form.email.errors }}</div>
+                {% endif %}
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="error">{{ form.password1.errors }}</div>
+                {% endif %}
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="error">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button class="add-btn" type="submit">Create New Employee</button>
+        </form>
+
+    </div>
+
+{% endblock %}

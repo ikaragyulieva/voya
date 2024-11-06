@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- Starts Head Section -->
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo-voya-image.png' %}">
+    <title>Voya</title>
+</head>
+<!-- End Head Section -->
+
+<!-- Starts Body Section -->
+<body>
+
+<!-- Starts Header Section with Navigation Bar -->
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <!-- Link to Home Page -->
+                <a href="{% url 'home' %}">
+                    <img width="200px" src="{% static 'images/logo-voya-powered by-v2.png' %}" alt="img1">
+                </a>
+
+            </div>
+
+            <div class="nav-links">
+                <ul class="nav-group">
+                    {% if request.user.is_authenticated and request.user.role == 'client' %}
+                        <li class="nav-item">
+
+                            <!-- Link to Add Pet Page -->
+                            <a href="{% url 'client-dashboard' pk=profile.pk %}">
+                                <i>Dashboard</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+
+                            <!-- Link to Add Photo Page -->
+                            <a href="#">
+                                <i>New Request</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+
+                            <!-- Link to Login Page -->
+                            <a href="{% url 'profile-details' pk=profile.pk %}">
+                                <i>Profile</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+
+                            <!-- Log out -->
+                            <a href="{% url 'logout' %}">
+                                <i>Log out</i>
+                            </a>
+                        </li>
+                    {% elif request.user.is_authenticated and request.user.role == 'employee' or request.user.is_staff %}
+                        <li class="nav-item">
+
+                            <!-- Link to Add Pet Page -->
+                            <a href="{% url 'employee-dashboard' pk=profile.pk %}">
+                                <i>Dashboard</i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                        
+                        <!-- Link to Login Page -->
+                        <a href="#">
+                            <i>Profile</i>
+                        </a>
+                        </li>
+                        
+                        <li class="nav-item">
+
+                            <!-- Log out -->
+                            <a href="{% url 'logout' %}">
+                                <i>Log out</i>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+
+                            <!-- Link to Add Pet Page -->
+                            <a href="{% url 'create-company' %}">
+                                <i>New Company</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+
+                            <!-- Link to Add Photo Page -->
+                            <a href="{% url 'create-client' %}">
+                                <i>New Client</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+
+                            <!-- Link to Login Page -->
+                            <a href="{% url 'login' %}">
+                                <i>Login</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- End Header Section with Navigation Bar -->
+
+<!-- Starts Main Section -->
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+<!-- End Main Section -->
+
+<!-- Start Footer Section -->
+<div class="footer">
+    <div class="logo">
+        <!-- Link to Home Page -->
+        <a href="#">
+            <img width="150px" src="{% static 'images/logo-voya.png' %}" alt="img1">
+        </a>
+        <span class="footer-section">
+			© 2024 | Voya SA | All Rights Reserved.
+		</span>
+    </div>
+    <!-- End Footer Section -->
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Start Profile Details Section -->
+    <div class="profile">
+        <!-- Start Profile Personal Data Section -->
+        <div class="profile-data">
+            <div class="profile_img">
+                <div class="image">
+                    <!-- Profile Image -->
+                    <img src="{{ object.company.logo.url }}" alt="Company Logo'"/>
+                </div>
+            </div>
+            <div class="personal">
+                <div class="edit">
+                    <!-- User Username -->
+                    <p>{{ object.first_name }} {{ object.last_name }}</p>
+
+                    <!-- Edit Button -->
+
+                    <!-- IF the viewer is the owner of the profile -->
+                    <!-- Link to Edit Profile Page -->
+
+                    <a href="{% url "edit-client-profile" pk=profile.pk %}">
+                        <img
+                                class="edit-img"
+                                src="{% static 'images/edit-pen-icon-6.jpg' %}"
+                                alt="edit button"
+                        />
+                    </a>
+
+                    <!-- Link to Delete Profile Page -->
+                    <a href="{% url 'delete-client-profile' pk=profile.pk %}">
+                        <img
+                                class="bin-img"
+                                src="{% static 'images/icon-remove-22.jpg' %}"
+                                alt="bin button"
+                        />
+                    </a>
+                </div>
+                <div class="data">
+                    <!-- Total Number of Photos by the User -->
+                    <span>4</span>
+                    <p>Total Requests</p>
+
+                    <!-- Total Number of Pets owned by the User -->
+                    <span>2</span>
+                    <p>Pending</p>
+
+                    <!-- Total Number of Likes for the User -->
+                    <span>2</span>
+                    <p>Closed</p>
+                </div>
+
+                <h3 class="names">{{ object.job_title }}</h3>
+                <p class="email">{{ object.phone_number }}</p>
+                <p class="email">{{ object.company.commercial_name }}</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
