@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo">
+        <h2>Edit Profile</h2>
+
+        <form method="post" action="{% url 'edit-client-profile' pk=profile.pk %}">
+            {% csrf_token %}
+
+            {{ form }}
+            <div class="action-btns">
+                <button class="add-btn" type="submit">Save Changes</button>
+                <button class="add-btn" type="button"
+                        onclick="window.location.href='{% url 'profile-details' pk=profile.pk %}'">Cancel
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}
