@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo">
+        <h2>Disable Company Account</h2>
+
+        <p>Are you sure you want to disable this company account?</p>
+
+        <form method="post" action="{% url 'company-delete' pk=company.pk%}">
+            {% csrf_token %}
+            <div class="action-btns">
+                <button class="add-btn" type="submit">Delete Company</button>
+                <button class="add-btn" type="button" onclick="window.location.href='{% url 'companies-dashboard' %}'">Cancel</button>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}
