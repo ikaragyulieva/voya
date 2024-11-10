@@ -47,7 +47,6 @@ class EmployeeProfile(TimestampedModel):
     phone_number = PhoneNumberField(
         blank=False,
         null=False,
-        help_text="Enter phone number in international format. Example: +123456789"
     )
 
     is_active = models.BooleanField(

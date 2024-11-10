@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Start Profile Details Section -->
+    <div class="profile">
+        <!-- Start Profile Personal Data Section -->
+        <div class="profile-data">
+            <div class="profile_img">
+                <div class="image">
+                    <!-- Profile Image -->
+                    <img src="{{ company.logo.url }}" alt="Company Logo'"/>
+                </div>
+                <div class="notes">
+                    <h3 class="names">Notes:</h3>
+                    {% if company.notes %}
+                    <p class="email">{{ company.notes }}</p>
+                    {% else %}
+                    <p class="email">No notes added!</p>
+                    {% endif %}
+                </div>
+                
+            </div>
+            <div class="personal">
+                <div class="edit">
+                    <!-- User Username -->
+                    <p>{{ company.commercial_name }}</p>
+
+                    <!-- Edit Button -->
+
+                    <!-- IF the viewer is the owner of the profile -->
+                    <!-- Link to Edit Profile Page -->
+
+{#                    <a href="{% url "edit-client-profile" pk=profile.pk %}">#}
+{#                        <img#}
+{#                                class="edit-img"#}
+{#                                src="{% static 'images/edit-icon.png' %}"#}
+{#                                alt="edit button"#}
+{#                        />#}
+{#                    </a>#}
+{##}
+{#                    <!-- Link to Delete Profile Page -->#}
+{#                    <a href="{% url 'delete-client-profile' pk=profile.pk %}">#}
+{#                        <img#}
+{#                                class="bin-img"#}
+{#                                src="{% static 'images/remove-icon.png' %}"#}
+{#                                alt="bin button"#}
+{#                        />#}
+{#                    </a>#}
+                </div>
+                <div class="data">
+                    <!-- Total Number of Photos by the User -->
+                    <span>4</span>
+                    <p>Total Requests</p>
+
+                    <!-- Total Number of Pets owned by the User -->
+                    <span>2</span>
+                    <p>Pending</p>
+
+                    <!-- Total Number of Likes for the User -->
+                    <span>2</span>
+                    <p>Closed</p>
+                </div>
+                <div class="profile-info">
+                    <h3 class="names">Billing Information:</h3>
+                    <p class="email">Legal Name: {{ company.legal_name }}</p>
+                    <p class="email">Tax ID: {{ company.tax_id }}</p>
+                    <p class="email">Billing Email: {{ company.billing_email }}</p>
+                    <p class="email">Telephone Number: {{ phone_number.number }}</p>
+                    
+                </div>
+                <div class="profile-info">
+                    <h3 class="names">Address Information:</h3>
+                    <p class="email">Country: {{ address.country }}</p>
+                    <p class="email">City: {{ address.city }}</p>
+                    <p class="email">State: {{ address.state }}</p>
+                    <p class="email">Street: {{ address.street_address }}</p>
+                    <p class="email">Postal Code: {{ address.postal_code }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

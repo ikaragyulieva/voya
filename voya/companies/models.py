@@ -44,12 +44,6 @@ class CompanyProfile(TimestampedModel):
         null=False,
     )
 
-    country = CountryField(
-        blank_label="Select your country",
-        blank=False,
-        null=False
-    )
-
     logo = models.ImageField(
         upload_to="company_logos/",
         null=False,
@@ -62,6 +56,10 @@ class CompanyProfile(TimestampedModel):
     notes = models.TextField(
         null=True,
         blank=True,
+    )
+
+    is_active = models.BooleanField(
+        default=True
     )
 
     def __str__(self):
@@ -100,6 +98,10 @@ class Address(TimestampedModel):
         blank_label="Select your country",
     )
 
+    is_active = models.BooleanField(
+        default=True
+    )
+
     def __str__(self):
         return f"{self.street_address}, {self.city}"
 
@@ -115,11 +117,10 @@ class PhoneNumber(TimestampedModel):
         null=False,
         help_text="Enter phone number in international format. Example: +123456789"
     )
-    label = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
+
+    is_active = models.BooleanField(
+        default=True
     )
 
     def __str__(self):
-        return f"{self.label or 'Phone'}: {self.number}"
+        return f"Phone: {self.number}"

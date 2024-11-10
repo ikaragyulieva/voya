@@ -73,14 +73,6 @@ class EmployeeSignUpForm(UserCreationForm):
         labels = {
             'email': "",
         }
-        # widgets = {
-        #     'email': forms.TextInput(attrs={'placeholder': 'Your Email Address'}),
-        #     'password1': forms.PasswordInput(attrs={'placeholder': 'Your Password'}),
-        #     'password2': forms.PasswordInput(attrs={'placeholder': 'Please Confirm Your Password'}),
-        # }
-        # help_texts = {
-        #     'password2': "",
-        # }
 
     def save(self, commit=True):
         with transaction.atomic():
@@ -106,3 +98,17 @@ class EmployeeSignUpForm(UserCreationForm):
                 employee.save()
 
         return user
+
+
+class EmployeeEditForm(forms.ModelForm):
+    class Meta:
+        model = EmployeeProfile
+        fields = ['title', 'first_name', 'last_name', 'job_title', 'phone_number', 'is_active']
+        labels = {
+            'title': "",
+            'first_name': "",
+            'last_name': "",
+            'job_title': "",
+            'phone_number': "",
+            'is_active': 'Active user'
+        }

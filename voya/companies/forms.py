@@ -21,8 +21,10 @@ class CompanyProfileForm(forms.ModelForm):
             'legal_name': "",
             'tax_id': "",
             'billing_email': "",
-            'country': "",
             'logo': "",
+        }
+        help_texts = {
+            'logo': "Please upload your logo here",
         }
 
 
@@ -30,7 +32,7 @@ class AddressForm(forms.ModelForm):
 
     class Meta:
         model = Address
-        fields = ['street_address', 'city', 'state', 'postal_code',]
+        fields = ['country', 'street_address', 'city', 'state', 'postal_code',]
         widgets = {
             'street_address': forms.TextInput(attrs={'placeholder': 'Street'}),
             'city': forms.TextInput(attrs={'placeholder': 'City'}),
@@ -38,6 +40,7 @@ class AddressForm(forms.ModelForm):
             'postal_code': forms.TextInput(attrs={'placeholder': 'Postal code'}),
         }
         labels = {
+            'country': "",
             'street_address': "",
             'city': "",
             'state': "",

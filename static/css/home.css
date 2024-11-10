@@ -8,6 +8,9 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+
     font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     background: #fafafa;
     min-height: 100vh;
@@ -145,7 +148,7 @@ main {
     width: 100%;
     min-height: 100%;
     display: flex;
-    /*align-items: center;*/
+    align-items: center;
     justify-content: center;
 }
 

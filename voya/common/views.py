@@ -25,13 +25,22 @@ def home_view(request):
         except ClientProfile.DoesNotExist:
             pass
 
+        try:
+            employee_profile = EmployeeProfile.objects.get(user=request.user, is_active=True)
+
+            context['profile'] = employee_profile
+
+        except EmployeeProfile.DoesNotExist:
+            pass
+
+    # all_request = Pet.objects.all()  # Fetch all the pets
     # search_form = SearchForm(request.GET)
     # if search_form.is_valid():
     #     all_request = all_request.filter(
     #         tagged_pet__name__icontains=search_form.cleaned_data['pet_name']
     #     )
 
-    return render(request, template_name='common/home.html', context=context)
+    return render(request, template_name='common/home-page.html', context=context)
 
 
 class LogInView(LoginView):
