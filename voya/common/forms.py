@@ -3,11 +3,11 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class SearchForm(forms.Form):
-    pet_name = forms.CharField(
+    search = forms.CharField(
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Search by pet name ...'
+                'placeholder': 'Search by trip title ...'
             }
         ),
     )

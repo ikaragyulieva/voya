@@ -3,10 +3,13 @@ from django.contrib.auth import mixins
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
 
 from voya.clients import forms
 from voya.clients.models import ClientProfile
+from voya.common.forms import SearchForm
+from voya.requests.models import TripRequests
+from voya.utils import get_user_obj
 
 
 class CreateClientView(CreateView):
@@ -18,7 +21,6 @@ class CreateClientView(CreateView):
     def form_valid(self, form):
         result = super().form_valid(form)
         login(self.request, form.instance)
-
         return result
 
 
@@ -77,11 +79,28 @@ class ProfileDetailsView(mixins.LoginRequiredMixin, DetailView):
         return ClientProfile.objects.get(user=self.request.user)
 
 
-class ClientDashboardView(mixins.LoginRequiredMixin, DetailView):
-    model = ClientProfile
-    template_name = 'clients/client-dashboard-page.html'
-    context_object_name = "profile"
+class ClientDashboardView(mixins.LoginRequiredMixin, ListView):
+    model = TripRequests
+    template_name = 'common/dashboard-page.html'
 
     def get_object(self, queryset=None):
-        # Fetch the ClientProfile based on the URL pk
         return ClientProfile.objects.get(user=self.request.user)
+
+    def get_context_data(self, queryset=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_form = SearchForm(self.request.GET)
+        queryset = TripRequests.objects.filter(created_by_company=self.get_object().company).order_by('-is_active',
+                                                                                                      '-created_at')
+        if search_form.is_valid():
+            search_query = search_form.cleaned_data.get('search')
+
+            if search_query:
+                context['triprequests_list'] = queryset.filter(slug__icontains=search_query)
+            else:
+                context['triprequests_list'] = queryset
+
+        context['profile'] = self.get_object()
+        context['all_requests'] = queryset
+        context['search_form'] = search_form
+
+        return context

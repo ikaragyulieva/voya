@@ -5,13 +5,29 @@
     <main class="dashboard-table">
         <div class="container-table">
 
-            {% if companyprofile_list %}
+            {% if all_companies %}
                 <h2>Active Companies</h2>
 
                 <!-- Display a heading if there are NO companies -->
             {% else %}
                 <h2>No Active Companies</h2>
             {% endif %}
+
+            <div class="col-9">
+
+                <!-- Start Searchbar Form -->
+                <form class="searchbar" method="get">
+
+                    {% csrf_token %}
+                    {{ search_form }}
+
+                    <button>
+                        <img src="{% static 'images/search.png' %}" height="18" alt="img2">
+                    </button>
+                </form>
+                <!-- End Searchbar Form -->
+
+            </div>
 
             <!-- Add company button -->
             <div class="action-btn add-option">
@@ -48,7 +64,7 @@
                             <div class="col col-2" data-label="Commercial Name">{{ company.commercial_name }}</div>
                             <div class="col col-33" data-label="Legal Name">{{ company.legal_name }}</div>
                             <div class="col col-4" data-label="City">{{ company.first_addresses.city }}</div>
-                            <div class="col col-5" data-label="Country">{{ company.country }}</div>
+                            <div class="col col-5" data-label="Country">{{ company.first_addresses.country }}</div>
                             <div class="col col-6" data-label="Actions">
                                 <div class="action-btn">
                                     <!-- View Profile Page-->

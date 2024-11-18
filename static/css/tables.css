@@ -1,4 +1,4 @@
-.container-table .add-option{
+.container-table .add-option {
     text-align: right;
 }
 
@@ -15,6 +15,12 @@
 
 }
 
+.request-action-btn{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 .table_img img {
     width: 2em;
     height: 2em;
@@ -26,9 +32,9 @@
 
 .container-table {
     margin-top: 14rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    /*max-width: 100%;*/
+    margin-left: 5em;
+    margin-right: 5em;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -60,6 +66,7 @@ h2 {
         box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
     }
 
+
     .col-1 {
         flex-basis: 10%;
     }
@@ -83,6 +90,7 @@ h2 {
     .col-6 {
         flex-basis: 10%;
     }
+
 
     @media all and (max-width: 767px) {
         .table-header {
@@ -116,4 +124,39 @@ h2 {
             }
         }
     }
+}
+
+.requests-table {
+    .col-1 {
+        flex-basis: 10%;
+    }
+
+    .col-2 {
+        flex-basis: 6%;
+    }
+
+    .col-33 {
+        flex-basis: 15%;
+    }
+
+    .col-4 {
+        flex-basis: 12%;
+    }
+
+    .col-5 {
+        flex-basis: 10%;
+    }
+
+    .col-6 {
+        flex-basis: 15%;
+    }
+
+    .col-7 {
+        flex-basis: 10%;
+    }
+
+    .col-8 {
+        flex-basis: 8%;
+    }
+
 }

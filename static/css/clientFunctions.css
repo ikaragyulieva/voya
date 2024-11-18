@@ -68,7 +68,7 @@
 	margin-top: 10px;
 }
 
-.edit-delete button {
+.edit-delete .add-btn {
 	color: black;
 	font-weight: bold;
 	font-size: 1em;
@@ -95,7 +95,7 @@
     margin-bottom: 1em;
 }
 
-.action-btns button {
+.action-btns .add-btn {
 	width: 45%;
 }
 

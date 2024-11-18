@@ -6,13 +6,21 @@
 <head>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logo-voya-image.png' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <title>Voya</title>
 </head>
 <!-- End Head Section -->
 
 <!-- Starts Body Section -->
 <body>
-
+<!-- Loader -->
+<div class="loader-wrapper">
+    <div class="loader"></div>
+</div>
 <!-- Starts Header Section with Navigation Bar -->
 <header>
     <nav class="navbar">
@@ -32,28 +40,28 @@
 
                             <!-- Link to Add Pet Page -->
                             <a href="{% url 'client-dashboard' pk=profile.pk %}">
-                                <i>Dashboard</i>
+                                Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
 
                             <!-- Link to Add Photo Page -->
-                            <a href="#">
-                                <i>New Request</i>
+                            <a href="{% url 'new-request' %}">
+                                New Request
                             </a>
                         </li>
                         <li class="nav-item">
 
                             <!-- Link to Login Page -->
                             <a href="{% url 'profile-details' pk=profile.pk %}">
-                                <i>Profile</i>
+                                Profile
                             </a>
                         </li>
                         <li class="nav-item">
 
                             <!-- Log out -->
                             <a href="{% url 'logout' %}">
-                                <i>Log out</i>
+                                Log out
                             </a>
                         </li>
                     {% elif request.user.is_authenticated and request.user.role == 'employee' or request.user.is_staff %}
@@ -61,31 +69,31 @@
 
                             <!-- Link to Add Pet Page -->
                             <a href="{% url 'employee-dashboard' pk=profile.pk %}">
-                                <i>Dashboard</i>
+                                Dashboard
                             </a>
                         </li>
 
                         <li class="nav-item">
-                        
-                        <!-- Link to Login Page -->
-                        <a href="{% url 'companies-dashboard' %}">
-                            <i>Companies</i>
-                        </a>
+
+                            <!-- Link to Login Page -->
+                            <a href="{% url 'companies-dashboard' %}">
+                                Companies
+                            </a>
                         </li>
-                        
+
                         <li class="nav-item">
-                        
-                        <!-- Link to Login Page -->
-                        <a href="{% url 'employee-profile' pk=profile.pk %}">
-                            <i>Profile</i>
-                        </a>
+
+                            <!-- Link to Login Page -->
+                            <a href="{% url 'employee-profile' pk=profile.pk %}">
+                                Profile
+                            </a>
                         </li>
-                        
+
                         <li class="nav-item">
 
                             <!-- Log out -->
                             <a href="{% url 'logout' %}">
-                                <i>Log out</i>
+                                Log out
                             </a>
                         </li>
                     {% else %}
@@ -93,21 +101,21 @@
 
                             <!-- Link to Add Pet Page -->
                             <a href="{% url 'create-company' %}">
-                                <i>New Company</i>
+                                New Company
                             </a>
                         </li>
                         <li class="nav-item">
 
                             <!-- Link to Add Photo Page -->
                             <a href="{% url 'create-client' %}">
-                                <i>New Client</i>
+                                New Client
                             </a>
                         </li>
                         <li class="nav-item">
 
                             <!-- Link to Login Page -->
                             <a href="{% url 'login' %}">
-                                <i>Login</i>
+                                Login
                             </a>
                         </li>
                     {% endif %}
@@ -125,13 +133,13 @@
     {% endblock %}
 
 </main>
-<!-- End Main Section -->
 
 <!-- Start Footer Section -->
+<footer>
 <div class="footer">
     <div class="logo">
         <!-- Link to Home Page -->
-        <a href="#">
+        <a href="{% url 'home' %}">
             <img width="150px" src="{% static 'images/logo-voya.png' %}" alt="img1">
         </a>
         <span class="footer-section">
@@ -140,5 +148,14 @@
     </div>
     <!-- End Footer Section -->
 </div>
+</footer>
+
+<!-- Start Script Section -->
+<script src="{% static '/js/loader.js' %}"></script>
+
+{% block scripts %}
+{% endblock %}
+
+
 </body>
 </html>

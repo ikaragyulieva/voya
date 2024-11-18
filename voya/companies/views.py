@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView, DetailView, UpdateView, DeleteView
 
+from voya.common.forms import SearchForm
 from voya.companies import models
 from voya.companies.forms import CompanyProfileForm, AddressForm, PhoneNumberForm
 from voya.companies.models import CompanyProfile
@@ -30,16 +31,7 @@ class CompanyCreateView(FormView):
         context['company_profile_form'] = context.get('company_profile_form', self.company_profile_form_class())
         context['address_form'] = context.get('address_form', self.address_form_class)
         context['phone_number_form'] = context.get('phone_number_form', self.phone_number_form_class)
-
-        if self.request.user.is_authenticated and self.request.user.is_active:
-
-            try:
-                employee_profile = self.get_object()
-
-                context['profile'] = employee_profile
-
-            except EmployeeProfile.DoesNotExist:
-                pass
+        context['profile'] = self.get_object()
 
         return context
 
@@ -58,6 +50,7 @@ class CompanyCreateView(FormView):
 
     def form_valid(self, company_profile_form, address_form, phone_number_form):
         with transaction.atomic():
+            company_profile_form.is_active = True
             company_profile = company_profile_form.save()
 
             address = address_form.save(commit=False)
@@ -92,19 +85,23 @@ class CompaniesDashboardView(mixins.LoginRequiredMixin, ListView):
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        context['profile'] = self.get_object()
         context['addresses'] = models.Address
 
         for company in context['companyprofile_list']:
             company.first_addresses = company.addresses.first()
 
-        if self.request.user.is_authenticated and self.request.user.is_active:
+        search_form = SearchForm(self.request.GET)
+        company_query = CompanyProfile.objects.all().order_by('-is_active', '-created_at')
+        if search_form.is_valid():
+            search_query = search_form.cleaned_data.get('search')
+            if search_query:
+                context['companyprofile_list'] = company_query.filter(commercial_name__icontains=search_query)
+            else:
+                context['companyprofile_list'] = company_query
 
-            try:
-                employee_profile = self.get_object()
-                context['profile'] = employee_profile
-
-            except EmployeeProfile.DoesNotExist:
-                pass
+        context["search_form"] = search_form
+        context['all_companies'] = company_query
 
         return context
 
@@ -128,13 +125,14 @@ class CompanyDetailsView(mixins.LoginRequiredMixin, DetailView):
                 context['profile'] = employee_profile
 
             except EmployeeProfile.DoesNotExist:
-                pass
+                redirect('login')
 
         return context
 
 
 class CompanyEditView(mixins.LoginRequiredMixin, UpdateView):
     model = models.CompanyProfile
+    form_class = models.CompanyProfile
     template_name = 'companies/company-edit-page.html'
     success_url = reverse_lazy('companies-dashboard')
     context_object_name = 'company'
@@ -161,7 +159,7 @@ class CompanyEditView(mixins.LoginRequiredMixin, UpdateView):
                 context['profile'] = employee_profile
 
             except EmployeeProfile.DoesNotExist:
-                redirect('home')
+                redirect('login')
 
         return context
 
@@ -185,6 +183,8 @@ class CompanyEditView(mixins.LoginRequiredMixin, UpdateView):
 
     def form_valid(self, company_profile_form, address_form, phone_number_form):
         with transaction.atomic():
+            company_profile_form.instance.is_active = True
+
             company_profile_form.save()
             address_form.save()
             phone_number_form.save()
@@ -207,6 +207,9 @@ class CompanyDeleteView(mixins.LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('companies-dashboard')
     context_object_name = "company"
 
+    def get_form(self, form_class=None):
+        return None
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -221,7 +224,6 @@ class CompanyDeleteView(mixins.LoginRequiredMixin, DeleteView):
         return context
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
         company_profile = self.get_object()
         addresses = company_profile.addresses.all()
         phone_numbers = company_profile.phone_numbers.all()
@@ -238,6 +240,3 @@ class CompanyDeleteView(mixins.LoginRequiredMixin, DeleteView):
             number.save()
 
         return redirect(self.success_url)
-
-    def get_form(self, form_class=None):
-        return None

@@ -8,37 +8,14 @@ from voya.clients.models import ClientProfile
 from voya.common import forms
 from voya.common.forms import SearchForm
 from voya.employees.models import EmployeeProfile
+from voya.utils import get_user_obj
 
 
 # Create your views here.
 
 
 def home_view(request):
-    context = {}
-
-    if request.user.is_authenticated and request.user.is_active:
-
-        try:
-            client_profile = ClientProfile.objects.get(user=request.user, is_active=True)
-
-            context['profile'] = client_profile
-        except ClientProfile.DoesNotExist:
-            pass
-
-        try:
-            employee_profile = EmployeeProfile.objects.get(user=request.user, is_active=True)
-
-            context['profile'] = employee_profile
-
-        except EmployeeProfile.DoesNotExist:
-            pass
-
-    # all_request = Pet.objects.all()  # Fetch all the pets
-    # search_form = SearchForm(request.GET)
-    # if search_form.is_valid():
-    #     all_request = all_request.filter(
-    #         tagged_pet__name__icontains=search_form.cleaned_data['pet_name']
-    #     )
+    context = {'profile': get_user_obj(request)}
 
     return render(request, template_name='common/home-page.html', context=context)
 
@@ -49,14 +26,7 @@ class LogInView(LoginView):
     redirect_authenticated_user = True
 
     def get_object(self, queryset=None):
-        # Fetch the ClientProfile based on the URL
-        client_profile = ClientProfile.objects.filter(user=self.request.user).first()
-        if client_profile:
-            return client_profile
-
-        employee_profile = EmployeeProfile.objects.filter(user=self.request.user).first()
-        if employee_profile:
-            return employee_profile
+        return get_user_obj(self.request)
 
     def get_success_url(self):
         if self.get_object().user.role == 'client':
@@ -75,10 +45,6 @@ class LogInView(LoginView):
             )
 
 
-
-
 def logout_view(request):
     logout(request)
     return redirect('home')
-
-

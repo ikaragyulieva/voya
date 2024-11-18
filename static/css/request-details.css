@@ -1,0 +1,72 @@
+.trip {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15em;
+    min-width: 600px;
+    justify-content: space-evenly;
+	background-color: rgb(255, 255, 255);
+	border: 1px solid #d7b241;
+	padding: 5rem;
+	margin-bottom: 15px;
+	border-radius: 30px;
+	box-shadow: 1px 2px 3px #d7b241;
+	align-items: center;
+}
+
+.trip .trip-title {
+    font-size: 2em;
+    font-weight: lighter;
+
+}
+
+.custom-line {
+    border: none;
+    border-top: 2px solid #d7b241;
+    width: 90%;
+    margin: 20px 0;
+}
+
+.trip-section{
+    margin: 1em 0;
+    width: 400px;
+}
+
+.trip-section .title{
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+/*.trip-section p{*/
+/*    font-size: 1.2em;*/
+/*    font-weight: lighter;*/
+/*    text-align: left;*/
+/*    margin: 0.5em 0;*/
+/*    overflow-wrap: break-word;*/
+/*    word-wrap: break-word;*/
+/*    white-space: normal;*/
+/*}*/
+
+table{
+    border-spacing: 10px 10px;
+}
+
+table tr{
+    font-size: 1.2em;
+    font-weight: lighter;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+table th{
+    font-weight: lighter;
+    width: 200px;
+}
+
+table td{
+    margin-left: 10px;
+    width: 200px
+}

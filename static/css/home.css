@@ -66,14 +66,16 @@ body {
 }
 
 .searchbar input {
-    background-color: #fafafa;
+    background-color: #ffffff;
+    font-size: 16px;
     width: 80%;
     padding: 5px 5px 5px 0;
-    text-indent: 21px;
+    text-indent: 10px;
     outline: none;
-    border: 1px solid rgb(218, 217, 217);
-    border-radius: 2px;
+    border: 1px solid #d7b241;
+    border-radius: 3px;
     color: rgb(77, 77, 77);
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1)
 }
 
 .searchbar button {

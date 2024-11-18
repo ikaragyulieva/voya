@@ -59,7 +59,7 @@ class CompanyProfile(TimestampedModel):
     )
 
     is_active = models.BooleanField(
-        default=True
+        default=True,
     )
 
     def __str__(self):
