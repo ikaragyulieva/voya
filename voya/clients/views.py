@@ -1,6 +1,7 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth import mixins
 from django.contrib.auth.views import LoginView
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
@@ -95,7 +96,17 @@ class ClientDashboardView(mixins.LoginRequiredMixin, ListView):
             search_query = search_form.cleaned_data.get('search')
 
             if search_query:
-                context['triprequests_list'] = queryset.filter(slug__icontains=search_query)
+                model_fields = [field.name for field in queryset.model._meta.fields
+                                if field.name not in ['id', 'created_at', 'created_by_company_id', 'created_by_user_id']
+                                and field.get_internal_type() not in ['ForeignKey', 'OneToOneField']]
+                query = Q()
+
+                # Build a Q object using the field__icontains lookup to search for the query.
+                # Use the | operator to combine the Q objects into a single query.
+                for field in model_fields:
+                    query |= Q(**{f'{field}__icontains': search_query})
+
+                context['triprequests_list'] = queryset.filter(query)
             else:
                 context['triprequests_list'] = queryset
 

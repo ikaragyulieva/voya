@@ -1,12 +1,16 @@
 from django.contrib.auth import mixins
+from django.db import models
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
 
 from voya.common.forms import SearchForm
+from voya.companies.models import CompanyProfile
 from voya.employees import forms
 from voya.employees.models import EmployeeProfile
 from voya.requests.models import TripRequests
+from voya.users.models import CustomUser
 from voya.utils import get_user_obj
 
 
@@ -36,7 +40,23 @@ class EmployeeDashboardView(mixins.LoginRequiredMixin, ListView):
         if search_form.is_valid():
             search_query = search_form.cleaned_data.get('search')
             if search_query:
-                context['triprequests_list'] = self.get_queryset().filter(slug__icontains=search_query)
+                model_fields = [field for field in self.get_queryset().model._meta.fields if field.name not in ['id', 'created_at'] and field.get_internal_type() not in ['OneToOneField']]
+
+                query = Q()
+
+                # Build a Q object using the field__icontains lookup to search for the query.
+                # Use the | operator to combine the Q objects into a single query.
+                for field in model_fields:
+                    if isinstance(field, models.ForeignKey):
+                        related_model = field.related_model
+                        if hasattr(related_model, 'commercial_name'):
+                            query |= Q(**{f'{field.name}__commercial_name__icontains': search_query})
+                        if hasattr(related_model, 'email'):
+                            query |= Q(**{f'{field.name}__email__icontains': search_query})
+                    else:
+                        query |= Q(**{f'{field.name}__icontains': search_query})
+
+                context['triprequests_list'] = self.get_queryset().filter(query)
             else:
                 context['triprequests_list'] = self.get_queryset()
 
@@ -103,6 +123,3 @@ class EmployeeDeleteProfileView(mixins.LoginRequiredMixin, DeleteView):
         user_credentials.save()
 
         return redirect(self.success_url)
-
-
-

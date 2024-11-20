@@ -17,6 +17,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.shortcuts import render
 from django.urls import path, include
 
 urlpatterns = [
@@ -26,6 +27,16 @@ urlpatterns = [
     path('companies/', include('voya.companies.urls')),
     path('employees/', include('voya.employees.urls')),
     path('request/', include('voya.requests.urls')),
+    path('services/', include('voya.services.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+def custom_404(request, exception):
+    return render(request, '500.html', {
+        'previous_page': request.META.get('HTTP_REFERER', '/'),  # Default to '/' if no referrer
+    }, status=404)
+
+
+handler404 = 'voya.urls.custom_404'

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logo-voya-image.png' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -83,6 +83,83 @@
 
                         <li class="nav-item">
 
+                            <nav>
+                                <menu>
+                                    <menuitem id="demo1">
+                                        <a>Services</a>
+                                        <menu>
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='hotels' %}">Hotels</a>
+                                                <menu>
+                                                    <menuitem><a href="{% url 'create-service' model_name='hotels' %}">Add
+                                                        New Hotel</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='localguides' %}">Guides</a>
+                                                <menu>
+                                                    <menuitem><a
+                                                            href="{% url 'create-service' model_name='localguides' %}">Add
+                                                        New Guide</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='tickets' %}">Activities</a>
+                                                <menu>
+                                                    <menuitem><a href="{% url 'create-service' model_name='tickets' %}">Add
+                                                        New Activity</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+                                            <menuitem id="demo2">
+                                                <a>Transport</a>
+                                                <menu>
+                                                    <menuitem id="demo3">
+                                                        <a href="{% url 'service-dashboard' model_name='privatetransport' %}">Private
+                                                            Transport</a>
+                                                        <menu>
+                                                            <menuitem><a
+                                                                    href="{% url 'create-service' model_name='privatetransport' %}">Add
+                                                                New</a></menuitem>
+                                                        </menu>
+                                                    </menuitem>
+                                                    <menuitem>
+                                                        <a href="{% url 'service-dashboard' model_name='publictransport' %}">Public
+                                                            Transport</a>
+                                                        <menu>
+                                                            <menuitem><a
+                                                                    href="{% url 'create-service' model_name='publictransport' %}">Add
+                                                                New</a></menuitem>
+                                                        </menu>
+                                                    </menuitem>
+                                                    <menuitem>
+                                                        <a href="{% url 'service-dashboard' model_name='transfers' %}">Transfers</a>
+                                                        <menu>
+                                                            <menuitem><a
+                                                                    href="{% url 'create-service' model_name='transfers' %}">Create
+                                                                New Transfer</a></menuitem>
+                                                        </menu>
+                                                    </menuitem>
+                                                </menu>
+                                            </menuitem>
+                                            
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='currency' %}">Currency</a>
+                                                <menu>
+                                                    <menuitem><a
+                                                            href="{% url 'create-service' model_name='currency' %}">Add
+                                                        New Currency</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+
+                                        </menu>
+                                    </menuitem>
+                                </menu>
+                            </nav>
+                        </li>
+
+                        <li class="nav-item">
+
                             <!-- Link to Login Page -->
                             <a href="{% url 'employee-profile' pk=profile.pk %}">
                                 Profile
@@ -136,18 +213,18 @@
 
 <!-- Start Footer Section -->
 <footer>
-<div class="footer">
-    <div class="logo">
-        <!-- Link to Home Page -->
-        <a href="{% url 'home' %}">
-            <img width="150px" src="{% static 'images/logo-voya.png' %}" alt="img1">
-        </a>
-        <span class="footer-section">
+    <div class="footer">
+        <div class="logo">
+            <!-- Link to Home Page -->
+            <a href="{% url 'home' %}">
+                <img width="150px" src="{% static 'images/logo-voya.png' %}" alt="img1">
+            </a>
+            <span class="footer-section">
 			© 2024 | Voya SA | All Rights Reserved.
 		</span>
+        </div>
+        <!-- End Footer Section -->
     </div>
-    <!-- End Footer Section -->
-</div>
 </footer>
 
 <!-- Start Script Section -->

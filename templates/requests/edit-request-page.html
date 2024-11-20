@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Edit Profile</h2>
+        <h2>Edit Request</h2>
 
         <form method="post" action="{% url 'edit-request' pk=object.pk %}">
             {% csrf_token %}
@@ -155,9 +155,9 @@
                 <button class="add-btn" type="submit">Save Changes</button>
                 <button class="add-btn" type="button"
                         {% if request.user.role == 'client' %}
-                        onclick="window.location.href='{% url 'dashboard-client' pk=profile.pk %}'"
+                        onclick="window.location.href='{% url 'client-dashboard' pk=profile.pk %}'"
                         {% else %}
-                        onclick="window.location.href='{% url 'dashboard-employee' pk=profile.pk %}'"
+                        onclick="window.location.href='{% url 'employee-dashboard' pk=profile.pk %}'"
                         {% endif %}
                 >Cancel
                 </button>

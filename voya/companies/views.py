@@ -86,13 +86,13 @@ class CompaniesDashboardView(mixins.LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         context['profile'] = self.get_object()
-        context['addresses'] = models.Address
-
-        for company in context['companyprofile_list']:
-            company.first_addresses = company.addresses.first()
 
         search_form = SearchForm(self.request.GET)
         company_query = CompanyProfile.objects.all().order_by('-is_active', '-created_at')
+
+        for company in company_query:
+            company.first_addresses = company.addresses.all().first()
+
         if search_form.is_valid():
             search_query = search_form.cleaned_data.get('search')
             if search_query:
@@ -228,15 +228,15 @@ class CompanyDeleteView(mixins.LoginRequiredMixin, DeleteView):
         addresses = company_profile.addresses.all()
         phone_numbers = company_profile.phone_numbers.all()
 
-        company_profile.is_active = False
+        company_profile.is_active = not company_profile.is_active
         company_profile.save()
 
         for address in addresses:
-            address.is_active = False
+            address.is_active = not address.is_active
             address.save()
 
         for number in phone_numbers:
-            number.is_active = False
+            number.is_active = not number.is_active
             number.save()
 
         return redirect(self.success_url)
