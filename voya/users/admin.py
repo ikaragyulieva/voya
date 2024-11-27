@@ -36,7 +36,7 @@ class CustomUserAdmin(UserAdmin):
         ('Account Data', {
             'fields': (
                 'email',
-                config('DB_PASSWORD'),
+                "password",
             ),
         }),
         ('Permissions', {
