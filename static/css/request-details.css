@@ -13,6 +13,10 @@
 	align-items: center;
 }
 
+.proposal .trip{
+    padding: 2rem;
+}
+
 .trip .trip-title {
     font-size: 2em;
     font-weight: lighter;
@@ -29,6 +33,11 @@
 .trip-section{
     margin: 1em 0;
     width: 400px;
+}
+
+.proposal-edit .trip-section {
+    margin: 1em 0;
+    width: 90%;
 }
 
 .trip-section .title{
@@ -69,4 +78,16 @@ table th{
 table td{
     margin-left: 10px;
     width: 200px
+}
+
+.trip-proposal{
+    min-width: unset;
+    max-width: 550px;
+
+}
+
+.proposal-edit{
+    min-width: 600px;
+    max-width: 800px;
+    padding: 2rem 5rem;
 }

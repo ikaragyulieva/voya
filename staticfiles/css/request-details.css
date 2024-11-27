@@ -13,6 +13,10 @@
 	align-items: center;
 }
 
+.proposal .trip{
+    padding: 2rem;
+}
+
 .trip .trip-title {
     font-size: 2em;
     font-weight: lighter;

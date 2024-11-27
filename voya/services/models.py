@@ -1,6 +1,7 @@
 from django.db import models
 
 from voya.common.models import TimestampedModel, ServiceBaseModel
+from voya.proposals.choices import TransferTypeChoices
 from voya.requests import choices
 from voya.users.models import CustomUser
 
@@ -38,28 +39,18 @@ class Hotels(ServiceBaseModel):
 
 
 class Transfers(ServiceBaseModel):
-    car_price_city = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        blank=True,
-        null=True,
+    transfer_name = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
     )
 
-    car_price_airport = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        blank=True,
-        null=True,
+    type = models.CharField(
+        max_length=50,
+        choices=TransferTypeChoices
     )
 
-    bus_price_city = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        blank=True,
-        null=True,
-    )
-
-    bus_price_airport = models.DecimalField(
+    price = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         blank=True,

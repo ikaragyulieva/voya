@@ -13,22 +13,22 @@
 
             {% else %}
                 <h2>Requests Dashboard</h2>
-                
-                    <div class="col-9">
 
-                        <!-- Start Searchbar Form -->
-                        <form class="searchbar" method="get">
+                <div class="col-9">
 
-                            {% csrf_token %}
-                            {{ search_form }}
+                    <!-- Start Searchbar Form -->
+                    <form class="searchbar" method="get">
 
-                            <button>
-                                <img src="{% static 'images/search.png' %}" height="18" alt="img2">
-                            </button>
-                        </form>
-                        <!-- End Searchbar Form -->
+                        {% csrf_token %}
+                        {{ search_form }}
 
-                    </div>
+                        <button>
+                            <img src="{% static 'images/search.png' %}" height="18" alt="img2">
+                        </button>
+                    </form>
+                    <!-- End Searchbar Form -->
+
+                </div>
 
                 <!-- Add company button -->
 
@@ -106,40 +106,49 @@
                                                 alt="view button"
                                         />
                                     </a>
-                                <!-- Duplicate request-->
+                                    <!-- Duplicate request-->
                                     <a href="#">
                                         <img
                                                 src="{% static 'images/duplicate (1).png' %}"
                                                 alt="duplicate button"
                                         />
                                     </a>
-                                
+
                                     {% if request.user.role == 'employee' %}
-                                    <!-- Link to Edit Request Page -->
-                                    <a href="{% url 'edit-request' pk=trip_request.pk %}">
-                                        <img
-                                                src="{% static 'images/edit-icon.png' %}"
-                                                alt="edit button"
-                                        />
-                                    </a>
-                                    
-                                    <!-- Link to Delete Request Page -->
-                                    <a href="{% url 'delete-request' pk=trip_request.pk %}">
-                                        <img
-                                                src="{% static 'images/check-mark.png' %}"
-                                                alt="delete button"
-                                        />
-                                        
-                                    </a>
+                                        <!-- Link to Edit Request Page -->
+                                        <a href="{% url 'edit-request' pk=trip_request.pk %}">
+                                            <img
+                                                    src="{% static 'images/edit-icon.png' %}"
+                                                    alt="edit button"
+                                            />
+                                        </a>
+
+                                        <!-- Link to Delete Request Page -->
+                                        <a href="{% url 'delete-request' pk=trip_request.pk %}">
+                                            <img
+                                                    src="{% static 'images/check-mark.png' %}"
+                                                    alt="delete button"
+                                            />
+
+                                        </a>
+
+                                        <!-- Link to Delete Request Page -->
+                                        <a href="{% url 'create-proposal' trip_id=trip_request.pk%}">
+                                            <img
+                                                    src="{% static 'images/check-mark.png' %}"
+                                                    alt="delete button"
+                                            />
+
+                                        </a>
                                     {% endif %}
                                 </div>
                             </div>
                         </li>
-                        
-                        {% empty %}
-                        
+
+                    {% empty %}
+
                         <li>No results found</li>
-                        
+
                     {% endfor %}
                 </ul>
             {% endif %}

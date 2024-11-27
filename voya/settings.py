@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+from decouple import config
 from django.http import request
 from django.urls import reverse_lazy
 
@@ -30,17 +31,18 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-MY_APPS = [
+PROJECT_APPS = [
     'voya.common',
     'voya.users',
     'voya.requests',
     'voya.clients',
     'voya.employees',
     'voya.companies',
-    'django_countries',
-    'phonenumber_field',
     'voya.services',
+    'voya.proposals',
+
 ]
+
 INSTALLED_APPS = [
                      'django.contrib.admin',
                      'django.contrib.auth',
@@ -48,7 +50,21 @@ INSTALLED_APPS = [
                      'django.contrib.sessions',
                      'django.contrib.messages',
                      'django.contrib.staticfiles',
-                 ] + MY_APPS
+                     'django_countries',
+                     'phonenumber_field',
+                     'rest_framework',
+                     'drf_spectacular',
+                 ] + PROJECT_APPS
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',  # Swagger
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Voya App',
+    'DESCRIPTION': 'Application for trip planning',
+    'VERSION': '1.0.0',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -90,8 +106,8 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST':  config('DB_HOST', default= config('DB_HOST', default= config('DB_HOST', default='localhost'))),
-        'PORT': config('DB_PORT', default=config('DB_PORT', default=config('DB_PORT', default='5432'))),
+        'HOST': config('DB_HOST', default= config('DB_HOST', default= config('DB_HOST', default= config('DB_HOST', default='localhost')))),
+        'PORT': config('DB_PORT', default=config('DB_PORT', default=config('DB_PORT', default=config('DB_PORT', default='5432')))),
     }
 }
 

@@ -29,8 +29,8 @@ class CompanyCreateView(FormView):
         context = super().get_context_data(**kwargs)
 
         context['company_profile_form'] = context.get('company_profile_form', self.company_profile_form_class())
-        context['address_form'] = context.get('address_form', self.address_form_class)
-        context['phone_number_form'] = context.get('phone_number_form', self.phone_number_form_class)
+        context['address_form'] = context.get('address_form', self.address_form_class())
+        context['phone_number_form'] = context.get('phone_number_form', self.phone_number_form_class())
         context['profile'] = self.get_object()
 
         return context

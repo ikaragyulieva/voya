@@ -2,6 +2,7 @@ from django.db import models
 
 
 class CityChoices(models.TextChoices):
+    SELECT_CITY = 'Select city', 'Select city'
     AMSTERDAM = 'Amsterdam', 'Amsterdam'
     ATHENS = 'Athens', 'Athens'
     BARCELONA = 'Barcelona', 'Barcelona'
@@ -14,7 +15,7 @@ class CityChoices(models.TextChoices):
     DUBLIN = 'Dublin', 'Dublin'
     EDINBURGH = 'Edinburgh', 'Edinburgh'
     FLORENCE = 'Florence', 'Florence'
-    GENEVa = 'Geneva', 'Geneva'
+    GENEVA = 'Geneva', 'Geneva'
     HELSINKI = 'Helsinki', 'Helsinki'
     ISTANBUL = 'Istanbul', 'Istanbul'
     LISBON = 'Lisbon', 'Lisbon'
@@ -134,6 +135,7 @@ class CountryChoices(models.TextChoices):
     PALESTINE = "PS", "Palestine"
     SYRIA = "SY", "Syria"
     TUNISIA = "TN", "Tunisia"
+
 
 class TransportationType(models.TextChoices):
     TRANSPORT = 'transport', 'Select transportation type'
