@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="trip">
+        {% if model_name == 'hotels' %}
+            <!--Hotels Service title -->
+            <div class="trip-title">
+
+                <p>{{ service.name }}</p>
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">General Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Category:</th>
+                        <td><i> {{ service.get_category_display }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Country:</th>
+                        <td><i>{{ service.get_country_display }}</i></td>
+                    </tr>
+                    <tr>
+                        <th>City:</th>
+                        <td><i> {{ service.city }} </i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="custom-line">
+
+            <div class="trip-section">
+                <h3 class="title">Price Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>High season price:</th>
+                        <td><i> &#8364 {{ service.high_season_price }} </i></td>
+                    </tr>
+                    {% if service.low_season_price %}
+                        <tr>
+                            <th>Low season price:</th>
+                            <td><i>&#8364 {{ service.low_season_price }}</i></td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% elif model_name == 'localguides' %}
+            <!--Local Guides Service title -->
+            <div class="trip-title">
+
+                <p>{{ service.guide_name }}</p>
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">General Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Country:</th>
+                        <td><i>{{ service.get_country_display }}</i></td>
+                    </tr>
+                    <tr>
+                        <th>City:</th>
+                        <td><i> {{ service.city }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Group capacity:</th>
+                        <td><i> {{ service.capacity }} </i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="custom-line">
+
+            <div class="trip-section">
+                <h3 class="title">Price Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Price:</th>
+                        <td><i> &#8364 {{ service.price }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Included in the price:</th>
+                        <td><i> {{ service.price_includes }} </i></td>
+                    </tr>
+                    {% if service.tour_duration %}
+                        <tr>
+                            <th>Tour duration:</th>
+                            <td><i> {{ service.tour_duration }} </i></td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% elif model_name == 'tickets' %}
+            <!--Activities Service title -->
+            <div class="trip-title">
+
+                <p>{{ service.name }}</p>
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">General Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Country:</th>
+                        <td><i>{{ service.get_country_display }}</i></td>
+                    </tr>
+                    <tr>
+                        <th>City:</th>
+                        <td><i> {{ service.city }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Description:</th>
+                        <td><i> {{ service.description }} </i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="custom-line">
+
+            <div class="trip-section">
+                <h3 class="title">Price Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Price:</th>
+                        <td><i> &#8364 {{ service.price }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Price for:</th>
+                        {% if service.capacity == 1 %}
+                            <td><i> 1 person</i></td>
+                        {% else %}
+                            <td><i> {{ service.capacity }} people</i></td>
+                        {% endif %}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            {% elif model_name == 'transfers' %}
+            
+            <!--Transfers Service title -->
+            <div class="trip-title">
+
+                <p>{{ service.city }}</p>
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">General Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Country:</th>
+                        <td><i>{{ service.get_country_display }}</i></td>
+                    </tr>
+                    <tr>
+                        <th>City:</th>
+                        <td><i> {{ service.city }} </i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="custom-line">
+
+            <div class="trip-section">
+                <h3 class="title">Price Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Car around the city:</th>
+                        <td><i> &#8364 {{ service.car_price_city }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Car from/to airport:</th>
+                        <td><i> &#8364 {{ service.car_price_airport }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Bus around the city:</th>
+                        <td><i> &#8364 {{ service.bus_price_city }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Bus from/to airport:</th>
+                        <td><i> &#8364 {{ service.bus_price_airport }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Price for:</th>
+                        {% if service.capacity == 1 %}
+                            <td><i> 1 person</i></td>
+                        {% else %}
+                            <td><i> {{ service.capacity }} people</i></td>
+                        {% endif %}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            {% elif model_name == 'currency' %}
+            
+            <!--Currency Service title -->
+            <div class="trip-title">
+
+                <p>{{ service.get_currency_from_display }} - {{ service.get_currency_to_display }}</p>
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">Exchange Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>1 {{ service.get_currency_from_display }} </th>
+                        <td><i>{{ service.exchange_rate }} {{ service.get_currency_to_display }}</i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        {% endif %}
+        <hr class="custom-line">
+
+        <div class="trip-section">
+            <h3 class="title">Creation Information</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <th>Last updated at:</th>
+                    <td><i> {{ service.updated_at|date:"d-M-Y" }} </i></td>
+                </tr>
+                <tr>
+                    <th>Updated by:</th>
+                    <td><i>{{ service.created_by_user.email }}</i></td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>
+                        <div class="action-btn">
+                            {% if service.is_active %}
+                                <!-- Active Request Status -->
+                                <img
+                                        src="{% static 'images/green-circle.png' %}"
+                                        alt="Active"
+                                />
+
+                            {% else %}
+                                <!-- Closed Request Status -->
+                                <img
+                                        src="{% static 'images/red-circle.png' %}"
+                                        alt="Closed"
+                                />
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock %}

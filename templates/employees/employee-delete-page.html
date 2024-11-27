@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo">
+        <h2>Disable Account</h2>
+
+        <p>Are you sure you want to disable this account?</p>
+
+        <form method="post" action="{% url 'delete-client-profile' pk=profile.pk %}">
+            {% csrf_token %}
+            <div class="action-btns">
+                <button class="add-btn" type="submit">Disable Profile</button>
+                <button class="add-btn" type="button" onclick="window.location.href='{% url 'employee-profile' pk=profile.pk %}'">Cancel</button>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}

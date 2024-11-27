@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="dashboard-table">
+        <div class="container-table">
+            <!-- Display a heading if there are no services -->
+            {% if not service_queryset %}
+                <h2>No {{ model_name|title|lower }} yet</h2>
+
+                <!-- Display a heading if there are services -->
+            {% else %}
+                <h2>{{ model_name|title|upper }}</h2>
+
+                <div class="col-9">
+
+                    <!-- Start Searchbar Form -->
+                    <form class="searchbar" method="get">
+
+                        {% csrf_token %}
+                        {{ search_form }}
+
+                        <button>
+                            <img src="{% static 'images/search.png' %}" height="18" alt="img2">
+                        </button>
+                    </form>
+                    <!-- End Searchbar Form -->
+
+                </div>
+                <div class="table-wrapper table-services">
+                    <!-- Add service button -->
+                    <div class="action-btn add-option">
+                        <a href="{% url "create-service" model_name=model_name %}">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="create new"
+                            />
+                        </a>
+                    </div>
+
+                    <!-- Dashboard Table -->
+                    <ul class="responsive-table">
+                        <li class="table-header">
+                            <div class="col col-1">Status</div>
+                            {% if model_name == 'currency' %}
+
+                                <div class="col col-2">From</div>
+                                <div class="col col-33">To</div>
+                                <div class="col col-4">Exchange rate</div>
+                                <div class="col col-5">Date added</div>
+                            {% else %}
+                                <div class="col col-2">Country</div>
+                                <div class="col col-33">City</div>
+                                {% if model_name != 'transfers' %}
+                                    <div class="col col-4">Name</div>
+                                    <div class="col col-5">Price</div>
+                                {% endif %}
+                            {% endif %}
+                            <div class="col col-6">Actions</div>
+                        </li>
+
+
+                        {% for service in service_list %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="Logo">
+                                    <div class="action-btn">
+                                        {% if service.is_active %}
+                                            <!-- Active Request Status -->
+                                            <img
+                                                    src="{% static 'images/green-circle.png' %}"
+                                                    alt="Active"
+                                            />
+
+                                        {% else %}
+                                            <!-- Closed Request Status -->
+                                            <img
+                                                    src="{% static 'images/red-circle.png' %}"
+                                                    alt="Closed"
+                                            />
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% if model_name == 'currency' %}
+                                <div class="col col-2" data-label="From">{{ service.get_currency_from_display }}</div>
+                                <div class="col col-33" data-label="To">{{ service.get_currency_to_display }}</div>
+                                <div class="col col-4" data-label="Exchange rate">{{ service.exchange_rate }} {{ service.get_currency_to_display }}</div>
+                                <div class="col col-5" data-label="Date added">{{ service.updated_at|date:"d-m-Y" }}</div>
+                            {% else %}
+                                <div class="col col-2" data-label="Country">{{ service.get_country_display }}</div>
+                                <div class="col col-33" data-label="City">{{ service.city }}</div>
+                                {% if model_name != 'transfers' %}
+                                    <div class="col col-4" data-label="Name">
+                                        {% if model_name == 'localguides' %}
+                                            {{ service.guide_name }}
+                                        {% elif model_name == 'privatetransport' or model_name == 'publictransport' %}
+                                            {{ service.get_type_display }}
+                                        {% else %}
+                                            {{ service.name }}
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col col-5" data-label="Price">
+                                        {% if model_name == 'hotels' %}
+                                            &#8364 {{ service.high_season_price }}
+                                        {% else %}
+                                            &#8364 {{ service.price }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                                <div class="col col-6" data-label="Actions">
+                                    <div class="action-btn">
+                                        <!-- View Profile Page-->
+                                        <a href="{% url 'service-details' model_name=model_name pk=service.pk %}">
+                                            <img
+                                                    src="{% static 'images/view-icon.png' %}"
+                                                    alt="View Profile"
+                                            />
+                                        </a>
+
+                                        <!-- Link to Edit Profile Page -->
+                                        <a href="{% url 'edit-service' model_name=model_name pk=service.pk %}">
+                                            <img
+                                                    src="{% static 'images/edit-icon.png' %}"
+                                                    alt="edit button"
+                                            />
+                                        </a>
+
+                                        <!-- Link to Delete Profile Page -->
+                                        <a href="{% url 'delete-service' model_name=model_name pk=service.pk%}">
+                                            <img
+                                                    src="{% static 'images/remove-icon.png' %}"
+                                                    alt="bin button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% empty %}
+
+                            <li>No results found</li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

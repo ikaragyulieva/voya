@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo">
+        <h2>Create New Company</h2>
+
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {{ form.non_field_errors }}
+
+            <div class="form-section">
+                <h3>Company Information</h3>
+            
+                {{ company_profile_form.commercial_name }}
+                {% if company_profile_form.commercial_name.errors %}
+                    <div class="error">{{ company_profile_form.commercial_name.errors }}</div>
+                {% endif %}
+                
+                {{ company_profile_form.legal_name }}
+                {% if company_profile_form.legal_name.errors %}
+                    <div class="error">{{ company_profile_form.legal_name.errors }}</div>
+                {% endif %}
+            
+                {{ company_profile_form.tax_id }}
+                {% if company_profile_form.tax_id.errors %}
+                    <div class="error">{{ company_profile_form.tax_id.errors }}</div>
+                {% endif %}
+            
+                {{ company_profile_form.billing_email }}
+                {% if company_profile_form.billing_email.errors %}
+                    <div class="error">{{ company_profile_form.billing_email.errors }}</div>
+                {% endif %}
+            
+                {{ phone_number_form.number }}
+                {% if phone_number_form.number.errors %}
+                    <div class="error">{{ phone_number_form.number.errors }}</div>
+                {% endif %}
+            
+                {{ company_profile_form.logo }}
+                {% if company_profile_form.logo.errors %}
+                    <div class="error">{{ company_profile_form.logo.errors }}</div>
+                {% endif %}
+            
+            </div>
+
+            <div class="form-section">
+                <h3>Address Information</h3>
+                {{ address_form.country }}
+                {% if address_form.country.errors %}
+                    <div class="error">{{ address_form.country.errors }}</div>
+                {% endif %}
+                {{ address_form.city }}
+                {% if address_form.city.errors %}
+                    <div class="error">{{ address_form.city.errors }}</div>
+                {% endif %}
+                {{ address_form.state }}
+                {% if address_form.state.errors %}
+                    <div class="error">{{ address_form.state.errors }}</div>
+                {% endif %}
+                {{ address_form.street_address }}
+                {% if address_form.street_address.errors %}
+                    <div class="error">{{ address_form.street_address.errors }}</div>
+                {% endif %}
+                {{ address_form.postal_code }}
+                {% if address_form.postal_code.errors %}
+                    <div class="error">{{ address_form.postal_code.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button class="add-btn" type="submit">Create Company</button>
+        </form>
+
+    </div>
+
+{% endblock %}
