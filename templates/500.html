@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- 404 page -->
+    <div class="not-found-img">
+        <img src="{% static 'images/logo-voya-image.png' %}" alt="404 not found gif">
+    </div>
+
+    <div class="not-found">
+        <h1>
+            Oops! Page Not Found
+        </h1>
+        <p>The page you’re looking for doesn’t exist.</p>
+        <!-- Link to Home Page -->
+        <a href="{{ previous_page|default:'/' }}">
+            <button>Back to Previous Page</button>
+        </a>
+    </div>
+    <!-- End 404 page -->
+
+{% endblock %}

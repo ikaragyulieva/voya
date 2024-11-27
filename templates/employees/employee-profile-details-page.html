@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Start Profile Details Section -->
+    <div class="profile">
+        <!-- Start Profile Personal Data Section -->
+        <div class="profile-data">
+            <div class="profile_img">
+                <div class="image">
+                    <!-- Profile Image -->
+                    <img src="{% static 'images/user.png' %}" alt="profile img'"/>
+                </div>
+            </div>
+            <div class="personal">
+                <div class="edit">
+                    <!-- User Username -->
+                    <p>{{ object.first_name }} {{ object.last_name }}</p>
+
+                    <!-- Edit Button -->
+
+                    <!-- IF the viewer is the owner of the profile -->
+                    <!-- Link to Edit Profile Page -->
+
+                    <a href="{% url "employee-edit" pk=profile.pk %}">
+                        <img
+                                class="edit-img"
+                                src="{% static 'images/edit-icon.png' %}"
+                                alt="edit button"
+                        />
+                    </a>
+
+                    <!-- Link to Delete Profile Page -->
+                    <a href="{% url 'employee-delete' pk=profile.pk %}">
+                        <img
+                                class="bin-img"
+                                src="{% static 'images/remove-icon.png' %}"
+                                alt="bin button"
+                        />
+                    </a>
+                </div>
+                <div class="data">
+                    <!-- Total Requests -->
+                    <span>4</span>
+                    <p>Total Requests</p>
+
+                    <!-- Pending Proposal Requests -->
+                    <span>2</span>
+                    <p>Pending</p>
+
+                    <!-- Closed Proposal Requests -->
+                    <span>2</span>
+                    <p>Closed</p>
+                </div>
+
+                <h3 class="names">{{ object.job_title }}</h3>
+                <p class="email">{{ object.phone_number }}</p>
+
+                <div class="status">
+                    {% if object.is_active %}
+                        <a href="{% url 'employee-delete' pk=profile.pk %}">
+                            <img
+                                    class="status-img"
+                                    src="{% static 'images/green-circle.png' %}"
+                                    alt="bin button"
+                            />
+                            <p>Active User</p>
+                        </a>
+
+                    {% else %}
+                        <a href="{% url 'employee-delete' pk=profile.pk %}">
+                            <div>
+                                <img
+                                        class="status-img"
+                                        src="{% static 'images/red-circle.png' %}"
+                                        alt="user-status"
+                                />
+                            </div>
+                            <p>Inactive User</p>
+                        </a>
+                        </div>
+
+                    {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

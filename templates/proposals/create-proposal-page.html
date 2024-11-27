@@ -1,0 +1,680 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="proposal">
+        <div class="trip trip-proposal">
+            <div class="trip-title">
+                <!-- Trip title -->
+                <p>{{ current_request.slug }}</p>
+
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">Group Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Nationality:</th>
+                        <td><i> {{ current_request.get_nationality_display }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Age range:</th>
+                        <td><i>{{ current_request.age_range }} years old</i></td>
+                    </tr>
+                    <tr>
+                        <th>Min participants:</th>
+                        <td><i> {{ current_request.min_participants }} people</i></td>
+                    </tr>
+                    <tr>
+                        <th>Max participants:</th>
+                        <td><i> {{ current_request.max_participants }} people</i></td>
+                    </tr>
+                    <tr>
+                        <th>Group type:</th>
+                        <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
+                    </tr>
+                    {% if current_request.type_of_trip %}
+                        <tr>
+                            <th>Type of trip:</th>
+                            <td><i> {{ current_request.type_of_trip }} </i></td>
+                        </tr>
+                    {% endif %}
+                    {% if current_request.additional_observations %}
+                        <tr>
+                            <th>Additional observations:</th>
+                            <td><i> {{ current_request.additional_observations }} </i></td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Dates Information</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Start date:</th>
+                            <td><i> {{ current_request.trip_start_date }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>End date:</th>
+                            <td><i>{{ current_request.trip_end_date }}</i></td>
+                        </tr>
+                        <tr>
+                            <th>Trip duration:</th>
+                            <td><i> {{ current_request.trip_duration }} days </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Destination Information:</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Origin country:</th>
+                            <td><i> {{ current_request.get_country_origin_display }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>Destinations:</th>
+                            <td><i>{{ current_request.get_country_destinations_display }}</i></td>
+                        </tr>
+                        {% if current_request.other_destinations %}
+                            <tr>
+                                <th>Additional destinations info:</th>
+                                <td><i> {{ current_request.other_destinations }} </i></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Trip Information:</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Transportation:</th>
+                            <td><i> {{ current_request.get_transportation_type_display }} </i></td>
+                        </tr>
+
+                        {% if current_request.transportation_details %}
+                            <tr>
+                                <th>Transportation details:</th>
+                                <td><i>{{ current_request.transportation_details }}</i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Accommodation:</th>
+                            <td><i> {{ current_request.get_accommodations_display }} </i></td>
+                        </tr>
+                        {% if current_request.accommodations_details %}
+                            <tr>
+                                <th>Accommodation details:</th>
+                                <td><i> {{ current_request.accommodations_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Meals:</th>
+                            <td><i> {{ current_request.get_meals_display }} </i></td>
+                        </tr>
+                        {% if current_request.meals_details %}
+                            <tr>
+                                <th>Meals details:</th>
+                                <td><i> {{ current_request.meals_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Staff:</th>
+                            <td><i> {{ current_request.get_staff_display }} </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Billing Information:</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Budget:</th>
+                            <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>Currency:</th>
+                            <td><i>{{ current_request.get_currency_display }}</i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Trip Proposal Template -->
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="trip proposal-edit">
+                <div class="trip-title">
+                    <!-- Proposal title -->
+                    <p>{{ form.title }}</p>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Accommodations</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1 " data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details"><select id="service-dropdown"
+                                                                                         name="service">
+                                <option value="">Select a Service</option>
+                            </select></div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-5" data-label="variable cost"><input type="text" id="service-price"
+                                                                                     name="service_price">
+                            </div>
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+                                    <!-- Remove Row-->
+                                    <a href="#" class="remove-row-button">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+
+
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Transport</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details">
+                                <select id="service-dropdown" name="service">
+                                    <option value="">Select a Service</option>
+                                </select>
+                            </div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price" readonly></div>
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+                                    <!-- Remove Row-->
+                                    <a href="#">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Activity</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details">
+                                <select id="service-dropdown" name="service">
+                                    <option value="">Select a Service</option>
+                                </select>
+                            </div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price" readonly></div>
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+                                    <!-- Remove Row-->
+                                    <a href="#">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Transfers</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details">
+                                <select id="service-dropdown" name="service">
+                                    <option value="">Select a Service</option>
+                                </select>
+                            </div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price" readonly></div>
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+                                    <!-- Remove Row-->
+                                    <a href="#">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Guides</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details">
+                                <select id="service-dropdown" name="service">
+                                    <option value="">Select a Service</option>
+                                </select>
+                            </div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price" readonly></div>
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+
+                                    <a href="#">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Other Services</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details">{{ item_form.additional_notes }}</div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price"></div>
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+
+                                    <a href="#">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </form>
+
+        <!-- Trip Proposal Budget Template -->
+
+        <div class="trip trip-proposal">
+            <div class="trip-title">
+                <!-- Trip title -->
+                <p>Proposal Budget</p>
+
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">Group Information</h3>
+                <table>
+                
+                <thead>
+                <tr>Totals</tr>
+                <tr>{{ current_request.min_participants }} pax</tr>
+                <tr>{{ current_request.max_participants }} pax</tr>
+                
+                </thead>
+                    <tbody>
+                    <tr>
+                        <th>Variable cost:</th>
+                        <td><i> {{ current_request.get_nationality_display }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Fixed cost:</th>
+                        <td><i>{{ current_request.age_range }} years old</i></td>
+                    </tr>
+                    <tr>
+                        <th>Total Cost:</th>
+                        <td><i> {{ current_request.min_participants }} people</i></td>
+                    </tr>
+                    <tr>
+                        <th>Management Cost:</th>
+                        <td><i> {{ current_request.max_participants }} people</i></td>
+                    </tr>
+                    <tr>
+                        <th>Margin:</th>
+                        <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Final Price:</th>
+                        <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
+                    </tr>
+                    
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sections = document.querySelectorAll("[id=section]");
+            const servicesDataMap = {}; // Cache services data for each section dynamically
+
+            // Utility Functions
+            const initializeFlatpickr = () => {
+                const flatpickrFields = document.querySelectorAll(".flatpickr");
+                flatpickrFields.forEach(field => {
+                    if (!field._flatpickr) {
+                        flatpickr(field, {dateFormat: "Y-m-d"});
+                    }
+                });
+            };
+
+            const fetchServices = (sectionName) => {
+                if (servicesDataMap[sectionName]) return Promise.resolve(servicesDataMap[sectionName]); // Use cached data
+                return fetch(`/proposals/api/services/${sectionName}/`)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => {
+                        servicesDataMap[sectionName] = data; // Cache data
+                        return data;
+                    })
+                    .catch(error => console.error(`Error fetching services for ${sectionName}:`, error));
+            };
+
+            const populateServiceDropdown = (serviceDropdown, sectionName, city) => {
+                fetchServices(sectionName).then(data => {
+                    const filteredServices = data.filter(service => service.city === city);
+                    serviceDropdown.innerHTML = "<option value=''>Select a Service</option>";
+                    filteredServices.forEach(service => {
+                        const option = document.createElement("option");
+                        option.value = service.id;
+                        option.textContent = service.display_field;
+                        serviceDropdown.appendChild(option);
+                    });
+                });
+            };
+
+            const clearRowInputs = (row) => {
+                const inputs = row.querySelectorAll("input, select");
+                inputs.forEach(input => {
+                    if (input.tagName === "SELECT") {
+                        input.selectedIndex = 0;
+                    } else {
+                        input.value = "";
+                    }
+                });
+            };
+
+            const updatePriceField = (serviceDropdown, sectionName, priceField) => {
+                serviceDropdown.addEventListener("change", function () {
+                    const selectedServiceId = serviceDropdown.value;
+                    fetchServices(sectionName).then(data => {
+                        const selectedService = data.find(service => service.id == selectedServiceId);
+                        priceField.value = selectedService
+                            ? `€ ${parseFloat(selectedService.price).toFixed(2)}`
+                            : "";
+                    });
+                });
+            };
+
+            // Initialize Service Dropdowns
+            sections.forEach(section => {
+                const sectionName = section.textContent.trim();
+                const tripSection = section.closest(".trip-section");
+                const serviceDropdown = tripSection.querySelector("#service-dropdown");
+                const cityDropdown = tripSection.querySelector("#city-dropdown");
+                const servicePriceField = tripSection.querySelector("#service-price");
+
+                if (sectionName && serviceDropdown) {
+                    cityDropdown.addEventListener("change", function () {
+                        const selectedCity = cityDropdown.value;
+                        populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                    });
+
+                    updatePriceField(serviceDropdown, sectionName, servicePriceField);
+                }
+            });
+
+            // Add Row Functionality
+            const addRowButtons = document.querySelectorAll(".add-option a");
+            addRowButtons.forEach(button => {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const tripSection = button.closest(".trip-section");
+                    const table = tripSection.querySelector(".requests-table");
+                    const lastRow = table.querySelector(".table-row:last-of-type");
+                    const newRow = lastRow.cloneNode(true);
+
+                    clearRowInputs(newRow);
+                    table.appendChild(newRow);
+                    initializeFlatpickr();
+
+                    const sectionName = tripSection.querySelector(".title").textContent.trim();
+                    const cityDropdown = newRow.querySelector("#city-dropdown");
+                    const serviceDropdown = newRow.querySelector("#service-dropdown");
+                    const servicePriceField = newRow.querySelector("#service-price");
+
+                    if (cityDropdown && serviceDropdown) {
+                        cityDropdown.addEventListener("change", function () {
+                            const selectedCity = cityDropdown.value;
+                            populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                        });
+
+                        updatePriceField(serviceDropdown, sectionName, servicePriceField);
+                    }
+
+                    // Ensure quantity retains original format
+                    const quantityField = newRow.querySelector("input[name='quantity']");
+                    if (quantityField) {
+                        quantityField.type = "number";
+                        quantityField.step = "1";
+                        quantityField.min = "1";
+                        quantityField.value = "1";
+                    }
+                });
+            });
+
+            // Remove Row Functionality
+            document.addEventListener("click", function (event) {
+                if (event.target.closest(".remove-row-button")) {
+                    event.preventDefault();
+                    const row = event.target.closest(".table-row");
+                    const table = row.parentNode;
+                    if (row && table.children.length > 2) {
+                        row.remove();
+                    }
+                }
+            });
+
+            // Initialize Flatpickr on Page Load
+            initializeFlatpickr();
+        });
+
+    </script>
+
+    <!-- flatpikr setup-->
+    <script src="{% static 'js/date-formatting.js' %}"></script>
+{% endblock %}
