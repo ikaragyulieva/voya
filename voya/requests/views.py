@@ -43,10 +43,6 @@ class NewRequestView(mixins.LoginRequiredMixin, CreateView):
     def get_success_url(self):
         profile = get_user_obj(self.request)
 
-        if profile is None or profile.pk is None:
-            # Log an error or redirect to a default fallback
-            return reverse_lazy('home')
-
         if hasattr(self.request.user, 'employee_profile'):
             return reverse_lazy(
                 'employee-dashboard',
@@ -61,6 +57,8 @@ class NewRequestView(mixins.LoginRequiredMixin, CreateView):
                     'pk': profile.pk
                 }
             )
+        else:
+            return reverse_lazy('home')
 
 
 class CloneRequestView(NewRequestView):
@@ -88,10 +86,6 @@ class CloneRequestView(NewRequestView):
     def get_success_url(self):
         profile = get_user_obj(self.request)
 
-        if profile is None or profile.pk is None:
-            # Log an error or redirect to a default fallback
-            return reverse_lazy('home')
-
         if hasattr(self.request.user, 'employee_profile'):
             return reverse_lazy(
                 'employee-dashboard',
@@ -106,6 +100,8 @@ class CloneRequestView(NewRequestView):
                     'pk': profile.pk
                 }
             )
+        else:
+            return reverse_lazy('home')
 
 
 class EditRequestView(mixins.LoginRequiredMixin, UpdateView):
