@@ -1,5 +1,5 @@
 from django.contrib.auth import mixins
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
@@ -42,6 +42,56 @@ class NewRequestView(mixins.LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         profile = get_user_obj(self.request)
+
+        if profile is None or profile.pk is None:
+            # Log an error or redirect to a default fallback
+            return reverse_lazy('home')
+
+        if hasattr(self.request.user, 'employee_profile'):
+            return reverse_lazy(
+                'employee-dashboard',
+                kwargs={
+                    'pk': profile.pk
+                }
+            )
+        elif hasattr(self.request.user, 'client-profile'):
+            return reverse_lazy(
+                'client-dashboard',
+                kwargs={
+                    'pk': profile.pk
+                }
+            )
+
+
+class CloneRequestView(NewRequestView):
+    template_name = 'requests/duplicate-request-page.html'
+
+    def get_initial(self):
+        original_request = get_object_or_404(models.TripRequests, pk=self.kwargs['pk'])
+        initial_data = super().get_initial()
+        for field in self.form_class.Meta.fields:
+            initial_data[field] = getattr(original_request, field)
+
+        initial_data['field_to_clear_or_update'] = None
+        return initial_data
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = get_user_obj(self.request)
+        context['trip_request'] = get_object_or_404(models.TripRequests, pk=self.kwargs['pk'])
+        return context
+
+    def form_valid(self, form):
+        form.instance.pk = None
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        profile = get_user_obj(self.request)
+
+        if profile is None or profile.pk is None:
+            # Log an error or redirect to a default fallback
+            return reverse_lazy('home')
+
         if hasattr(self.request.user, 'employee_profile'):
             return reverse_lazy(
                 'employee-dashboard',

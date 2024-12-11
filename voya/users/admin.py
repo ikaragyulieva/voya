@@ -8,17 +8,15 @@ from voya.users.forms import CustomUserChangeForm, CustomUserCreationForm
 UserModel = get_user_model()
 
 
-class ProfileInline(admin.StackedInline):
-    model = EmployeeProfile
-    can_delete = False
-    fields = ('first_name', 'last_name', 'job_title')
-
-
 @admin.register(UserModel)
 class CustomUserAdmin(UserAdmin):
-    # inlines = ProfileInline #add inline fields from related models
-    list_display = ('email', 'is_active')
+    list_display = (
+        'email',
+        'is_active'
+    )
+
     ordering = ['email']
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
 

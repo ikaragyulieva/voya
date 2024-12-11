@@ -1,38 +1,61 @@
-from django.apps import apps
-from django.contrib.contenttypes.models import ContentType
-from django.db import transaction, models
+
 from rest_framework import serializers
 
 from voya.proposals.choices import SectionChoices
-from voya.proposals.models import ProposalSectionItem, Proposal
-# from voya.services import models
-from voya.utils import get_user_obj
+from voya.requests import choices
 
 
-class DynamicServiceSerializer(serializers.Serializer):
-    def __init__(self, *args, **kwargs):
-        model = kwargs.pop('model', None)
-        super().__init__(*args, **kwargs)
+class ProposalSerializer(serializers.Serializer):
+    title = serializers.CharField(
+        max_length=255,
+        error_messages={
+            'blank': 'The proposal title is required.',
+            'max_length': 'The title must not exceed 255 characters.',
+        }
+    )
 
-        if model:
-            for field in model._meta.get_fields():
-                if field.is_relation or field.name in ['id', 'created_at', 'updated_at']:
-                    continue
-
-                if isinstance(field, models.CharField):
-                    self.fields[field.name] = serializers.CharField()
-                elif isinstance(field, models.DecimalField):
-                    self.fields[field.name] = serializers.DecimalField(max_digits=field.max_digits, decimal_places=field.decimal_places)
-                elif isinstance(field, models.IntegerField):
-                    self.fields[field.name] = serializers.IntegerField()
-                elif isinstance(field, models.BooleanField):
-                    self.fields[field.name] = serializers.BooleanField()
+    is_draft = serializers.BooleanField(default=True)
 
 
-class ServiceListSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    display_field = serializers.CharField()
-    city = serializers.CharField()
-    price = serializers.DecimalField(max_digits=5, decimal_places=2)
+class ItemSerializer(serializers.Serializer):
+    section_name = serializers.ChoiceField(
+        choices=SectionChoices,
+        error_messages={
+            'invalid_choice': 'Invalid section name. Please select a valid section.',
+        }
+    )
+
+    service_id = serializers.IntegerField()
+    quantity = serializers.IntegerField(
+        min_value=1,
+        error_messages={
+            'min_value': 'Quantity must be at least 1.',
+            'invalid': 'Quantity must be a number.',
+        }
+    )
+    additional_notes = serializers.CharField(allow_blank=True)
+    corresponding_trip_date = serializers.DateField(
+        error_messages={
+            'invalid': 'Invalid date format. Please use YYYY-MM-DD.',
+            'null': 'Trip date is required.',
+        }
+    )
+    price = serializers.DecimalField(max_digits=10, decimal_places=2)
+    city = serializers.ChoiceField(
+        choices=choices.CityChoices,
+        error_messages={
+            'invalid_choice': 'Invalid city. Please select a valid city.',
+        }
+    )
 
 
+class BudgetSerializer(serializers.Serializer):
+    pax = serializers.IntegerField()
+    variable_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
+    fixed_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
+    total_cost_per_person = serializers.DecimalField(max_digits=10, decimal_places=2)
+    total_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
+    service_fee = serializers.DecimalField(max_digits=10, decimal_places=2)
+    margin = serializers.IntegerField()
+    fina_price_per_person = serializers.DecimalField(max_digits=10, decimal_places=2)
+    final_price = serializers.DecimalField(max_digits=10, decimal_places=2)

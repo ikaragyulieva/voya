@@ -100,31 +100,53 @@
                             <div class="col col-8" data-label="Actions">
                                 <div class="action-btn request-action-btn">
                                     <!-- View Request Page-->
-                                    <a href="{% url 'request-details' pk=trip_request.pk %}">
+                                    <a href="{% url 'request-details' pk=trip_request.pk %}" class="action-link"
+                                       title="View Request">
                                         <img
                                                 src="{% static 'images/view-icon.png' %}"
                                                 alt="view button"
                                         />
                                     </a>
                                     <!-- Duplicate request-->
-                                    <a href="#">
+                                    <a href="{% url 'clone-request' pk=trip_request.pk %}" class="action-link"
+                                       title="Duplicate Request">
                                         <img
                                                 src="{% static 'images/duplicate (1).png' %}"
                                                 alt="duplicate button"
                                         />
                                     </a>
 
+                                    <!-- Link to Edit Request Page -->
+                                    <a href="{% url 'edit-request' pk=trip_request.pk %}" class="action-link"
+                                       title="Edit Request">
+                                        <img
+                                                src="{% static 'images/edit-icon.png' %}"
+                                                alt="edit button"
+                                        />
+                                    </a>
+                                
+                                    {% if request.user.role == 'client' %}
+                                        {% if trip_request.request_proposal %}
+                                            {% if not trip_request.request_proposal.is_draft %}
+                                                
+                                                 <a href="{% url 'client-proposal-detail' proposal_id=trip_request.request_proposal.pk%}"
+                                                 class="action-link" title="Check Proposal">
+                                            <img
+                                                    src="{% static 'images/document-approved (1).png' %}"
+                                                    alt="create proposal button"
+                                            />
+
+                                        </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+
                                     {% if request.user.role == 'employee' %}
-                                        <!-- Link to Edit Request Page -->
-                                        <a href="{% url 'edit-request' pk=trip_request.pk %}">
-                                            <img
-                                                    src="{% static 'images/edit-icon.png' %}"
-                                                    alt="edit button"
-                                            />
-                                        </a>
+
 
                                         <!-- Link to Delete Request Page -->
-                                        <a href="{% url 'delete-request' pk=trip_request.pk %}">
+                                        <a href="{% url 'delete-request' pk=trip_request.pk %}"
+                                           class="action-link delete-link" title="Request Completed">
                                             <img
                                                     src="{% static 'images/check-mark.png' %}"
                                                     alt="delete button"
@@ -132,19 +154,33 @@
 
                                         </a>
 
-                                        <!-- Link to Delete Request Page -->
-                                        <a href="{% url 'create-proposal' trip_id=trip_request.pk%}">
+                                        {% if trip_request.request_proposal %}
+                                        <!-- Link to Create Proposal Page -->
+                                        <a href="{% url 'proposal-detail' proposal_id=trip_request.request_proposal.pk%}"
+                                           class="action-link" title="Check Proposal">
                                             <img
-                                                    src="{% static 'images/check-mark.png' %}"
-                                                    alt="delete button"
+                                                    src="{% static 'images/document-approved (1).png' %}"
+                                                    alt="create proposal button"
+                                            />
+
+                                        </a>
+                                        {% else %}
+                                        <!-- Link to Create Proposal Page -->
+                                        <a href="{% url 'create-proposal' trip_id=trip_request.pk %}"
+                                           class="action-link" title="Create Proposal">
+                                            <img
+                                                    src="{% static 'images/contract.png' %}"
+                                                    alt="create proposal button"
                                             />
 
                                         </a>
                                     {% endif %}
+                                        
+                                    {% endif %}
+                                    
                                 </div>
                             </div>
                         </li>
-
                     {% empty %}
 
                         <li>No results found</li>

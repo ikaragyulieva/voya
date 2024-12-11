@@ -20,16 +20,15 @@
 	/*height:55vh;*/
 }
 
-
-
 .edit-delete h2 {
 	text-align: center;
-	margin-top: -10px;
-	margin-bottom: 2em;
+	margin-bottom: 20px;
 	text-shadow: 1px 1px rgb(65, 63, 63);
 }
 .status{
 	margin-top: 20px;
+	display: flex;
+	align-items: center;
 }
 .status a{
 	display: flex;
@@ -38,12 +37,13 @@
 .status .status-img{
 	width: 25px;
 	margin-right: 10px;
+	height: 25px;
 }
 
 .form-section{
 	display: flex;
 	flex-direction: column;
-	margin: 1.5em 0 1em 0;
+	margin: 2.5em 0 1em 0;
 }
 
 .form-section h3{
@@ -65,7 +65,7 @@
 	border-radius: 3px;
 	height: 30px;
 	padding-left: 2px;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 .edit-delete .add-btn {
@@ -110,6 +110,17 @@
 /* .edit-photo select {
 
 } */
+
+.form-fields{
+	margin-top: 10px;
+}
+
+.form-fields p{
+	margin-top: 10px;
+	font-size: 16px;
+	font-weight: 300;
+	color: #0f0f0f;
+}
 
 .edit-photo label {
 	display: initial !important;

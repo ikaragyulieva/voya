@@ -56,4 +56,4 @@ class EmployeeProfile(TimestampedModel):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='employee_profile')
 
     def __str__(self):
-        return f"Employee Profile for {self.user.email}"
+        return f"{self.first_name} {self.last_name}"

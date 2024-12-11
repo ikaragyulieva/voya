@@ -1,11 +1,17 @@
 from django import forms
 
 from voya.common.mixins import PlaceholderMixin
-from voya.proposals.models import Proposal, ProposalSectionItem
+from voya.proposals.choices import StatusChoices
+from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
 
 
 class CreateProposalForm(forms.ModelForm):
+    is_draft = forms.ChoiceField(
+        choices=StatusChoices,
+        label="",
+        widget=forms.Select(attrs={'placeholder': 'Draft'}),
+    )
 
     class Meta:
         model = Proposal
@@ -44,6 +50,8 @@ class CreateItemForm(forms.ModelForm):
         fields = [
             'corresponding_trip_date',
             'quantity',
+            'city',
+            'price',
             'additional_notes',
         ]
 
@@ -63,3 +71,20 @@ class CreateItemForm(forms.ModelForm):
     #         self.fields['service'].queryset = section_model_map[section].objects.filter(is_active=True)
     #     else:
     #         self.fields['service'].queryset = None
+
+
+class CreateBudgetForm(forms.ModelForm):
+
+    class Meta:
+        model = ProposalBudget
+        fields = [
+            'variable_cost',
+            'fixed_cost',
+            'total_cost_per_person',
+            'total_cost',
+            'pax',
+            'fina_price_per_person',
+            'final_price',
+            'service_fee',
+            'margin',
+        ]

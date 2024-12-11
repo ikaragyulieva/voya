@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <div class="proposal">
+
+        <!-- Trip Proposal Template -->
+
+        <div class="trip proposal-edit">
+            <div class="trip-title">
+                <!-- Proposal title -->
+                <p>{{ proposal.title }}</p>
+
+            </div>
+            <hr class="custom-line">
+            {% if accommodation_items %}
+                <div class="trip-section">
+                    <h3 id="section" class="title">Accommodations</h3>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+
+                        </li>
+                        {% for item in accommodation_items %}
+
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if transport_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Transport</h3>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        {% for item in transport_items %}
+
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endif %}
+            {% if activity_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Activity</h3>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        {% for item in activity_items %}
+
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endif %}
+            {% if transfer_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Transfers</h3>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+
+                        </li>
+                        {% for item in transfer_items %}
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endif %}
+            {% if guides_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Guides</h3>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+
+
+                        </li>
+                        {% for item in guides_items %}
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endif %}
+            {% if other_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Other Services</h3>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+
+                        </li>
+                        {% for item in other_items %}
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Trip Proposal Budget Template -->
+
+
+        <div class="trip trip-proposal budget">
+
+            <div class="trip-title">
+                <!-- Budget title -->
+                <p>Proposal Budget</p>
+
+            </div>
+
+            <hr class="custom-line">
+            <div class="trip-section">
+                <div class="budget-container">
+                    <table class="budget-table" id="budget-table">
+                        
+                        <thead>
+                        <tr>
+                            <th></th>
+                            {% for budget_option in budget %}
+                            <th>{{ budget_option.pax}} pax</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+
+
+                        <tfoot>
+                        <tr>
+                            <th>Price per person:</th>
+                            {% for budget_option in budget %}
+                            <td><i> {{ budget_option.fina_price_per_person }} € </i></td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>Final Price:</th>
+                            {% for budget_option in budget %}
+                            <td><i> {{ budget_option.final_price }} € </i></td>
+                            {% endfor %}
+                        </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

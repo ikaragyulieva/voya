@@ -2,9 +2,25 @@ from django import forms
 
 from voya.common.mixins import PlaceholderMixin, StyledFormMixin
 from voya.companies.models import CompanyProfile, Address, PhoneNumber
+from cloudinary.forms import CloudinaryFileField
+
+from voya.companies.validators import FileSizeValidator
 
 
 class CompanyProfileForm(forms.ModelForm):
+    logo = CloudinaryFileField(
+        options={
+            'folder': 'uploads/',
+            'tags': ['company-logo'],
+            'resource_type': 'auto',
+            'editable': True,
+        },
+        help_text="Please upload your logo here",
+        validators=[
+            FileSizeValidator(5),
+        ]
+
+    )
 
     class Meta:
         model = CompanyProfile
@@ -14,7 +30,7 @@ class CompanyProfileForm(forms.ModelForm):
             'legal_name': forms.TextInput(attrs={'placeholder': 'Legal name'}),
             'tax_id': forms.TextInput(attrs={'placeholder': 'VAT/Tax ID'}),
             'billing_email': forms.TextInput(attrs={'placeholder': 'Billing email'}),
-            'logo': forms.FileInput(attrs={'placeholder': 'Upload logo'}),
+
         }
         labels = {
             'commercial_name': "",
@@ -22,9 +38,6 @@ class CompanyProfileForm(forms.ModelForm):
             'tax_id': "",
             'billing_email': "",
             'logo': "",
-        }
-        help_texts = {
-            'logo': "Please upload your logo here",
         }
 
 

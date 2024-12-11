@@ -2,6 +2,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+from cloudinary.models import CloudinaryField
 
 from voya.common.models import TimestampedModel
 from voya.companies.validators import FileSizeValidator
@@ -44,13 +45,13 @@ class CompanyProfile(TimestampedModel):
         null=False,
     )
 
-    logo = models.ImageField(
-        upload_to="company_logos/",
+    logo = CloudinaryField(
+        "company_logos",
         null=False,
         blank=False,
-        validators=[
-            FileSizeValidator(5),
-        ]
+        # validators=[
+        #     FileSizeValidator(5),
+        # ]
     )
 
     notes = models.TextField(

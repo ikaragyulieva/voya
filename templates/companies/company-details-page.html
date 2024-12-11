@@ -20,6 +20,30 @@
                     <p class="email">No notes added!</p>
                     {% endif %}
                 </div>
+                <div class="status">
+                    {% if company.is_active %}
+                            <img
+                                    class="status-img"
+                                    src="{% static 'images/green-circle.png' %}"
+                                    alt="bin button"
+                            />
+                            <p>Active company</p>
+
+                    {% else %}
+                            <div>
+                                <img
+                                        class="status-img"
+                                        src="{% static 'images/red-circle.png' %}"
+                                        alt="user-status"
+                                />
+                            </div>
+                            <p>Inactive company</p>
+                        </div>
+
+                    {% endif %}
+
+
+            </div>
                 
             </div>
             <div class="personal">
@@ -49,19 +73,19 @@
 {#                        />#}
 {#                    </a>#}
                 </div>
-                <div class="data">
-                    <!-- Total Number of Photos by the User -->
-                    <span>4</span>
-                    <p>Total Requests</p>
-
-                    <!-- Total Number of Pets owned by the User -->
-                    <span>2</span>
-                    <p>Pending</p>
-
-                    <!-- Total Number of Likes for the User -->
-                    <span>2</span>
-                    <p>Closed</p>
-                </div>
+{#                <div class="data">#}
+{#                    <!-- Total Number of Photos by the User -->#}
+{#                    <span>4</span>#}
+{#                    <p>Total Requests</p>#}
+{##}
+{#                    <!-- Total Number of Pets owned by the User -->#}
+{#                    <span>2</span>#}
+{#                    <p>Pending</p>#}
+{##}
+{#                    <!-- Total Number of Likes for the User -->#}
+{#                    <span>2</span>#}
+{#                    <p>Closed</p>#}
+{#                </div>#}
                 <div class="profile-info">
                     <h3 class="names">Billing Information:</h3>
                     <p class="email">Legal Name: {{ company.legal_name }}</p>

@@ -25,6 +25,7 @@ class ServiceBaseModel(TimestampedModel):
 
     city = models.CharField(
         max_length=50,
+        choices=choices.CityChoices,
         blank=False,
         null=False,
     )

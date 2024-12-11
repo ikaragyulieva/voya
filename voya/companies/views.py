@@ -21,9 +21,9 @@ class CompanyCreateView(FormView):
     address_form_class = AddressForm
     phone_number_form_class = PhoneNumberForm
 
-    def get_object(self, queryset=None):
-        # Fetch the ClientProfile based on the URL pk
-        return EmployeeProfile.objects.get(user=self.request.user)
+    # def get_object(self, queryset=None):
+    #     # Fetch the ClientProfile based on the URL pk
+    #     return EmployeeProfile.objects.get(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,7 +31,9 @@ class CompanyCreateView(FormView):
         context['company_profile_form'] = context.get('company_profile_form', self.company_profile_form_class())
         context['address_form'] = context.get('address_form', self.address_form_class())
         context['phone_number_form'] = context.get('phone_number_form', self.phone_number_form_class())
-        context['profile'] = self.get_object()
+        if self.request.user.is_authenticated and self.request.user.is_active:
+            employee_profile = EmployeeProfile.objects.get(user=self.request.user)
+            context['profile'] = employee_profile
 
         return context
 
@@ -171,10 +173,11 @@ class CompanyEditView(mixins.LoginRequiredMixin, UpdateView):
         address_instance = company_profile_instance.addresses.first()
         phone_number_instance = company_profile_instance.phone_numbers.first()
 
-        company_profile_form = CompanyProfileForm(request.POST, instance=company_profile_instance)
+        company_profile_form = CompanyProfileForm(request.POST, request.FILES, instance=company_profile_instance)
         address_form = AddressForm(request.POST, instance=address_instance)
         phone_number_form = PhoneNumberForm(request.POST, instance=phone_number_instance)
-
+        if not company_profile_form.is_valid():
+            print(company_profile_form.errors)
         if all([company_profile_form.is_valid(), address_form.is_valid(), phone_number_form.is_valid()]):
             return self.form_valid(company_profile_form, address_form, phone_number_form)
 

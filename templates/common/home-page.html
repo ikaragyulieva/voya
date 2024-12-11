@@ -2,22 +2,238 @@
 {% load static %}
 
 {% block content %}
-{#    <div class="container">#}
-{#        <div class="col-9">#}
-{##}
-{#            <!-- Start Searchbar Form -->#}
-{#            <form class="searchbar" method="get">#}
-{#                #}
-{#                {% csrf_token %}#}
-{#                {{ search_form}}#}
-{#                #}
-{#                <button>#}
-{#                    <img src="{% static 'images/search.png' %}" height="18" alt="img2">#}
-{#                </button>#}
-{#            </form>#}
-{#            <!-- End Searchbar Form -->#}
-{#            #}
-{#        </div>#}
-{#    </div>#}
-    
+
+    <!--welcome-hero start -->
+    <div class="wrapper">
+        <section id="home" class="welcome-hero">
+            <div class="container">
+                <div class="welcome-hero-txt">
+                    <h2>Welcome to Voya </h2>
+                    <h2>Redefining Group Travel Management</h2>
+                    <p>
+                        At Voya, we specialize in transforming the complexities of group travel into seamless, enriching
+                        experiences. Whether you're a travel agency planning group journeys across Europe or a company
+                        managing corporate trips, Voya is your trusted partner in delivering tailored travel solutions
+                        that exceed expectations.
+                    </p>
+                    <p>
+                        Why Choose Voya?
+                    </p>
+                    <p>
+                        When you choose Voya, you’re not just opting for a travel management platform—you’re gaining
+                        access to a comprehensive ecosystem designed to make planning, organizing, and managing group
+                        travel effortless. Here's what sets us apart:
+                    </p>
+                </div>
+            </div>
+
+        </section><!--/.welcome-hero-->
+        <!--welcome-hero end -->
+
+        <!--list-topics start -->
+        <section id="list-topics" class="list-topics">
+            <div class="container">
+                <div class="list-topics-content">
+                    <ul>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="home-topic-content action-btn">
+                                    <img
+                                            src="{% static 'images/profile.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Personalized Itineraries </a></h2>
+                                <p>Every trip is customized to reflect the unique preferences and requirements of your
+                                    clients.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="home-topic-content action-btn">
+                                    <img
+                                            src="{% static 'images/streamlined.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Streamlined Processes</a></h2>
+                                <p>From quote requests to finalized proposals, Voya simplifies the entire process,
+                                    saving you time and effort.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="home-topic-content action-btn">
+                                    <img
+                                            src="{% static 'images/trustworthiness.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Trusted Partnerships</a></h2>
+                                <p>Leverage our extensive network of trusted suppliers to deliver exceptional travel
+                                    experiences.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="home-topic-content action-btn">
+                                    <img
+                                            src="{% static 'images/tagged.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Transparent Pricing</a></h2>
+                                <p>Flexible options cater to every budget, ensuring no compromise on quality and
+                                    experience.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="single-list-topics-content">
+                                <div class="home-topic-content action-btn">
+                                    <img
+                                            src="{% static 'images/influencer.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Expert Support</a></h2>
+                                <p>Our team is here to guide you every step of the way, ensuring a smooth journey from
+                                    start to finish.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div><!--/.container-->
+
+        </section><!--/.list-topics-->
+        <!--list-topics end-->
+
+        <!--works start -->
+        <section id="works" class="works">
+            <div class="section-header">
+                <h2>How Voya Works?</h2>
+            </div><!--/.section-header-->
+            <div class="container">
+                <div class="works-content">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="single-how-works">
+                                <div class="single-how-works-icon">
+                                    <img
+                                            src="{% static 'images/one.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Create Your Company Profile</a></h2>
+                                <p>Start your journey by setting up a company profile. This ensures all your clients’
+                                    trips are accurately linked to your organization. </p>
+                                <p>Navigate to the <b>Company section</b>, enter your company's details—including the
+                                    Tax ID—and let us take care of the rest.</p>
+
+                                {#								<button class="welcome-hero-btn how-work-btn" onclick="window.location.href='{% url 'create-company' %}'">#}
+                                {#									Create company#}
+                                {#								</button>#}
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="single-how-works">
+                                <div class="single-how-works-icon">
+                                    <img
+                                            src="{% static 'images/two.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Create a Client Account</a></h2>
+                                <p>After your company profile is registered, you can create individual client profiles
+                                    linked to your organization. </p>
+                                <p>Use the <b> New Client </b> section to set up these accounts and ensure all necessary
+                                    details are captured for seamless trip planning.</p>
+                                {#								<button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
+                                {#									read more#}
+                                {#								</button>#}
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="single-how-works">
+                                <div class="single-how-works-icon">
+                                    <img
+                                            src="{% static 'images/three.png' %}"
+                                            alt="New Request"
+                                    />
+
+                                </div>
+                                <h2><a href="#">Submit a Trip Request</a></h2>
+                                <p>Once your company profile is registered, you can create detailed trip requests. </p>
+                                <p>Share specifics like: travel dates and duration, accommodation preferences, desired
+                                    activities and destinations, budget constraints and any special requirements. The
+                                    more details you provide, the better we can craft a package perfectly tailored to
+                                    your clients’ needs.</p>
+                                {#								<button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
+                                {#									read more#}
+                                {#								</button>#}
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="single-how-works">
+                                <div class="single-how-works-icon">
+                                    <img
+                                            src="{% static 'images/four.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Generate Proposals</a></h2>
+                                <p>
+                                    Once we receive your request, our agents will begin crafting a professional and
+                                    tailored trip proposal, ensuring delivery within 48 hours.
+                                </p>
+                                {#								<button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
+                                {#									read more#}
+                                {#								</button>#}
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="single-how-works">
+                                <div class="single-how-works-icon">
+                                    <img
+                                            src="{% static 'images/five.png' %}"
+                                            alt="New Request"
+                                    />
+                                </div>
+                                <h2><a href="#">Collaborate and Finalize</a></h2>
+                                <p>
+                                    Work hand-in-hand with our travel experts to refine every detail of your trip
+                                    proposal. Together, we’ll ensure your clients enjoy an unforgettable journey.
+                                </p>
+                                {#								<button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
+                                {#									read more#}
+                                {#								</button>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+
+        </section><!--/.works-->
+        <!--works end -->
+        
+        <!--subscription strat -->
+        <section id="contact" class="subscription">
+            <div class="container">
+                <div class="subscribe-title text-center">
+                    <h2>
+                        Start Planning with Voya Today
+                    </h2>
+                    <p>
+                        At Voya, we believe that travel is more than just reaching destinations—it’s about creating connections, fostering experiences, and building memories that last a lifetime. Let us help you provide your clients with exceptional travel solutions that they'll cherish forever.
+                    </p>
+                </div>
+            </div>
+
+        </section><!--/subscription-->
+        <!--subscription end -->
+
+
+    </div>
+
+
+
 {% endblock %}
