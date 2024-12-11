@@ -164,11 +164,15 @@ class TripRequests(TimestampedModel):
     )
 
     slug = models.SlugField(
-        unique=True,
+        # unique=True,
         null=False,
         blank=True,
         editable=False,
     )
+
+    def __str__(self):
+        return f"{self.slug} - {self.created_by_company.commercial_name}"
+
 
     def clean(self):
 
@@ -191,6 +195,6 @@ class TripRequests(TimestampedModel):
 
         company_part = ''.join([word[0].upper() for word in self.created_by_company.commercial_name.split()])
 
-        self.slug = f"{date_part}-{destinations_part}-{company_part}"
+        self.slug = f"{date_part}-{destinations_part}-{company_part}-{self.pk}"
 
         super().save(*args, **kwargs)

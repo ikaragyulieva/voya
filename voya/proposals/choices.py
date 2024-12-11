@@ -16,3 +16,10 @@ class TransferTypeChoices(models.TextChoices):
     BUS_AROUND_CITY = 'City bus', 'Bus around the city'
     BUS_TO_AIRPORT = 'Airport bus', 'Bus to the airport'
 
+
+class StatusChoices(models.TextChoices):
+    DRAFT = 'Draft', 'Draft'
+    DONE = 'Done', 'Done'
+    IN_PROGRESS = 'In progress', 'In progress'
+
+

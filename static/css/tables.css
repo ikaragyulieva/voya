@@ -41,7 +41,7 @@
 }
 
 h2 {
-    font-size: 26px;
+    font-size: 36px;
     margin: 20px 0;
     text-align: center;
 }
@@ -298,6 +298,7 @@ h2 {
     }
 
     .responsive-table {
+        width: 100%;
         li {
             padding: 15px;
         }
@@ -335,4 +336,214 @@ h2 {
         visibility: hidden;
     }
 
+}
+
+.fixed-cost{
+        background-color: black !important;
+        color: white;
+    }
+
+/*budget table*/
+
+
+.budget{
+    position: sticky;
+    top: 15rem;
+    z-index: 10;
+
+    .trip-section .add-option {
+        text-align: right;
+    }
+
+}
+
+.budget-container {
+    position: relative;
+    max-height: calc(100vh - 10rem);
+    /*width: 500px;*/
+    overflow: auto; /* Adds scroll if content overflows */
+}
+
+.budget-table {
+    width: 100%; /* Optional: adjust based on your layout */
+    border-collapse: separate; /* Separate borders so we can use spacing */
+    border-spacing: 0 10px; /* Adds 10px vertical margin between rows */
+
+    td, th {
+        padding: 12px;
+        min-width: 4em;
+        box-sizing: border-box;
+        text-align: left;
+        background-color: #ffffff;
+    }
+
+    thead th, tbody th, tfoot th{
+        /*position: -webkit-sticky;*/
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: #d7b241;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    thead th{
+        text-align: center;
+    }
+
+    thead th:first-child {
+        left: 0;
+        z-index: 3;
+        min-width: 10em;
+    }
+
+    tfoot {
+        /*position: -webkit-sticky;*/
+        bottom: 0;
+        z-index: 2;
+    }
+
+    tfoot td {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        background: #d7b241;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        text-align: center;
+    }
+
+    tfoot th{
+        font-weight: 500;
+
+    }
+
+    tfoot td:first-child {
+        z-index: 3;
+    }
+
+    tbody {
+        overflow: scroll;
+        height: 200px;
+    }
+
+    tbody td{
+        font-size: 12px;
+        text-align: center;
+    }
+
+    /* MAKE LEFT COLUMN FIXED */
+
+    tr > :first-child {
+        /*position: -webkit-sticky;*/
+        position: sticky;
+        background: #d7b241;
+        left: 0;
+    }
+
+    tr {
+        box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+        width: 60%;
+        border: 0.1px solid white;
+        border-radius: 3px;
+        height: 20px;
+        padding-left: 2px;
+        /*margin-top: 5px;*/
+        box-sizing: border-box;
+        font-size: 12px;
+        font-weight: lighter;
+    }
+
+    select {
+        width: 70% !important; /* Make the select tag fit the parent column */
+        max-width: 100%; /* Prevent it from exceeding the parent column */
+        box-sizing: border-box; /* Include padding and border in width */
+        border: 0.1px solid white;
+        border-radius: 3px;
+        background-color: white;
+        height: 20px;
+        padding-left: 2px;
+        margin-top: 5px;
+        font-size: 12px;
+        font-weight: lighter;
+
+    }
+
+}
+
+.trip-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
+    justify-content: center; /* Centers items vertically */
+}
+
+.trip-section .add-btn {
+    color: black;
+    font-weight: bold;
+    font-size: 1em;
+    border: none;
+    width: 70%;
+    border-radius: 3px;
+    margin-top: 2em;
+    height: 3em;
+    box-shadow: 2px 3px #d7b241;
+    cursor: pointer;
+    align-content: center;
+
+    }
+
+.error-row {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.prop-status{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    p{
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.03em
+    }
+}
+
+/* Hover effect */
+.action-link:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+    background-color: rgba(0, 0, 0, 0.1); /* Subtle background highlight */
+    border-radius: 50%; /* Circular highlight */
+}
+
+/* Tooltips */
+.action-link[title]:hover::after {
+    content: attr(title); /* Use the title attribute as tooltip */
+    position: absolute;
+    top: 100%; /* Below the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 5px;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.action-link[title]::after {
+    content: ""; /* Default hidden */
+    opacity: 0;
 }

@@ -2,9 +2,9 @@
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Edit Profile</h2>
+        <h2>Edit Company</h2>
 
-        <form method="post" action="{% url 'company-edit' pk=company.pk %}">
+        <form method="post" action="{% url 'company-edit' pk=company.pk %}" enctype="multipart/form-data">
             {% csrf_token %}
 
             {{ form.non_field_errors }}
@@ -37,10 +37,10 @@
                     <div class="error">{{ phone_number_form.number.errors }}</div>
                 {% endif %}
 
-                {{ company_profile_form.logo }}
-                {% if company_profile_form.logo.errors %}
-                    <div class="error">{{ company_profile_form.logo.errors }}</div>
-                {% endif %}
+{#                {{ company_profile_form.logo }}#}
+{#                {% if company_profile_form.logo.errors %}#}
+{#                    <div class="error">{{ company_profile_form.logo.errors }}</div>#}
+{#                {% endif %}#}
 
             </div>
 

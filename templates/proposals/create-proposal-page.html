@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+
+    {% csrf_token %}
     <div class="proposal">
         <div class="trip trip-proposal">
             <div class="trip-title">
@@ -144,7 +146,8 @@
                         <tbody>
                         <tr>
                             <th>Budget:</th>
-                            <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i></td>
+                            <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
+                            </td>
                         </tr>
                         <tr>
                             <th>Currency:</th>
@@ -160,12 +163,15 @@
 
 
         <!-- Trip Proposal Template -->
-        <form method="post" action="">
-            {% csrf_token %}
+        <form id="proposal-form" method="post" action="#" onsubmit="return false">
             <div class="trip proposal-edit">
+
                 <div class="trip-title">
                     <!-- Proposal title -->
-                    <p>{{ form.title }}</p>
+                    <p>{{ proposal.title }}</p>
+                    {% if proposal.errors.title %}
+                        <div class="error">{{ proposal.errors.title }}</div>
+                    {% endif %}
 
                 </div>
                 <hr class="custom-line">
@@ -183,7 +189,7 @@
                     </div>
                     <ul class="responsive-table requests-table">
 
-                        <li class="table-header">
+                        <li class="table-header variable-cost">
                             <div class="col col-1">Date</div>
                             <div class="col col-2">City</div>
                             <div class="col col-33">Service</div>
@@ -235,7 +241,7 @@
                     </div>
                     <ul class="responsive-table requests-table">
 
-                        <li class="table-header">
+                        <li class="table-header fixed-cost">
                             <div class="col col-1">Date</div>
                             <div class="col col-2">City</div>
                             <div class="col col-33">Service</div>
@@ -254,7 +260,7 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" readonly></div>
+                                                                             name="service_price"></div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
                                     <!-- Remove Row-->
@@ -286,7 +292,7 @@
                     </div>
                     <ul class="responsive-table requests-table">
 
-                        <li class="table-header">
+                        <li class="table-header variable-cost">
                             <div class="col col-1">Date</div>
                             <div class="col col-2">City</div>
                             <div class="col col-33">Service</div>
@@ -305,7 +311,7 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" readonly></div>
+                                                                             name="service_price"></div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
                                     <!-- Remove Row-->
@@ -337,7 +343,7 @@
                     </div>
                     <ul class="responsive-table requests-table">
 
-                        <li class="table-header">
+                        <li class="table-header fixed-cost">
                             <div class="col col-1">Date</div>
                             <div class="col col-2">City</div>
                             <div class="col col-33">Service</div>
@@ -356,7 +362,7 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" readonly></div>
+                                                                             name="service_price"></div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
                                     <!-- Remove Row-->
@@ -389,7 +395,7 @@
 
                     <ul class="responsive-table requests-table">
 
-                        <li class="table-header">
+                        <li class="table-header fixed-cost">
                             <div class="col col-1">Date</div>
                             <div class="col col-2">City</div>
                             <div class="col col-33">Service</div>
@@ -408,7 +414,7 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" readonly></div>
+                                                                             name="service_price"></div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
 
@@ -442,7 +448,7 @@
 
                     <ul class="responsive-table requests-table">
 
-                        <li class="table-header">
+                        <li class="table-header fixed-cost">
                             <div class="col col-1">Date</div>
                             <div class="col col-2">City</div>
                             <div class="col col-33">Service</div>
@@ -454,81 +460,133 @@
                         <li class="table-row">
                             <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
                             <div class="col col-2" data-label="city">{{ item_form.city }}</div>
-                            <div class="col col-33" data-label="service details">{{ item_form.additional_notes }}</div>
+                            <div class="col col-33 notes"
+                                 data-label="service details">{{ item_form.additional_notes }}</div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
                                                                              name="service_price"></div>
+
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
 
                                     <a href="#">
                                         <img
                                                 src="{% static 'images/remove-icon.png' %}"
-                                                alt="remove row button"
+                                                alt="add column button"
                                         />
                                     </a>
                                 </div>
                             </div>
-
                         </li>
                     </ul>
 
+
                 </div>
+
 
             </div>
         </form>
-
         <!-- Trip Proposal Budget Template -->
 
-        <div class="trip trip-proposal">
+
+        <div class="trip trip-proposal budget">
+
             <div class="trip-title">
-                <!-- Trip title -->
+                <!-- Budget title -->
                 <p>Proposal Budget</p>
 
             </div>
-            <hr class="custom-line">
-            <div class="trip-section">
-                <h3 class="title">Group Information</h3>
-                <table>
-                
-                <thead>
-                <tr>Totals</tr>
-                <tr>{{ current_request.min_participants }} pax</tr>
-                <tr>{{ current_request.max_participants }} pax</tr>
-                
-                </thead>
-                    <tbody>
-                    <tr>
-                        <th>Variable cost:</th>
-                        <td><i> {{ current_request.get_nationality_display }} </i></td>
-                    </tr>
-                    <tr>
-                        <th>Fixed cost:</th>
-                        <td><i>{{ current_request.age_range }} years old</i></td>
-                    </tr>
-                    <tr>
-                        <th>Total Cost:</th>
-                        <td><i> {{ current_request.min_participants }} people</i></td>
-                    </tr>
-                    <tr>
-                        <th>Management Cost:</th>
-                        <td><i> {{ current_request.max_participants }} people</i></td>
-                    </tr>
-                    <tr>
-                        <th>Margin:</th>
-                        <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
-                    </tr>
-                    
-                    <tr>
-                        <th>Final Price:</th>
-                        <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
-                    </tr>
-                    
-                    </tbody>
-                </table>
 
+            <hr class="custom-line">
+
+            <div class="trip-section">
+                <!-- Add column button -->
+
+                {#                    <div class="action-btn add-option">#}
+                {#                        <a href="#" id="add-column-button">#}
+                {#                            <img#}
+                {#                                    src="{% static 'images/new-page.png' %}"#}
+                {#                                    alt="Add column"#}
+                {#                            />#}
+                {#                        </a>#}
+                {#                    </div>#}
+                <form id="proposal-form" method="post" action="#" onsubmit="return false">
+                    <div class="budget-container">
+                        <table class="budget-table" id="budget-table">
+
+                            <thead>
+                            <tr>
+                                <th></th>
+                                {#                            <th>Totals</th>#}
+                                <th>{{ current_request.min_participants }} pax</th>
+                                <th>{{ current_request.max_participants }} pax</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Variable cost:</th>
+                                <td><i> {{ budget_form.variable_cost }} € </i></td>
+                                <td><i> {{ budget_form.variable_cost }} € </i></td>
+                            </tr>
+                            <tr>
+                                <th class="fixed-cost">Fixed cost:</th>
+                                <td><i> {{ budget_form.fixed_cost }} € </i></td>
+                                <td><i> {{ budget_form.fixed_cost }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total per person:</th>
+                                <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
+                                <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Cost:</th>
+                                <td><i> {{ budget_form.total_cost }} € </i></td>
+                                <td><i> {{ budget_form.total_cost }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>Service fee:</th>
+                                <td><i> € {{ budget_form.service_fee }} </i></td>
+                                <td><i> € {{ budget_form.service_fee }} </i></td>
+                            </tr>
+                            <tr>
+                                <th>Margin:</th>
+                                <td><i> {{ budget_form.margin }} % </i></td>
+                                <td><i> {{ budget_form.margin }} %</i></td>
+                            </tr>
+
+                            </tbody>
+
+
+                            <tfoot>
+                            <tr>
+                                <th>Price per person:</th>
+                                <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
+                                <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
+                            </tr>
+                            <tr>
+                                <th>Final Price:</th>
+                                {#                            <td><i> total € </i></td>#}
+                                <td><i> {{ budget_form.fina_price }} € </i></td>
+                                <td><i> {{ budget_form.fina_price }} € </i></td>
+                            </tr>
+                            </tfoot>
+
+                        </table>
+                         <div class="prop-status"> 
+                             <p>State:</p> <p id="draft-status">{{ proposal.is_draft }}</p>
+                             
+                         </div>
+                        
+                </form>
             </div>
+            <button id="submit-proposal-btn" class="add-btn" type="submit">Submit Proposal</button>
+
         </div>
+
+    </div>
 
     </div>
 
@@ -669,8 +727,306 @@
                 }
             });
 
+
             // Initialize Flatpickr on Page Load
             initializeFlatpickr();
+        });
+
+        // Functionality to submit proposal and budget forms and sends POST to the API to save dynamic rows
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const submitButton = document.getElementById("submit-proposal-btn");
+
+            submitButton.addEventListener("click", function () {
+                console.log("Submit button clicked."); // Debugging
+                const tripId = "{{ trip_id }}";
+                
+                const draftStatusField = document.querySelector("#draft-status")?.value 
+                let draftStatus = ""
+                if (draftStatusField === "Draft" || draftStatusField === "In progress") {
+                    draftStatus = true;
+                } else {
+                    draftStatus = false
+                }
+
+                // Collect proposal data
+                const proposalData = {
+                    title: document.querySelector("input[name='title']")?.value || "",
+                    is_draft: draftStatus,
+                };
+
+                // Validate rows for completeness and collection of items
+                const itemsData = [];
+                const invalidRows = [];
+                // 1. Collect items data
+
+                document.querySelectorAll(".table-row").forEach((row, index) => {
+                    const serviceDropdown = row.querySelector("#service-dropdown");
+                    const selectedServices = serviceDropdown
+                        ? Array.from(serviceDropdown.selectedOptions).map(option => parseInt(option.value, 10)).filter(Boolean)
+                        : [];
+
+                    const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
+                    const cityField = row.querySelector("#city-dropdown") || row.querySelector(".col-2");
+
+                    // Initialize a data object to store row-specific values
+                    const rowData = {
+                        corresponding_trip_date: row.querySelector(".col-1 input")?.value || "", // YYYY-MM-DD format
+                        section_name: row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || "", // Must match SectionChoices
+                        {#city: row.querySelector("#city-dropdown")?.value || "",#}
+                        city: cityField?.value && cityField.value !== "Select city" ? cityField.value : "", // Skip placeholder
+                        quantity: parseInt(row.querySelector(".col-4 input")?.value || "0", 10), // Ensure integer
+                        price: parseFloat(priceField || "0.00"), // Handle autofill or placeholder
+                        {#price: parseFloat(#}
+                        {#    row.querySelector(".col-5 input")?.value ||#}
+                        {#    row.querySelector(".col-5")?.textContent.replace("€", "").trim() || "0.00"#}
+                        {#), // Ensure decimal#}
+                        service_id: selectedServices[0],
+
+                    };
+
+                    const hasData = Boolean(
+                        rowData.corresponding_trip_date ||
+                        rowData.city ||
+                        rowData.quantity > 1 ||
+                        rowData.price > 0 ||
+                        rowData.additional_notes ||
+                        rowData.service_id
+                    );
+
+                    const isComplete = Boolean(
+                        rowData.corresponding_trip_date &&
+                        rowData.city &&
+                        rowData.quantity > 0 &&
+                        rowData.price > 0
+                    );
+                    console.log(`Row ${index + 1} has data: ${hasData}, is complete: ${isComplete}`);
+
+                    // Only validate rows with data
+                    if (hasData && !isComplete) {
+                        invalidRows.push(rowData.section_name || `Row ${index + 1}`);
+                        row.classList.add("error-row");
+                    } else {
+                        row.classList.remove("error-row");
+                    }
+
+                    // Add valid rows to itemsData
+                    if (hasData && isComplete) {
+                        rowData.additional_notes = row.querySelector(".notes textarea")?.value || "No notes";
+                        itemsData.push(rowData)
+                    }
+
+                });
+                // Show validation errors if any
+                if (invalidRows.length > 0) {
+                    alert(`Please complete or clear the data rows in the following table(s): ${[...new Set(invalidRows)].join(", ")}`);
+                    return;
+                }
+                console.log("Final Items Data:", JSON.stringify(itemsData, null, 2));
+
+                // Collect budget data
+                const budgetData = [];
+                const budgetTable = document.querySelector(".budget-table");
+                const minPax = parseInt(budgetTable.querySelector("th:nth-child(2)").textContent.trim() || "0");
+                const maxPax = parseInt(budgetTable.querySelector("th:nth-child(3)").textContent.trim() || "0");
+
+                // Min Pax Budget
+                budgetData.push({
+                    pax: minPax,
+                    variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "")),
+                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(2)").textContent.replace("€", "").trim() || "500.00"),
+                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2)").textContent.replace("%", "").trim() || "10"),
+                    fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                });
+
+                // Max Pax Budget
+                budgetData.push({
+                    pax: maxPax,
+                    variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "500.00"),
+                    margin: parseInt(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3)").textContent.replace("%", "").trim() || "10"),
+                    fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                });
+
+                // Combine data and send to API
+                const payload = {
+                    trip_id: tripId,
+                    proposal: proposalData,
+                    items: itemsData,
+                    budget: budgetData
+                };
+                console.log("Payload sent to API:", JSON.stringify(payload, null, 2));
+
+                fetch(`/proposals/api/create/${tripId}/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                    },
+                    body: JSON.stringify(payload),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.detail || "Invalid item data");
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            alert("Proposal saved successfully!");
+                            window.location.href = `/proposals/details/${data.proposal_id}/`;
+                        } else {
+                            throw new Error(data.error || "Failed to save proposal.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error saving proposal:", error);
+                        alert(`An error occurred: ${error.message}`);
+                        if (error.error) {
+                            alert(`Error: ${error.error}\nDetails: ${JSON.stringify(error.details, null, 2)}`);
+                        } else {
+                            alert("An unexpected error occurred. Please try again.");
+                        }
+
+                    });
+
+            });
+        });
+
+
+        //Budget Tabel Functionality
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const budgetTable = document.querySelector(".budget-table");
+            const proposalTables = document.querySelectorAll(".requests-table");
+
+            // Utility Functions
+            const calculateBudget = () => {
+                let variableCost = 0;
+                let fixedCost = 0;
+
+                // Calculate costs from the proposal tables
+                proposalTables.forEach(table => {
+                    const rows = table.querySelectorAll(".table-row");
+
+                    rows.forEach(row => {
+                        const priceField = row.querySelector("#service-price");
+                        const quantityField = row.querySelector("input[name='quantity']");
+                        const price = parseFloat(priceField?.value.replace("€", "").trim()) || 0;
+                        const quantity = parseInt(quantityField?.value) || 0;
+
+                        // Classify costs based on section title
+                        const sectionTitle = table.closest(".trip-section").querySelector(".title").textContent || "";
+                        if (["Guides", "Transfers", "Private Transport", "Others"].some(type => sectionTitle.includes(type))) {
+                            fixedCost += price * quantity;
+                        } else {
+                            variableCost += price;
+                        }
+                    });
+                });
+
+                // Update the budget table based on column headers
+                const budgetHeaders = budgetTable.querySelectorAll("thead th");
+                const budgetRows = budgetTable.querySelectorAll("tbody tr");
+                const budgetFooterRows = budgetTable.querySelectorAll("tfoot tr")
+
+                budgetHeaders.forEach((header, columnIndex) => {
+                    if (columnIndex === 0) {
+                        return
+                    }
+
+                    const headerText = header.textContent.trim();
+                    let paxMultiplier = 1; // Default multiplier for "Totals"
+
+                    if (headerText.includes("pax")) {
+                        paxMultiplier = parseInt(headerText.replace("pax", "").trim()) || 1;
+                    }
+
+                    // Safely update corresponding rows
+                    const variableCostCell = budgetRows[0]?.querySelectorAll("td")[columnIndex - 1];
+                    const fixedCostCell = budgetRows[1]?.querySelectorAll("td")[columnIndex - 1];
+                    const totalCostPerPersonCell = budgetRows[2]?.querySelectorAll("td")[columnIndex - 1];
+                    const totalCostCell = budgetRows[3]?.querySelectorAll("td")[columnIndex - 1];
+                    const serviceFeeCell = budgetRows[4]?.querySelectorAll("td")[columnIndex - 1];
+                    const marginCell = budgetRows[5]?.querySelectorAll("td")[columnIndex - 1];
+                    const finalPricePerPersonCell = budgetFooterRows[0]?.querySelectorAll("td")[columnIndex - 1];
+                    const finalPriceCell = budgetFooterRows[1]?.querySelectorAll("td")[columnIndex - 1];
+
+                    // Extract text content safely
+                    const serviceFee = parseFloat(serviceFeeCell?.querySelector("input")?.value || "500");
+                    const margin = parseInt(marginCell?.querySelector("input")?.value || "10");
+                    const totalPerPerson = variableCost + (fixedCost / paxMultiplier);
+                    const totalCost = (variableCost * paxMultiplier) + fixedCost
+
+                    if (variableCostCell) variableCostCell.textContent = `€ ${(variableCost).toFixed(2)}`;
+                    if (fixedCostCell) fixedCostCell.textContent = `€ ${(fixedCost).toFixed(2)}`;
+                    if (totalCostPerPersonCell) totalCostPerPersonCell.textContent = `€ ${(totalPerPerson).toFixed(2)}`;
+                    if (totalCostCell) totalCostCell.textContent = `€ ${(totalCost).toFixed(2)}`;
+
+                    if (finalPricePerPersonCell) {
+                        const finalPricePerPerson = (totalPerPerson + (serviceFee / paxMultiplier)) * (1 + (margin / 100));
+                        finalPricePerPersonCell.textContent = `€ ${finalPricePerPerson.toFixed(2)}`;
+                    }
+                    if (finalPriceCell) {
+                        const finalPrice = (totalCost + serviceFee) * (1 + (margin / 100));
+                        finalPriceCell.textContent = `€ ${finalPrice.toFixed(2)}`;
+                    }
+
+                });
+            };
+
+            // Add listeners to "Service Fee" and "Margin" inputs
+            const serviceFeeInputs = budgetTable.querySelectorAll(
+                "tbody tr:nth-child(5) td input"
+            );
+            const marginInputs = budgetTable.querySelectorAll(
+                "tbody tr:nth-child(6) td input"
+            );
+
+            if (serviceFeeInputs.length > 0) {
+                serviceFeeInputs.forEach((input) => {
+                    input.addEventListener("input", calculateBudget);
+                });
+            }
+
+            if (marginInputs.length > 0) {
+                marginInputs.forEach((input) => {
+                    input.addEventListener("input", calculateBudget);
+                });
+            }
+
+            // Initial calculation on page load
+            calculateBudget();
+
+
+            // Set up a MutationObserver to watch for changes in the DOM
+            proposalTables.forEach(table => {
+                const observer = new MutationObserver(() => calculateBudget());
+
+                // Watch for additions or removals of child nodes
+                observer.observe(table, {childList: true});
+
+                // Add listeners for changes in input fields
+                table.addEventListener("input", (event) => {
+                    if (event.target.matches("#service-price, input[name='quantity']")) {
+                        calculateBudget();
+                    }
+                });
+            });
+
+            // Initial calculation on page load
+            calculateBudget();
         });
 
     </script>

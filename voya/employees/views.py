@@ -1,6 +1,7 @@
 from django.contrib.auth import mixins
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Subquery, OuterRef, Value
+from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
@@ -9,6 +10,7 @@ from voya.common.forms import SearchForm
 from voya.companies.models import CompanyProfile
 from voya.employees import forms
 from voya.employees.models import EmployeeProfile
+from voya.proposals.models import Proposal
 from voya.requests.models import TripRequests
 from voya.users.models import CustomUser
 from voya.utils import get_user_obj
@@ -34,6 +36,15 @@ class EmployeeDashboardView(mixins.LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Annotate trip requests with the corresponding proposal ID
+        trip_requests = self.get_queryset().annotate(
+            proposal_id=Coalesce(
+                Subquery(
+                    Proposal.objects.filter(trip_request_id=OuterRef('id')).values('id')[:1]
+                ),
+                Value(None)  # Default to None if no proposal exists
+            )
+        )
 
         search_form = SearchForm(self.request.GET)
 
@@ -60,10 +71,15 @@ class EmployeeDashboardView(mixins.LoginRequiredMixin, ListView):
             else:
                 context['triprequests_list'] = self.get_queryset()
 
+        # if trip_requests:
+        #     for request in trip_requests:
+        #         if proposal_mapping.get(request.id):
+        #             request.proposal = proposal_mapping.get(request.id)
+
         context['profile'] = self.get_object()
 
         context["search_form"] = search_form
-        context['all_requests'] = self.get_queryset()
+        context['all_requests'] = trip_requests
 
         return context
 
