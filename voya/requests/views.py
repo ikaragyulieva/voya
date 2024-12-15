@@ -42,28 +42,23 @@ class NewRequestView(mixins.LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         profile = get_user_obj(self.request)
-
-        if hasattr(self.request.user, 'employee_profile'):
+        if self.request.user.role == 'employee':
             return reverse_lazy(
                 'employee-dashboard',
                 kwargs={
                     'pk': profile.pk
                 }
             )
-        elif hasattr(self.request.user, 'client-profile'):
+        elif self.request.user.role == 'client':
             return reverse_lazy(
                 'client-dashboard',
                 kwargs={
                     'pk': profile.pk
                 }
             )
-        else:
-            return reverse_lazy('home')
 
 
 class CloneRequestView(NewRequestView):
-    template_name = 'requests/duplicate-request-page.html'
-
     def get_initial(self):
         original_request = get_object_or_404(models.TripRequests, pk=self.kwargs['pk'])
         initial_data = super().get_initial()
@@ -73,35 +68,9 @@ class CloneRequestView(NewRequestView):
         initial_data['field_to_clear_or_update'] = None
         return initial_data
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['profile'] = get_user_obj(self.request)
-        context['trip_request'] = get_object_or_404(models.TripRequests, pk=self.kwargs['pk'])
-        return context
-
     def form_valid(self, form):
         form.instance.pk = None
         return super().form_valid(form)
-
-    def get_success_url(self):
-        profile = get_user_obj(self.request)
-
-        if hasattr(self.request.user, 'employee_profile'):
-            return reverse_lazy(
-                'employee-dashboard',
-                kwargs={
-                    'pk': profile.pk
-                }
-            )
-        elif hasattr(self.request.user, 'client-profile'):
-            return reverse_lazy(
-                'client-dashboard',
-                kwargs={
-                    'pk': profile.pk
-                }
-            )
-        else:
-            return reverse_lazy('home')
 
 
 class EditRequestView(mixins.LoginRequiredMixin, UpdateView):
@@ -123,14 +92,14 @@ class EditRequestView(mixins.LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         profile = get_user_obj(self.request)
-        if hasattr(self.request.user, 'employee_profile'):
+        if self.request.user.role == 'employee':
             return reverse_lazy(
                 'employee-dashboard',
                 kwargs={
                     'pk': profile.pk
                 }
             )
-        elif hasattr(self.request.user, 'client-profile'):
+        elif self.request.user.role == 'client':
             return reverse_lazy(
                 'client-dashboard',
                 kwargs={
@@ -162,14 +131,14 @@ class DeleteRequestView(mixins.LoginRequiredMixin, DeleteView):
     def get_success_url(self):
 
         profile = get_user_obj(self.request)
-        if hasattr(self.request.user, 'employee_profile'):
+        if self.request.user.role == 'employee':
             return reverse_lazy(
                 'employee-dashboard',
                 kwargs={
                     'pk': profile.pk
                 }
             )
-        elif hasattr(self.request.user, 'client-profile'):
+        elif self.request.user.role == 'client':
             return reverse_lazy(
                 'client-dashboard',
                 kwargs={
