@@ -13,7 +13,7 @@ from voya.employees.models import EmployeeProfile
 from voya.proposals.models import Proposal
 from voya.requests.models import TripRequests
 from voya.users.models import CustomUser
-from voya.utils import get_user_obj
+from voya.utils import get_user_obj, send_custom_email, generate_activation_token
 
 
 # Create your views here.
@@ -22,6 +22,21 @@ class CreateEmployeeView(CreateView):
     form_class = forms.EmployeeSignUpForm
     template_name = 'employees/employee-create-page.html'
     success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        user = form.save()
+
+        activation_link = generate_activation_token(self.request, user)
+
+        send_custom_email(
+            user=user,
+            template_name='emails/employee-account-activation.html',
+            activation_link=activation_link,
+            email_subject='New Voya employee account activation',
+            send_to=['ivelina@dromo.travel']
+        )
+
+        return render(self.request, 'common/check-email-page.html', context={'user': user})
 
 
 class EmployeeDashboardView(mixins.LoginRequiredMixin, ListView):

@@ -225,4 +225,4 @@ Once the application is set up and running, here’s how you can interact with i
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the GPL-3.0 License.

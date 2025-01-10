@@ -1,16 +1,22 @@
+from django.shortcuts import redirect
+from django.core.mail import send_mail
 from django.contrib.auth import logout, login
 from django.contrib.auth import mixins
-from django.contrib.auth.views import LoginView
 from django.db.models import Q
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
+
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+
+from voya.common.tokens import account_activation_token
 
 from voya.clients import forms
 from voya.clients.models import ClientProfile
 from voya.common.forms import SearchForm
 from voya.requests.models import TripRequests
-from voya.utils import get_user_obj
+from voya.utils import send_activation_email
 
 
 class CreateClientView(CreateView):
@@ -20,9 +26,14 @@ class CreateClientView(CreateView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        result = super().form_valid(form)
-        login(self.request, form.instance)
-        return result
+        # result = super().form_valid(form)
+        # login(self.request, form.instance)
+        # return result
+        user = form.save()
+
+        send_activation_email(self.request, user)
+
+        return render(self.request, 'common/check-email-page.html', context={'user': user})
 
 
 class EditUserProfileView(mixins.LoginRequiredMixin, UpdateView):

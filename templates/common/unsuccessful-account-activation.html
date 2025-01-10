@@ -1,0 +1,46 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo pass-change">
+
+        <div class="image">
+            <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+                    type="module"></script>
+            <dotlottie-player src="https://lottie.host/150f983c-d997-42c7-aa0e-db03f0d5b90b/YQDj6QQuqT.lottie"
+                              background="transparent" speed="1" style="width: 150px; height: 150px"
+                              autoplay></dotlottie-player>
+        </div>
+
+        <h2> Unsuccessful account confirmation! </h2>
+        {% if user.role == 'client' %}
+            <p> Your account can not be confirmed due to activation link is invalid or has expired. </p>
+            <p>Please try to create your account again or contact Voya support for assistance.</p>
+        {% elif user.role == 'employee' %}
+            <p> This employee account can not be confirmed due to activation link is invalid or has expired. </p>
+            <p>Please create a new account or contact Voya support for assistance.</p>
+        {% endif %}
+        <button class="add-btn" type="button" onclick="window.location.href='{% url 'create-client' %}'">Create
+            account
+        </button>
+
+    </div>
+{% endblock %}
