@@ -36,8 +36,6 @@ from voya.requests.models import TripRequests
 from voya.utils import get_user_obj
 
 
-# Create your views here.
-
 # @extend_schema(
 #     summary="Create Proposal Endpoint",
 #     description="Create a new proposal",
@@ -230,6 +228,7 @@ def proposal_detail(request, proposal_id):
     }
     return render(request, 'proposals/proposal-detail-page.html', context)
 
+
 def client_proposal_detail(request, proposal_id):
     proposal = get_object_or_404(Proposal, id=proposal_id)
     items = ProposalSectionItem.objects.filter(proposal=proposal)
@@ -290,6 +289,7 @@ def client_proposal_detail(request, proposal_id):
         'current_request': current_request
     }
     return render(request, 'proposals/client-proposal-details-page.html', context)
+
 
 class DynamicServiceView(APIView):
     model_map = {

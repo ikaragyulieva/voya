@@ -103,6 +103,7 @@ class SignUpClientForm(UserCreationForm):
             # Save the User instance adding role set up
             user = super().save(commit=False)
             user.role = 'client'
+            user.is_active = False  # user is inactive until email confirm
 
             if commit:
                 user.save()

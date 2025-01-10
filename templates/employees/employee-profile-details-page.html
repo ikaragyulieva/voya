@@ -40,19 +40,19 @@
                         />
                     </a>
                 </div>
-{#                <div class="data">#}
-{#                    <!-- Total Requests -->#}
-{#                    <span>4</span>#}
-{#                    <p>Total Requests</p>#}
-{##}
-{#                    <!-- Pending Proposal Requests -->#}
-{#                    <span>2</span>#}
-{#                    <p>Pending</p>#}
-{##}
-{#                    <!-- Closed Proposal Requests -->#}
-{#                    <span>2</span>#}
-{#                    <p>Closed</p>#}
-{#                </div>#}
+                {#                <div class="data">#}
+                {#                    <!-- Total Requests -->#}
+                {#                    <span>4</span>#}
+                {#                    <p>Total Requests</p>#}
+                {##}
+                {#                    <!-- Pending Proposal Requests -->#}
+                {#                    <span>2</span>#}
+                {#                    <p>Pending</p>#}
+                {##}
+                {#                    <!-- Closed Proposal Requests -->#}
+                {#                    <span>2</span>#}
+                {#                    <p>Closed</p>#}
+                {#                </div>#}
 
                 <h3 class="names">{{ object.job_title }}</h3>
                 <p class="email">{{ object.phone_number }}</p>
@@ -79,10 +79,12 @@
                             </div>
                             <p>Inactive User</p>
                         </a>
-                        </div>
+
 
                     {% endif %}
+                </div>
 
+                <a href="{% url 'password_change' %}" class="change-pass-btn">Change password</a>
 
             </div>
         </div>

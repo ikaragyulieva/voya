@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.contrib.auth import mixins
 from django.db.models import Q
 from django.http import Http404
@@ -87,6 +88,9 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
         instance = form.save(commit=False)
         instance.created_by_user = self.request.user
         instance.save()
+
+        messages.success(self.request, "Service was successfully created")
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -176,27 +180,6 @@ class DeleteServiceView(DeleteView):
         return reverse_lazy('service-dashboard', kwargs={
             'model_name': self.get_model()._meta.model_name
         })
-
-# class ServiceDetailsView(mixins.LoginRequiredMixin, DetailView):
-#     model = LocalGuides
-#     queryset = LocalGuides.objects.all()
-#     template_name = 'services/service-details-page.html'
-#     context_object_name = 'service'
-#
-#     def get_queryset(self):
-#         queryset = LocalGuides.objects.all()
-#         print(f"Queryset: {queryset}")
-#         return queryset
-#
-#     def get_object(self, queryset=None):
-#         print(f"Requesting object with PK: {self.kwargs.get('pk')}")
-#         return super().get_object(queryset=queryset)
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['profile'] = get_user_obj(self.request)
-#
-#         return context
 
 
 def service_detail_view(request, model_name, pk):

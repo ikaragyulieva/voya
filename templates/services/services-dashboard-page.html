@@ -4,6 +4,17 @@
 {% block content %}
     <main class="dashboard-table">
         <div class="container-table">
+            <!-- Error Messages -->
+            {% if messages %}
+                <div class="popup-messages" style="display: none;">
+                    {% for message in messages %}
+                        <div class="message alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <!-- End error messages -->
             <!-- Display a heading if there are no services -->
             {% if not service_queryset %}
                 <h2>No {{ model_name|title|lower }} yet</h2>
@@ -80,34 +91,37 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                            {% if model_name == 'currency' %}
-                                <div class="col col-2" data-label="From">{{ service.get_currency_from_display }}</div>
-                                <div class="col col-33" data-label="To">{{ service.get_currency_to_display }}</div>
-                                <div class="col col-4" data-label="Exchange rate">{{ service.exchange_rate }} {{ service.get_currency_to_display }}</div>
-                                <div class="col col-5" data-label="Date added">{{ service.updated_at|date:"d-m-Y" }}</div>
-                            {% else %}
-                                <div class="col col-2" data-label="Country">{{ service.get_country_display }}</div>
-                                <div class="col col-33" data-label="City">{{ service.city }}</div>
-                                {% if model_name != 'transfers' %}
-                                    <div class="col col-4" data-label="Name">
-                                        {% if model_name == 'localguides' %}
-                                            {{ service.guide_name }}
-                                        {% elif model_name == 'privatetransport' or model_name == 'publictransport' %}
-                                            {{ service.get_type_display }}
-                                        {% else %}
-                                            {{ service.name }}
-                                        {% endif %}
-                                    </div>
+                                {% if model_name == 'currency' %}
+                                    <div class="col col-2"
+                                         data-label="From">{{ service.get_currency_from_display }}</div>
+                                    <div class="col col-33" data-label="To">{{ service.get_currency_to_display }}</div>
+                                    <div class="col col-4"
+                                         data-label="Exchange rate">{{ service.exchange_rate }} {{ service.get_currency_to_display }}</div>
+                                    <div class="col col-5"
+                                         data-label="Date added">{{ service.updated_at|date:"d-m-Y" }}</div>
+                                {% else %}
+                                    <div class="col col-2" data-label="Country">{{ service.get_country_display }}</div>
+                                    <div class="col col-33" data-label="City">{{ service.city }}</div>
+                                    {% if model_name != 'transfers' %}
+                                        <div class="col col-4" data-label="Name">
+                                            {% if model_name == 'localguides' %}
+                                                {{ service.guide_name }}
+                                            {% elif model_name == 'privatetransport' or model_name == 'publictransport' %}
+                                                {{ service.get_type_display }}
+                                            {% else %}
+                                                {{ service.name }}
+                                            {% endif %}
+                                        </div>
 
-                                    <div class="col col-5" data-label="Price">
-                                        {% if model_name == 'hotels' %}
-                                            &#8364 {{ service.high_season_price }}
-                                        {% else %}
-                                            &#8364 {{ service.price }}
-                                        {% endif %}
-                                    </div>
+                                        <div class="col col-5" data-label="Price">
+                                            {% if model_name == 'hotels' %}
+                                                &#8364 {{ service.high_season_price }}
+                                            {% else %}
+                                                &#8364 {{ service.price }}
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
                                 <div class="col col-6" data-label="Actions">
                                     <div class="action-btn">
                                         <!-- View Profile Page-->
@@ -127,7 +141,7 @@
                                         </a>
 
                                         <!-- Link to Delete Profile Page -->
-                                        <a href="{% url 'delete-service' model_name=model_name pk=service.pk%}">
+                                        <a href="{% url 'delete-service' model_name=model_name pk=service.pk %}">
                                             <img
                                                     src="{% static 'images/remove-icon.png' %}"
                                                     alt="bin button"
@@ -146,4 +160,18 @@
             {% endif %}
         </div>
     </main>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const popupMessages = document.getElementById('popup-messages');
+            if (popupMessages) {
+                const messages = popupMessages.querySelectorAll('.message');
+                messages.forEach((msg) => {
+                    alert(msg.textContent); // Show the message as a browser alert
+                });
+            }
+        });
+    </script>
 {% endblock %}

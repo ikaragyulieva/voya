@@ -1,0 +1,47 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo pass-change">
+
+        <div class="image">
+            <!-- Profile Image -->
+            {#                    <img src="{% static 'images/Animation - 1736274877990.gif' %}" alt="Company Logo'"/>#}
+            <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+                    type="module"></script>
+            <dotlottie-player src="https://lottie.host/56c5389a-1b42-424f-9ddc-976534533a60/zdNovKdGuY.lottie"
+                              background="transparent" speed="1" style="width: 200px; height: 200px" loop
+                              autoplay></dotlottie-player>
+        </div>
+
+        <h2> Account confirmed successfully! </h2>
+        {% if user.role == 'client' %}
+            <p> Your account has been confirmed successfully. You can now log in. </p>
+            <button class="add-btn" type="button" onclick="window.location.href='{% url 'login' %}'">Login</button>
+        {% elif user.role == 'employee' %}
+            <p> The employee account has been confirmed successfully. </p>
+            <p><b>{{ user.email }}</b> &nbsp;can now log in. </p>
+            <button class="add-btn" type="button" onclick="window.location.href='{% url 'home' %}'">Close</button>
+        {% endif %}
+
+
+    </div>
+{% endblock %}

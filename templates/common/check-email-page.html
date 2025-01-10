@@ -1,0 +1,40 @@
+<!-- 
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see
+<https://www.gnu.org/licenses/>. 
+-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="edit-delete edit-photo">
+
+        {% if user.role == 'client' %}
+            <h2>Verify your email address</h2>
+
+            <p>Almost there! An email with account activation instructions was sent to {{ user.email }}. </p>
+            <p>Please confirm your email in the next 24h, otherwise your account will be removed automatically.</p>
+        {% elif user.role == 'employee' %}
+            <h2>Your account needs to be verified</h2>
+
+            <p>Almost there! An account activation email was sent to our onboarding team. </p>
+            <p>Once your account is activated you will be able give use of your account.</p>
+        {% endif %}
+        <button class="add-btn" type="button" onclick="window.location.href='{% url 'home' %}'">Go to home</button>
+
+    </div>
+{% endblock %}

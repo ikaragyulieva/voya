@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="edit-delete edit-photo">
+    <div class="edit-delete edit-photo login">
         <h2>Create Employee Account</h2>
 
         <form method="post" action="{% url 'create-employee' %}">
@@ -51,6 +51,9 @@
 
             <button class="add-btn" type="submit">Create New Employee</button>
         </form>
+        <div class="no-account">
+            <a href="{% url 'login' %}"><i>Already have an account? <u>Login here!</u></i> </a>
+        </div>
 
     </div>
 
