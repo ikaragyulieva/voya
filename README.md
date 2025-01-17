@@ -62,49 +62,147 @@ This project is a **travel management application** designed to streamline trip 
 - Python 3.8 or higher
 - PostgreSQL (or your preferred database backend)
 - Virtual environment tool (`venv`, `virtualenv`, etc.)
+- (Optional) Docker and Docker Compose installed, if you want to run the containerized version
 
 ### Setup
 
-1. **Clone the Repository**:  
+**OPTION 1: Local Installation (No Docker)**
+
+1. **Clone the Repository:**  
    ```bash
    git clone <repository-url>
    cd voya
    
-2. **Create a Virtual Environment:**:  
+2. **Create a Virtual Environment:**  
    ```bash
    python -m venv .venv
    source .venv/bin/activate    # Linux/Mac
    .venv\Scripts\activate       # Windows
 
-3. **Install Dependencies:**:  
+3. **Install Dependencies:**  
    ```bash
    pip install -r requirements.txt
    
-4. **Set Up Environment Variables:**:  
+4. **Set Up Environment Variables:**  
 - Create a `.env` file in the `voya` directory:
    ```bash
    SECRET_KEY=your-secret-key
+  
+   # PostgreSQL DB settings
    DB_NAME=your-database-name
    DB_USER=your-database-user
    DB_PASSWORD=your-database-password
    DB_HOST=localhost
    DB_PORT=5432
   
-5. **Run Migrations:**:  
+   # SMTP Settings
+   EMAIL_HOST=your-email-host
+   EMAIL_PORT=your-email-port
+   EMAIL_USE_TLS=your-email-TLS_settings
+   EMAIL_HOST_USER=your-email-user
+   EMAIL_HOST_PASSWORD=your-email-password
+  
+   # Cloudinary Settings
+   CLOUD_NAME=your-cloudinary-name
+   API_KEY=our-cloudinary-api-key
+   API_SECRET=our-cloudinary-api-secret
+   CLOUDINARY_URL=our-cloudinary-url
+  
+5. **Run Migrations:**  
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    
-6. **Collect Static Files:**:  
+6. **Collect Static Files:**  
    ```bash
    python manage.py collectstatic
    
-7. **Run the Server:**:  
+7. **Run the Server:**  
    ```bash
    python manage.py runserver
    
-8. **Access the Application:**:
+8. **Access the Application:**
    Open `http://127.0.0.1:8000/` in your browser.
+
+**OPTION 2: Running with Docker (Locally)**
+
+This project also includes a Dockerfile and a docker-compose.yml, so you can run it containerized without installing Python or Postgres on your host.
+
+**Note: The container image is not pushed to a public registry (e.g., Docker Hub). You will build it locally.**
+
+
+1. **Ensure Docker & Docker Compose Are Installed:**
+- Install Docker
+- Install Docker Compose (or use the built-in docker compose plugin if you have Docker Desktop on Windows/Mac)
+
+2. **Set Up `.env` for Docker:**
+You still need a `.env` file with your secrets/config. **Either**:
+- Reuse the same `.env` described in the local instructions, **or**
+- Create a new `.env` in the project root:
+    ```bash
+   SECRET_KEY=your-secret-key
+  
+   # PostgreSQL DB settings
+   DB_NAME=your-database-name
+   DB_USER=your-database-user
+   DB_PASSWORD=your-database-password
+   DB_HOST=localhost
+   DB_PORT=5432
+  
+   # SMTP Settings
+   EMAIL_HOST=your-email-host
+   EMAIL_PORT=your-email-port
+   EMAIL_USE_TLS=your-email-TLS_settings
+   EMAIL_HOST_USER=your-email-user
+   EMAIL_HOST_PASSWORD=your-email-password
+  
+   # Cloudinary Settings
+   CLOUD_NAME=your-cloudinary-name
+   API_KEY=our-cloudinary-api-key
+   API_SECRET=our-cloudinary-api-secret
+   CLOUDINARY_URL=our-cloudinary-url
+   
+3. **Build and Run with Docker Compose:**
+In the **voya** directory (where `docker-compose.yml` resides), run:
+    ```bash
+   docker-compose up -d --build
+   
+- `--build`: Forces Docker to build the image from your `Dockerfile`.
+- `-d`: Runs containers in **detached** mode (in the background).
+
+4. **Verify Containers Are Running:**
+    ```bash
+   docker-compose ps
+   
+You should see something like:
+
+   ```markdown
+         Name            Command             State         Ports
+    ---------------------------------------------------------------
+    voya_db    docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp
+    voya_app   python manage.py runserver ...  Up      0.0.0.0:8000->8000/tcp
+```
+5. **Access the Application:**
+Open `http://127.0.0.1:8000/` in your browser.
+*(If you changed the container port or mapped it differently in `docker-compose.yml`, adjust the URL accordingly.)*
+
+6. **Stopping the Containers:**
+If running in detached mode (`-d`):
+    ```bash
+   docker-compose down
+   
+This stops and removes the containers and the default network.
+*(If you ran without `-d`, you can simply press Ctrl + C in the same terminal.)*
+
+7. **Updating the Container:**
+When you make code changes or update dependencies:
+- **Re-run:**
+     ```bash
+     docker-compose up --build
+  
+This rebuilds the image with your new changes and restarts containers.
+
+**Additional Tips**
 
 ---
 

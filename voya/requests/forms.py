@@ -10,11 +10,11 @@ from voya.requests.models import TripRequests
 from django_countries import countries
 
 
-class CreateRequestForm(PlaceholderMixin, forms.ModelForm):
+class CreateRequestForm(forms.ModelForm):
 
     country_destinations = forms.MultipleChoiceField(
         choices=choices.CountryChoices,
-        widget=forms.SelectMultiple(attrs={'class': 'multi-select'}),
+        widget=forms.SelectMultiple(attrs={'class': 'multi-select', 'placeholder': 'Select Destinations'}),
         label="Country Destinations",
     )
 
@@ -26,6 +26,7 @@ class CreateRequestForm(PlaceholderMixin, forms.ModelForm):
         required=False,  # Optional, if it should only be set by employees
         label="Company",
         widget=forms.Select(attrs={'placeholder': 'Select Company'}),
+        initial='Select Company',
     )
 
     class Meta:
@@ -55,6 +56,16 @@ class CreateRequestForm(PlaceholderMixin, forms.ModelForm):
             'additional_observations',
             'created_by_company',
         ]
+        widgets = {
+            'age_range': forms.TextInput(attrs={'placeholder': 'Average travelers age'}),
+            'other_destinations': forms.TextInput(attrs={'placeholder': 'Tell us more about the places you wish to visit.'}),
+            'transportation_details': forms.TextInput(attrs={'placeholder': 'Share any transport details here.'}),
+            'accommodations_details': forms.TextInput(attrs={'placeholder': 'Share any accommodations details here.'}),
+            'meals_details': forms.TextInput(attrs={'placeholder': 'Any meals details we need to have into account?'}),
+            'type_of_trip': forms.TextInput(attrs={'placeholder': 'E.g. family trip, company trip, religious trip'}),
+            'additional_observations': forms.TextInput(attrs={'placeholder': 'Share any details you consider important here'}),
+
+        }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)

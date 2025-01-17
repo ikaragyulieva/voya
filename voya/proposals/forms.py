@@ -18,7 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 from django import forms
-from voya.proposals.choices import StatusChoices
+from voya.proposals.choices import StatusChoices, LogoChoices
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
 
@@ -72,23 +72,6 @@ class CreateItemForm(forms.ModelForm):
             'additional_notes',
         ]
 
-    # def __int__(self, *args, section=None, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #
-    #     section_model_map = {
-    #         'Accommodations': 'Hotels',
-    #         'Public Transport': 'Public Transport',
-    #         'Private Transport': 'Private Transport',
-    #         'Transfers': 'Transfers',
-    #         'Activity': 'Tickets',
-    #         'Guides': 'LocalGuides',
-    #     }
-    #
-    #     if section and section in section_model_map:
-    #         self.fields['service'].queryset = section_model_map[section].objects.filter(is_active=True)
-    #     else:
-    #         self.fields['service'].queryset = None
-
 
 class CreateBudgetForm(forms.ModelForm):
 
@@ -105,3 +88,19 @@ class CreateBudgetForm(forms.ModelForm):
             'service_fee',
             'margin',
         ]
+
+
+class PDFOptionsForm(forms.Form):
+    logo_options = forms.ChoiceField(
+        choices=LogoChoices,
+        label="",
+        widget=forms.Select(attrs={'placeholder': 'Draft'}),
+        initial='Voya logo'
+    )
+
+    commission = forms.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        initial=0,
+        help_text='Commission should be added as percentage'
+    )

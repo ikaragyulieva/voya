@@ -17,13 +17,13 @@ from voya.users.models import CustomUser
 class TripRequests(TimestampedModel):
 
     country_origin = CountryField(
-        blank_label='Select your country of origin',
+        blank_label='Select country',
         null=False,
         blank=False,
     )
 
     nationality = CountryField(
-        blank_label='Select your nationality',
+        blank_label='Select nationality',
         null=False,
         blank=False,
     )
@@ -84,6 +84,7 @@ class TripRequests(TimestampedModel):
         choices=choices.CurrencyChoices.choices,
         null=False,
         blank=False,
+        default='currency',
 
     )
 
@@ -92,9 +93,11 @@ class TripRequests(TimestampedModel):
         choices=choices.TransportationType,
         blank=False,
         null=False,
+        default='transport',
     )
 
-    transportation_details = models.TextField(
+    transportation_details = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
     )
@@ -104,9 +107,11 @@ class TripRequests(TimestampedModel):
         choices=choices.AccommodationsType,
         blank=False,
         null=False,
+        default='acc',
     )
 
-    accommodations_details = models.TextField(
+    accommodations_details = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
     )
@@ -116,9 +121,11 @@ class TripRequests(TimestampedModel):
         choices=choices.MealsType,
         null=True,
         blank=True,
+        default='meal',
     )
 
-    meals_details = models.TextField(
+    meals_details = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
     )
@@ -128,6 +135,7 @@ class TripRequests(TimestampedModel):
         choices=choices.StaffChoices,
         null=True,
         blank=True,
+        default='staff',
     )
 
     kind_of_group = models.CharField(
@@ -135,14 +143,17 @@ class TripRequests(TimestampedModel):
         choices=choices.GroupChoice,
         null=True,
         blank=True,
+        default='group',
     )
 
-    type_of_trip = models.TextField(
+    type_of_trip = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
     )
 
-    additional_observations = models.TextField(
+    additional_observations = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
     )
@@ -172,7 +183,6 @@ class TripRequests(TimestampedModel):
 
     def __str__(self):
         return f"{self.slug} - {self.created_by_company.commercial_name}"
-
 
     def clean(self):
 
