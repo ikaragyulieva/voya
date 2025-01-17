@@ -42,3 +42,7 @@ class StatusChoices(models.TextChoices):
     IN_PROGRESS = 'In progress', 'In progress'
 
 
+class LogoChoices(models.TextChoices):
+    NONE = "None", "None"
+    VOYA_LOGO = "Voya logo", "Voya logo"
+    COMPANY_LOGO = "My company's logo", "My company's logo"

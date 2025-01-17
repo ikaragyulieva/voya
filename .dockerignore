@@ -4,6 +4,8 @@
 # Ignore Python compiled files
 *.pyc
 __pycache__/
+*.pyo
+*.pyd
 
 # Ignore local settings or development-specific files
 local-settings.py
@@ -15,5 +17,13 @@ local-settings.py
 # Ignore logs
 *.log
 
-#Ignore dockerignore
-.dockerignore
+#Ignore version control files
+.gitignore
+.git
+
+#Ignove the virtual environment
+.venv
+.venv/
+
+staticfiles
+media
