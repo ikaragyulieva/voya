@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
+from datetime import timedelta
 
 from django.apps import apps
 from django.contrib.auth import mixins
@@ -25,11 +26,13 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import CreateView, TemplateView
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from decimal import Decimal
 from weasyprint import HTML
 
 from voya.proposals.forms import CreateProposalForm, CreateItemForm, CreateBudgetForm, PDFOptionsForm
@@ -172,7 +175,6 @@ class ProposalItemsAPI(APIView):
 
 @login_required
 def proposal_detail(request, proposal_id):
-
     proposal = get_object_or_404(Proposal, id=proposal_id)
     items = ProposalSectionItem.objects.filter(proposal=proposal)
     model_map = {
@@ -421,27 +423,55 @@ def proposal_pdf_view(request, proposal_id):
             logo_option = form.cleaned_data['logo_options']
             commission = form.cleaned_data['commission']
 
+            company_name = 'Dromo S.A.'
+            company_address = 'Rue de Madame de Stael 5'
+            company_address_2 = '1201, Genève, Suisse'
+            company_email = 'info@dromo.travel'
+
+            # Set logo
             if logo_option == 'None':
                 logo = None
             elif logo_option == 'Voya logo':
-                logo = "{% static 'images/logo-voya.png' %}"
+                logo = 'https://dromo.travel/wp-content/uploads/128px_Logo_Dromo.png'
             elif logo_option == "My company's logo":
-                logo = user_profile.company.logo
+                logo = proposal.trip_request.created_by_company.logo.url
+                company_name = proposal.trip_request.created_by_company.commercial_name
+                company_address = proposal.trip_request.created_by_company.addresses.first().street_address
+                company_address_2 = (f'{proposal.trip_request.created_by_company.addresses.first().postal_code}, '
+                                     f'{proposal.trip_request.created_by_company.addresses.first().city}, '
+                                     f'{proposal.trip_request.created_by_company.addresses.first().country}')
+                company_email = proposal.trip_request.created_by_company.billing_email
 
-            commission_final_price = 0
-            commission_final_price_per_person = 0
-            # 1. Calculate final price if a commission is added
-            if commission > 0.00:
-                commission_final_price = budget.final_price * (1+(float(commission)/100))
-                commission_final_price_per_person = budget.fina_price_per_person * (1+(float(commission)/100))
+            proposal_budget = []
 
-            # 2. Render template to HTML with the user's choices
+            # Calculate final price if a commission is added
+
+            for budget_option in budget:
+                if commission > 0.00:
+                    budget_final_price = budget_option.final_price * Decimal(1 + (commission / 100))
+                    budget_final_price_per_person = budget_option.fina_price_per_person * Decimal(1 + (commission / 100))
+                else:
+                    budget_final_price = budget_option.final_price
+                    budget_final_price_per_person = budget_option.fina_price_per_person
+
+                pre_payment = budget_final_price * Decimal(0.20)
+
+                proposal_budget.append({
+                    'id': budget_option.id,
+                    'pax': budget_option.pax,
+                    'final_price': budget_final_price,
+                    'final_price_per_person': budget_final_price_per_person,
+                    'pre_payment': pre_payment,
+                })
+
+            current_date = timezone.now()
+            due_date = current_date + timedelta(days=7)
+            # Render template to HTML with the user's choices
             html_string = render_to_string('proposals/pdf-proposal.html', {
                 'logo_option': logo_option,
                 'logo': logo,
                 'commission': commission,
-                'commission_final_price': commission_final_price,
-                'commission_final_price_per_person': commission_final_price_per_person,
+                'proposal_budget': proposal_budget,
                 'proposal': proposal,
                 'profile': user_profile,
                 'items': items,
@@ -452,6 +482,12 @@ def proposal_pdf_view(request, proposal_id):
                 'transfer_items': transfer_items,
                 'other_items': other_items,
                 'budget': budget,
+                'current_date': current_date,
+                'due_date': due_date,
+                'company_name': company_name,
+                'company_address': company_address,
+                'company_address_2': company_address_2,
+                'company_email': company_email,
             })
 
             # 3. Convert the HTML to PDF
@@ -461,6 +497,29 @@ def proposal_pdf_view(request, proposal_id):
             response = HttpResponse(pdf_file, content_type='application/pdf')
             response['Content-Disposition'] = 'attachment; filename="proposal.pdf"'
             return response
+            # return render(request, 'proposals/pdf-proposal.html', context={'logo_option': logo_option,
+            #                                                                'logo': logo,
+            #                                                                'commission': commission,
+            #
+            #                                                                'proposal_budget': proposal_budget,
+            #                                                                'proposal': proposal,
+            #                                                                'profile': user_profile,
+            #                                                                'items': items,
+            #                                                                'accommodation_items': accommodation_items,
+            #                                                                'transport_items': transport_items,
+            #                                                                'activity_items': activity_items,
+            #                                                                'guides_items': guides_items,
+            #                                                                'transfer_items': transfer_items,
+            #                                                                'other_items': other_items,
+            #                                                                'budget': budget,
+            #                                                                'current_date': current_date,
+            #                                                                'due_date': due_date,
+            #                                                                'company_name': company_name,
+            #                                                                'company_address': company_address,
+            #                                                                'company_address_2': company_address_2,
+            #                                                                'company_email': company_email,
+            #                                                                },)
+
     else:
         form = PDFOptionsForm()
 

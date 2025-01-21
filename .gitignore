@@ -11,6 +11,7 @@ local-settings.py
 # Ignore IDE/editor configurations
 .vscode/
 .idea/
+.idea
 
 # Ignore logs
 *.log
