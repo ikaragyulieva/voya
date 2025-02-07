@@ -1,4 +1,27 @@
 services:
+  traefik:
+    image: traefik:v3.1.2
+    container_name: traefik
+    command:
+      # Define entrypoints for HTTP and HTTPS
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # Enable the Docker provider and disable exposing all containers by default
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      # Enable Let's Encrypt with a TLS challenge
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=voya@dromo.travel"  # Replace with your email
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"  # Persist certificate data
+    restart: always
+
+
   web:
     build: .
     container_name: voya_app
@@ -37,7 +60,7 @@ services:
     container_name: voya_nginx
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.voya.rule=Host(`voya.com`)"
+      - "traefik.http.routers.voya.rule=Host(`voya.dromo.travel`)"
       - "traefik.http.services.voya.loadbalancer.server.port=80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
