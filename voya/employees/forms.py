@@ -103,12 +103,11 @@ class EmployeeSignUpForm(UserCreationForm):
 class EmployeeEditForm(forms.ModelForm):
     class Meta:
         model = EmployeeProfile
-        fields = ['title', 'first_name', 'last_name', 'job_title', 'phone_number', 'is_active']
+        fields = ['title', 'first_name', 'last_name', 'job_title', 'phone_number']
         labels = {
             'title': "",
             'first_name': "",
             'last_name': "",
             'job_title': "",
             'phone_number': "",
-            'is_active': 'Active user'
         }

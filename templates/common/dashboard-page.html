@@ -30,13 +30,13 @@
 
                 </div>
 
-                <!-- Add company button -->
+                <!-- Add request button -->
 
                 <div class="action-btn add-option">
-                    <a href="{% url 'new-request' %}">
+                    <a href="{% url 'new-request' %}" title="Create new request">
                         <img
                                 src="{% static 'images/new-page.png' %}"
-                                alt="Create new company"
+                                alt="Create new request"
                         />
                     </a>
                 </div>
@@ -97,52 +97,117 @@
                                 <div class="col col-7"
                                      data-label="Company">{{ trip_request.created_by_company.commercial_name }}</div>
                             {% endif %}
+
                             <div class="col col-8" data-label="Actions">
                                 <div class="action-btn request-action-btn">
-                                    <!-- View Request Page-->
-                                    <a href="{% url 'request-details' pk=trip_request.pk %}" class="action-link"
-                                       title="View Request">
-                                        <img
-                                                src="{% static 'images/view-icon.png' %}"
-                                                alt="view button"
-                                        />
-                                    </a>
-                                    <!-- Duplicate request-->
-                                    <a href="{% url 'clone-request' pk=trip_request.pk %}" class="action-link"
-                                       title="Duplicate Request">
-                                        <img
-                                                src="{% static 'images/duplicate (1).png' %}"
-                                                alt="duplicate button"
-                                        />
-                                    </a>
+            
+                                    
+                                    {#                            {% if request.user.role == 'client' and request.user.is_authenticated %}#}
+                                    {#                            <div class="col col-8" data-label="Actions">#}
+                                    {#                                <div class="action-btn request-action-btn">#}
+                                    {#                                    <!-- View Request Page-->#}
+                                    {#                                    <a href="{% url 'request-details' pk=trip_request.pk %}" class="action-link"#}
+                                    {#                                       title="View Request">#}
+                                    {#                                        <img#}
+                                    {#                                                src="{% static 'images/view-icon.png' %}"#}
+                                    {#                                                alt="view button"#}
+                                    {#                                        />#}
+                                    {#                                    </a>#}
+                                    {#                                    <!-- Duplicate request-->#}
+                                    {#                                    <a href="{% url 'clone-request' pk=trip_request.pk %}" class="action-link"#}
+                                    {#                                       title="Duplicate Request">#}
+                                    {#                                        <img#}
+                                    {#                                                src="{% static 'images/duplicate (1).png' %}"#}
+                                    {#                                                alt="duplicate button"#}
+                                    {#                                        />#}
+                                    {#                                    </a>#}
+                                    {##}
+                                    {#                                    <!-- Link to Edit Request Page -->#}
+                                    {#                                    <a href="{% url 'edit-request' pk=trip_request.pk %}" class="action-link"#}
+                                    {#                                       title="Edit Request">#}
+                                    {#                                        <img#}
+                                    {#                                                src="{% static 'images/edit-icon.png' %}"#}
+                                    {#                                                alt="edit button"#}
+                                    {#                                        />#}
+                                    {#                                    </a>#}
 
-                                    <!-- Link to Edit Request Page -->
-                                    <a href="{% url 'edit-request' pk=trip_request.pk %}" class="action-link"
-                                       title="Edit Request">
-                                        <img
-                                                src="{% static 'images/edit-icon.png' %}"
-                                                alt="edit button"
-                                        />
-                                    </a>
+                                <!-- Client Buttons -->
                                 
-                                    {% if request.user.role == 'client' %}
-                                        {% if trip_request.request_proposal %}
-                                            {% if not trip_request.request_proposal.is_draft %}
-                                                
-                                                 <a href="{% url 'client-proposal-detail' proposal_id=trip_request.request_proposal.pk%}"
-                                                 class="action-link" title="Check Proposal">
-                                            <img
-                                                    src="{% static 'images/document-approved (1).png' %}"
-                                                    alt="create proposal button"
-                                            />
+                                    {% if request.user.role == 'client' and request.user.is_authenticated %}
+                                        {% if trip_request.request_proposal and not trip_request.request_proposal.is_draft %}
 
-                                        </a>
-                                            {% endif %}
+                                            <a href="{% url 'client-proposal-detail' proposal_id=trip_request.request_proposal.pk %}"
+                                               class="action-link" title="Check Proposal">
+                                                <img
+                                                        src="{% static 'images/document-approved (1).png' %}"
+                                                        alt="create proposal button"
+                                                />
+
+                                            </a>
+                                        {% else %}
+
+                                            <!-- View Request Page-->
+                                            <a href="{% url 'request-details' pk=trip_request.pk %}"
+                                               class="action-link"
+                                               title="View Request">
+                                                <img
+                                                        src="{% static 'images/view-icon.png' %}"
+                                                        alt="view button"
+                                                />
+                                            </a>
+                                            <!-- Duplicate request-->
+                                            <a href="{% url 'clone-request' pk=trip_request.pk %}"
+                                               class="action-link"
+                                               title="Duplicate Request">
+                                                <img
+                                                        src="{% static 'images/duplicate (1).png' %}"
+                                                        alt="duplicate button"
+                                                />
+                                            </a>
+
+                                            <!-- Link to Edit Request Page -->
+                                            <a href="{% url 'edit-request' pk=trip_request.pk %}"
+                                               class="action-link"
+                                               title="Edit Request">
+                                                <img
+                                                        src="{% static 'images/edit-icon.png' %}"
+                                                        alt="edit button"
+                                                />
+                                            </a>
+
                                         {% endif %}
+
                                     {% endif %}
 
-                                    {% if request.user.role == 'employee' %}
+                                <!-- Employee Buttons -->
+                                
+                                    {% if request.user.role == 'employee' and request.user.is_authenticated%}
 
+                                         <!-- View Request Page-->
+                                            <a href="{% url 'request-details' pk=trip_request.pk %}"
+                                               class="action-link" title="View Request">
+                                                <img
+                                                        src="{% static 'images/view-icon.png' %}"
+                                                        alt="view button"
+                                                />
+                                            </a>
+                                            <!-- Duplicate request-->
+                                            <a href="{% url 'clone-request' pk=trip_request.pk %}"
+                                               class="action-link" title="Duplicate Request">
+                                                <img
+                                                        src="{% static 'images/duplicate (1).png' %}"
+                                                        alt="duplicate button"
+                                                />
+                                            </a>
+
+                                            <!-- Link to Edit Request Page -->
+                                            <a href="{% url 'edit-request' pk=trip_request.pk %}"
+                                               class="action-link" title="Edit Request">
+                                                <img
+                                                        src="{% static 'images/edit-icon.png' %}"
+                                                        alt="edit button"
+                                                />
+                                            </a>
 
                                         <!-- Link to Delete Request Page -->
                                         <a href="{% url 'delete-request' pk=trip_request.pk %}"
@@ -155,29 +220,29 @@
                                         </a>
 
                                         {% if trip_request.request_proposal %}
-                                        <!-- Link to Create Proposal Page -->
-                                        <a href="{% url 'proposal-detail' proposal_id=trip_request.request_proposal.pk%}"
-                                           class="action-link" title="Check Proposal">
-                                            <img
-                                                    src="{% static 'images/document-approved (1).png' %}"
-                                                    alt="create proposal button"
-                                            />
+                                            <!-- Link to Check Proposal Page -->
+                                            <a href="{% url 'proposal-detail' proposal_id=trip_request.request_proposal.pk %}"
+                                               class="action-link" title="Check Proposal">
+                                                <img
+                                                        src="{% static 'images/document-approved (1).png' %}"
+                                                        alt="create proposal button"
+                                                />
 
-                                        </a>
+                                            </a>
                                         {% else %}
-                                        <!-- Link to Create Proposal Page -->
-                                        <a href="{% url 'create-proposal' trip_id=trip_request.pk %}"
-                                           class="action-link" title="Create Proposal">
-                                            <img
-                                                    src="{% static 'images/contract.png' %}"
-                                                    alt="create proposal button"
-                                            />
+                                            <!-- Link to Create Proposal Page -->
+                                            <a href="{% url 'create-proposal' trip_id=trip_request.pk %}"
+                                               class="action-link" title="Create Proposal">
+                                                <img
+                                                        src="{% static 'images/contract.png' %}"
+                                                        alt="create proposal button"
+                                                />
 
-                                        </a>
+                                            </a>
+                                        {% endif %}
+
                                     {% endif %}
-                                        
-                                    {% endif %}
-                                    
+
                                 </div>
                             </div>
                         </li>

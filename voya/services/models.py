@@ -9,12 +9,13 @@ from voya.users.models import CustomUser
 # Create your models here.
 
 
-class Hotels(ServiceBaseModel):
+class Hotel(ServiceBaseModel):
     category = models.CharField(
         max_length=30,
         choices=choices.AccommodationsType,
         blank=False,
         null=False,
+        default='acc',
     )
 
     name = models.CharField(
@@ -38,7 +39,7 @@ class Hotels(ServiceBaseModel):
     )
 
 
-class Transfers(ServiceBaseModel):
+class Transfer(ServiceBaseModel):
     transfer_name = models.CharField(
         max_length=100,
         blank=False,
@@ -47,7 +48,8 @@ class Transfers(ServiceBaseModel):
 
     type = models.CharField(
         max_length=50,
-        choices=TransferTypeChoices
+        choices=TransferTypeChoices,
+        default='ct',
     )
 
     price = models.DecimalField(
@@ -58,7 +60,7 @@ class Transfers(ServiceBaseModel):
     )
 
 
-class LocalGuides(ServiceBaseModel):
+class LocalGuide(ServiceBaseModel):
     guide_name = models.CharField(
         max_length=80,
         blank=False,
@@ -85,7 +87,7 @@ class LocalGuides(ServiceBaseModel):
     )
 
 
-class Tickets(ServiceBaseModel):
+class Ticket(ServiceBaseModel):
     name = models.CharField(
         max_length=50,
         blank=False,
@@ -111,6 +113,7 @@ class Currency(TimestampedModel):
         choices=choices.CurrencyChoices,
         blank=False,
         null=False,
+        default='currency',
     )
 
     currency_to = models.CharField(
@@ -145,6 +148,7 @@ class PublicTransport(ServiceBaseModel):
         choices=choices.TransportationType,
         blank=False,
         null=False,
+        default='transport',
     )
 
     price = models.DecimalField(
@@ -161,6 +165,7 @@ class PrivateTransport(ServiceBaseModel):
         choices=choices.TransportationType,
         blank=False,
         null=False,
+        default='transport'
     )
 
     price = models.DecimalField(

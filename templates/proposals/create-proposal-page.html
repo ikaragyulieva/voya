@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
 
@@ -205,16 +206,16 @@
                                                                                          name="service">
                                 <option value="">Select a Service</option>
                             </select></div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="variable cost"><input type="text" id="service-price"
-                                                                                     name="service_price">
+                                                                                     name="service_price" placeholder="€ 0.00">
                             </div>
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
                                     <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
+                                                src="{% static 'images/close.png' %}"
                                                 alt="remove row button"
                                         />
                                     </a>
@@ -258,11 +259,11 @@
                                     <option value="">Select a Service</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price"></div>
+                                                                             name="service_price" placeholder="€ 0.00"></div>
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
                                     <!-- Remove Row-->
                                     <a href="#">
                                         <img
@@ -309,9 +310,9 @@
                                     <option value="">Select a Service</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price"></div>
+                                                                             name="service_price" placeholder="€ 0.00"></div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
                                     <!-- Remove Row-->
@@ -360,9 +361,9 @@
                                     <option value="">Select a Service</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price"></div>
+                                                                             name="service_price" placeholder="€ 0.00"></div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
                                     <!-- Remove Row-->
@@ -412,9 +413,9 @@
                                     <option value="">Select a Service</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price"></div>
+                                                                             name="service_price" placeholder="€ 0.00"></div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
 
@@ -460,11 +461,11 @@
                         <li class="table-row">
                             <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
                             <div class="col col-2" data-label="city">{{ item_form.city }}</div>
-                            <div class="col col-33 notes"
-                                 data-label="service details">{{ item_form.additional_notes }}</div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity }}</div>
+                            <div class="col col-33 note"
+                                 data-label="service details">{{ item_form.additional_notes|placeholder:'Add service' }}</div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price"></div>
+                                                                             name="service_price" placeholder="€ 0.00"></div>
 
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
@@ -812,7 +813,7 @@
 
                     // Add valid rows to itemsData
                     if (hasData && isComplete) {
-                        rowData.additional_notes = row.querySelector(".notes textarea")?.value || "No notes";
+                        rowData.additional_notes = row.querySelector(".note textarea")?.value || "No notes";
                         itemsData.push(rowData)
                     }
 

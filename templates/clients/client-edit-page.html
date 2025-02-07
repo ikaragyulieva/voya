@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% block content %}
     <div class="edit-delete edit-photo">
@@ -6,8 +7,43 @@
 
         <form method="post" action="{% url 'edit-client-profile' pk=profile.pk %}">
             {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-section">
+                <h3>Personal Information</h3>
+                <div class="form-fields">
 
-            {{ form }}
+                    <p>Title</p>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="error">{{ form.title.errors }}</div>
+                    {% endif %}
+
+                    <p>First name</p>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <div class="error">{{ form.first_name.errors }}</div>
+                    {% endif %}
+
+                    <p>Last name</p>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <div class="error">{{ form.last_name.errors }}</div>
+                    {% endif %}
+
+                    <p>Job title</p>
+                    {{ form.job_title }}
+                    {% if form.job_title.errors %}
+                        <div class="error">{{ form.job_title.errors }}</div>
+                    {% endif %}
+
+                    <p>Whatsapp number</p>
+                    {{ form.phone_number|placeholder:'e.g. +1234567890' }}
+                    {% if form.phone_number.errors %}
+                        <div class="error">{{ form.phone_number.errors }}</div>
+                    {% endif %}
+
+                </div>
+            </div>
             <div class="action-btns">
                 <button class="add-btn" type="submit">Save Changes</button>
                 <button class="add-btn" type="button"

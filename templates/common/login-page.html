@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load custom_filters %}
 {% block content %}
 
     <div class="edit-delete edit-photo login">
@@ -7,8 +7,14 @@
 
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
-
-            {{ form }}
+            {{ form.non_field_errors }}
+            <div class="form-section">
+                {{ form.username|placeholder:'Email' }}
+                {{ form.username.errors }}
+                {{ form.password|placeholder:'Password' }}
+                {{ form.password.errors }}
+{#            {{ form }}#}
+            </div>
         <div class="forgot-password">
             <a href="{% url 'password_reset' %}">Forgot password?</a>
         </div>

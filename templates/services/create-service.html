@@ -7,14 +7,53 @@
 
         <form method="post" action="">
             {% csrf_token %}
-            {{ form }}
-            <button class="add-btn" type="submit">Submit Request</button>
+            {{ form.non_field_errors }}
+            <div class="form-fields">
+                {% if model_name == 'currency' %}
+
+                    {% include 'services/partials/currency-form.html' %}
+
+                {% else %}
+                    <p>Country</p>
+                    {{ form.country }}
+                    {% if form.country.errors %}
+                        <div class="error">{{ form.country.errors }}</div>
+                    {% endif %}
+
+                    <p>City</p>
+                    {{ form.city }}
+                    {% if form.city.errors %}
+                        <div class="error">{{ form.city.errors }}</div>
+                    {% endif %}
+
+                    <p>Capacity</p>
+                    {{ form.capacity }}
+                    {% if form.capacity.errors %}
+                        <div class="error">{{ form.capacity.errors }}</div>
+                    {% endif %}
+
+                    {% if model_name == 'hotel' %}
+                        {% include 'services/partials/hotel-form.html' %}
+                    {% elif model_name == 'transfer' %}
+                        {% include 'services/partials/transfer-form.html' %}
+                    {% elif model_name == 'localguide' %}
+                        {% include 'services/partials/guides-form.html' %}
+                    {% elif model_name == 'ticket' %}
+                        {% include 'services/partials/activity-form.html' %}
+                    {% elif model_name == 'publictransport' or model_name == 'privatetransport' %}
+                        {% include 'services/partials/public-private-transport-form.html' %}
+                        {#                        {{ form }}#}
+
+                    {% endif %}
+                {% endif %}
+            </div>
+            <button class="add-btn" type="submit">Create</button>
         </form>
 
     </div>
-    
-<!-- Multi-select JavaScript -->
-<script src="{% static 'js/multi_select.js' %}"></script>
+
+    <!-- Multi-select JavaScript -->
+    <script src="{% static 'js/multi_select.js' %}"></script>
 
 {% endblock %}
 

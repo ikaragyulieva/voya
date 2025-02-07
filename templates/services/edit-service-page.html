@@ -4,154 +4,51 @@
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Edit</h2>
+        <h2>Edit {{ model_name|title }}</h2>
 
         <form method="post" action="{% url 'edit-service' model_name=model_name pk=object.pk %}">
             {% csrf_token %}
-            {{ form }}
+            {{ form.non_field_errors }}
+            <div class="form-fields">
+                {% if model_name == 'currency' %}
 
-            {#            {{ form.non_field_errors }}#}
-            {##}
-            {#            <div class="form-section">#}
-            {#                <h3>Information About the Travelers</h3>#}
-            {##}
-            {#                {{ form.nationality }}#}
-            {#                {% if form.nationality.errors %}#}
-            {#                    <div class="error">{{ form.nationality.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.country_origin }}#}
-            {#                {% if form.country_origin.errors %}#}
-            {#                    <div class="error">{{ form.country_origin.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.age_range }}#}
-            {#                {% if form.age_range.errors %}#}
-            {#                    <div class="error">{{ form.age_range.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.min_participants }}#}
-            {#                {% if form.min_participants.errors %}#}
-            {#                    <div class="error">{{ form.min_participants.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.max_participants }}#}
-            {#                {% if form.max_participants.errors %}#}
-            {#                    <div class="error">{{ form.max_participants.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#            </div>#}
-            {##}
-            {#            <div class="form-section">#}
-            {#                <h3>Trip Information</h3>#}
-            {##}
-            {##}
-            {#                {{ form.budget }}#}
-            {#                {% if form.budget.errors %}#}
-            {#                    <div class="error">{{ form.budget.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.currency }}#}
-            {#                {% if form.currency.errors %}#}
-            {#                    <div class="error">{{ form.currency.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {##}
-            {#                {{ form.trip_duration }}#}
-            {#                {% if form.trip_duration.errors %}#}
-            {#                    <div class="error">{{ form.trip_duration.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.trip_start_date }}#}
-            {#                {% if form.trip_start_date.errors %}#}
-            {#                    <div class="error">{{ form.trip_start_date.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.trip_end_date }}#}
-            {#                {% if form.trip_end_date.errors %}#}
-            {#                    <div class="error">{{ form.trip_end_date.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {##}
-            {#                {{ form.country_destinations }}#}
-            {#                {% if form.country_destinations.errors %}#}
-            {#                    <div class="error">{{ form.country_destinations.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {##}
-            {##}
-            {#                {{ form.city_destinations }}#}
-            {#                {% if form.city_destinations.errors %}#}
-            {#                    <div class="error">{{ form.city_destinations.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {##}
-            {#                {{ form.other_destinations }}#}
-            {#                {% if form.other_destinations.errors %}#}
-            {#                    <div class="error">{{ form.other_destinations.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.transportation_type }}#}
-            {#                {% if form.transportation_type.errors %}#}
-            {#                    <div class="error">{{ form.transportation_type.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.transportation_details }}#}
-            {#                {% if form.transportation_details.errors %}#}
-            {#                    <div class="error">{{ form.transportation_details.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.accommodations }}#}
-            {#                {% if form.accommodations.errors %}#}
-            {#                    <div class="error">{{ form.accommodations.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.accommodations_details }}#}
-            {#                {% if form.accommodations_details.errors %}#}
-            {#                    <div class="error">{{ form.accommodations_details.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.meals }}#}
-            {#                {% if form.meals.errors %}#}
-            {#                    <div class="error">{{ form.meals.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.meals_details }}#}
-            {#                {% if form.meals_details.errors %}#}
-            {#                    <div class="error">{{ form.meals_details.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.staff }}#}
-            {#                {% if form.staff.errors %}#}
-            {#                    <div class="error">{{ form.staff.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.kind_of_group }}#}
-            {#                {% if form.kind_of_group.errors %}#}
-            {#                    <div class="error">{{ form.kind_of_group.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.type_of_trip }}#}
-            {#                {% if form.type_of_trip.errors %}#}
-            {#                    <div class="error">{{ form.type_of_trip.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#                {{ form.additional_observations }}#}
-            {#                {% if form.additional_observations.errors %}#}
-            {#                    <div class="error">{{ form.additional_observations.errors }}</div>#}
-            {#                {% endif %}#}
-            {##}
-            {#            </div>#}
-            {##}
-            {#            {% if request.user.role == 'employee' %}#}
-            {#                <div class="form-section">#}
-            {#                    <h3>Company Info</h3>#}
-            {#                    {{ form.created_by_company }}#}
-            {#                    {% if form.created_by_company.errors %}#}
-            {#                        <div class="error">{{ form.created_by_company.errors }}</div>#}
-            {#                    {% endif %}#}
-            {#                </div>#}
-            {#            {% endif %}#}
+                    {% include 'services/partials/currency-form.html' %}
+
+                {% else %}
+                    <p>Country</p>
+                    {{ form.country }}
+                    {% if form.country.errors %}
+                        <div class="error">{{ form.country.errors }}</div>
+                    {% endif %}
+
+                    <p>City</p>
+                    {{ form.city }}
+                    {% if form.city.errors %}
+                        <div class="error">{{ form.city.errors }}</div>
+                    {% endif %}
+
+                    <p>Capacity</p>
+                    {{ form.capacity }}
+                    {% if form.capacity.errors %}
+                        <div class="error">{{ form.capacity.errors }}</div>
+                    {% endif %}
+
+                    {% if model_name == 'hotel' %}
+                        {% include 'services/partials/hotel-form.html' %}
+                    {% elif model_name == 'transfer' %}
+                        {% include 'services/partials/transfer-form.html' %}
+                    {% elif model_name == 'localguide' %}
+                        {% include 'services/partials/guides-form.html' %}
+                    {% elif model_name == 'ticket' %}
+                        {% include 'services/partials/activity-form.html' %}
+                    {% elif model_name == 'publictransport' or model_name == 'privatetransport' %}
+                        {% include 'services/partials/public-private-transport-form.html' %}
+                        {#                        {{ form }}#}
+
+                    {% endif %}
+                {% endif %}
+            </div>
+
             <div class="action-btns">
                 <button class="add-btn" type="submit">Save Changes</button>
                 <button class="add-btn" type="button" onclick="window.location.href='{% url 'service-dashboard' model_name=model_name %}'">

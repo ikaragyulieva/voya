@@ -75,6 +75,7 @@ class CityChoices(models.TextChoices):
 
 class CountryChoices(models.TextChoices):
     # European countries
+    CHOOSE_COUNTRY = "cc", "Select country"
     ALBANIA = "AL", "Albania"
     ANDORRA = "AD", "Andorra"
     ARMENIA = "AM", "Armenia"

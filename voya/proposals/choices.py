@@ -30,6 +30,7 @@ class SectionChoices(models.TextChoices):
 
 
 class TransferTypeChoices(models.TextChoices):
+    CHOOSE_TRANSFER = 'ct', 'Choose a transfer'
     CAR_AROUND_CITY = 'City car', 'Car around the city'
     CAR_TO_AIRPORT = 'Airport car', 'Car to the airport'
     BUS_AROUND_CITY = 'City bus', 'Bus around the city'

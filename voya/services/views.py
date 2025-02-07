@@ -11,7 +11,7 @@ from django.apps import apps
 
 from voya.common.forms import SearchForm
 from voya.common.mixins import PlaceholderMixin
-from voya.services.models import LocalGuides, Hotels
+from voya.services.models import LocalGuide, Hotel
 from voya.utils import get_user_obj
 
 
@@ -20,9 +20,12 @@ from voya.utils import get_user_obj
 
 class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
     template_name = 'services/services-dashboard-page.html'
+    ALLOWED_MODELS = ['hotel', 'publictransport', 'privatetransport', 'activity', 'ticket', 'transfer', 'localguide', 'currency', 'other']
 
     def get_model(self):
         model_name = self.kwargs['model_name']
+        if model_name not in self.ALLOWED_MODELS:
+            raise Http404(f'Model {model_name} does not exist or is not allowed.')
         try:
             return apps.get_model(app_label='services', model_name=model_name)
         except LookupError:

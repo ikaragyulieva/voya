@@ -1,0 +1,38 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% load custom_filters %}
+
+<p>From</p>
+{{ form.currency_from|placeholder:'' }}
+{% if form.currency_from.errors %}
+    <div class="error">{{ form.currency_from.errors }}</div>
+{% endif %}
+
+<p>To</p>
+{{ form.currency_to }}
+{% if form.currency_to.errors %}
+    <div class="error">{{ form.currency_to.errors }}</div>
+{% endif %}
+
+<p>Exchange rate</p>
+{{ form.exchange_rate|placeholder:'' }}
+{% if form.exchange_rate.errors %}
+    <div class="error">{{ form.exchange_rate.errors }}</div>
+{% endif %}

@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from voya.services.models import Hotels, Transfers, LocalGuides, Tickets, Currency, PublicTransport, PrivateTransport
+from voya.services.models import Hotel, Transfer, LocalGuide, Ticket, Currency, PublicTransport, PrivateTransport
 
 
-@admin.register(Hotels)
+@admin.register(Hotel)
 class HotelsAdmin(admin.ModelAdmin):
     list_display = (
         'name',
@@ -50,7 +50,7 @@ class HotelsAdmin(admin.ModelAdmin):
     mark_inactive.short_description = "Mark selected hotels as inactive"
 
 
-@admin.register(Transfers)
+@admin.register(Transfer)
 class TransfersAdmin(admin.ModelAdmin):
     list_display = (
         'transfer_name',
@@ -88,7 +88,7 @@ class TransfersAdmin(admin.ModelAdmin):
     mark_inactive.short_description = "Mark selected transfers as inactive"
 
 
-@admin.register(LocalGuides)
+@admin.register(LocalGuide)
 class LocalGuidesAdmin(admin.ModelAdmin):
     list_display = (
         'guide_name',
@@ -126,7 +126,7 @@ class LocalGuidesAdmin(admin.ModelAdmin):
     mark_inactive.short_description = "Mark selected guides as inactive"
 
 
-@admin.register(Tickets)
+@admin.register(Ticket)
 class TicketsAdmin(admin.ModelAdmin):
     list_display = (
         'name',

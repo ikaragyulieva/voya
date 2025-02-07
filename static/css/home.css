@@ -53,6 +53,7 @@ body {
     color: red;
     font-size: 14px;
     list-style-type: none;
+    max-width: 300px;
 }
 
 .container .logo {

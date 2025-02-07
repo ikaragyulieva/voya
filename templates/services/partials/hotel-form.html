@@ -1,0 +1,45 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+{% load custom_filters %}
+
+<p>Category</p>
+{{ form.category }}
+{% if form.category.errors %}
+    <div class="error">{{ form.category.errors }}</div>
+{% endif %}
+
+<p>Hotel name</p>
+{{ form.name|placeholder:'' }}
+{% if form.name.errors %}
+    <div class="error">{{ form.name.errors }}</div>
+{% endif %}
+
+<p>High season price (€)</p>
+{{ form.high_season_price|placeholder:'Price in €' }}
+{% if form.high_season_price.errors %}
+    <div class="error">{{ form.high_season_price.errors }}</div>
+{% endif %}
+
+<p>Low season price (€)</p>
+{{ form.low_season_price|placeholder:'Price in €' }}
+{% if form.low_season_price.errors %}
+    <div class="error">{{ form.low_season_price.errors }}</div>
+{% endif %}
+
+

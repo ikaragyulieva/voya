@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logo-voya-image.png' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+{#    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>#}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -89,25 +89,25 @@
                                         <a>Services</a>
                                         <menu>
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='hotels' %}">Hotels</a>
+                                                <a href="{% url 'service-dashboard' model_name='hotel' %}">Hotels</a>
                                                 <menu>
-                                                    <menuitem><a href="{% url 'create-service' model_name='hotels' %}">Add
+                                                    <menuitem><a href="{% url 'create-service' model_name='hotel' %}">Add
                                                         New Hotel</a></menuitem>
                                                 </menu>
                                             </menuitem>
 
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='localguides' %}">Guides</a>
+                                                <a href="{% url 'service-dashboard' model_name='localguide' %}">Guides</a>
                                                 <menu>
                                                     <menuitem><a
-                                                            href="{% url 'create-service' model_name='localguides' %}">Add
+                                                            href="{% url 'create-service' model_name='localguide' %}">Add
                                                         New Guide</a></menuitem>
                                                 </menu>
                                             </menuitem>
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='tickets' %}">Activities</a>
+                                                <a href="{% url 'service-dashboard' model_name='ticket' %}">Activities</a>
                                                 <menu>
-                                                    <menuitem><a href="{% url 'create-service' model_name='tickets' %}">Add
+                                                    <menuitem><a href="{% url 'create-service' model_name='ticket' %}">Add
                                                         New Activity</a></menuitem>
                                                 </menu>
                                             </menuitem>
@@ -133,10 +133,10 @@
                                                         </menu>
                                                     </menuitem>
                                                     <menuitem>
-                                                        <a href="{% url 'service-dashboard' model_name='transfers' %}">Transfers</a>
+                                                        <a href="{% url 'service-dashboard' model_name='transfer' %}">Transfers</a>
                                                         <menu>
                                                             <menuitem><a
-                                                                    href="{% url 'create-service' model_name='transfers' %}">Create
+                                                                    href="{% url 'create-service' model_name='transfer' %}">Create
                                                                 New Transfer</a></menuitem>
                                                         </menu>
                                                     </menuitem>

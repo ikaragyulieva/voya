@@ -15,54 +15,31 @@ UserModel = get_user_model()
 class SignUpClientForm(UserCreationForm):
     title = forms.ChoiceField(
         choices=TitleChoices,
-        label="",
-        widget=forms.Select(attrs={'placeholder': 'Title'}),
     )
 
     first_name = forms.CharField(
         max_length=50,
-        label="",
-        widget=forms.TextInput(attrs={'placeholder': 'First name'}),
     )
 
     last_name = forms.CharField(
         max_length=50,
-        label="",
-        widget=forms.TextInput(attrs={'placeholder': 'Last name'}),
     )
 
     job_title = forms.CharField(
         max_length=20,
-        label='',
-        widget=forms.TextInput(attrs={'placeholder': 'Job title?'}),
     )
 
-    phone_number = PhoneNumberField(
-        label='',
-        widget=forms.TextInput(attrs={'placeholder': 'Whatsapp number in format: +1234567890'}),
-    )
+    phone_number = PhoneNumberField()
+
     tax_id = forms.CharField(
         max_length=20,
-        label="",
-        widget=forms.TextInput(attrs={'placeholder': 'Company VAT/Tax ID'}),
-
     )
 
-    email = forms.EmailField(
-        widget=forms.TextInput(attrs={'placeholder': 'Email address'}),
-        label="",
-    )
+    email = forms.EmailField()
 
-    password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
-        label="",
-    )
+    password1 = forms.CharField()
 
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
-        label="",
-        help_text="",
-    )
+    password2 = forms.CharField()
 
     class Meta:
         model = UserModel
@@ -79,14 +56,6 @@ class SignUpClientForm(UserCreationForm):
         labels = {
             'email': "",
         }
-        # widgets = {
-        #     'email': forms.TextInput(attrs={'placeholder': 'Your Email Address'}),
-        #     'password1': forms.PasswordInput(attrs={'placeholder': 'Your Password'}),
-        #     'password2': forms.PasswordInput(attrs={'placeholder': 'Please Confirm Your Password'}),
-        # }
-        # help_texts = {
-        #     'password2': "",
-        # }
 
     def clean_tax_id(self):
         tax_id = self.cleaned_data.get('tax_id')

@@ -178,12 +178,12 @@ def proposal_detail(request, proposal_id):
     proposal = get_object_or_404(Proposal, id=proposal_id)
     items = ProposalSectionItem.objects.filter(proposal=proposal)
     model_map = {
-        'Accommodations': 'Hotels',
+        'Accommodations': 'Hotel',
         'Public Transport': 'Public Transport',
         'Private Transport': 'Private Transport',
-        'Transfers': 'Transfers',
+        'Transfers': 'Transfer',
         'Activity': 'Tickets',
-        'Guides': 'LocalGuides',
+        'Guides': 'LocalGuide',
         # 'Other Services': 'Other',
     }
     accommodation_items = []
@@ -241,12 +241,12 @@ def client_proposal_detail(request, proposal_id):
     proposal = get_object_or_404(Proposal, id=proposal_id)
     items = ProposalSectionItem.objects.filter(proposal=proposal)
     model_map = {
-        'Accommodations': 'Hotels',
+        'Accommodations': 'Hotel',
         'Public Transport': 'Public Transport',
         'Private Transport': 'Private Transport',
-        'Transfers': 'Transfers',
-        'Activity': 'Tickets',
-        'Guides': 'LocalGuides',
+        'Transfers': 'Transfer',
+        'Activity': 'Ticket',
+        'Guides': 'LocalGuide',
         # 'Other Services': 'Other',
     }
     accommodation_items = []
@@ -301,12 +301,12 @@ def client_proposal_detail(request, proposal_id):
 
 class DynamicServiceView(APIView):
     model_map = {
-        'Accommodations': 'Hotels',
+        'Accommodations': 'Hotel',
         'Public Transport': 'Public Transport',
         'Private Transport': 'Private Transport',
-        'Transfers': 'Transfers',
-        'Activity': 'Tickets',
-        'Guides': 'LocalGuides',
+        'Transfers': 'Transfer',
+        'Activity': 'Ticket',
+        'Guides': 'LocalGuide',
         # 'Other Services': 'Other',
     }
 
@@ -377,12 +377,12 @@ def proposal_pdf_view(request, proposal_id):
         # Get proposal's items
         items = ProposalSectionItem.objects.filter(proposal=proposal)
         model_map = {
-            'Accommodations': 'Hotels',
+            'Accommodations': 'Hotel',
             'Public Transport': 'Public Transport',
             'Private Transport': 'Private Transport',
-            'Transfers': 'Transfers',
-            'Activity': 'Tickets',
-            'Guides': 'LocalGuides',
+            'Transfers': 'Transfer',
+            'Activity': 'Ticket',
+            'Guides': 'LocalGuide',
             # 'Other Services': 'Other',
         }
         accommodation_items = []

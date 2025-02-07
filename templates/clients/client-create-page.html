@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load custom_filters %}
 {% block content %}
     <div class="edit-delete edit-photo login">
         <h2>Create New Account</h2>
@@ -11,55 +11,80 @@
 
             <div class="form-section">
                 <h3>Company Information</h3>
-                {{ form.tax_id }}
-                {% if form.tax_id.errors %}
-                    <div class="error">{{ form.tax_id.errors }}</div>
-                {% endif %}
+                <div class="form-fields">
+
+                    <p>Company VAT/Tax ID</p>
+                    {{ form.tax_id }}
+                    {% if form.tax_id.errors %}
+                        <div class="error">{{ form.tax_id.errors }}</div>
+                    {% endif %}
+                </div>
             </div>
 
             <div class="form-section">
                 <h3>Personal Information</h3>
-                {{ form.title }}
-                {% if form.title.errors %}
-                    <div class="error">{{ form.title.errors }}</div>
-                {% endif %}
-                {{ form.first_name }}
-                {% if form.first_name.errors %}
-                    <div class="error">{{ form.first_name.errors }}</div>
-                {% endif %}
-                {{ form.last_name }}
-                {% if form.last_name.errors %}
-                    <div class="error">{{ form.last_name.errors }}</div>
-                {% endif %}
-                {{ form.job_title }}
-                {% if form.job_title.errors %}
-                    <div class="error">{{ form.job_title.errors }}</div>
-                {% endif %}
-                {{ form.phone_number }}
-                {% if form.phone_number.errors %}
-                    <div class="error">{{ form.phone_number.errors }}</div>
-                {% endif %}
+                <div class="form-fields">
+
+                    <p>Title</p>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="error">{{ form.title.errors }}</div>
+                    {% endif %}
+
+                    <p>First name</p>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <div class="error">{{ form.first_name.errors }}</div>
+                    {% endif %}
+
+                    <p>Last name</p>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <div class="error">{{ form.last_name.errors }}</div>
+                    {% endif %}
+
+                    <p>Job title</p>
+                    {{ form.job_title }}
+                    {% if form.job_title.errors %}
+                        <div class="error">{{ form.job_title.errors }}</div>
+                    {% endif %}
+
+                    <p>Whatsapp number</p>
+                    {{ form.phone_number|placeholder:'e.g. +1234567890' }}
+                    {% if form.phone_number.errors %}
+                        <div class="error">{{ form.phone_number.errors }}</div>
+                    {% endif %}
+
+                </div>
             </div>
 
             <div class="form-section">
                 <h3>Account Details</h3>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <div class="error">{{ form.email.errors }}</div>
-                {% endif %}
-                {{ form.password1 }}
-                {% if form.password1.errors %}
-                    <div class="error">{{ form.password1.errors }}</div>
-                {% endif %}
-                {{ form.password2 }}
-                {% if form.password2.errors %}
-                    <div class="error">{{ form.password2.errors }}</div>
-                {% endif %}
+                <div class="form-fields">
+
+                    <p>E-mail address</p>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="error">{{ form.email.errors }}</div>
+                    {% endif %}
+
+                    <p>Password</p>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <div class="error">{{ form.password1.errors }}</div>
+                    {% endif %}
+
+                    <p>Confirm password</p>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="error">{{ form.password2.errors }}</div>
+                    {% endif %}
+                </div>
             </div>
 
             <button class="add-btn" type="submit">Create Account</button>
-       
-       
+
+
         </form>
         <div class="no-account">
             <a href="{% url 'login' %}"><i>Already have an account? <u>Login here!</u></i> </a>

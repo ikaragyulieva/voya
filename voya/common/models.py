@@ -21,6 +21,7 @@ class ServiceBaseModel(TimestampedModel):
         choices=choices.CountryChoices,
         blank=False,
         null=False,
+        default='cc',
     )
 
     city = models.CharField(
@@ -28,6 +29,7 @@ class ServiceBaseModel(TimestampedModel):
         choices=choices.CityChoices,
         blank=False,
         null=False,
+        default="Select city",
     )
 
     capacity = models.IntegerField(
