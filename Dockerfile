@@ -2,7 +2,10 @@ FROM python:3.12
 
 # Install system packages needed by WeasyPrint
 RUN apt-get update && apt-get install -y \
-    libpango-1.0-0 libpangocairo-1.0-0 libcairo2 libffi-dev libgdk-pixbuf2.0-0 \
+    libpango-1.0-0  \
+    libpangocairo-1.0-0  \
+    libcairo2 libffi-dev  \
+    libgdk-pixbuf2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a directory for the Django project (Voya project)
@@ -22,13 +25,13 @@ COPY . /voya/
 COPY gunicorn.conf.py /voya/gunicorn.conf.py
 
 # Collect static files (only when in Production)
-RUN python manage.py colectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # Expose the port voya app is running on (using default Django port)
 EXPOSE 8000
 
 # Set default command to run the Django dev server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 #Set default command to run Gunicorn (when in Production)
-CMD ["gunicorn", "-c", "gunicorn.conf.py", "voya.wsgi:application"]
+CMD ["python", "-m", "gunicorn", "-c", "gunicorn.conf.py", "voya.wsgi:application"]

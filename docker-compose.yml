@@ -3,7 +3,7 @@ services:
     build: .
     container_name: voya_app
     # when in Production mode
-    command: gunicorn -c gunicorn.conf.py voya.wsgi:application
+#    command: gunicorn -c gunicorn.conf.py voya.wsgi:application
 #    command: python manage.py runserver 0.0.0.0:8000
 #    volumes:
 #      - .:/voya # Useful for development; no need in production
@@ -37,7 +37,7 @@ services:
     container_name: voya_nginx
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.voya.rule=Host(`yourdomain.com`)"
+      - "traefik.http.routers.voya.rule=Host(`voya.com`)"
       - "traefik.http.services.voya.loadbalancer.server.port=80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
