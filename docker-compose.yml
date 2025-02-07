@@ -35,9 +35,10 @@ services:
   nginx:
     image: nginx:latest
     container_name: voya_nginx
-    ports:
-      - "80:80"
-      - "443:443"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.voya.rule=Host(`yourdomain.com`)"
+      - "traefik.http.services.voya.loadbalancer.server.port=80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - .static:/static

@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 from voya.requests import choices
 from voya.users.models import CustomUser
@@ -36,6 +37,12 @@ class ServiceBaseModel(TimestampedModel):
         default=1,
         blank=False,
         null=False,
+    )
+
+    telephone_number = PhoneNumberField(
+        blank=False,
+        null=False,
+        help_text="Enter phone number in international format. Example: +123456789"
     )
 
     is_active = models.BooleanField(
