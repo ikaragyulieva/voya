@@ -35,7 +35,17 @@ services:
     depends_on:
       - db
     env_file:
-      - .env  # Load secrets from .env
+#      .env  # Load secrets from .env
+      - SECRET_KEY=${SECRET_KEY}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - CLOUD_NAME=${CLOUD_NAME}
+      - API_KEY=${API_KEY}
+      - API_SECRET=${API_SECRET}
+      - CLOUDINARY_URL=${CLOUDINARY_URL}
     # when in Production mode
     restart: always
 
@@ -59,8 +69,15 @@ services:
     image: nginx:latest
     container_name: voya_nginx
     labels:
+      # Expose this container to Traefik
       - "traefik.enable=true"
-      - "traefik.http.routers.voya.rule=Host(`voya.dromo.travel`)"
+      # Route requests for your domain
+      - "traefik.http.routers.voya.rule=Host(`voya.dromo.org`)"
+      # Use the secure (HTTPS) entrypoint
+      - "traefik.http.routers.voya.entrypoints=websecure"
+      # Use the Let's Encrypt resolver to obtain TLS certificates
+      - "traefik.http.routers.voya.tls.certresolver=myresolver"
+      # Tell Traefik which port the Django app listens on inside the container
       - "traefik.http.services.voya.loadbalancer.server.port=80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
