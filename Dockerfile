@@ -13,16 +13,16 @@ COPY requirements.txt /voya/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install Gunicorn (when in Production)
-# RUN pip install gunicorn gevent  # gevent included as asynchronous workers will be used
+ RUN pip install gunicorn gevent  # gevent included as asynchronous workers will be used
 
 # Copy the rest of the project code into the container
 COPY . /voya/
 
 # Gunicorn config (only when in Production)
-#COPY gunicorn.conf.py /voya/gunicorn.conf.py
+COPY gunicorn.conf.py /voya/gunicorn.conf.py
 
 # Collect static files (only when in Production)
-#RUN python manage.py colectstatic --noinput
+RUN python manage.py colectstatic --noinput
 
 # Expose the port voya app is running on (using default Django port)
 EXPOSE 8000
@@ -31,4 +31,4 @@ EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 #Set default command to run Gunicorn (when in Production)
-#CMD ["gunicorn", "-c", "gunicorn.conf.py", "voya.wsgi:application"]
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "voya.wsgi:application"]
