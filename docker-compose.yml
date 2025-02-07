@@ -34,8 +34,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    env_file:
+#    env_file:
 #      .env  # Load secrets from .env
+    environment:
       - SECRET_KEY=${SECRET_KEY}
       - EMAIL_HOST=${EMAIL_HOST}
       - EMAIL_PORT=${EMAIL_PORT}
