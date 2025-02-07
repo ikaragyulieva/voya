@@ -3,10 +3,10 @@ services:
     build: .
     container_name: voya_app
     # when in Production mode
-    # command: gunicorn -c gunicorn.conf.py voya.wsgi:application
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/voya # Useful for development; no need in production
+    command: gunicorn -c gunicorn.conf.py voya.wsgi:application
+#    command: python manage.py runserver 0.0.0.0:8000
+#    volumes:
+#      - .:/voya # Useful for development; no need in production
     ports:
       - "8000:8000"
     depends_on:
@@ -14,7 +14,7 @@ services:
     env_file:
       - .env  # Load secrets from .env
     # when in Production mode
-    # restart: always
+    restart: always
 
 
   db:
@@ -29,7 +29,7 @@ services:
     volumes:
       - voya_my-postgres-data:/var/lib/postgresql/data
     # when in Production mode
-    # restart: always
+    restart: always
 
 
   nginx:
