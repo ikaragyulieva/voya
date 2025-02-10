@@ -46,7 +46,7 @@ services:
     depends_on:
       - web
     networks:
-      - voya_network
+      - dokploy-network
     restart: always
 
 
@@ -85,7 +85,7 @@ services:
     depends_on:
       - db
     networks:
-      - voya_network
+      - dokploy-network
     restart: always
 
 
@@ -101,12 +101,12 @@ services:
     volumes:
       - voya_my-postgres-data:/var/lib/postgresql/data
     networks:
-      - voya_network
+      - dokploy-network
     restart: always
 
 networks:
-  voya_network:
-    driver: bridge
+  dokploy-network:
+    external: true
 
 volumes:
   voya_my-postgres-data:
