@@ -95,5 +95,6 @@ services:
 
 
 volumes:
+  voya_my-postgres-data:
   static_data:
   media_data:
