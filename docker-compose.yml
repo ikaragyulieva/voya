@@ -1,40 +1,50 @@
 version: '3.9'
 
 services:
-  traefik:
-    image: traefik:v3.1.2
-    container_name: traefik
-    command:
-      # Define entrypoints for HTTP and HTTPS
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      # Enable the Docker provider and disable exposing all containers by default
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      # Enable Let's Encrypt with a TLS challenge
-      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=voya@dromo.travel"  # Replace with your email
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./letsencrypt:/letsencrypt"  # Persist certificate data
-    restart: always
+#  traefik:
+#    image: traefik:v3.1.2
+#    container_name: traefik
+#    command:
+#      # Define entrypoints for HTTP and HTTPS
+#      - "--entrypoints.web.address=:80"
+#      - "--entrypoints.websecure.address=:443"
+#      # Enable the Docker provider and disable exposing all containers by default
+#      - "--providers.docker=true"
+#      - "--providers.docker.exposedbydefault=false"
+#      # Enable Let's Encrypt with a TLS challenge
+#      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+#      - "--certificatesresolvers.myresolver.acme.email=voya@dromo.travel"  # Replace with your email
+#      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    volumes:
+#      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+#      - "./letsencrypt:/letsencrypt"  # Persist certificate data
+#    restart: always
 
-
-  db:
-    image: postgres:latest
-    container_name: voya_db
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "5432:5432"
+  nginx:
+    image: nginx:latest
+    container_name: voya_nginx
+    # Traefik labels go on the Nginx container since Traefik will forward
+    # requests from the outside to Nginx
+    labels:
+      # Expose this container to Traefik
+      - "traefik.enable=true"
+      # Route requests for your domain
+      - "traefik.http.routers.voya.rule=Host(`voya.dromo.org`)"
+      # Use the secure (HTTPS) entrypoint
+      - "traefik.http.routers.voya.entrypoints=websecure"
+      # Use the Let's Encrypt resolver to obtain TLS certificates
+      - "traefik.http.routers.voya.tls.certresolver=myresolver"
+      # Nginx listens on 80 internally, so route traffic to port 80 of Nginx
+      - "traefik.http.services.voya.loadbalancer.server.port=80"
     volumes:
-      - voya_my-postgres-data:/var/lib/postgresql/data
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - .static:/static
+      - .media:/media
+    depends_on:
+      - web
     restart: always
 
 
@@ -70,31 +80,20 @@ services:
     restart: always
 
 
-  nginx:
-    image: nginx:latest
-    container_name: voya_nginx
-    # Traefik labels go on the Nginx container since Traefik will forward
-    # requests from the outside to Nginx
-    labels:
-      # Expose this container to Traefik
-      - "traefik.enable=true"
-      # Route requests for your domain
-      - "traefik.http.routers.voya.rule=Host(`voya.dromo.org`)"
-      # Use the secure (HTTPS) entrypoint
-      - "traefik.http.routers.voya.entrypoints=websecure"
-      # Use the Let's Encrypt resolver to obtain TLS certificates
-      - "traefik.http.routers.voya.tls.certresolver=myresolver"
-      # Nginx listens on 80 internally, so route traffic to port 80 of Nginx
-      - "traefik.http.services.voya.loadbalancer.server.port=80"
+  db:
+    image: postgres:latest
+    container_name: voya_db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - .static:/static
-      - .media:/media
-    depends_on:
-      - web
+      - voya_my-postgres-data:/var/lib/postgresql/data
     restart: always
 
+
 volumes:
-  voya_my-postgres-data:
   static_data:
   media_data:
