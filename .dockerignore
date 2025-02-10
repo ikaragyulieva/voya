@@ -27,3 +27,6 @@ local-settings.py
 
 staticfiles
 media
+
+# letsencrypt secrets
+letsencrypt

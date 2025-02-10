@@ -29,9 +29,8 @@ services:
 
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image:
+      dromovoya/voyaapp:latest
     env_file:
       .env  # Load secrets from .env
     environment:
