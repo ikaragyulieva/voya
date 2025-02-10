@@ -49,8 +49,8 @@ services:
       - CLOUDINARY_URL=${CLOUDINARY_URL}
     # Share a named volume for static so Nginx can see it too
     volumes:
-      - static_data:/voya/static
-      - media_data:/voya/media
+      - static_data:/static
+      - media_data:/media
 #    ports:
 #      - "8000:8000"
     depends_on:
