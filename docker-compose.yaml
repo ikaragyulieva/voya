@@ -1,31 +1,8 @@
-version: '3.9'
+version: "3.9"
 
 services:
-#  traefik:
-#    image: traefik:v3.1.2
-#    container_name: traefik
-#    command:
-#      # Define entrypoints for HTTP and HTTPS
-#      - "--entrypoints.web.address=:80"
-#      - "--entrypoints.websecure.address=:443"
-#      # Enable the Docker provider and disable exposing all containers by default
-#      - "--providers.docker=true"
-#      - "--providers.docker.exposedbydefault=false"
-#      # Enable Let's Encrypt with a TLS challenge
-#      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-#      - "--certificatesresolvers.myresolver.acme.email=voya@dromo.travel"  # Replace with your email
-#      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    volumes:
-#      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-#      - "./letsencrypt:/letsencrypt"  # Persist certificate data
-#    restart: always
-
   nginx:
     image: nginx:latest
-#    container_name: voya_nginx
     # Traefik labels go on the Nginx container since Traefik will forward
     # requests from the outside to Nginx
     labels:
@@ -47,14 +24,14 @@ services:
       - web
     networks:
       - dokploy-network
-    restart: always
+    deploy:
+      replicas: 1
 
 
   web:
     build:
       context: .
       dockerfile: Dockerfile
-#    container_name: voya_app
     env_file:
       .env  # Load secrets from .env
     environment:
@@ -83,7 +60,8 @@ services:
       - db
     networks:
       - dokploy-network
-    restart: always
+    deploy:
+      replicas: 1
 
 
   db:
@@ -93,13 +71,12 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "5432:5432"
     volumes:
       - voya_my-postgres-data:/var/lib/postgresql/data
     networks:
       - dokploy-network
-    restart: always
+    deploy:
+      replicas: 1
 
 networks:
   dokploy-network:
