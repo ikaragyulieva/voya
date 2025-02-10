@@ -3,3 +3,5 @@
 
 # Force LF for .json files, or anything else that must remain LF
 *.json text eol=lf
+
+*.py text eol=lf
