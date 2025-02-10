@@ -29,8 +29,7 @@ services:
 
 
   web:
-    image:
-      dromovoya/voyaapp:latest
+    image: dromovoya/voyaapp:latest
     env_file:
       .env  # Load secrets from .env
     environment:
