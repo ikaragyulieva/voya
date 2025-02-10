@@ -8,4 +8,4 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "Starting Gunicorn..."
-exec /run_gunicorn.py
+exec python /run_gunicorn.py

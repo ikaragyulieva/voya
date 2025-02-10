@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import gevent.monkey
 
 # 1) Patch everything very early
