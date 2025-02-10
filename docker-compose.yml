@@ -25,7 +25,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: voya_nginx
+#    container_name: voya_nginx
     # Traefik labels go on the Nginx container since Traefik will forward
     # requests from the outside to Nginx
     labels:
@@ -45,6 +45,8 @@ services:
       - .media:/media
     depends_on:
       - web
+    networks:
+      - voya_network
     restart: always
 
 
@@ -52,7 +54,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: voya_app
+#    container_name: voya_app
     # when in Production mode
 #    command: gunicorn -c gunicorn.conf.py voya.wsgi:application
 #    command: python manage.py runserver 0.0.0.0:8000
@@ -82,12 +84,14 @@ services:
 #      - "8000:8000"
     depends_on:
       - db
+    networks:
+      - voya_network
     restart: always
 
 
   db:
     image: postgres:latest
-    container_name: voya_db
+#    container_name: voya_db
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -96,8 +100,13 @@ services:
       - "5432:5432"
     volumes:
       - voya_my-postgres-data:/var/lib/postgresql/data
+    networks:
+      - voya_network
     restart: always
 
+networks:
+  voya_network:
+    driver: bridge
 
 volumes:
   voya_my-postgres-data:
