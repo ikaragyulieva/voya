@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   nginx:
-    image: nginx:latest
+    image: dromovoya/my-nginx:latest
     # Traefik labels go on the Nginx container since Traefik will forward
     # requests from the outside to Nginx
     labels:

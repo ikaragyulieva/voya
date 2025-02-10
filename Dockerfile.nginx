@@ -1,0 +1,6 @@
+# Dockerfile.nginx
+FROM nginx:latest
+
+# Copy your custom Nginx config files into /etc/nginx/conf.d
+# Make sure the "conf.d" folder on your local machine has the .conf files
+COPY nginx/conf.d/ /etc/nginx/conf.d/
