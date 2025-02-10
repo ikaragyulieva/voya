@@ -17,7 +17,6 @@ services:
       # Nginx listens on 80 internally, so route traffic to port 80 of Nginx
       - "traefik.http.services.voya.loadbalancer.server.port=80"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - .static:/static
       - .media:/media
     depends_on:
