@@ -57,7 +57,9 @@ services:
     depends_on:
       - db
     networks:
-      - dokploy-network
+      dokploy-network:
+        aliases:
+          - web
     deploy:
       replicas: 1
 
