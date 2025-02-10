@@ -8,4 +8,4 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "Starting Gunicorn..."
-exec gunicorn -c gunicorn.conf.py voya.wsgi:application
+exec /run_gunicorn.py

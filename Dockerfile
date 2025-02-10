@@ -43,4 +43,4 @@ EXPOSE 8000
 ENTRYPOINT ["/entrypoint.sh"]
 
 #Set default command to run Gunicorn (when in Production)
-CMD ["gunicorn", "-c", "gunicorn.conf.py", "voya.wsgi:application"]
+#CMD ["gunicorn", "-c", "gunicorn.conf.py", "voya.wsgi:application"]

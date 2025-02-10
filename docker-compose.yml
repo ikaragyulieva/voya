@@ -55,9 +55,6 @@ services:
       context: .
       dockerfile: Dockerfile
 #    container_name: voya_app
-    # when in Production mode
-#    command: gunicorn -c gunicorn.conf.py voya.wsgi:application
-#    command: python manage.py runserver 0.0.0.0:8000
     env_file:
       .env  # Load secrets from .env
     environment:
