@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
   traefik:
     image: traefik:v3.1.2
@@ -22,35 +24,6 @@ services:
     restart: always
 
 
-  web:
-    build: .
-    container_name: voya_app
-    # when in Production mode
-#    command: gunicorn -c gunicorn.conf.py voya.wsgi:application
-#    command: python manage.py runserver 0.0.0.0:8000
-#    volumes:
-#      - .:/voya # Useful for development; no need in production
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-#    env_file:
-#      .env  # Load secrets from .env
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      - CLOUD_NAME=${CLOUD_NAME}
-      - API_KEY=${API_KEY}
-      - API_SECRET=${API_SECRET}
-      - CLOUDINARY_URL=${CLOUDINARY_URL}
-    # when in Production mode
-    restart: always
-
-
   db:
     image: postgres:latest
     container_name: voya_db
@@ -62,13 +35,46 @@ services:
       - "5432:5432"
     volumes:
       - voya_my-postgres-data:/var/lib/postgresql/data
+    restart: always
+
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: voya_app
     # when in Production mode
+#    command: gunicorn -c gunicorn.conf.py voya.wsgi:application
+#    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      .env  # Load secrets from .env
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - CLOUD_NAME=${CLOUD_NAME}
+      - API_KEY=${API_KEY}
+      - API_SECRET=${API_SECRET}
+      - CLOUDINARY_URL=${CLOUDINARY_URL}
+    # Share a named volume for static so Nginx can see it too
+    volumes:
+      - static_data:/voya/static
+      - media_data:/voya/media
+#    ports:
+#      - "8000:8000"
+    depends_on:
+      - db
     restart: always
 
 
   nginx:
     image: nginx:latest
     container_name: voya_nginx
+    # Traefik labels go on the Nginx container since Traefik will forward
+    # requests from the outside to Nginx
     labels:
       # Expose this container to Traefik
       - "traefik.enable=true"
@@ -78,10 +84,10 @@ services:
       - "traefik.http.routers.voya.entrypoints=websecure"
       # Use the Let's Encrypt resolver to obtain TLS certificates
       - "traefik.http.routers.voya.tls.certresolver=myresolver"
-      # Tell Traefik which port the Django app listens on inside the container
+      # Nginx listens on 80 internally, so route traffic to port 80 of Nginx
       - "traefik.http.services.voya.loadbalancer.server.port=80"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - .static:/static
       - .media:/media
     depends_on:
@@ -90,3 +96,5 @@ services:
 
 volumes:
   voya_my-postgres-data:
+  static_data:
+  media_data:

@@ -1,0 +1,5 @@
+# Force LF (Unix-style) line endings for shell scripts
+*.sh text eol=lf
+
+# Force LF for .json files, or anything else that must remain LF
+*.json text eol=lf
