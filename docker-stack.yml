@@ -9,7 +9,7 @@ services:
       # Expose this container to Traefik
       - "traefik.enable=true"
       # Route requests for your domain
-      - "traefik.http.routers.voya.rule=Host(`voya.dromo.org`)"
+      - "traefik.http.routers.voya.rule=Host(voya.dromo.org)"
       # Use the secure (HTTPS) entrypoint
       - "traefik.http.routers.voya.entrypoints=websecure"
       # Use the Let's Encrypt resolver to obtain TLS certificates
