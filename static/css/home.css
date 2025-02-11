@@ -160,6 +160,10 @@ main {
     justify-content: center;
 }
 
+.main-home{
+    justify-content: unset;
+}
+
 main .container {
     position: relative;
     margin-top: 60px;
