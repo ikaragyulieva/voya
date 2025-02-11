@@ -30,3 +30,5 @@ media
 
 # letsencrypt secrets
 letsencrypt
+
+docker-compose.yml

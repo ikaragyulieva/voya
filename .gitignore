@@ -21,3 +21,4 @@ local-settings.py
 
 # letsencrypt secrets
 letsencrypt
+docker-compose.yml
