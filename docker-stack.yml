@@ -16,10 +16,10 @@ services:
       - "traefik.http.routers.voya.tls.certresolver=myresolver"
       # Nginx listens on 80 internally, so route traffic to port 80 of Nginx
       - "traefik.http.services.voya.loadbalancer.server.port=80"
-#    volumes:
+    volumes:
 #      - ./etc/nginx/conf.d:/etc/nginx/conf.d:ro
-#      - .static:/static
-#      - .media:/media
+      - static_data:/static
+      - media_data:/media
     depends_on:
       - web
     networks:
@@ -48,9 +48,9 @@ services:
       - API_SECRET=${API_SECRET}
       - CLOUDINARY_URL=${CLOUDINARY_URL}
     # Share a named volume for static so Nginx can see it too
-#    volumes:
-#      - static_data:/static
-#      - media_data:/media
+    volumes:
+      - static_data:/voya/staticfiles
+      - media_data:/voya/media
 #    ports:
 #      - "8000:8000"
     depends_on:
@@ -83,5 +83,5 @@ networks:
 
 volumes:
   voya_my-postgres-data:
-#  static_data:
-#  media_data:
+  static_data:
+  media_data:
