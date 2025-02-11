@@ -9,7 +9,7 @@ services:
       # Expose this container to Traefik
       - "traefik.enable=true"
       # Route requests for your domain
-      - "traefik.http.routers.voya.rule=Host(voya.dromo.org)"
+      - "traefik.http.routers.voya.rule=Host(`voya.dromo.org`)"
       # Use the secure (HTTPS) entrypoint
       - "traefik.http.routers.voya.entrypoints=websecure"
       # Use the Let's Encrypt resolver to obtain TLS certificates
@@ -30,8 +30,7 @@ services:
 
   web:
     image: dromovoya/voyaapp:latest
-    env_file:
-      .env  # Load secrets from .env
+    env_file: .env  # Load secrets from .env
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - DB_NAME=${DB_NAME}
