@@ -30,11 +30,15 @@ class SectionChoices(models.TextChoices):
 
 
 class TransferTypeChoices(models.TextChoices):
-    CHOOSE_TRANSFER = 'ct', 'Choose a transfer'
+    CHOOSE_TRANSFER = '', 'Select an option'
     CAR_AROUND_CITY = 'City car', 'Car around the city'
     CAR_TO_AIRPORT = 'Airport car', 'Car to the airport'
     BUS_AROUND_CITY = 'City bus', 'Bus around the city'
     BUS_TO_AIRPORT = 'Airport bus', 'Bus to the airport'
+    PRIVATE_BOAT = 'private boat', 'Private boat'
+    LUXURY_CAR = 'luxury car (4pax)', 'Luxury car (4 pax)'
+    LUXURY_VAN = 'luxury van (7pax)', 'Luxury van (7 pax)'
+    LUXURY_BUS = 'luxury bus (8+pax)', 'Luxury bus (8+ pax)'
 
 
 class StatusChoices(models.TextChoices):

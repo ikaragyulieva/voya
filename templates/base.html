@@ -96,14 +96,37 @@
                                                 </menu>
                                             </menuitem>
 
-                                            <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='localguide' %}">Guides</a>
+{#                                            <menuitem>#}
+{#                                                <a href="{% url 'service-dashboard' model_name='localguide' %}">Guides</a>#}
+{#                                                <menu>#}
+{#                                                    <menuitem><a#}
+{#                                                            href="{% url 'create-service' model_name='localguide' %}">Add#}
+{#                                                        New Guide</a></menuitem>#}
+{#                                                </menu>#}
+{#                                            </menuitem>#}
+                                            
+                                            <menuitem id="demo2">
+                                                <a>Guides</a>
                                                 <menu>
-                                                    <menuitem><a
-                                                            href="{% url 'create-service' model_name='localguide' %}">Add
-                                                        New Guide</a></menuitem>
+                                                    <menuitem id="demo3">
+                                                        <a href="{% url 'service-dashboard' model_name='localguide' %}">Local guides</a>
+                                                        <menu>
+                                                            <menuitem><a
+                                                                    href="{% url 'create-service' model_name='localguide' %}">Add
+                                                                New</a></menuitem>
+                                                        </menu>
+                                                    </menuitem>
+                                                    <menuitem>
+                                                        <a href="{% url 'service-dashboard' model_name='staff' %}">Tour leaders</a>
+                                                        <menu>
+                                                            <menuitem><a
+                                                                    href="{% url 'create-service' model_name='staff' %}">Add
+                                                                New</a></menuitem>
+                                                        </menu>
+                                                    </menuitem>
                                                 </menu>
                                             </menuitem>
+                                            
                                             <menuitem>
                                                 <a href="{% url 'service-dashboard' model_name='ticket' %}">Activities</a>
                                                 <menu>

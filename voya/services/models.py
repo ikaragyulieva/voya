@@ -1,9 +1,11 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from voya.common.models import TimestampedModel, ServiceBaseModel
 from voya.proposals.choices import TransferTypeChoices
 from voya.requests import choices
 from voya.users.models import CustomUser
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 # Create your models here.
@@ -12,10 +14,10 @@ from voya.users.models import CustomUser
 class Hotel(ServiceBaseModel):
     category = models.CharField(
         max_length=30,
-        choices=choices.AccommodationsType,
+        choices=choices.HotelType,
         blank=False,
         null=False,
-        default='acc',
+        default='',
     )
 
     name = models.CharField(
@@ -38,6 +40,24 @@ class Hotel(ServiceBaseModel):
         null=True,
     )
 
+    street_address = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+    )
+
+    zone = models.CharField(
+        max_length=100,
+        blank=False,
+        null=False,
+    )
+
+    zone_description = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+    )
+
 
 class Transfer(ServiceBaseModel):
     transfer_name = models.CharField(
@@ -49,14 +69,16 @@ class Transfer(ServiceBaseModel):
     type = models.CharField(
         max_length=50,
         choices=TransferTypeChoices,
-        default='ct',
+        default='',
+        blank=False,
+        null=False,
     )
 
     price = models.DecimalField(
         max_digits=5,
         decimal_places=2,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )
 
 
@@ -80,10 +102,53 @@ class LocalGuide(ServiceBaseModel):
         null=False,
     )
 
-    tour_duration = models.CharField(
-        max_length=30,
+    tour_description = models.TextField(
+        blank=False,
+        null=False,
+    )
+
+    label = models.CharField(
+        max_length=50,
+        blank=False,
+        null=False,
+    )
+
+
+class Staff(ServiceBaseModel):
+    name = models.CharField(
+        max_length=80,
+        blank=False,
+        null=False,
+    )
+
+    mansion = models.CharField(
+        max_length=50,
+        blank=False,
+        null=False,
+    )
+
+    price = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        blank=False,
+        null=False,
+    )
+
+    price_includes = models.CharField(
+        max_length=200,
         blank=True,
         null=True,
+    )
+
+    tour_description = models.TextField(
+        blank=True,
+        null=True,
+    )
+
+    label = models.CharField(
+        max_length=50,
+        blank=False,
+        null=False,
     )
 
 
@@ -101,9 +166,12 @@ class Ticket(ServiceBaseModel):
         null=False,
     )
 
-    description = models.TextField(
-        blank=True,
-        null=True,
+    type = models.CharField(
+        max_length=20,
+        choices=choices.ActivityTypeChoices,
+        blank=False,
+        null=False,
+        default='choice',
     )
 
 
@@ -113,7 +181,7 @@ class Currency(TimestampedModel):
         choices=choices.CurrencyChoices,
         blank=False,
         null=False,
-        default='currency',
+        default='',
     )
 
     currency_to = models.CharField(
@@ -145,32 +213,32 @@ class Currency(TimestampedModel):
 class PublicTransport(ServiceBaseModel):
     type = models.CharField(
         max_length=30,
-        choices=choices.TransportationType,
+        choices=choices.PublicTransportationType,
         blank=False,
         null=False,
-        default='transport',
+        default="",
     )
 
     price = models.DecimalField(
         max_digits=5,
         decimal_places=2,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )
 
 
 class PrivateTransport(ServiceBaseModel):
     type = models.CharField(
         max_length=30,
-        choices=choices.TransportationType,
+        choices=choices.PrivateTransportationType,
         blank=False,
         null=False,
-        default='transport'
+        default="",
     )
 
     price = models.DecimalField(
         max_digits=5,
         decimal_places=2,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )

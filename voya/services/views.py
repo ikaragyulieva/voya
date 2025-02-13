@@ -20,7 +20,17 @@ from voya.utils import get_user_obj
 
 class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
     template_name = 'services/services-dashboard-page.html'
-    ALLOWED_MODELS = ['hotel', 'publictransport', 'privatetransport', 'activity', 'ticket', 'transfer', 'localguide', 'currency', 'other']
+    ALLOWED_MODELS = [
+        'hotel',
+        'publictransport',
+        'privatetransport',
+        'activity',
+        'ticket',
+        'transfer',
+        'localguide',
+        'staff',
+        'currency',
+        'other']
 
     def get_model(self):
         model_name = self.kwargs['model_name']
@@ -37,6 +47,27 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        model = self.kwargs['model_name']
+        model_title = ''
+
+        if model == 'hotel':
+            model_title = 'hotels'
+        elif model == 'publictransport':
+            model_title = 'public transport'
+        elif model == 'privatetransport':
+            model_title = 'private transport'
+        elif model == 'ticket':
+            model_title = 'activities'
+        elif model == 'transfer':
+            model_title = 'transfers'
+        elif model == 'localguide':
+            model_title = 'local guides'
+        elif model == 'staff':
+            model_title = 'tour leaders'
+        elif model == 'currency':
+            model_title = 'currencies'
+
 
         search_form = SearchForm(self.request.GET)
 
@@ -58,7 +89,8 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
 
         context['search_form'] = search_form
         context['service_queryset'] = self.get_queryset()
-        context['model_name'] = self.kwargs['model_name']
+        context['model_name'] = model
+        context['model_title'] = model_title
         context['profile'] = get_user_obj(self.request)
 
         return context
@@ -99,8 +131,29 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['model_name'] = self.kwargs['model_name']
+        model = self.kwargs['model_name']
+        model_title = ''
+
+        if model == 'hotel':
+            model_title = 'hotel'
+        elif model == 'publictransport':
+            model_title = 'public transport'
+        elif model == 'privatetransport':
+            model_title = 'private transport'
+        elif model == 'ticket':
+            model_title = 'activity'
+        elif model == 'transfer':
+            model_title = 'transfer'
+        elif model == 'localguide':
+            model_title = 'local guide'
+        elif model == 'staff':
+            model_title = 'tour leader'
+        elif model == 'currency':
+            model_title = 'currency'
+
+        context['model_name'] = model
         context['profile'] = get_user_obj(self.request)
+        context['model_title'] = model_title
 
         return context
 

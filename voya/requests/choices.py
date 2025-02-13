@@ -2,7 +2,7 @@ from django.db import models
 
 
 class CityChoices(models.TextChoices):
-    SELECT_CITY = 'Select city', 'Select city'
+    SELECT_CITY = '', 'Select a city'
     AMSTERDAM = 'Amsterdam', 'Amsterdam'
     ATHENS = 'Athens', 'Athens'
     BARCELONA = 'Barcelona', 'Barcelona'
@@ -75,7 +75,7 @@ class CityChoices(models.TextChoices):
 
 class CountryChoices(models.TextChoices):
     # European countries
-    CHOOSE_COUNTRY = "cc", "Select country"
+    CHOOSE_COUNTRY = '', 'Select country'
     ALBANIA = "AL", "Albania"
     ANDORRA = "AD", "Andorra"
     ARMENIA = "AM", "Armenia"
@@ -139,7 +139,7 @@ class CountryChoices(models.TextChoices):
 
 
 class TransportationType(models.TextChoices):
-    TRANSPORT = 'transport', 'Select transportation type'
+    TRANSPORT = '', 'Select an option'
     NO_TRANSPORTATION = 'no transportation', 'No transportation - I\'ll take care of it'
     PRIVATE_BUS = 'private bus', 'Private Bus'
     PUBLIC_BUSES = 'public buses', 'Public Buses'
@@ -149,12 +149,46 @@ class TransportationType(models.TextChoices):
     AIRPORT_STATION_TRANSFERS = 'airport/station transfers', 'Airport/Station Transfers'
 
 
+class PublicTransportationType(models.TextChoices):
+    PUB_TRANSP = '', 'Select an option'
+    PUBLIC_BUS = 'public bus', 'Public Bus'
+    TRAIN = 'train', 'Train'
+    FLIGHTS = 'flights', 'Flights'
+    FERRY = 'ferry', 'Ferry'
+    METRO = 'metro', 'Metro'
+    OTHER = 'other', 'Other'
+
+
+class PrivateTransportationType(models.TextChoices):
+    PR_TRANSP = '', 'Select an option'
+    PRIVATE_BUS = 'private bus', 'Private bus'
+    PRIVATE_CAR = 'private car', 'Private car'
+    PRIVATE_VAN = 'private van', 'Private van'
+    PRIVATE_BOAT = 'private boat', 'Private boat'
+    LUXURY_CAR = 'luxury car (4pax)', 'Luxury car (4 pax)'
+    LUXURY_VAN = 'luxury van (7pax)', 'Luxury van (7 pax)'
+    LUXURY_BUS = 'luxury bus (8+pax)', 'Luxury bus (8+ pax)'
+
+    OTHER = 'other', 'Other'
+
+
 class AccommodationsType(models.TextChoices):
     ACC = 'acc', 'Select accommodations type'
     NONE = 'none', 'None -  I\'ll take care of it'
     TWO_TREE_STAR_HOTELS = '2-3 star hotels', '2-3 Star Hotels'
     FOUR_FIVE_STAR_HOTELS = '4-5 star hotels', '4-5 Star Hotels'
     HOSTELS_WITH_PRIVATE_BATHROOM = 'hostels with private bathroom', 'Hostels with private bathroom'
+    APARTMENT = 'apartment', 'Apartment'
+    CAMPING = 'camping', 'Camping'
+
+
+class HotelType(models.TextChoices):
+    ACC = '', 'Select an option'
+    TWO_STAR_HOTEL = '2 star hotel', '2 Stars hotel'
+    THREE_STAR_HOTEL = '3 star hotel', '3 Stars hotel'
+    FOUR_STAR_HOTEL = '4 star hotel', '4 Stars hotel'
+    FIVE_STAR_HOTEL = '5 star hotel', '5 Stars hotel'
+    HOSTEL_WITH_PRIVATE_BATHROOM = 'hostel private bathroom', 'Hostel with private bathroom'
     APARTMENT = 'apartment', 'Apartment'
     CAMPING = 'camping', 'Camping'
 
@@ -195,8 +229,15 @@ class GroupChoice(models.TextChoices):
 
 
 class CurrencyChoices(models.TextChoices):
-    CURRENCY = 'currency', 'Select currency'
+    CURRENCY = '', 'Select an option'
     EUR = 'eur', 'EUR'
     USD = 'usd', 'USD'
     MXN = 'mxn', 'MXN'
     CHF = 'chf', 'CHF'
+
+
+class ActivityTypeChoices(models.TextChoices):
+    CHOICE = '', 'Select an option'
+    TICKET = 'ticket', 'Ticket'
+    PACK = 'pack', 'Package'
+    OTHER = 'other', 'Other'

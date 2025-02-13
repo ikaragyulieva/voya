@@ -93,7 +93,7 @@ class LocalGuidesAdmin(admin.ModelAdmin):
     list_display = (
         'guide_name',
         'price',
-        'tour_duration',
+        'tour_description',
         'is_active',
         'updated_at',
     )

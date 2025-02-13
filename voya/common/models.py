@@ -33,16 +33,31 @@ class ServiceBaseModel(TimestampedModel):
         default="Select city",
     )
 
-    capacity = models.IntegerField(
+    capacity = models.PositiveIntegerField(
         default=1,
         blank=False,
         null=False,
     )
 
     telephone_number = PhoneNumberField(
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
         help_text="Enter phone number in international format. Example: +123456789"
+    )
+
+    email = models.EmailField(
+        blank=True,
+        null=True,
+    )
+
+    website = models.URLField(
+        blank=True,
+        null=True,
+    )
+
+    description = models.TextField(
+        blank=True,
+        null=True,
     )
 
     is_active = models.BooleanField(

@@ -19,19 +19,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 {% load custom_filters %}
 
-<p>From</p>
+<p>From *</p>
 {{ form.currency_from|placeholder:'' }}
 {% if form.currency_from.errors %}
     <div class="error">{{ form.currency_from.errors }}</div>
 {% endif %}
 
-<p>To</p>
+<p>To *</p>
 {{ form.currency_to }}
 {% if form.currency_to.errors %}
     <div class="error">{{ form.currency_to.errors }}</div>
 {% endif %}
 
-<p>Exchange rate</p>
+<p>Exchange rate *</p>
 {{ form.exchange_rate|placeholder:'' }}
 {% if form.exchange_rate.errors %}
     <div class="error">{{ form.exchange_rate.errors }}</div>

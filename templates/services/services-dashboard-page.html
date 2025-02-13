@@ -17,11 +17,11 @@
             <!-- End error messages -->
             <!-- Display a heading if there are no services -->
             {% if not service_queryset %}
-                <h2>No {{ model_name|title|lower }} yet</h2>
+                <h2>No {{ model_title }} yet</h2>
 
                 <!-- Display a heading if there are services -->
             {% else %}
-                <h2>{{ model_name|title|upper }}</h2>
+                <h2>{{ model_title|upper }}</h2>
 
                 <div class="col-9">
 
@@ -73,7 +73,7 @@
 
                         {% for service in service_list %}
                             <li class="table-row">
-                                <div class="col col-1" data-label="Logo">
+                                <div class="col col-1" data-label="Status">
                                     <div class="action-btn">
                                         {% if service.is_active %}
                                             <!-- Active Request Status -->

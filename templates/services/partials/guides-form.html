@@ -16,27 +16,46 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
+{% load custom_filters %}
 
-<p>Guide name</p>
-{{ form.guide_name }}
-{% if form.guide_name.errors %}
-    <div class="error">{{ form.guide_name.errors }}</div>
-{% endif %}
+<div class="form-section">
+    <h3>Guide Information </h3>
+    <div class="form-fields">
+        <p>Guide name *</p>
+        {{ form.guide_name|placeholder:'' }}
+        {% if form.guide_name.errors %}
+            <div class="error">{{ form.guide_name.errors }}</div>
+        {% endif %}
 
-<p>Price (€)</p>
-{{ form.price }}
-{% if form.price.errors %}
-    <div class="error">{{ form.price.errors }}</div>
-{% endif %}
+        <p>Price * (€)</p>
+        {{ form.price|placeholder:'Price in €' }}
+        {% if form.price.errors %}
+            <div class="error">{{ form.price.errors }}</div>
+        {% endif %}
 
-<p>Price includes</p>
-{{ form.price_includes }}
-{% if form.price_includes.errors %}
-    <div class="error">{{ form.price_includes.errors }}</div>
-{% endif %}
+        <p>Max group capacity * (e.g. 30 pax)</p>
+        {{ form.capacity|placeholder:'' }}
+        {% if form.capacity.errors %}
+            <div class="error">{{ form.capacity.errors }}</div>
+        {% endif %}
 
-<p>Tour description/duration</p>
-{{ form.tour_duration }}
-{% if form.tour_duration.errors %}
-    <div class="error">{{ form.tour_duration.errors }}</div>
-{% endif %}
+        <p>Price includes *</p>
+        {{ form.price_includes|placeholder:'e.g. 1 hour visit around Paris' }}
+        {% if form.price_includes.errors %}
+            <div class="error">{{ form.price_includes.errors }}</div>
+        {% endif %}
+
+        <p>Tour description/duration *</p>
+        {{ form.tour_description|placeholder:'e.g. Visit - Place de la Concorde - Avenue des Champs Elysees - Arc de Triomphe - Place du Trocadero - Eiffel Tower ' }}
+        {% if form.tour_description.errors %}
+            <div class="error">{{ form.tour_description.errors }}</div>
+        {% endif %}
+
+        <p>Label *</p>
+        {{ form.label|placeholder:'Text that the client will see' }}
+        {% if form.label.errors %}
+            <div class="error">{{ form.label.errors }}</div>
+        {% endif %}
+
+    </div>
+</div>

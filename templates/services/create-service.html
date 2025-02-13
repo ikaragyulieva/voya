@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% load static %}
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Create {{ model_name|title }}</h2>
+        <h2>Create new {{ model_title }}</h2>
 
         <form method="post" action="">
             {% csrf_token %}
@@ -14,23 +15,6 @@
                     {% include 'services/partials/currency-form.html' %}
 
                 {% else %}
-                    <p>Country</p>
-                    {{ form.country }}
-                    {% if form.country.errors %}
-                        <div class="error">{{ form.country.errors }}</div>
-                    {% endif %}
-
-                    <p>City</p>
-                    {{ form.city }}
-                    {% if form.city.errors %}
-                        <div class="error">{{ form.city.errors }}</div>
-                    {% endif %}
-
-                    <p>Capacity</p>
-                    {{ form.capacity }}
-                    {% if form.capacity.errors %}
-                        <div class="error">{{ form.capacity.errors }}</div>
-                    {% endif %}
 
                     {% if model_name == 'hotel' %}
                         {% include 'services/partials/hotel-form.html' %}
@@ -42,9 +26,69 @@
                         {% include 'services/partials/activity-form.html' %}
                     {% elif model_name == 'publictransport' or model_name == 'privatetransport' %}
                         {% include 'services/partials/public-private-transport-form.html' %}
-                        {#                        {{ form }}#}
+                    {% elif model_name == 'staff' %}
+                        {% include 'services/partials/staff-form.html' %}
 
                     {% endif %}
+
+                    {% if model_name != 'hotel' %}
+                        <div class="form-section">
+                            <h3>Location </h3>
+                            <div class="form-fields">
+                                <p>Country *</p>
+                                {{ form.country }}
+                                {% if form.country.errors %}
+                                    <div class="error">{{ form.country.errors }}</div>
+                                {% endif %}
+
+                                <p>City *</p>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                    <div class="error">{{ form.city.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                    <div class="form-section">
+                        <h3>Contact Information</h3>
+                        <div class="form-fields">
+
+                            <p>Email</p>
+                            {{ form.email|placeholder:'' }}
+                            {% if form.email.errors %}
+                                <div class="error">{{ form.email.errors }}</div>
+                            {% endif %}
+
+                            <p>Phone number</p>
+                            {{ form.telephone_number|placeholder:'e.g. +1234567890' }}
+                            {% if form.telephone_number.errors %}
+                                <div class="error">{{ form.telephone_number.errors }}</div>
+                            {% endif %}
+
+                            <p>Website</p>
+                            {{ form.website|placeholder:'' }}
+                            {% if form.website.errors %}
+                                <div class="error">{{ form.website.errors }}</div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Notes</h3>
+                        <div class="form-fields">
+
+                            <p>Description</p>
+                            {{ form.description|placeholder:'' }}
+                            {% if form.description.errors %}
+                                <div class="error">{{ form.description.errors }}</div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
                 {% endif %}
             </div>
             <button class="add-btn" type="submit">Create</button>

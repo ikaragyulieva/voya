@@ -19,14 +19,31 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 {% load custom_filters %}
 
-<p>Transport type</p>
-{{ form.type|placeholder:'' }}
-{% if form.type.errors %}
-    <div class="error">{{ form.type.errors }}</div>
-{% endif %}
+<div class="form-section">
+    <h3>Transport Information </h3>
+    <div class="form-fields">
+        <p>Transport type *</p>
+        {{ form.type|placeholder:'' }}
+        {% if form.type.errors %}
+            <div class="error">{{ form.type.errors }}</div>
+        {% endif %}
 
-<p>Transport price (€)</p>
-{{ form.price|placeholder:'Price in €' }}
-{% if form.price.errors %}
-    <div class="error">{{ form.price.errors }}</div>
-{% endif %}
+
+        <p>Transport price * (€)</p>
+        {% if model_name == 'privatetransport' %}
+            {{ form.price|placeholder:'Price per unit' }}
+        {% else %}
+            {{ form.price|placeholder:'Price per person' }}
+        {% endif %}
+        {% if form.price.errors %}
+            <div class="error">{{ form.price.errors }}</div>
+        {% endif %}
+    
+            <p>Max capacity *</p>
+        {{ form.capacity }}
+        {% if form.capacity.errors %}
+            <div class="error">{{ form.capacity.errors }}</div>
+        {% endif %}
+
+    </div>
+</div>

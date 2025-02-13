@@ -18,21 +18,33 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 {% load custom_filters %}
 
-<p>Transfer name</p>
-{{ form.transfer_name|placeholder:'' }}
-{% if form.transfer_name.errors %}
-    <div class="error">{{ form.transfer_name.errors }}</div>
-{% endif %}
+<div class="form-section">
+    <h3>Service Information </h3>
+    <div class="form-fields">
 
-<p>Transfer type</p>
-{{ form.type }}
-{% if form.type.errors %}
-    <div class="error">{{ form.type.errors }}</div>
-{% endif %}
+        <p>Transfer name *</p>
+        {{ form.transfer_name|placeholder:'' }}
+        {% if form.transfer_name.errors %}
+            <div class="error">{{ form.transfer_name.errors }}</div>
+        {% endif %}
 
-<p>Transfer price (€)</p>
-{{ form.price|placeholder:'Price in €' }}
-{% if form.price.errors %}
-    <div class="error">{{ form.price.errors }}</div>
-{% endif %}
+        <p>Transfer type *</p>
+        {{ form.type }}
+        {% if form.type.errors %}
+            <div class="error">{{ form.type.errors }}</div>
+        {% endif %}
 
+        <p>Transfer price * (€)</p>
+        {{ form.price|placeholder:'Price in €' }}
+        {% if form.price.errors %}
+            <div class="error">{{ form.price.errors }}</div>
+        {% endif %}
+
+        <p>Max capacity * (e.g. 4 Pax)</p>
+        {{ form.capacity }}
+        {% if form.capacity.errors %}
+            <div class="error">{{ form.capacity.errors }}</div>
+        {% endif %}
+
+    </div>
+</div>
