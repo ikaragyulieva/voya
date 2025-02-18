@@ -100,8 +100,8 @@
 
                             <div class="col col-8" data-label="Actions">
                                 <div class="action-btn request-action-btn">
-            
-                                    
+
+
                                     {#                            {% if request.user.role == 'client' and request.user.is_authenticated %}#}
                                     {#                            <div class="col col-8" data-label="Actions">#}
                                     {#                                <div class="action-btn request-action-btn">#}
@@ -131,8 +131,8 @@
                                     {#                                        />#}
                                     {#                                    </a>#}
 
-                                <!-- Client Buttons -->
-                                
+                                    <!-- Client Buttons -->
+
                                     {% if request.user.role == 'client' and request.user.is_authenticated %}
                                         {% if trip_request.request_proposal and not trip_request.request_proposal.is_draft %}
 
@@ -179,35 +179,35 @@
 
                                     {% endif %}
 
-                                <!-- Employee Buttons -->
-                                
-                                    {% if request.user.role == 'employee' and request.user.is_authenticated%}
+                                    <!-- Employee Buttons -->
 
-                                         <!-- View Request Page-->
-                                            <a href="{% url 'request-details' pk=trip_request.pk %}"
-                                               class="action-link" title="View Request">
-                                                <img
-                                                        src="{% static 'images/view-icon.png' %}"
-                                                        alt="view button"
-                                                />
-                                            </a>
-                                            <!-- Duplicate request-->
-                                            <a href="{% url 'clone-request' pk=trip_request.pk %}"
-                                               class="action-link" title="Duplicate Request">
-                                                <img
-                                                        src="{% static 'images/duplicate (1).png' %}"
-                                                        alt="duplicate button"
-                                                />
-                                            </a>
+                                    {% if request.user.role == 'employee' and request.user.is_authenticated %}
 
-                                            <!-- Link to Edit Request Page -->
-                                            <a href="{% url 'edit-request' pk=trip_request.pk %}"
-                                               class="action-link" title="Edit Request">
-                                                <img
-                                                        src="{% static 'images/edit-icon.png' %}"
-                                                        alt="edit button"
-                                                />
-                                            </a>
+                                        <!-- View Request Page-->
+                                        <a href="{% url 'request-details' pk=trip_request.pk %}"
+                                           class="action-link" title="View Request">
+                                            <img
+                                                    src="{% static 'images/view-icon.png' %}"
+                                                    alt="view button"
+                                            />
+                                        </a>
+                                        <!-- Duplicate request-->
+                                        <a href="{% url 'clone-request' pk=trip_request.pk %}"
+                                           class="action-link" title="Duplicate Request">
+                                            <img
+                                                    src="{% static 'images/duplicate (1).png' %}"
+                                                    alt="duplicate button"
+                                            />
+                                        </a>
+
+                                        <!-- Link to Edit Request Page -->
+                                        <a href="{% url 'edit-request' pk=trip_request.pk %}"
+                                           class="action-link" title="Edit Request">
+                                            <img
+                                                    src="{% static 'images/edit-icon.png' %}"
+                                                    alt="edit button"
+                                            />
+                                        </a>
 
                                         <!-- Link to Delete Request Page -->
                                         <a href="{% url 'delete-request' pk=trip_request.pk %}"

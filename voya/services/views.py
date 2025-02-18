@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import mixins
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -11,6 +12,7 @@ from django.apps import apps
 
 from voya.common.forms import SearchForm
 from voya.common.mixins import PlaceholderMixin
+from voya.providers.models import Providers
 from voya.services.models import LocalGuide, Hotel
 from voya.utils import get_user_obj
 
@@ -68,7 +70,6 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
         elif model == 'currency':
             model_title = 'currencies'
 
-
         search_form = SearchForm(self.request.GET)
 
         if search_form.is_valid():
@@ -111,11 +112,21 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
         return model.objects.all()
 
     def get_form_class(self):
+        service_name = self.kwargs['model_name']
+
+        eligible_providers = Providers.objects.filter(services__icontains=service_name) | Providers.objects.filter(services__icontains='other')
+
         class DynamicModelForm(PlaceholderMixin, forms.ModelForm):
             class Meta:
                 model = self.get_model()
                 # fields = "__all__"
                 exclude = ['is_active', 'created_by_user']
+
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                if 'provider' in self.fields:
+                    self.fields['provider'].queryset = eligible_providers
+                    self.fields['provider'].empty_label = "Select an option"
 
         return DynamicModelForm
 
@@ -163,7 +174,7 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
         })
 
 
-class ServiceEditView(UpdateView):
+class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
     template_name = 'services/edit-service-page.html'
 
     def get_model(self):
@@ -189,7 +200,28 @@ class ServiceEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['model_name'] = self.kwargs['model_name']
+        model = self.kwargs['model_name']
+        model_title = ''
+
+        if model == 'hotel':
+            model_title = 'hotel'
+        elif model == 'publictransport':
+            model_title = 'public transport'
+        elif model == 'privatetransport':
+            model_title = 'private transport'
+        elif model == 'ticket':
+            model_title = 'activity'
+        elif model == 'transfer':
+            model_title = 'transfer'
+        elif model == 'localguide':
+            model_title = 'local guide'
+        elif model == 'staff':
+            model_title = 'tour leader'
+        elif model == 'currency':
+            model_title = 'currency'
+
+        context['model_name'] = model
+        context['model_title'] = model_title
         context['profile'] = get_user_obj(self.request)
 
         return context
@@ -200,7 +232,7 @@ class ServiceEditView(UpdateView):
         })
 
 
-class DeleteServiceView(DeleteView):
+class DeleteServiceView(mixins.LoginRequiredMixin, DeleteView):
 
     def get_model(self):
         model_name = self.kwargs['model_name']
@@ -238,6 +270,7 @@ class DeleteServiceView(DeleteView):
         })
 
 
+@login_required
 def service_detail_view(request, model_name, pk):
     try:
         model = apps.get_model(app_label='services', model_name=model_name)

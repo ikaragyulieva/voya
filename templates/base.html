@@ -95,15 +95,6 @@
                                                         New Hotel</a></menuitem>
                                                 </menu>
                                             </menuitem>
-
-{#                                            <menuitem>#}
-{#                                                <a href="{% url 'service-dashboard' model_name='localguide' %}">Guides</a>#}
-{#                                                <menu>#}
-{#                                                    <menuitem><a#}
-{#                                                            href="{% url 'create-service' model_name='localguide' %}">Add#}
-{#                                                        New Guide</a></menuitem>#}
-{#                                                </menu>#}
-{#                                            </menuitem>#}
                                             
                                             <menuitem id="demo2">
                                                 <a>Guides</a>
@@ -172,6 +163,14 @@
                                                     <menuitem><a
                                                             href="{% url 'create-service' model_name='currency' %}">Add
                                                         New Currency</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+                                            
+                                            <menuitem>
+                                                <a href="{% url 'providers-dashboard' %}">Providers</a>
+                                                <menu>
+                                                    <menuitem><a href="{% url 'create-provider' %}">Add
+                                                        New Provider</a></menuitem>
                                                 </menu>
                                             </menuitem>
 

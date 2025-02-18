@@ -31,6 +31,7 @@ urlpatterns = [
     path('request/', include('voya.requests.urls')),
     path('services/', include('voya.services.urls')),
     path('proposals/', include('voya.proposals.urls')),
+    path('providers/', include('voya.providers.urls')),
 
     # Swagger URLs
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

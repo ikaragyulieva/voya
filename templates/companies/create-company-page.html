@@ -15,38 +15,38 @@
 
                 <div class="form-fields">
 
-                    <p>Commercial name</p>
+                    <p>Commercial name *</p>
                     {{ company_profile_form.status }}
                     {{ company_profile_form.commercial_name }}
                     {% if company_profile_form.commercial_name.errors %}
                         <div class="error">{{ company_profile_form.commercial_name.errors }}</div>
                     {% endif %}
 
-                    <p>Legal name</p>
+                    <p>Legal name *</p>
                     {{ company_profile_form.legal_name }}
                     {% if company_profile_form.legal_name.errors %}
                         <div class="error">{{ company_profile_form.legal_name.errors }}</div>
                     {% endif %}
 
-                    <p>VAT / Tax ID</p>
+                    <p>VAT / Tax ID *</p>
                     {{ company_profile_form.tax_id }}
                     {% if company_profile_form.tax_id.errors %}
                         <div class="error">{{ company_profile_form.tax_id.errors }}</div>
                     {% endif %}
 
-                    <p>Billing e-mail</p>
+                    <p>Billing e-mail *</p>
                     {{ company_profile_form.billing_email }}
                     {% if company_profile_form.billing_email.errors %}
                         <div class="error">{{ company_profile_form.billing_email.errors }}</div>
                     {% endif %}
 
-                    <p>Whatsapp number</p>
+                    <p>Whatsapp number *</p>
                     {{ phone_number_form.number|placeholder:'e.g. +1234567890' }}
                     {% if phone_number_form.number.errors %}
                         <div class="error">{{ phone_number_form.number.errors }}</div>
                     {% endif %}
 
-                    <p>Company logo (max 5MB)</p>
+                    <p>Company logo (max 5MB) *</p>
                     {{ company_profile_form.logo|placeholder:'Email' }}
                     {% if company_profile_form.logo.errors %}
                         <div class="error">{{ company_profile_form.logo.errors }}</div>
@@ -59,13 +59,13 @@
                 <h3>Address Information</h3>
                 <div class="form-fields">
                 
-                    <p>Country</p>
+                    <p>Country *</p>
                     {{ address_form.country }}
                     {% if address_form.country.errors %}
                         <div class="error">{{ address_form.country.errors }}</div>
                     {% endif %}
                 
-                    <p>City</p>
+                    <p>City *</p>
                     {{ address_form.city }}
                     {% if address_form.city.errors %}
                         <div class="error">{{ address_form.city.errors }}</div>
@@ -77,13 +77,13 @@
                         <div class="error">{{ address_form.state.errors }}</div>
                     {% endif %}
                 
-                    <p>Street</p>
+                    <p>Street *</p>
                     {{ address_form.street_address }}
                     {% if address_form.street_address.errors %}
                         <div class="error">{{ address_form.street_address.errors }}</div>
                     {% endif %}
                 
-                    <p>Postal code</p>
+                    <p>Postal code *</p>
                     {{ address_form.postal_code }}
                     {% if address_form.postal_code.errors %}
                         <div class="error">{{ address_form.postal_code.errors }}</div>

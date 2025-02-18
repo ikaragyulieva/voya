@@ -1,0 +1,139 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="trip">
+
+
+        <div class="trip-title">
+            <p>{{ provider.commercial_name }}</p>
+        </div>
+
+        <hr class="custom-line">
+
+        <div class="trip-section">
+            <h3 class="title">Provider Information</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <th>Services:</th>
+                    <td><i> {{ provider.services }} </i></td>
+                </tr>
+                <tr>
+                    <th>Country:</th>
+                    <td><i> {{ provider.get_country_display }} </i></td>
+                </tr>
+                <tr>
+                    <th>City:</th>
+                    <td><i> {{ provider.get_city_display }} </i></td>
+                </tr>
+                <tr>
+                    <th>Website:</th>
+                    {% if provider.website == None %}
+                        <td><i> - </i></td>
+                    {% else %}
+                        <td><i><a href="{{ provider.website }}" target=”_blank”>
+                            {{ provider.website }}
+                        </a></i></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th>Notes:</th>
+                    {% if not provider.description %}
+                        <td><i> - </i></td>
+                    {% else %}
+                        <td><i> {{ provider.description }} </i></td>
+                    {% endif %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="custom-line">
+
+        <div class="trip-section">
+            <h3 class="title">Contact Information</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <th>Email:</th>
+                    {% if provider.email == None %}
+                        <td><i> - </i></td>
+                    {% else %}
+                        <td><i> {{ provider.email }} </i></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th>Phone number:</th>
+                    {% if provider.telephone_number == None %}
+                        <td><i> - </i></td>
+                    {% else %}
+                        <td><i> {{ provider.telephone_number }} </i></td>
+                    {% endif %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="custom-line">
+
+        <div class="trip-section">
+            <h3 class="title">Entry Information</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <th>Last update:</th>
+                    <td><i> {{ provider.updated_at|date:"d-M-Y" }} </i></td>
+                </tr>
+                <tr>
+                    <th>Updated by:</th>
+                    <td><i>{{ provider.created_by_user.email }}</i></td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>
+                        <div class="action-btn">
+                            {% if provider.is_active %}
+                                <!-- Active Request Status -->
+                                <img
+                                        src="{% static 'images/green-circle.png' %}"
+                                        alt="Active"
+                                />
+
+                            {% else %}
+                                <!-- Closed Request Status -->
+                                <img
+                                        src="{% static 'images/red-circle.png' %}"
+                                        alt="Closed"
+                                />
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock %}

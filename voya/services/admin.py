@@ -91,22 +91,22 @@ class TransfersAdmin(admin.ModelAdmin):
 @admin.register(LocalGuide)
 class LocalGuidesAdmin(admin.ModelAdmin):
     list_display = (
-        'guide_name',
+        'name',
         'price',
         'tour_description',
         'is_active',
         'updated_at',
     )
 
-    search_fields = ('guide_name', 'price_includes')
+    search_fields = ('name', 'price_includes')
 
     list_filter = ('is_active',)
 
-    ordering = ('guide_name',)
+    ordering = ('name',)
 
     fieldsets = (
         ('Guide Information', {
-            'fields': ('guide_name', 'price', 'price_includes', 'tour_duration')
+            'fields': ('name', 'price', 'price_includes', 'tour_duration')
         }),
         ('Status', {
             'fields': ('is_active',)

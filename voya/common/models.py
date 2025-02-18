@@ -1,6 +1,8 @@
+from django.apps import apps
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+from voya.providers.models import Providers
 from voya.requests import choices
 from voya.users.models import CustomUser
 
@@ -62,6 +64,12 @@ class ServiceBaseModel(TimestampedModel):
 
     is_active = models.BooleanField(
         default=True
+    )
+
+    provider = models.ForeignKey(
+        Providers,
+        on_delete=models.CASCADE,
+        related_name='%(class)s_provider',
     )
 
     created_by_user = models.ForeignKey(

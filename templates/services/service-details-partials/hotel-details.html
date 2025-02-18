@@ -1,0 +1,105 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+
+<div class="trip-section">
+    <h3 class="title">Venue Information</h3>
+    <table>
+        <tbody>
+        <tr>
+            <th>Category:</th>
+            <td><i> {{ service.get_category_display }} </i></td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            {% if not service.description %}
+                <td><i> - </i></td>
+            {% else %}
+                <td><i> {{ service.description }} </i></td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr class="custom-line">
+
+<div class="trip-section">
+    <h3 class="title">Price Information</h3>
+    <table>
+        <tbody>
+        <tr>
+            <th>High season price:</th>
+            <td><i> &#8364 {{ service.high_season_price }} </i></td>
+        </tr>
+        <tr>
+            <th>Low season price:</th>
+            {% if service.low_season_price == None %}
+                <td><i> - </i></td>
+            {% else %}
+                <td><i> &#8364 {{ service.low_season_price }} </i></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <th>Price for max:</th>
+            {% if service.capacity == 1 %}
+                <td><i> {{ service.capacity }} person </i></td>
+            {% else %}
+                <td><i> {{ service.capacity }} people </i></td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr class="custom-line">
+
+<div class="trip-section">
+    <h3 class="title">Location</h3>
+    <table>
+        <tbody>
+        <tr>
+            <th>Country:</th>
+            <td><i> {{ service.get_country_display }} </i></td>
+        </tr>
+        <tr>
+            <th>City:</th>
+            <td><i> {{ service.city }} </i></td>
+        </tr>
+        <tr>
+            <th>Street:</th>
+            <td><i> {{ service.street_address }} </i></td>
+        </tr>
+        <tr>
+            <th>District:</th>
+            <td><i> {{ service.zone }} </i></td>
+        </tr>
+        <tr>
+            <th>District description:</th>
+            {% if service.zone_description == None %}
+                <td><i> - </i></td>
+            {% else %}
+                <td><i> {{ service.zone_description }} </i></td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+

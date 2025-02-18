@@ -9,13 +9,14 @@ from voya.companies import models
 from voya.companies.forms import CompanyProfileForm, AddressForm, PhoneNumberForm
 from voya.companies.models import CompanyProfile
 from voya.employees.models import EmployeeProfile
+from voya.utils import get_user_obj
 
 
 # Create your views here.
 
 class CompanyCreateView(FormView):
     template_name = 'companies/create-company-page.html'
-    success_url = reverse_lazy('home')
+    # success_url = reverse_lazy('companies-dashboard')
 
     company_profile_form_class = CompanyProfileForm
     address_form_class = AddressForm
@@ -73,6 +74,17 @@ class CompanyCreateView(FormView):
                 address_form=address_form,
             )
         )
+
+    def get_success_url(self):
+        # profile = get_user_obj(self.request)
+        if self.request.user.role == 'employee':
+            return reverse_lazy(
+                'companies-dashboard',
+            )
+        else:
+            return reverse_lazy(
+                'home'
+            )
 
 
 class CompaniesDashboardView(mixins.LoginRequiredMixin, ListView):

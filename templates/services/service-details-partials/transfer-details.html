@@ -1,0 +1,66 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<div class="trip-section">
+    <h3 class="title">Service Information</h3>
+    <table>
+        <tbody>
+        <tr>
+            <th>Transfer name:</th>
+            <td><i> {{ service.transfer_name }} </i></td>
+        </tr>
+        <tr>
+            <th>Transfer type:</th>
+            <td><i> {{ service.get_type_display }} </i></td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            {% if not service.description %}
+                <td><i> - </i></td>
+            {% else %}
+                <td><i> {{ service.description }} </i></td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr class="custom-line">
+
+<div class="trip-section">
+    <h3 class="title">Price Information</h3>
+    <table>
+        <tbody>
+        <tr>
+            <th>Price:</th>
+            <td><i> &#8364 {{ service.price }} </i></td>
+        </tr>
+        <tr>
+            <th>Price for max:</th>
+            {% if service.capacity == 1 %}
+                <td><i> {{ service.capacity }} person </i></td>
+            {% else %}
+                <td><i> {{ service.capacity }} people </i></td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr class="custom-line">

@@ -175,6 +175,9 @@ h2 {
 
 }
 
+
+
+
 .table-services {
     width: 65%;
     margin: 0 auto; /* Centers the table horizontally */
@@ -556,4 +559,37 @@ h2 {
 .action-link[title]::after {
     content: ""; /* Default hidden */
     opacity: 0;
+}
+
+.providers-table {
+    width: 65%;
+    margin: 0 auto; /* Centers the table horizontally */
+    overflow-x: auto; /* Adds scroll if content overflows */
+    /*text-align: center;*/
+
+    .col-1 {
+        flex-basis: 10%;
+    }
+
+    .col-2 {
+        flex-basis: 25%;
+    }
+
+    .col-33 {
+        flex-basis: 25%;
+    }
+
+    .col-4 {
+        flex-basis: 12%;
+    }
+
+    .col-5 {
+        flex-basis: 12%;
+    }
+
+    .col-6 {
+        /*text-align: center;*/
+        flex-basis: 12%;
+    }
+
 }

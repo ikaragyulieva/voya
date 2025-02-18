@@ -12,8 +12,8 @@ class CompanyProfile(TimestampedModel):
     commercial_name = models.CharField(
         max_length=255,
         unique=True,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
         validators=[
             MinLengthValidator(2),
         ]
@@ -22,8 +22,8 @@ class CompanyProfile(TimestampedModel):
     legal_name = models.CharField(
         max_length=255,
         unique=True,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
         validators=[
             MinLengthValidator(2),
         ]
@@ -32,8 +32,8 @@ class CompanyProfile(TimestampedModel):
     tax_id = models.CharField(
         max_length=15,
         unique=True,
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
         validators=[
             MinLengthValidator(5),
         ]
@@ -76,10 +76,14 @@ class Address(TimestampedModel):
 
     street_address = models.CharField(
         max_length=255,
+        blank=False,
+        null=False,
     )
 
     city = models.CharField(
         max_length=100,
+        blank=False,
+        null=False,
     )
 
     state = models.CharField(
@@ -90,13 +94,17 @@ class Address(TimestampedModel):
 
     postal_code = models.CharField(
         max_length=20,
+        blank=False,
+        null=False,
         validators=[
             MinLengthValidator(4),
         ]
     )
 
     country = CountryField(
-        blank_label="Select your country",
+        blank_label="Select country",
+        blank=False,
+        null=False,
     )
 
     is_active = models.BooleanField(

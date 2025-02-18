@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Edit {{ model_name|title }}</h2>
+        <h2>Edit {{ model_title }}</h2>
 
         <form method="post" action="{% url 'edit-service' model_name=model_name pk=object.pk %}">
             {% csrf_token %}
@@ -13,25 +13,25 @@
             <div class="form-fields">
                 {% if model_name == 'currency' %}
 
-                    {% include 'services/partials/currency-form.html' %}
+                    {% include 'services/create-edit-partials/currency-form.html' %}
 
                 {% else %}
 
                     {% if model_name == 'hotel' %}
-                        {% include 'services/partials/hotel-form.html' %}
+                        {% include 'services/create-edit-partials/hotel-form.html' %}
                     {% elif model_name == 'transfer' %}
-                        {% include 'services/partials/transfer-form.html' %}
+                        {% include 'services/create-edit-partials/transfer-form.html' %}
                     {% elif model_name == 'localguide' %}
-                        {% include 'services/partials/guides-form.html' %}
+                        {% include 'services/create-edit-partials/guides-form.html' %}
                     {% elif model_name == 'ticket' %}
-                        {% include 'services/partials/activity-form.html' %}
+                        {% include 'services/create-edit-partials/activity-form.html' %}
                     {% elif model_name == 'publictransport' or model_name == 'privatetransport' %}
-                        {% include 'services/partials/public-private-transport-form.html' %}
+                        {% include 'services/create-edit-partials/public-private-transport-form.html' %}
                     {% elif model_name == 'staff' %}
-                        {% include 'services/partials/staff-form.html' %}
+                        {% include 'services/create-edit-partials/staff-form.html' %}
 
                     {% endif %}
-                    
+
                     {% if model_name != 'hotel' %}
                         <div class="form-section">
                             <h3>Location </h3>
@@ -57,7 +57,7 @@
                         <div class="form-fields">
 
                             <p>Email</p>
-                            {{ form.email|placeholder:'' }}
+                            {{ form.email|placeholder:'e-mail@email.com' }}
                             {% if form.email.errors %}
                                 <div class="error">{{ form.email.errors }}</div>
                             {% endif %}
@@ -69,7 +69,7 @@
                             {% endif %}
 
                             <p>Website</p>
-                            {{ form.website|placeholder:'' }}
+                            {{ form.website|placeholder:'https://your-webpage.com' }}
                             {% if form.website.errors %}
                                 <div class="error">{{ form.website.errors }}</div>
                             {% endif %}
@@ -77,6 +77,19 @@
                         </div>
                     </div>
                     
+                    <div class="form-section">
+                        <h3>Service Provider</h3>
+                        <div class="form-fields">
+
+                            <p>Provider *</p>
+                            {{ form.provider|placeholder:'Select an option' }}
+                            {% if form.provider.errors %}
+                                <div class="error">{{ form.provider.errors }}</div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
                     <div class="form-section">
                         <h3>Notes</h3>
                         <div class="form-fields">
@@ -89,7 +102,7 @@
 
                         </div>
                     </div>
-                    
+
                 {% endif %}
             </div>
 

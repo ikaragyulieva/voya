@@ -16,7 +16,7 @@ from voya.clients import forms
 from voya.clients.models import ClientProfile
 from voya.common.forms import SearchForm
 from voya.requests.models import TripRequests
-from voya.utils import send_activation_email
+from voya.utils import send_activation_email, get_user_obj
 
 
 class CreateClientView(CreateView):
@@ -34,6 +34,12 @@ class CreateClientView(CreateView):
         send_activation_email(self.request, user)
 
         return render(self.request, 'common/check-email-page.html', context={'user': user})
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = get_user_obj(self.request)
+
+        return context
 
 
 class EditUserProfileView(mixins.LoginRequiredMixin, UpdateView):

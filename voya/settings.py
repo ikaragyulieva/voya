@@ -43,6 +43,7 @@ PROJECT_APPS = [
     'voya.companies',
     'voya.services',
     'voya.proposals',
+    'voya.providers',
 
 ]
 

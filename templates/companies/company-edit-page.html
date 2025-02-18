@@ -45,6 +45,14 @@
                     {% if phone_number_form.number.errors %}
                         <div class="error">{{ phone_number_form.number.errors }}</div>
                     {% endif %}
+                
+                    {% if request.user.is_authenticated and request.user.role == 'employee' or request.user.is_staff %} 
+                    <p>Notes</p>
+                    {{ company_profile_form.notes|placeholder:'' }}
+                    {% if phone_number_form.number.errors %}
+                        <div class="error">{{ phone_number_form.number.errors }}</div>
+                    {% endif %}
+                    {% endif %}
 
                 </div>
             </div>

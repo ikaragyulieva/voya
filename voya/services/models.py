@@ -83,7 +83,7 @@ class Transfer(ServiceBaseModel):
 
 
 class LocalGuide(ServiceBaseModel):
-    guide_name = models.CharField(
+    name = models.CharField(
         max_length=80,
         blank=False,
         null=False,

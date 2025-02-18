@@ -42,15 +42,6 @@ from voya.requests.models import TripRequests
 from voya.utils import get_user_obj
 
 
-# @extend_schema(
-#     summary="Create Proposal Endpoint",
-#     description="Create a new proposal",
-#     request=ProposalSerializer,
-#     responses={
-#         201: ProposalSerializer,
-#         400: "Invalid request data",
-#     }
-# )
 class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
     template_name = "proposals/create-proposal-page.html"
 

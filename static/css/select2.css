@@ -98,7 +98,9 @@
 }
 
 .select2-results__option--selectable {
-    cursor: pointer
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 14px;
 }
 
 .select2-container--open .select2-dropdown {
@@ -267,8 +269,11 @@
 .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
     cursor: default;
     padding-left: 2px;
-    padding-right: 5px
+    padding-right: 5px;
+    font-weight: 300;
+    font-size: 12px;
 }
+
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     background-color: transparent;

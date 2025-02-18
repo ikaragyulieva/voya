@@ -367,6 +367,7 @@ textarea {
     background: none;
     font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     transition: height 0.2s ease;
+    padding: 5px 0;
 }
 
 textarea.text::placeholder {
@@ -863,6 +864,10 @@ menuitem > menu > menuitem.hover > menu > menuitem {
     align-items: center;
 }
 
+.list-topics .container{
+    text-align: center;
+}
+
 
 .welcome-hero {
     position: relative;
@@ -1058,6 +1063,13 @@ menuitem > menu > menuitem.hover > menu > menuitem {
             width: 270px;
             min-height: 600px;
         }
+    }
+
+}
+
+@media all and (max-width: 1100px){
+    .works{
+        display: none;
     }
 }
 

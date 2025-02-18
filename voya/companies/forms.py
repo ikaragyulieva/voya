@@ -24,7 +24,14 @@ class CompanyProfileForm(forms.ModelForm):
 
     class Meta:
         model = CompanyProfile
-        exclude = ['notes']
+        fields = "__all__"
+        #     [
+        #     'commercial_name',
+        #     'legal_name',
+        #     'tax_id',
+        #     'billing_email',
+        #     ''
+        # ]
         # widgets = {
         #     'commercial_name': forms.TextInput(attrs={'placeholder': 'Commercial name'}),
         #     'legal_name': forms.TextInput(attrs={'placeholder': 'Legal name'}),

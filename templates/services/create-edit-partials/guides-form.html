@@ -22,8 +22,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <h3>Guide Information </h3>
     <div class="form-fields">
         <p>Guide name *</p>
-        {{ form.guide_name|placeholder:'' }}
-        {% if form.guide_name.errors %}
+        {{ form.name|placeholder:'' }}
+        {% if form.name.errors %}
             <div class="error">{{ form.guide_name.errors }}</div>
         {% endif %}
 
