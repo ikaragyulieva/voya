@@ -18,7 +18,7 @@ class ProviderCreateView(mixins.LoginRequiredMixin, CreateView):
     model = Providers
     form_class = ProviderCreateForm
     template_name = 'providers/create-provider.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('providers-dashboard')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
