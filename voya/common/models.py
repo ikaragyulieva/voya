@@ -66,11 +66,11 @@ class ServiceBaseModel(TimestampedModel):
         default=True
     )
 
-    provider = models.ForeignKey(
-        Providers,
-        on_delete=models.CASCADE,
-        related_name='%(class)s_provider',
-    )
+    # provider = models.ForeignKey(
+    #     Providers,
+    #     on_delete=models.CASCADE,
+    #     related_name='%(class)s_provider',
+    # )
 
     created_by_user = models.ForeignKey(
         CustomUser,
