@@ -20,6 +20,7 @@ from voya.common.tokens import account_activation_token
 def home_view(request):
     context = {'profile': get_user_obj(request)}
 
+    # return render(request, template_name='common/home-page.html', context=context)
     return render(request, template_name='common/home-page.html', context=context)
 
 
@@ -58,6 +59,7 @@ def activate_account(request, uidb64, token):
 
     context = {
         'user': user,
+        'profile': get_user_obj(request),
     }
 
     if user is not None and account_activation_token.check_token(user, token):
@@ -110,7 +112,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
             template_name='emails/new-password-confirmation.html',
             activation_link=None,
             email_subject='Your Voya password has been changed successfully',
-            send_to=[user.email,]
+            send_to=[user.email, ]
         )
 
         return render(self.request, 'common/password_reset_complete.html')

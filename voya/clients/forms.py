@@ -35,11 +35,21 @@ class SignUpClientForm(UserCreationForm):
         max_length=20,
     )
 
-    email = forms.EmailField()
+    email = forms.EmailField(
+        widget=forms.TextInput(attrs={'placeholder': 'Email address'}),
+        label="",
+    )
 
-    password1 = forms.CharField()
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
+        label="",
+    )
 
-    password2 = forms.CharField()
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+        label="",
+        help_text="",
+    )
 
     class Meta:
         model = UserModel

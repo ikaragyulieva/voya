@@ -87,6 +87,11 @@ select option {
     box-shadow: 2px 3px #d7b241;
     cursor: pointer;
 }
+
+.edit-delete .verify-btn {
+	width: 50%;
+}
+
 .profile-info{
 	margin-top: 1em;
 	margin-bottom: 1em;
