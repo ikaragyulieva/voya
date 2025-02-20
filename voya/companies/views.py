@@ -32,7 +32,7 @@ class CompanyCreateView(FormView):
         context['company_profile_form'] = context.get('company_profile_form', self.company_profile_form_class())
         context['address_form'] = context.get('address_form', self.address_form_class())
         context['phone_number_form'] = context.get('phone_number_form', self.phone_number_form_class())
-        if self.request.user.is_authenticated and self.request.user.is_active:
+        if self.request.user and self.request.user.is_authenticated and self.request.user.is_active:
             employee_profile = EmployeeProfile.objects.get(user=self.request.user)
             context['profile'] = employee_profile
 
@@ -53,8 +53,9 @@ class CompanyCreateView(FormView):
 
     def form_valid(self, company_profile_form, address_form, phone_number_form):
         with transaction.atomic():
-            company_profile_form.is_active = True
-            company_profile = company_profile_form.save()
+            company_profile = company_profile_form.save(commit=False)
+            company_profile.is_active = True
+            company_profile.save()
 
             address = address_form.save(commit=False)
             address.company = company_profile
@@ -77,14 +78,18 @@ class CompanyCreateView(FormView):
 
     def get_success_url(self):
         # profile = get_user_obj(self.request)
-        if self.request.user.role == 'employee':
+        if not self.request.user.is_authenticated:
             return reverse_lazy(
-                'companies-dashboard',
+                'home',
             )
-        else:
+        if getattr(self.request.user, 'role', None) is not 'employee':
             return reverse_lazy(
-                'home'
+                'home',
             )
+
+        return reverse_lazy(
+            'companies-dashboard'
+        )
 
 
 class CompaniesDashboardView(mixins.LoginRequiredMixin, ListView):
