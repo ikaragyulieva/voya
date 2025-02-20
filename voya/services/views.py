@@ -114,6 +114,21 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
     def get_form_class(self):
         service_name = self.kwargs['model_name']
 
+        if service_name == 'hotel':
+            service_name = 'accommodation'
+        elif service_name == 'publictransport':
+            service_name = 'public transport'
+        elif service_name == 'privatetransport':
+            service_name = 'private transport'
+        elif service_name == 'ticket':
+            service_name = 'activity'
+        elif service_name == 'transfer':
+            service_name = 'transfers'
+        elif service_name == 'localguide':
+            service_name = 'local guides'
+        elif service_name == 'staff':
+            service_name = 'tour leaders'
+
         eligible_providers = Providers.objects.filter(services__icontains=service_name) | Providers.objects.filter(services__icontains='other')
 
         class DynamicModelForm(PlaceholderMixin, forms.ModelForm):
@@ -189,11 +204,38 @@ class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
         return model.objects.all()
 
     def get_form_class(self):
+
+        service_name = self.kwargs['model_name']
+
+        if service_name == 'hotel':
+            service_name = 'accommodation'
+        elif service_name == 'publictransport':
+            service_name = 'public transport'
+        elif service_name == 'privatetransport':
+            service_name = 'private transport'
+        elif service_name == 'ticket':
+            service_name = 'activity'
+        elif service_name == 'transfer':
+            service_name = 'transfers'
+        elif service_name == 'localguide':
+            service_name = 'local guides'
+        elif service_name == 'staff':
+            service_name = 'tour leaders'
+
+        eligible_providers = Providers.objects.filter(services__icontains=service_name) | Providers.objects.filter(
+            services__icontains='other')
+
         class DynamicModelForm(PlaceholderMixin, forms.ModelForm):
             class Meta:
                 model = self.get_model()
                 # fields = "__all__"
                 exclude = ['is_active', 'created_by_user']
+
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                if 'provider' in self.fields:
+                    self.fields['provider'].queryset = eligible_providers
+                    self.fields['provider'].empty_label = "Select an option"
 
         return DynamicModelForm
 
