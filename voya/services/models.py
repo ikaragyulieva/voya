@@ -27,14 +27,14 @@ class Hotel(ServiceBaseModel):
     )
 
     high_season_price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=False,
         null=False,
     )
 
     low_season_price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=True,
         null=True,
@@ -75,7 +75,7 @@ class Transfer(ServiceBaseModel):
     )
 
     price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=False,
         null=False,
@@ -90,7 +90,7 @@ class LocalGuide(ServiceBaseModel):
     )
 
     price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=False,
         null=False,
@@ -128,7 +128,7 @@ class Staff(ServiceBaseModel):
     )
 
     price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=False,
         null=False,
@@ -160,7 +160,7 @@ class Ticket(ServiceBaseModel):
     )
 
     price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=False,
         null=False,
@@ -193,7 +193,7 @@ class Currency(TimestampedModel):
     )
 
     exchange_rate = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=3,
         blank=False,
         null=False,
@@ -220,7 +220,7 @@ class PublicTransport(ServiceBaseModel):
     )
 
     price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=False,
         null=False,
@@ -237,7 +237,7 @@ class PrivateTransport(ServiceBaseModel):
     )
 
     price = models.DecimalField(
-        max_digits=5,
+        max_digits=7,
         decimal_places=2,
         blank=False,
         null=False,

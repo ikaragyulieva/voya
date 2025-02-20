@@ -183,6 +183,9 @@ LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 SESSION_COOKIE_NAME = 'new_session_id'
+SESSION_COOKIE_HTTPONLY = True  # session id in cookies shown only in https
+SESSION_COOKIE_SECURE = True   # session id can not be accessed with js
+
 
 # SMTP Set up
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -63,6 +63,7 @@
 
 table{
     border-spacing: 10px 10px;
+    width: 400px;
 }
 
 table tr{
@@ -81,7 +82,7 @@ table th{
 
 table td{
     margin-left: 10px;
-    width: 200px
+    max-width: 200px
 }
 
 .trip-proposal{
