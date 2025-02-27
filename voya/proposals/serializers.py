@@ -71,6 +71,8 @@ class BudgetSerializer(serializers.Serializer):
     pax = serializers.IntegerField()
     variable_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
     fixed_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
+    free_of_charge = serializers.IntegerField()
+    free_of_charge_amount = serializers.DecimalField(max_digits=10, decimal_places=2)
     total_cost_per_person = serializers.DecimalField(max_digits=10, decimal_places=2)
     total_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
     service_fee = serializers.DecimalField(max_digits=10, decimal_places=2)

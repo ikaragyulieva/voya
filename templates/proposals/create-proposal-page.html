@@ -176,6 +176,7 @@
 
                 </div>
                 <hr class="custom-line">
+                <!-- Accommodation -->
                 <div class="trip-section">
                     <h3 id="section" class="title">Accommodations</h3>
                     <!-- Add row button -->
@@ -208,7 +209,8 @@
                             </select></div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="variable cost"><input type="text" id="service-price"
-                                                                                     name="service_price" placeholder="€ 0.00">
+                                                                                     name="service_price"
+                                                                                     placeholder="€ 0.00">
                             </div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn proposal-item-btn">
@@ -226,14 +228,14 @@
                     </ul>
                 </div>
 
-
+                <!-- Private Transport -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Transport</h3>
+                    <h3 id="section" class="title">Private Transport</h3>
                     <!-- Add row button -->
 
                     <div class="action-btn add-option">
-                        <a href="#">
+                        <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
                                     alt="Add row"
@@ -261,11 +263,12 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00"></div>
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn proposal-item-btn">
                                     <!-- Remove Row-->
-                                    <a href="#">
+                                    <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/remove-icon.png' %}"
                                                 alt="remove row button"
@@ -278,13 +281,15 @@
                     </ul>
 
                 </div>
+
+                <!-- Public Transport -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Activity</h3>
+                    <h3 id="section" class="title">Public Transport</h3>
                     <!-- Add row button -->
 
                     <div class="action-btn add-option">
-                        <a href="#">
+                        <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
                                     alt="Add row"
@@ -312,11 +317,12 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00"></div>
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
                                     <!-- Remove Row-->
-                                    <a href="#">
+                                    <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/remove-icon.png' %}"
                                                 alt="remove row button"
@@ -329,13 +335,69 @@
                     </ul>
 
                 </div>
+
+                <!-- Activity -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Activity</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details">
+                                <select id="service-dropdown" name="service">
+                                    <option value="">Select a Service</option>
+                                </select>
+                            </div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+                                    <!-- Remove Row-->
+                                    <a href="#" class="remove-row-button">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- Transfers -->
                 <hr class="custom-line">
                 <div class="trip-section">
                     <h3 id="section" class="title">Transfers</h3>
                     <!-- Add row button -->
 
                     <div class="action-btn add-option">
-                        <a href="#">
+                        <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
                                     alt="Add row"
@@ -363,11 +425,13 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00"></div>
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
+
                                     <!-- Remove Row-->
-                                    <a href="#">
+                                    <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/remove-icon.png' %}"
                                                 alt="remove row button"
@@ -380,13 +444,15 @@
                     </ul>
 
                 </div>
+
+                <!-- Local Guides -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Guides</h3>
+                    <h3 id="section" class="title">Local Guides</h3>
                     <!-- Add row button -->
 
                     <div class="action-btn add-option">
-                        <a href="#">
+                        <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
                                     alt="Add row"
@@ -415,11 +481,14 @@
                             </div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00"></div>
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
+
+                            <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
 
-                                    <a href="#">
+                                    <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/remove-icon.png' %}"
                                                 alt="remove row button"
@@ -433,13 +502,72 @@
 
                 </div>
 
+                <!-- Tour Leader -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Tour Leader</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33" data-label="service details">
+                                <select id="service-dropdown" name="service">
+                                    <option value="">Select a Service</option>
+                                </select>
+                            </div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
+
+                            <!-- Remove Row-->
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn">
+
+                                    <a href="#" class="remove-row-button">
+                                        <img
+                                                src="{% static 'images/remove-icon.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+
+
+                <!-- Other Services -->
                 <hr class="custom-line">
                 <div class="trip-section">
                     <h3 id="section" class="title">Other Services</h3>
                     <!-- Add row button -->
 
                     <div class="action-btn add-option">
-                        <a href="#">
+                        <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
                                     alt="Add row"
@@ -449,7 +577,7 @@
 
                     <ul class="responsive-table requests-table">
 
-                        <li class="table-header fixed-cost">
+                        <li class="table-header variable-cost">
                             <div class="col col-1">Date</div>
                             <div class="col col-2">City</div>
                             <div class="col col-33">Service</div>
@@ -465,12 +593,14 @@
                                  data-label="service details">{{ item_form.additional_notes|placeholder:'Add service' }}</div>
                             <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
                             <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00"></div>
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
 
+                            <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn">
 
-                                    <a href="#">
+                                    <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/remove-icon.png' %}"
                                                 alt="add column button"
@@ -484,12 +614,11 @@
 
                 </div>
 
-
             </div>
         </form>
+
+
         <!-- Trip Proposal Budget Template -->
-
-
         <div class="trip trip-proposal budget">
 
             <div class="trip-title">
@@ -501,16 +630,6 @@
             <hr class="custom-line">
 
             <div class="trip-section">
-                <!-- Add column button -->
-
-                {#                    <div class="action-btn add-option">#}
-                {#                        <a href="#" id="add-column-button">#}
-                {#                            <img#}
-                {#                                    src="{% static 'images/new-page.png' %}"#}
-                {#                                    alt="Add column"#}
-                {#                            />#}
-                {#                        </a>#}
-                {#                    </div>#}
                 <form id="proposal-form" method="post" action="#" onsubmit="return false">
                     <div class="budget-container">
                         <table class="budget-table" id="budget-table">
@@ -533,6 +652,15 @@
                                 <th class="fixed-cost">Fixed cost:</th>
                                 <td><i> {{ budget_form.fixed_cost }} € </i></td>
                                 <td><i> {{ budget_form.fixed_cost }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    FOC: <input type="number" id="foc-input" name="free_of_charge" min="0"
+                                                value="{{ budget_form.free_of_charge.value|default:0 }}">
+                                </th>
+                                <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
+                                <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
                             </tr>
 
                             <tr>
@@ -576,11 +704,12 @@
                             </tfoot>
 
                         </table>
-                         <div class="prop-status"> 
-                             <p>State:</p> <p id="draft-status">{{ proposal.is_draft }}</p>
-                             
-                         </div>
-                        
+                        <div class="prop-status">
+                            <p>State:</p>
+                            <p id="draft-status">{{ proposal.is_draft }}</p>
+
+                        </div>
+
                 </form>
             </div>
             <button id="submit-proposal-btn" class="add-btn" type="submit">Submit Proposal</button>
@@ -589,17 +718,17 @@
 
     </div>
 
-    </div>
-
 {% endblock %}
 
 {% block scripts %}
     <script>
+
+        // Items functionalities
         document.addEventListener("DOMContentLoaded", function () {
             const sections = document.querySelectorAll("[id=section]");
             const servicesDataMap = {}; // Cache services data for each section dynamically
 
-            // Utility Functions
+            // Utility Functions: Initialize Flatpickr
             const initializeFlatpickr = () => {
                 const flatpickrFields = document.querySelectorAll(".flatpickr");
                 flatpickrFields.forEach(field => {
@@ -609,6 +738,7 @@
                 });
             };
 
+            // Fetching service based on the section name
             const fetchServices = (sectionName) => {
                 if (servicesDataMap[sectionName]) return Promise.resolve(servicesDataMap[sectionName]); // Use cached data
                 return fetch(`/proposals/api/services/${sectionName}/`)
@@ -623,6 +753,7 @@
                     .catch(error => console.error(`Error fetching services for ${sectionName}:`, error));
             };
 
+            // Logic to populate service dropdown with services based on the chosed city
             const populateServiceDropdown = (serviceDropdown, sectionName, city) => {
                 fetchServices(sectionName).then(data => {
                     const filteredServices = data.filter(service => service.city === city);
@@ -636,6 +767,7 @@
                 });
             };
 
+            // Logic to clear row inputs (to be used when rows are added)
             const clearRowInputs = (row) => {
                 const inputs = row.querySelectorAll("input, select");
                 inputs.forEach(input => {
@@ -647,14 +779,17 @@
                 });
             };
 
-            const updatePriceField = (serviceDropdown, sectionName, priceField) => {
+            // Logic to update items price and quantity fields after service field is populated
+            const updatePriceQuantityField = (serviceDropdown, sectionName, priceField, quantityField) => {
                 serviceDropdown.addEventListener("change", function () {
                     const selectedServiceId = serviceDropdown.value;
                     fetchServices(sectionName).then(data => {
                         const selectedService = data.find(service => service.id == selectedServiceId);
+                        quantityField.value = "1";
                         priceField.value = selectedService
                             ? `€ ${parseFloat(selectedService.price).toFixed(2)}`
                             : "";
+                        calculateBudget();
                     });
                 });
             };
@@ -666,14 +801,17 @@
                 const serviceDropdown = tripSection.querySelector("#service-dropdown");
                 const cityDropdown = tripSection.querySelector("#city-dropdown");
                 const servicePriceField = tripSection.querySelector("#service-price");
+                const serviceQuantityField = tripSection.querySelector("input[name='quantity']");
 
                 if (sectionName && serviceDropdown) {
                     cityDropdown.addEventListener("change", function () {
                         const selectedCity = cityDropdown.value;
                         populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                        servicePriceField.value = "€ 0.00";
+                        serviceQuantityField.value = "0";
                     });
 
-                    updatePriceField(serviceDropdown, sectionName, servicePriceField);
+                    updatePriceQuantityField(serviceDropdown, sectionName, servicePriceField, serviceQuantityField);
                 }
             });
 
@@ -687,31 +825,52 @@
                     const lastRow = table.querySelector(".table-row:last-of-type");
                     const newRow = lastRow.cloneNode(true);
 
-                    clearRowInputs(newRow);
-                    table.appendChild(newRow);
-                    initializeFlatpickr();
+                    // Clears the new rows
+                    {#clearRowInputs(newRow);#}
 
+                    // Copy all the input/select values from the last row
+                    const lastRowInputs = lastRow.querySelectorAll("input, select");
+                    const newRowInputs = newRow.querySelectorAll("input, select");
+
+                    newRowInputs.forEach((newInput, index) => {
+                        const lastInput = lastRowInputs[index];
+
+                        if (lastInput) {
+                            if (newInput.tagName === "SELECT") {
+                                newInput.value = lastInput.value; // Copy selected option in the new row
+                            } else {
+                                if (newInput.id === "id_corresponding_trip_date") {
+                                    // Handel date field: set to the next day
+                                    if (lastInput.value) {
+                                        const lastDate = lastInput.value ? new Date(lastInput.value) : new Date();
+                                        lastDate.setDate(lastDate.getDate() + 1); // Add 1 day
+                                        newInput.value = lastDate.toISOString().split("T")[0]; //Set format to YYYY-MM-DD
+                                    }
+                                } else {
+                                    newInput.value = lastInput.value; // Copy input values in the new row
+                                }
+                            }
+                        }
+                    });
+
+                    table.appendChild(newRow);
+                    initializeFlatpickr(); // Ensure date picker works for new row
+                    // Populate city and service dropdown and update price and quantity
                     const sectionName = tripSection.querySelector(".title").textContent.trim();
                     const cityDropdown = newRow.querySelector("#city-dropdown");
                     const serviceDropdown = newRow.querySelector("#service-dropdown");
                     const servicePriceField = newRow.querySelector("#service-price");
+                    const serviceQuantityField = newRow.querySelector("input[name='quantity']");
 
                     if (cityDropdown && serviceDropdown) {
                         cityDropdown.addEventListener("change", function () {
                             const selectedCity = cityDropdown.value;
                             populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                            servicePriceField.value = "€ 0.00";
+                            serviceQuantityField.value = "0";
                         });
 
-                        updatePriceField(serviceDropdown, sectionName, servicePriceField);
-                    }
-
-                    // Ensure quantity retains original format
-                    const quantityField = newRow.querySelector("input[name='quantity']");
-                    if (quantityField) {
-                        quantityField.type = "number";
-                        quantityField.step = "1";
-                        quantityField.min = "1";
-                        quantityField.value = "1";
+                        updatePriceQuantityField(serviceDropdown, sectionName, servicePriceField, serviceQuantityField);
                     }
                 });
             });
@@ -733,21 +892,26 @@
             initializeFlatpickr();
         });
 
-        // Functionality to submit proposal and budget forms and sends POST to the API to save dynamic rows
 
+        // Functionality to submit proposal and budget forms and sends POST to the API to save dynamic rows
         document.addEventListener("DOMContentLoaded", function () {
             const submitButton = document.getElementById("submit-proposal-btn");
 
             submitButton.addEventListener("click", function () {
                 console.log("Submit button clicked."); // Debugging
                 const tripId = "{{ trip_id }}";
-                
-                const draftStatusField = document.querySelector("#draft-status")?.value 
-                let draftStatus = ""
+
+                // Getting the status of the proposal (Draft/In progress/Completed)
+                const draftStatusElement = document.querySelector("#id_is_draft");
+                const draftStatusField = draftStatusElement?.value || ""; // Ensure it has a fallback value
+                {#let draftStatus#}
+                {#draftStatus = draftStatusField === "Draft" || draftStatusField === "In progress";#}
+
+                let draftStatus = null;
                 if (draftStatusField === "Draft" || draftStatusField === "In progress") {
                     draftStatus = true;
-                } else {
-                    draftStatus = false
+                } else if (draftStatusField === "Done") {
+                    draftStatus = false;
                 }
 
                 // Collect proposal data
@@ -756,16 +920,32 @@
                     is_draft: draftStatus,
                 };
 
+                console.log(`Proposal status is: ${draftStatusField}`); // Debugging
+
+                // Show Proposal validation errors if any
+                if (!proposalData.title) {
+                    alert(`Proposal title is required. Please add a proposal title.`);
+                    return;
+                } else if (!draftStatusField) {
+                    alert(`Please set the current state of the proposal`);
+                    return;
+                }
+
                 // Validate rows for completeness and collection of items
                 const itemsData = [];
                 const invalidRows = [];
-                // 1. Collect items data
 
+                // 1. Collect items data
                 document.querySelectorAll(".table-row").forEach((row, index) => {
+                    const section_name = row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || ""; // Must match SectionChoices
                     const serviceDropdown = row.querySelector("#service-dropdown");
-                    const selectedServices = serviceDropdown
-                        ? Array.from(serviceDropdown.selectedOptions).map(option => parseInt(option.value, 10)).filter(Boolean)
-                        : [];
+                    let service_id = 1
+                    if (section_name !== "Other Services"){
+                        const selectedServices = serviceDropdown
+                            ? Array.from(serviceDropdown.selectedOptions).map(option => parseInt(option.value, 10)).filter(Boolean)
+                            : [];
+                        service_id = selectedServices[0]
+                    }
 
                     const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
                     const cityField = row.querySelector("#city-dropdown") || row.querySelector(".col-2");
@@ -773,17 +953,11 @@
                     // Initialize a data object to store row-specific values
                     const rowData = {
                         corresponding_trip_date: row.querySelector(".col-1 input")?.value || "", // YYYY-MM-DD format
-                        section_name: row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || "", // Must match SectionChoices
-                        {#city: row.querySelector("#city-dropdown")?.value || "",#}
+                        section_name: section_name,
                         city: cityField?.value && cityField.value !== "Select city" ? cityField.value : "", // Skip placeholder
                         quantity: parseInt(row.querySelector(".col-4 input")?.value || "0", 10), // Ensure integer
                         price: parseFloat(priceField || "0.00"), // Handle autofill or placeholder
-                        {#price: parseFloat(#}
-                        {#    row.querySelector(".col-5 input")?.value ||#}
-                        {#    row.querySelector(".col-5")?.textContent.replace("€", "").trim() || "0.00"#}
-                        {#), // Ensure decimal#}
-                        service_id: selectedServices[0],
-
+                        service_id: service_id,
                     };
 
                     const hasData = Boolean(
@@ -798,6 +972,7 @@
                     const isComplete = Boolean(
                         rowData.corresponding_trip_date &&
                         rowData.city &&
+                        rowData.service_id &&
                         rowData.quantity > 0 &&
                         rowData.price > 0
                     );
@@ -836,10 +1011,12 @@
                     pax: minPax,
                     variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "")),
-                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
-                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
-                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(2)").textContent.replace("€", "").trim() || "500.00"),
-                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2)").textContent.replace("%", "").trim() || "10"),
+                    foc: parseInt(budgetTable.querySelector("th:nth-child(3)").textContent.trim() || "0"),
+                    foc_amount: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2)").textContent.replace("€", "").trim() || "500.00"),
+                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(2)").textContent.replace("%", "").trim() || "10"),
                     fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                 });
@@ -849,10 +1026,12 @@
                     pax: maxPax,
                     variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
-                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
-                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
-                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "500.00"),
-                    margin: parseInt(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3)").textContent.replace("%", "").trim() || "10"),
+                    foc: parseInt(budgetTable.querySelector("th:nth-child(3)").textContent.trim() || "0"),
+                    foc_amount: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3)").textContent.replace("€", "").trim() || "500.00"),
+                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(3)").textContent.replace("%", "").trim() || "10"),
                     fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                 });
@@ -900,99 +1079,110 @@
                         }
 
                     });
-
             });
         });
 
-
-        //Budget Tabel Functionality
-
-
-        document.addEventListener("DOMContentLoaded", function () {
+        // Functionality to calculate the budget table
+        const calculateBudget = () => {
             const budgetTable = document.querySelector(".budget-table");
             const proposalTables = document.querySelectorAll(".requests-table");
 
+            let variableCost = 0;
+            let fixedCost = 0;
+
+            // Calculate costs from the proposal tables
+            proposalTables.forEach(table => {
+                const rows = table.querySelectorAll(".table-row");
+
+                rows.forEach(row => {
+                    const priceField = row.querySelector("#service-price");
+                    const quantityField = row.querySelector("input[name='quantity']");
+                    const price = parseFloat(priceField?.value.replace("€", "").trim()) || 0;
+                    const quantity = parseInt(quantityField?.value) || 0;
+
+                    // Classify costs based on section title
+                    const sectionTitle = table.closest(".trip-section").querySelector(".title").textContent || "";
+                    if (["Local Guides", "Tour Leader", "Transfers", "Private Transport", "Others Services"].some(type => sectionTitle.includes(type))) {
+                        fixedCost += price * quantity;
+                    } else {
+                        variableCost += price;
+                    }
+                });
+            });
+
+            // Update the budget table based on column headers
+            const budgetHeaders = budgetTable.querySelectorAll("thead th");
+            const budgetRows = budgetTable.querySelectorAll("tbody tr");
+            const budgetFooterRows = budgetTable.querySelectorAll("tfoot tr")
+
+            budgetHeaders.forEach((header, columnIndex) => {
+                if (columnIndex === 0) {
+                    return
+                }
+
+                const headerText = header.textContent.trim();
+                let paxMultiplier = 1; // Default multiplier for "Totals"
+
+                if (headerText.includes("pax")) {
+                    paxMultiplier = parseInt(headerText.replace("pax", "").trim()) || 1;
+                }
+
+                // Safely update corresponding rows
+                const variableCostCell = budgetRows[0]?.querySelectorAll("td")[columnIndex - 1];
+                const fixedCostCell = budgetRows[1]?.querySelectorAll("td")[columnIndex - 1];
+                const focCell = budgetRows[2]?.querySelectorAll("th")[columnIndex - 1];
+                const focAmountCell = budgetRows[2]?.querySelectorAll("td")[columnIndex - 1];
+                const totalCostPerPersonCell = budgetRows[3]?.querySelectorAll("td")[columnIndex - 1];
+                const totalCostCell = budgetRows[4]?.querySelectorAll("td")[columnIndex - 1];
+                const serviceFeeCell = budgetRows[5]?.querySelectorAll("td")[columnIndex - 1];
+                const marginCell = budgetRows[6]?.querySelectorAll("td")[columnIndex - 1];
+                const finalPricePerPersonCell = budgetFooterRows[0]?.querySelectorAll("td")[columnIndex - 1];
+                const finalPriceCell = budgetFooterRows[1]?.querySelectorAll("td")[columnIndex - 1];
+
+                // Extract text content safely
+                const foc = parseFloat(focCell?.querySelector("input")?.value || "0");
+                const serviceFee = parseFloat(serviceFeeCell?.querySelector("input")?.value || "500");
+                const margin = parseFloat(marginCell?.querySelector("input")?.value || "10");
+                const focAmount = variableCost * foc;
+                const totalPerPerson = variableCost + (focAmount / paxMultiplier) + (fixedCost / paxMultiplier);
+                const totalCost = (variableCost * paxMultiplier) + focAmount + fixedCost
+
+                if (variableCostCell) variableCostCell.textContent = `€ ${(variableCost).toFixed(2)}`;
+                if (fixedCostCell) fixedCostCell.textContent = `€ ${(fixedCost).toFixed(2)}`;
+                if (focAmountCell) focAmountCell.textContent = `€ ${(focAmount).toFixed(2)}`;
+                if (totalCostPerPersonCell) totalCostPerPersonCell.textContent = `€ ${(totalPerPerson).toFixed(2)}`;
+                if (totalCostCell) totalCostCell.textContent = `€ ${(totalCost).toFixed(2)}`;
+
+                if (finalPricePerPersonCell) {
+                    const finalPricePerPerson = (totalPerPerson + (serviceFee / paxMultiplier)) * (1 + (margin / 100));
+                    finalPricePerPersonCell.textContent = `€ ${finalPricePerPerson.toFixed(2)}`;
+                }
+                if (finalPriceCell) {
+                    const finalPrice = (totalCost + serviceFee) * (1 + (margin / 100));
+                    finalPriceCell.textContent = `€ ${finalPrice.toFixed(2)}`;
+                }
+
+            });
+        };
+        //Budget Tabel Functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const budgetTable = document.querySelector(".budget-table");
+            const proposalTables = document.querySelectorAll(".requests-table");
+            {#calculateBudget();#}
+
             // Utility Functions
-            const calculateBudget = () => {
-                let variableCost = 0;
-                let fixedCost = 0;
 
-                // Calculate costs from the proposal tables
-                proposalTables.forEach(table => {
-                    const rows = table.querySelectorAll(".table-row");
 
-                    rows.forEach(row => {
-                        const priceField = row.querySelector("#service-price");
-                        const quantityField = row.querySelector("input[name='quantity']");
-                        const price = parseFloat(priceField?.value.replace("€", "").trim()) || 0;
-                        const quantity = parseInt(quantityField?.value) || 0;
-
-                        // Classify costs based on section title
-                        const sectionTitle = table.closest(".trip-section").querySelector(".title").textContent || "";
-                        if (["Guides", "Transfers", "Private Transport", "Others"].some(type => sectionTitle.includes(type))) {
-                            fixedCost += price * quantity;
-                        } else {
-                            variableCost += price;
-                        }
-                    });
-                });
-
-                // Update the budget table based on column headers
-                const budgetHeaders = budgetTable.querySelectorAll("thead th");
-                const budgetRows = budgetTable.querySelectorAll("tbody tr");
-                const budgetFooterRows = budgetTable.querySelectorAll("tfoot tr")
-
-                budgetHeaders.forEach((header, columnIndex) => {
-                    if (columnIndex === 0) {
-                        return
-                    }
-
-                    const headerText = header.textContent.trim();
-                    let paxMultiplier = 1; // Default multiplier for "Totals"
-
-                    if (headerText.includes("pax")) {
-                        paxMultiplier = parseInt(headerText.replace("pax", "").trim()) || 1;
-                    }
-
-                    // Safely update corresponding rows
-                    const variableCostCell = budgetRows[0]?.querySelectorAll("td")[columnIndex - 1];
-                    const fixedCostCell = budgetRows[1]?.querySelectorAll("td")[columnIndex - 1];
-                    const totalCostPerPersonCell = budgetRows[2]?.querySelectorAll("td")[columnIndex - 1];
-                    const totalCostCell = budgetRows[3]?.querySelectorAll("td")[columnIndex - 1];
-                    const serviceFeeCell = budgetRows[4]?.querySelectorAll("td")[columnIndex - 1];
-                    const marginCell = budgetRows[5]?.querySelectorAll("td")[columnIndex - 1];
-                    const finalPricePerPersonCell = budgetFooterRows[0]?.querySelectorAll("td")[columnIndex - 1];
-                    const finalPriceCell = budgetFooterRows[1]?.querySelectorAll("td")[columnIndex - 1];
-
-                    // Extract text content safely
-                    const serviceFee = parseFloat(serviceFeeCell?.querySelector("input")?.value || "500");
-                    const margin = parseInt(marginCell?.querySelector("input")?.value || "10");
-                    const totalPerPerson = variableCost + (fixedCost / paxMultiplier);
-                    const totalCost = (variableCost * paxMultiplier) + fixedCost
-
-                    if (variableCostCell) variableCostCell.textContent = `€ ${(variableCost).toFixed(2)}`;
-                    if (fixedCostCell) fixedCostCell.textContent = `€ ${(fixedCost).toFixed(2)}`;
-                    if (totalCostPerPersonCell) totalCostPerPersonCell.textContent = `€ ${(totalPerPerson).toFixed(2)}`;
-                    if (totalCostCell) totalCostCell.textContent = `€ ${(totalCost).toFixed(2)}`;
-
-                    if (finalPricePerPersonCell) {
-                        const finalPricePerPerson = (totalPerPerson + (serviceFee / paxMultiplier)) * (1 + (margin / 100));
-                        finalPricePerPersonCell.textContent = `€ ${finalPricePerPerson.toFixed(2)}`;
-                    }
-                    if (finalPriceCell) {
-                        const finalPrice = (totalCost + serviceFee) * (1 + (margin / 100));
-                        finalPriceCell.textContent = `€ ${finalPrice.toFixed(2)}`;
-                    }
-
-                });
-            };
-
-            // Add listeners to "Service Fee" and "Margin" inputs
+            // Add listeners to "Service Fee" Free of charge ("FOC") and "Margin" inputs
             const serviceFeeInputs = budgetTable.querySelectorAll(
-                "tbody tr:nth-child(5) td input"
+                "tbody tr:nth-child(6) td input"
             );
             const marginInputs = budgetTable.querySelectorAll(
-                "tbody tr:nth-child(6) td input"
+                "tbody tr:nth-child(7) td input"
+            );
+
+            const focInput = budgetTable.querySelectorAll(
+                "tbody tr:nth-child(3) th input"
             );
 
             if (serviceFeeInputs.length > 0) {
@@ -1003,6 +1193,12 @@
 
             if (marginInputs.length > 0) {
                 marginInputs.forEach((input) => {
+                    input.addEventListener("input", calculateBudget);
+                });
+            }
+
+            if (focInput.length > 0) {
+                focInput.forEach((input) => {
                     input.addEventListener("input", calculateBudget);
                 });
             }
@@ -1020,7 +1216,7 @@
 
                 // Add listeners for changes in input fields
                 table.addEventListener("input", (event) => {
-                    if (event.target.matches("#service-price, input[name='quantity']")) {
+                    if (event.target.matches("#service-price, input[name='quantity'], select[id='service-dropdown']")) {
                         calculateBudget();
                     }
                 });

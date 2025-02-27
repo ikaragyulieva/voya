@@ -26,7 +26,8 @@ class SectionChoices(models.TextChoices):
     PRIVATE_TRANSPORT = 'Private Transport', 'Private Transport'
     TRANSFERS = 'Transfers', 'Transfers'
     ACTIVITY = 'Activity', 'Activity'
-    GUIDES = 'Guides', 'Guides'
+    LOCAL_GUIDES = 'Local Guides', 'Local Guides'
+    TOUR_LEADERS = 'Tour Leader', 'Tour Leader'
 
 
 class TransferTypeChoices(models.TextChoices):
@@ -42,6 +43,7 @@ class TransferTypeChoices(models.TextChoices):
 
 
 class StatusChoices(models.TextChoices):
+    SELECT_CHOICE = '', 'Select an option'
     DRAFT = 'Draft', 'Draft'
     DONE = 'Done', 'Done'
     IN_PROGRESS = 'In progress', 'In progress'

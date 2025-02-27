@@ -359,8 +359,9 @@
             </div>
 
             <hr class="custom-line">
+        
             <div class="trip-section">
-                <div class="budget-container">
+                <div class="budget-container">>
                     <table class="budget-table" id="budget-table">
                         
                         <thead>
@@ -381,8 +382,15 @@
                         </tr>
                         <tr>
                             <th class="fixed-cost">Fixed cost:</th>
-                            <{% for budget_option in budget %}
+                            {% for budget_option in budget %}
                             <td><i> {{ budget_option.fixed_cost}} € </i></td>
+                            {% endfor %}
+                        </tr>
+                        
+                        <tr>
+                            <th>FOC: {{ foc_pax }} pax </th>
+                            {% for budget_option in budget %}
+                            <td><i> {{ budget_option.free_of_charge_amount}} € </i></td>
                             {% endfor %}
                         </tr>
 

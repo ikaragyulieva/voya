@@ -143,6 +143,8 @@ class ProposalItemsAPI(APIView):
                         pax=budget_entry.get('pax'),
                         variable_cost=budget_entry.get('variable_cost'),
                         fixed_cost=budget_entry.get('fixed_cost'),
+                        free_of_charge=budget_entry.get('foc'),
+                        free_of_charge_amount=budget_entry.get('foc_amount'),
                         total_cost_per_person=budget_entry.get('total_cost_per_person'),
                         total_cost=budget_entry.get('total_cost'),
                         service_fee=budget_entry.get('service_fee'),
@@ -170,18 +172,22 @@ def proposal_detail(request, proposal_id):
     items = ProposalSectionItem.objects.filter(proposal=proposal)
     model_map = {
         'Accommodations': 'Hotel',
-        'Public Transport': 'Public Transport',
-        'Private Transport': 'Private Transport',
+        'Public Transport': 'PublicTransport',
+        'Private Transport': 'PrivateTransport',
         'Transfers': 'Transfer',
         'Activity': 'Tickets',
-        'Guides': 'LocalGuide',
+        'Local Guides': 'LocalGuide',
+        'Tour Leader': 'TourLeader',
         # 'Other Services': 'Other',
     }
+
     accommodation_items = []
-    transport_items = []
+    public_transport_items = []
+    private_transport_items = []
     activity_items = []
     transfer_items = []
     guides_items = []
+    tour_leader_items = []
     other_items = []
 
     for item in items:
@@ -190,114 +196,145 @@ def proposal_detail(request, proposal_id):
         service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
         if hasattr(service_object, 'name'):
             item.service_name = service_object.name
-        elif hasattr(service_object, 'guide_name'):
-            item.service_name = service_object.guide_name
         elif hasattr(service_object, 'type'):
             item.service_name = service_object.type
 
         if item.section_name == 'Accommodations':
             accommodation_items.append(item)
-        elif item.section_name == 'Transport':
-            transport_items.append(item)
+        elif item.section_name == 'Public Transport':
+            public_transport_items.append(item)
+        elif item.section_name == 'Private Transport':
+            private_transport_items.append(item)
         elif item.section_name == 'Activity':
             activity_items.append(item)
-        elif item.section_name == 'Guides':
+        elif item.section_name == 'Local Guides':
             guides_items.append(item)
         elif item.section_name == 'Transfers':
             transfer_items.append(item)
+        elif item.section_name == 'Tour Leader':
+            tour_leader_items.append(item)
         elif item.section_name == 'Other Services':
             other_items.append(item)
 
     budget = ProposalBudget.objects.filter(proposal=proposal)
+    foc_pax = [budget_option.free_of_charge for budget_option in budget]
+
     user_profile = get_user_obj(request)
     current_request = TripRequests.objects.get(id=proposal.trip_request.id)
-    context = {
-        'proposal': proposal,
-        'profile': user_profile,
-        'items': items,
-        'accommodation_items': accommodation_items,
-        'transport_items': transport_items,
-        'activity_items': activity_items,
-        'guides_items': guides_items,
-        'transfer_items': transfer_items,
-        'other_items': other_items,
-        'budget': budget,
-        'current_request': current_request
-    }
-    return render(request, 'proposals/proposal-detail-page.html', context)
 
+    if user_profile.user.role == 'employee':
+        context = {
+            'proposal': proposal,
+            'profile': user_profile,
+            'items': items,
+            'accommodation_items': accommodation_items,
+            'public_transport_items': public_transport_items,
+            'private_transport_items': private_transport_items,
+            'activity_items': activity_items,
+            'guides_items': guides_items,
+            'tour_leader_items': tour_leader_items,
+            'transfer_items': transfer_items,
+            'other_items': other_items,
+            'budget': budget,
+            'current_request': current_request,
+            'foc_pax': foc_pax[0],
+        }
+        return render(request, 'proposals/proposal-detail-page.html', context)
 
-@login_required
-def client_proposal_detail(request, proposal_id):
-    proposal = get_object_or_404(Proposal, id=proposal_id)
-    items = ProposalSectionItem.objects.filter(proposal=proposal)
-    model_map = {
-        'Accommodations': 'Hotel',
-        'Public Transport': 'Public Transport',
-        'Private Transport': 'Private Transport',
-        'Transfers': 'Transfer',
-        'Activity': 'Ticket',
-        'Guides': 'LocalGuide',
-        # 'Other Services': 'Other',
-    }
-    accommodation_items = []
-    transport_items = []
-    activity_items = []
-    transfer_items = []
-    guides_items = []
-    other_items = []
+    elif user_profile.user.role == 'client':
 
-    for item in items:
-        model_name = model_map.get(item.section_name)
+        context = {
+            'proposal': proposal,
+            'profile': user_profile,
+            'items': items,
+            'accommodation_items': accommodation_items,
+            'public_transport_items': public_transport_items,
+            'private_transport_items': private_transport_items,
+            'activity_items': activity_items,
+            'guides_items': guides_items,
+            'tour_leader_items': tour_leader_items,
+            'transfer_items': transfer_items,
+            'other_items': other_items,
+            'budget': budget,
+            'current_request': current_request
+        }
+        return render(request, 'proposals/client-proposal-details-page.html', context)
+    else:
 
-        service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
-        if hasattr(service_object, 'name'):
-            item.service_name = service_object.name
-        elif hasattr(service_object, 'guide_name'):
-            item.service_name = service_object.guide_name
-        elif hasattr(service_object, 'type'):
-            item.service_name = service_object.type
+        return render(request, 'common/home-page.html')
 
-        if item.section_name == 'Accommodations':
-            accommodation_items.append(item)
-        elif item.section_name == 'Transport':
-            transport_items.append(item)
-        elif item.section_name == 'Activity':
-            activity_items.append(item)
-        elif item.section_name == 'Guides':
-            guides_items.append(item)
-        elif item.section_name == 'Transfers':
-            transfer_items.append(item)
-        elif item.section_name == 'Other Services':
-            other_items.append(item)
-
-    budget = ProposalBudget.objects.filter(proposal=proposal)
-    user_profile = get_user_obj(request)
-    current_request = TripRequests.objects.get(id=proposal.trip_request.id)
-    context = {
-        'proposal': proposal,
-        'profile': user_profile,
-        'items': items,
-        'accommodation_items': accommodation_items,
-        'transport_items': transport_items,
-        'activity_items': activity_items,
-        'guides_items': guides_items,
-        'transfer_items': transfer_items,
-        'other_items': other_items,
-        'budget': budget,
-        'current_request': current_request
-    }
-    return render(request, 'proposals/client-proposal-details-page.html', context)
+# @login_required
+# def client_proposal_detail(request, proposal_id):
+#     proposal = get_object_or_404(Proposal, id=proposal_id)
+#     items = ProposalSectionItem.objects.filter(proposal=proposal)
+#     model_map = {
+#         'Accommodations': 'Hotel',
+#         'Public Transport': 'Public Transport',
+#         'Private Transport': 'Private Transport',
+#         'Transfers': 'Transfer',
+#         'Activity': 'Ticket',
+#         'Guides': 'LocalGuide',
+#         # 'Other Services': 'Other',
+#     }
+#     accommodation_items = []
+#     transport_items = []
+#     activity_items = []
+#     transfer_items = []
+#     guides_items = []
+#     other_items = []
+#
+#     for item in items:
+#         model_name = model_map.get(item.section_name)
+#
+#         service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
+#         if hasattr(service_object, 'name'):
+#             item.service_name = service_object.name
+#         elif hasattr(service_object, 'guide_name'):
+#             item.service_name = service_object.guide_name
+#         elif hasattr(service_object, 'type'):
+#             item.service_name = service_object.type
+#
+#         if item.section_name == 'Accommodations':
+#             accommodation_items.append(item)
+#         elif item.section_name == 'Transport':
+#             transport_items.append(item)
+#         elif item.section_name == 'Activity':
+#             activity_items.append(item)
+#         elif item.section_name == 'Guides':
+#             guides_items.append(item)
+#         elif item.section_name == 'Transfers':
+#             transfer_items.append(item)
+#         elif item.section_name == 'Other Services':
+#             other_items.append(item)
+#
+#     budget = ProposalBudget.objects.filter(proposal=proposal)
+#     user_profile = get_user_obj(request)
+#     current_request = TripRequests.objects.get(id=proposal.trip_request.id)
+#     context = {
+#         'proposal': proposal,
+#         'profile': user_profile,
+#         'items': items,
+#         'accommodation_items': accommodation_items,
+#         'transport_items': transport_items,
+#         'activity_items': activity_items,
+#         'guides_items': guides_items,
+#         'transfer_items': transfer_items,
+#         'other_items': other_items,
+#         'budget': budget,
+#         'current_request': current_request
+#     }
+#     return render(request, 'proposals/client-proposal-details-page.html', context)
 
 
 class DynamicServiceView(APIView):
     model_map = {
         'Accommodations': 'Hotel',
-        'Public Transport': 'Public Transport',
-        'Private Transport': 'Private Transport',
+        'Public Transport': 'PublicTransport',
+        'Private Transport': 'PrivateTransport',
         'Transfers': 'Transfer',
         'Activity': 'Ticket',
-        'Guides': 'LocalGuide',
+        'Local Guides': 'LocalGuide',
+        'Tour Leader': 'Staff'
         # 'Other Services': 'Other',
     }
 
@@ -316,8 +353,6 @@ class DynamicServiceView(APIView):
             # Determine the field to use for display (e.g., `name`, `guide_name`)
             if hasattr(model, 'name'):
                 display_field = 'name'
-            elif hasattr(model, 'guide_name'):
-                display_field = 'guide_name'
             elif hasattr(model, 'type'):
                 display_field = 'type'
             else:

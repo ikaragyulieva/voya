@@ -131,6 +131,19 @@ class ProposalBudget(models.Model):
         null=False,
     )
 
+    free_of_charge = models.PositiveIntegerField(
+        default=0,
+        blank=True,
+        null=True,
+    )
+
+    free_of_charge_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+
     total_cost_per_person = models.DecimalField(
         max_digits=10,
         decimal_places=2,
