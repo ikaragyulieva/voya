@@ -474,6 +474,11 @@ h2 {
         font-weight: lighter;
     }
 
+    #foc-input {
+        width: 25%;
+        text-align: right;
+    }
+
     select {
         width: 70% !important; /* Make the select tag fit the parent column */
         max-width: 100%; /* Prevent it from exceeding the parent column */

@@ -270,7 +270,7 @@
                                     <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
+                                                src="{% static 'images/close.png' %}"
                                                 alt="remove row button"
                                         />
                                     </a>
@@ -324,7 +324,7 @@
                                     <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
+                                                src="{% static 'images/close.png' %}"
                                                 alt="remove row button"
                                         />
                                     </a>
@@ -374,11 +374,11 @@
                                                                              name="service_price" placeholder="€ 0.00">
                             </div>
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
                                     <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
+                                                src="{% static 'images/close.png' %}"
                                                 alt="remove row button"
                                         />
                                     </a>
@@ -428,12 +428,12 @@
                                                                              name="service_price" placeholder="€ 0.00">
                             </div>
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
 
                                     <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
+                                                src="{% static 'images/close.png' %}"
                                                 alt="remove row button"
                                         />
                                     </a>
@@ -486,11 +486,11 @@
 
                             <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
 
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
+                                                src="{% static 'images/close.png' %}"
                                                 alt="remove row button"
                                         />
                                     </a>
@@ -543,11 +543,11 @@
 
                             <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
 
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
+                                                src="{% static 'images/close.png' %}"
                                                 alt="remove row button"
                                         />
                                     </a>
@@ -598,12 +598,12 @@
 
                             <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
-                                <div class="action-btn request-action-btn">
+                                <div class="action-btn request-action-btn proposal-item-btn">
 
                                     <a href="#" class="remove-row-button">
                                         <img
-                                                src="{% static 'images/remove-icon.png' %}"
-                                                alt="add column button"
+                                                src="{% static 'images/close.png' %}"
+                                                alt="remove row button"
                                         />
                                     </a>
                                 </div>
@@ -656,8 +656,8 @@
 
                             <tr>
                                 <th>
-                                    FOC: <input type="number" id="foc-input" name="free_of_charge" min="0"
-                                                value="{{ budget_form.free_of_charge.value|default:0 }}">
+                                    FOC: &nbsp; &nbsp; <input type="number" id="foc-input" name="free_of_charge" min="0"  placeholder="0"
+                                                value="{{ budget_form.free_of_charge.value }}"> &nbsp;pax
                                 </th>
                                 <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
                                 <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
@@ -1005,14 +1005,17 @@
                 const budgetTable = document.querySelector(".budget-table");
                 const minPax = parseInt(budgetTable.querySelector("th:nth-child(2)").textContent.trim() || "0");
                 const maxPax = parseInt(budgetTable.querySelector("th:nth-child(3)").textContent.trim() || "0");
-
+                const focInput = budgetTable.querySelector("tbody tr:nth-child(3) th input")?.value || "0";
+                const focAmountMinCell = budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(2)")?.textContent.trim().replace("€", "") || "0";
+                const focAmountMaxCell = budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(3)")?.textContent.trim().replace("€", "") || "0";
+                
                 // Min Pax Budget
                 budgetData.push({
                     pax: minPax,
                     variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "")),
-                    foc: parseInt(budgetTable.querySelector("th:nth-child(3)").textContent.trim() || "0"),
-                    foc_amount: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    foc: parseInt(focInput, 10), // Ensure integer conversion
+                    foc_amount: parseFloat(focAmountMinCell), // Correctly read and pass from the UI
                     total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2)").textContent.replace("€", "").trim() || "500.00"),
@@ -1026,8 +1029,8 @@
                     pax: maxPax,
                     variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
-                    foc: parseInt(budgetTable.querySelector("th:nth-child(3)").textContent.trim() || "0"),
-                    foc_amount: parseFloat(budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    foc: parseInt(focInput, 10),
+                    foc_amount: parseFloat(focAmountMinCell),
                     total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3)").textContent.replace("€", "").trim() || "500.00"),
@@ -1044,7 +1047,7 @@
                     budget: budgetData
                 };
                 console.log("Payload sent to API:", JSON.stringify(payload, null, 2));
-
+                
                 fetch(`/proposals/api/create/${tripId}/`, {
                     method: "POST",
                     headers: {
@@ -1130,7 +1133,7 @@
                 // Safely update corresponding rows
                 const variableCostCell = budgetRows[0]?.querySelectorAll("td")[columnIndex - 1];
                 const fixedCostCell = budgetRows[1]?.querySelectorAll("td")[columnIndex - 1];
-                const focCell = budgetRows[2]?.querySelectorAll("th")[columnIndex - 1];
+                const focCell = budgetRows[2]?.querySelector("th input");
                 const focAmountCell = budgetRows[2]?.querySelectorAll("td")[columnIndex - 1];
                 const totalCostPerPersonCell = budgetRows[3]?.querySelectorAll("td")[columnIndex - 1];
                 const totalCostCell = budgetRows[4]?.querySelectorAll("td")[columnIndex - 1];
@@ -1140,7 +1143,7 @@
                 const finalPriceCell = budgetFooterRows[1]?.querySelectorAll("td")[columnIndex - 1];
 
                 // Extract text content safely
-                const foc = parseFloat(focCell?.querySelector("input")?.value || "0");
+                const foc = parseFloat(focCell?.value || "0");
                 const serviceFee = parseFloat(serviceFeeCell?.querySelector("input")?.value || "500");
                 const margin = parseFloat(marginCell?.querySelector("input")?.value || "10");
                 const focAmount = variableCost * foc;

@@ -43,7 +43,12 @@ class ItemSerializer(serializers.Serializer):
         }
     )
 
-    service_id = serializers.IntegerField()
+    service_id = serializers.IntegerField(
+        required=False,  # Allow missing service_id
+        allow_null=True,  # Allow null value
+        error_messages={'invalid': 'Invalid service ID.'}
+    )
+
     quantity = serializers.IntegerField(
         min_value=1,
         error_messages={

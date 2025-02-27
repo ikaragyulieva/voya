@@ -81,8 +81,8 @@ class ProposalItemsAPI(APIView):
         if not proposal_serializer.is_valid():
             return Response({
                 'error': 'Proposal validation failed',
-                'details': proposal_serializer.errors},
-                status=status.HTTP_400_BAD_REQUEST)
+                'details': proposal_serializer.errors
+            },status=status.HTTP_400_BAD_REQUEST)
 
         # Validate Items
         items_serializer = ItemSerializer(data=data.get('items', []), many=True)
@@ -126,7 +126,7 @@ class ProposalItemsAPI(APIView):
                     new_item = ProposalSectionItem.objects.create(
                         proposal=proposal,
                         section_name=item_data.get('section_name'),
-                        service_id=item_data.get('service_id'),
+                        service_id=item_data.get('service_id', None),
                         quantity=item_data.get('quantity'),
                         additional_notes=item_data.get('additional_notes', ''),
                         corresponding_trip_date=item_data.get('corresponding_trip_date'),
