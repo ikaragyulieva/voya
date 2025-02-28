@@ -30,6 +30,7 @@ from django.utils import timezone
 from django.views.generic import CreateView, TemplateView
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from decimal import Decimal
@@ -71,6 +72,7 @@ class ProposalItemsAPI(APIView):
     """
     Unified API endpoint to handle proposals, items, and budget.
     """
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
 
@@ -143,8 +145,8 @@ class ProposalItemsAPI(APIView):
                         pax=budget_entry.get('pax'),
                         variable_cost=budget_entry.get('variable_cost'),
                         fixed_cost=budget_entry.get('fixed_cost'),
-                        free_of_charge=budget_entry.get('foc'),
-                        free_of_charge_amount=budget_entry.get('foc_amount'),
+                        free_of_charge=budget_entry.get('free_of_charge'),
+                        free_of_charge_amount=budget_entry.get('free_of_charge_amount'),
                         total_cost_per_person=budget_entry.get('total_cost_per_person'),
                         total_cost=budget_entry.get('total_cost'),
                         service_fee=budget_entry.get('service_fee'),
@@ -191,13 +193,16 @@ def proposal_detail(request, proposal_id):
     other_items = []
 
     for item in items:
-        model_name = model_map.get(item.section_name)
+        if item.section_name == 'Other Services':
+            pass
+        else:
+            model_name = model_map.get(item.section_name)
 
-        service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
-        if hasattr(service_object, 'name'):
-            item.service_name = service_object.name
-        elif hasattr(service_object, 'type'):
-            item.service_name = service_object.type
+            service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
+            if hasattr(service_object, 'name'):
+                item.service_name = service_object.name
+            elif hasattr(service_object, 'type'):
+                item.service_name = service_object.type
 
         if item.section_name == 'Accommodations':
             accommodation_items.append(item)

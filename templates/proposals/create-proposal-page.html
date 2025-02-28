@@ -939,12 +939,14 @@
                 document.querySelectorAll(".table-row").forEach((row, index) => {
                     const section_name = row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || ""; // Must match SectionChoices
                     const serviceDropdown = row.querySelector("#service-dropdown");
-                    let service_id = 1
+                    let service_id
                     if (section_name !== "Other Services"){
                         const selectedServices = serviceDropdown
                             ? Array.from(serviceDropdown.selectedOptions).map(option => parseInt(option.value, 10)).filter(Boolean)
                             : [];
                         service_id = selectedServices[0]
+                    } else if (section_name === "Other Services") {
+                        service_id = 1
                     }
 
                     const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
@@ -1014,8 +1016,8 @@
                     pax: minPax,
                     variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "")),
-                    foc: parseInt(focInput, 10), // Ensure integer conversion
-                    foc_amount: parseFloat(focAmountMinCell), // Correctly read and pass from the UI
+                    free_of_charge: parseInt(focInput, 10), // Ensure integer conversion
+                    free_of_charge_amount: parseFloat(focAmountMinCell), // Correctly read and pass from the UI
                     total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2)").textContent.replace("€", "").trim() || "500.00"),
@@ -1029,8 +1031,8 @@
                     pax: maxPax,
                     variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
-                    foc: parseInt(focInput, 10),
-                    foc_amount: parseFloat(focAmountMinCell),
+                    free_of_charge: parseInt(focInput, 10),
+                    free_of_charge_amount: parseFloat(focAmountMinCell),
                     total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3)").textContent.replace("€", "").trim() || "500.00"),

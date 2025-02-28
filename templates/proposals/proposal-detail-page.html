@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    
+
     <div class="proposal">
         <div class="trip trip-proposal">
             <div class="trip-title">
@@ -169,8 +169,11 @@
                 <p>{{ proposal.title }}</p>
 
             </div>
-            <hr class="custom-line">
+
+            <!-- Accommodation Section-->
+
             {% if accommodation_items %}
+                <hr class="custom-line">
                 <div class="trip-section">
                     <h3 id="section" class="title">Accommodations</h3>
 
@@ -191,17 +194,20 @@
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
                             </li>
 
                         {% endfor %}
                     </ul>
                 </div>
             {% endif %}
-            {% if transport_items %}
+
+            <!-- Public Transport Section-->
+
+            {% if public_transport_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Transport</h3>
+                    <h3 id="section" class="title">Public Transport</h3>
                     <ul class="responsive-table requests-table">
 
                         <li class="table-header fixed-cost">
@@ -213,14 +219,14 @@
                             <div class="col col-6 empty-space">Btn</div>
 
                         </li>
-                        {% for item in transport_items %}
+                        {% for item in public_transport_items %}
 
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
                             </li>
 
                         {% endfor %}
@@ -228,6 +234,42 @@
 
                 </div>
             {% endif %}
+
+            <!-- Private Transport Section-->
+
+            {% if private_transport_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Private Transport</h3>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        {% for item in private_transport_items %}
+
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endif %}
+
+            <!-- Activity/Tickets Section-->
+
             {% if activity_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
@@ -251,7 +293,7 @@
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
                             </li>
 
                         {% endfor %}
@@ -259,6 +301,9 @@
 
                 </div>
             {% endif %}
+
+            <!-- Transfers Section-->
+
             {% if transfer_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
@@ -279,13 +324,16 @@
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
                             </li>
                         {% endfor %}
                     </ul>
 
                 </div>
             {% endif %}
+
+            <!-- Local Guides Section-->
+
             {% if guides_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
@@ -308,13 +356,48 @@
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
                             </li>
                         {% endfor %}
                     </ul>
 
                 </div>
             {% endif %}
+
+            <!-- Tour Leader Section-->
+
+            {% if tour_leader_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Tour Leader</h3>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+
+
+                        </li>
+                        {% for item in tour_leader_items %}
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endif %}
+
+            <!-- Other Services Section-->
+
             {% if other_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
@@ -334,9 +417,9 @@
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.additional_notes }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -359,65 +442,65 @@
             </div>
 
             <hr class="custom-line">
-        
+
             <div class="trip-section">
                 <div class="budget-container">>
                     <table class="budget-table" id="budget-table">
-                        
+
                         <thead>
                         <tr>
                             <th></th>
                             {% for budget_option in budget %}
-                            <th>{{ budget_option.pax}} pax</th>
+                                <th>{{ budget_option.pax }} pax</th>
                             {% endfor %}
                         </tr>
                         </thead>
-                    
+
                         <tbody>
                         <tr>
                             <th>Variable cost:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.variable_cost }} € </i></td>
+                                <td><i> {{ budget_option.variable_cost }} € </i></td>
                             {% endfor %}
                         </tr>
                         <tr>
                             <th class="fixed-cost">Fixed cost:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.fixed_cost}} € </i></td>
+                                <td><i> {{ budget_option.fixed_cost }} € </i></td>
                             {% endfor %}
                         </tr>
-                        
+
                         <tr>
-                            <th>FOC: {{ foc_pax }} pax </th>
+                            <th>FOC: {{ foc_pax }} pax</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.free_of_charge_amount}} € </i></td>
+                                <td><i> {{ budget_option.free_of_charge_amount }} € </i></td>
                             {% endfor %}
                         </tr>
 
                         <tr>
                             <th>Total per person:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.total_cost_per_person }} € </i></td>
+                                <td><i> {{ budget_option.total_cost_per_person }} € </i></td>
                             {% endfor %}
                         </tr>
 
                         <tr>
                             <th>Total Cost:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.total_cost }} € </i></td>
+                                <td><i> {{ budget_option.total_cost }} € </i></td>
                             {% endfor %}
                         </tr>
 
                         <tr>
                             <th>Service fee:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.service_fee }} € </i></td>
+                                <td><i> {{ budget_option.service_fee }} € </i></td>
                             {% endfor %}
                         </tr>
                         <tr>
                             <th>Margin:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.margin }} € </i></td>
+                                <td><i> {{ budget_option.margin }} € </i></td>
                             {% endfor %}
                         </tr>
 
@@ -428,13 +511,13 @@
                         <tr>
                             <th>Price per person:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.fina_price_per_person }} € </i></td>
+                                <td><i> {{ budget_option.fina_price_per_person }} € </i></td>
                             {% endfor %}
                         </tr>
                         <tr>
                             <th>Final Price:</th>
                             {% for budget_option in budget %}
-                            <td><i> {{ budget_option.final_price }} € </i></td>
+                                <td><i> {{ budget_option.final_price }} € </i></td>
                             {% endfor %}
                         </tr>
                         </tfoot>

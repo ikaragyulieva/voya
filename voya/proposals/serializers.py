@@ -46,6 +46,7 @@ class ItemSerializer(serializers.Serializer):
     service_id = serializers.IntegerField(
         required=False,  # Allow missing service_id
         allow_null=True,  # Allow null value
+        default=None,
         error_messages={'invalid': 'Invalid service ID.'}
     )
 
