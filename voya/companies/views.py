@@ -54,15 +54,17 @@ class CompanyCreateView(FormView):
     def form_valid(self, company_profile_form, address_form, phone_number_form):
         with transaction.atomic():
             company_profile = company_profile_form.save(commit=False)
-            # company_profile.is_active = True
+            company_profile.is_active = True
             company_profile.save()
 
             address = address_form.save(commit=False)
             address.company = company_profile
+            address.company.is_active = True
             address.save()
 
             phone_number = phone_number_form.save(commit=False)
             phone_number.company = company_profile
+            phone_number.company.is_active = True
             phone_number.save()
 
             return super().form_valid(company_profile_form)

@@ -29,7 +29,7 @@
     width: 2em;
     height: 2em;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: contain;
     border-style: double;
     border-color: #d7b241;
 }
@@ -193,13 +193,16 @@ h2 {
 
     @media all and (max-width: 1500px) {
         .col {
-            min-width: 100px;
+            min-width: 80px;
             padding: 5px;
             word-break: break-word;
         }
         .request-action-btn{
             flex-wrap: wrap;
             row-gap: 3px;
+        }
+        .requests-table{
+            overflow: auto;
         }
     }
 }
@@ -280,7 +283,7 @@ h2 {
     display: flex;
     align-items: flex-start;
     gap: 3%;
-    overflow: auto;
+
 
 }
 
