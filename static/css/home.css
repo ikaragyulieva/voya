@@ -34,7 +34,7 @@ body {
 
 .container {
     /*padding: 15px 0;*/
-    width: 85%;
+    width: 90%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -410,6 +410,7 @@ i {
         width: 100%;
         background: #fafafa;
     }
+
 
     .col-3 {
         display: none;
@@ -1070,6 +1071,10 @@ menuitem > menu > menuitem.hover > menu > menuitem {
 @media all and (max-width: 1100px){
     .works{
         display: none;
+    }
+    .container{
+        width: 100%;
+        justify-content: space-around;
     }
 }
 

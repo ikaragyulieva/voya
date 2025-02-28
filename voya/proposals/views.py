@@ -177,9 +177,9 @@ def proposal_detail(request, proposal_id):
         'Public Transport': 'PublicTransport',
         'Private Transport': 'PrivateTransport',
         'Transfers': 'Transfer',
-        'Activity': 'Tickets',
+        'Activity': 'Ticket',
         'Local Guides': 'LocalGuide',
-        'Tour Leader': 'TourLeader',
+        'Tour Leader': 'Staff',
         # 'Other Services': 'Other',
     }
 

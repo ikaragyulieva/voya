@@ -137,6 +137,8 @@ class ProposalBudgetAdmin(admin.ModelAdmin):
                 'pax',
                 'variable_cost',
                 'fixed_cost',
+                'free_of_charge',
+                'free_of_charge_amount',
                 'total_cost_per_person',
                 'total_cost',
                 'service_fee',
