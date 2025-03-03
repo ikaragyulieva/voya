@@ -1,5 +1,6 @@
 from django.contrib.auth import mixins
 from django.db import transaction
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView, DetailView, UpdateView, DeleteView
@@ -67,7 +68,7 @@ class CompanyCreateView(FormView):
             phone_number.company.is_active = True
             phone_number.save()
 
-            return super().form_valid(company_profile_form)
+            return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, company_profile_form, address_form, phone_number_form):
         return self.render_to_response(
@@ -84,7 +85,7 @@ class CompanyCreateView(FormView):
             return reverse_lazy(
                 'home',
             )
-        if getattr(self.request.user, 'role', None) is not 'employee':
+        if getattr(self.request.user, 'role', None) != 'employee':
             return reverse_lazy(
                 'home',
             )

@@ -23,6 +23,7 @@ from voya.proposals import views
 
 urlpatterns = [
     path('create/<int:trip_id>/', views.CreateProposalView.as_view(), name='create-proposal'),
+    path('dashboard/', views.ProposalDashboardView.as_view(), name='proposal-dashboard'),
     path('details/<int:proposal_id>/', views.proposal_detail, name='proposal-detail'),
     path('proposal_details/<int:proposal_id>/', views.proposal_detail, name='client-proposal-detail'),
     path('download/<int:proposal_id>/', views.proposal_pdf_view, name='proposal_download'),

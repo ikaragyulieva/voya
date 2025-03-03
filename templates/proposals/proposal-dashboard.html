@@ -1,0 +1,160 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% extends 'base.html' %}
+{% load tz %}
+{% load static %}
+
+{% block content %}
+
+    <main class="dashboard-table">
+        <div class="container-table">
+
+            {% if not all_proposals %}
+
+                <h2>There are no proposals yet!</h2>
+
+            {% else %}
+                <h2>Proposals Dashboard</h2>
+
+                <div class="col-9">
+
+                    <!-- Start Searchbar Form -->
+                    <form class="searchbar" method="get">
+
+                        {% csrf_token %}
+                        {{ search_form }}
+
+                        <button>
+                            <img src="{% static 'images/search.png' %}" height="18" alt="img2">
+                        </button>
+                    </form>
+                    <!-- End Searchbar Form -->
+
+                </div>
+                <div class="table-wrapper table-services">
+                    <!-- Add request button -->
+                    <div class="action-btn add-option">
+                        <a href="#">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Create new proposal"
+                            />
+                        </a>
+                    </div>
+
+
+                    <!-- Dashboard Table -->
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header">
+                            <div class="col col-1">Status</div>
+                            <div class="col col-2">Created On</div>
+                            <div class="col col-33">Title</div>
+                            <div class="col col-4">Request</div>
+                            <div class="col col-5">Company</div>
+                            <div class="col col-6">Actions</div>
+                        </li>
+                        {% for proposal in proposals_list %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="Status">
+                                    <div class="action-btn">
+                                        {% if proposal.created_at|date:"Y-m-d" == now|date:"Y-m-d" and proposal.is_draft %}
+                                            <!-- New Proposal Status-->
+                                            <img
+                                                    src="{% static 'images/new-icon.png' %}"
+                                                    alt="New Proposal"
+                                            />
+                                        {% elif proposal.is_draft %}
+                                            <!-- Active Proposal Status -->
+                                            <img
+                                                    src="{% static 'images/green-circle.png' %}"
+                                                    alt="Active Proposal"
+                                            />
+
+                                        {% elif not proposal.is_draft %}
+                                            <!-- Closed Proposal Status -->
+                                            <img
+                                                    src="{% static 'images/red-circle.png' %}"
+                                                    alt="Closed Proposal"
+                                            />
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col col-2" data-label="Created On">{{ proposal.created_at|date }}</div>
+                                <div class="col col-33" data-label="Title">{{ proposal.title }}</div>
+                                <div class="col col-4"
+                                     data-label="Request">{{ proposal.trip_request.slug }}</div>
+                                <div class="col col-5"
+                                     data-label="Company">{{ proposal.trip_request.created_by_company.commercial_name }}</div>
+                                <div class="col col-6" data-label="Actions">
+                                    <div class="action-btn request-action-btn">
+                                        <!-- View Proposal Page-->
+                                        <a href="{% url 'proposal-detail' proposal_id=proposal.pk %}"
+                                           class="action-link"
+                                           title="View Proposal">
+                                            <img
+                                                    src="{% static 'images/view-icon.png' %}"
+                                                    alt="View button"
+                                            />
+                                        </a>
+                                        <!-- Duplicate proposal-->
+                                        {#                                            <a href="{% url 'clone-request' pk=trip_request.pk %}"#}
+                                        {#                                               class="action-link"#}
+                                        {#                                               title="Duplicate Request">#}
+                                        {#                                                <img#}
+                                        {#                                                        src="{% static 'images/duplicate (1).png' %}"#}
+                                        {#                                                        alt="duplicate button"#}
+                                        {#                                                />#}
+                                        {#                                            </a>#}
+
+                                        <!-- Link to Edit Proposal Page -->
+                                        <a href="#"
+                                           class="action-link"
+                                           title="Edit Proposal">
+                                            <img
+                                                    src="{% static 'images/edit-icon.png' %}"
+                                                    alt="Edit button"
+                                            />
+                                        </a>
+
+                                        <!-- Link to Delete Proposal Page -->
+                                        <a href="#"
+                                           class="action-link delete-link" title="Disable Proposal">
+                                            <img
+                                                    src="{% static 'images/check-mark.png' %}"
+                                                    alt="Delete button"
+                                            />
+
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </li>
+                        {% empty %}
+
+                            <li>No results found</li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

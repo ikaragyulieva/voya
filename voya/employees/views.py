@@ -72,7 +72,9 @@ class EmployeeDashboardView(mixins.LoginRequiredMixin, ListView):
         if search_form.is_valid():
             search_query = search_form.cleaned_data.get('search')
             if search_query:
-                model_fields = [field for field in self.get_queryset().model._meta.fields if field.name not in ['id', 'created_at'] and field.get_internal_type() not in ['OneToOneField']]
+                model_fields = [field for field in self.get_queryset().model._meta.fields if
+                                field.name not in ['id', 'created_at'] and field.get_internal_type() not in [
+                                    'OneToOneField']]
 
                 query = Q()
 

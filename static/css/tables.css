@@ -57,6 +57,7 @@ h2 {
 
 .col {
     text-overflow: ellipsis;
+    align-content: center;
 }
 
 .responsive-table {

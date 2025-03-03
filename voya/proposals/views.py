@@ -22,12 +22,13 @@ from django.apps import apps
 from django.contrib.auth import mixins
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, ListView
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
@@ -36,11 +37,13 @@ from rest_framework.views import APIView
 from decimal import Decimal
 from weasyprint import HTML
 
+from voya.common.forms import SearchForm
+from voya.employees.models import EmployeeProfile
 from voya.proposals.forms import CreateProposalForm, CreateItemForm, CreateBudgetForm, PDFOptionsForm
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.proposals.serializers import ProposalSerializer, ItemSerializer, BudgetSerializer
 from voya.requests.models import TripRequests
-from voya.utils import get_user_obj
+from voya.utils import get_user_obj, get_dashboard_multiple_search
 
 
 class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
@@ -555,3 +558,29 @@ def proposal_pdf_view(request, proposal_id):
         form = PDFOptionsForm()
 
     return render(request, 'proposals/pdf-proposal-form.html', {'form': form, 'profile': user_profile})
+
+
+class ProposalDashboardView(mixins.LoginRequiredMixin, ListView):
+    model = Proposal
+    template_name = 'proposals/proposal-dashboard.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Proposal.objects.all().order_by('-is_draft', '-created_at')
+
+    def get_object(self, queryset=None):
+        # Fetch the ClientProfile based on the URL pk
+        return EmployeeProfile.objects.get(user=self.request.user)
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        all_proposals_query = self.get_queryset()
+        proposals_list = get_dashboard_multiple_search(self.request, all_proposals_query)
+
+        context['profile'] = self.get_object()
+        context["search_form"] = SearchForm(self.request.GET)
+        context['all_proposals'] = all_proposals_query
+        context['proposals_list'] = proposals_list
+
+        return context

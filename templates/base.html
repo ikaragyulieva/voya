@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logo-voya-image.png' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{#    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>#}
+    {#    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>#}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -68,9 +68,24 @@
                         <li class="nav-item">
 
                             <!-- Link to Add Pet Page -->
-                            <a href="{% url 'employee-dashboard' pk=profile.pk %}">
-                                Dashboard
-                            </a>
+                            {#                            <a href="{% url 'employee-dashboard' pk=profile.pk %}">#}
+                            {#                                Dashboard#}
+                            {#                            </a>#}
+                            <nav>
+                                <menu>
+                                    <menuitem>
+                                        <a>Dashboards</a>
+                                        <menu>
+                                            <menuitem>
+                                                <a href="{% url 'employee-dashboard' pk=profile.pk %}">Requests</a>
+                                            </menuitem>
+                                            <menuitem>
+                                                <a href="{% url 'proposal-dashboard' %}">Proposals</a>
+                                            </menuitem>
+                                        </menu>
+                                    </menuitem>
+                                </menu>
+                            </nav>
                         </li>
 
                         <li class="nav-item">
@@ -95,12 +110,13 @@
                                                         New Hotel</a></menuitem>
                                                 </menu>
                                             </menuitem>
-                                            
+
                                             <menuitem id="demo2">
                                                 <a>Guides</a>
                                                 <menu>
                                                     <menuitem id="demo3">
-                                                        <a href="{% url 'service-dashboard' model_name='localguide' %}">Local guides</a>
+                                                        <a href="{% url 'service-dashboard' model_name='localguide' %}">Local
+                                                            guides</a>
                                                         <menu>
                                                             <menuitem><a
                                                                     href="{% url 'create-service' model_name='localguide' %}">Add
@@ -108,7 +124,8 @@
                                                         </menu>
                                                     </menuitem>
                                                     <menuitem>
-                                                        <a href="{% url 'service-dashboard' model_name='staff' %}">Tour leaders</a>
+                                                        <a href="{% url 'service-dashboard' model_name='staff' %}">Tour
+                                                            leaders</a>
                                                         <menu>
                                                             <menuitem><a
                                                                     href="{% url 'create-service' model_name='staff' %}">Add
@@ -117,7 +134,7 @@
                                                     </menuitem>
                                                 </menu>
                                             </menuitem>
-                                            
+
                                             <menuitem>
                                                 <a href="{% url 'service-dashboard' model_name='ticket' %}">Activities</a>
                                                 <menu>
@@ -156,7 +173,7 @@
                                                     </menuitem>
                                                 </menu>
                                             </menuitem>
-                                            
+
                                             <menuitem>
                                                 <a href="{% url 'service-dashboard' model_name='currency' %}">Currency</a>
                                                 <menu>
@@ -165,7 +182,7 @@
                                                         New Currency</a></menuitem>
                                                 </menu>
                                             </menuitem>
-                                            
+
                                             <menuitem>
                                                 <a href="{% url 'providers-dashboard' %}">Providers</a>
                                                 <menu>
