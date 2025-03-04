@@ -17,17 +17,24 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
-from django.urls import path
+from django.urls import path, include
 
 from voya.proposals import views
 
 urlpatterns = [
     path('create/<int:trip_id>/', views.CreateProposalView.as_view(), name='create-proposal'),
     path('dashboard/', views.ProposalDashboardView.as_view(), name='proposal-dashboard'),
-    path('details/<int:proposal_id>/', views.proposal_detail, name='proposal-detail'),
-    path('proposal_details/<int:proposal_id>/', views.proposal_detail, name='client-proposal-detail'),
-    path('download/<int:proposal_id>/', views.proposal_pdf_view, name='proposal_download'),
+    path('<int:pk>/', include([
+        path('details/', views.proposal_detail, name='proposal-detail'),
+        path('proposal_details/', views.proposal_detail, name='client-proposal-detail'),
+        path('edit/', views.EditProposalView.as_view(), name='edit-proposal'),
+        path('download/', views.proposal_pdf_view, name='proposal_download'),
+
+    ])),
+
+
     path('api/services/<str:section>/', views.DynamicServiceView.as_view(), name='dynamic-services'),
     path('api/create/<int:trip_id>/', views.ProposalItemsAPI.as_view(), name='proposal-create-api'),
+    path('api/edit/<int:pk>/', views.ProposalUpdateAPI.as_view(), name='proposal-edit-api'),
 
 ]

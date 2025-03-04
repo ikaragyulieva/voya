@@ -106,7 +106,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                 <div class="col col-6" data-label="Actions">
                                     <div class="action-btn request-action-btn">
                                         <!-- View Proposal Page-->
-                                        <a href="{% url 'proposal-detail' proposal_id=proposal.pk %}"
+                                        <a href="{% url 'proposal-detail' pk=proposal.pk %}"
                                            class="action-link"
                                            title="View Proposal">
                                             <img
@@ -125,7 +125,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                         {#                                            </a>#}
 
                                         <!-- Link to Edit Proposal Page -->
-                                        <a href="#"
+                                        <a href="{% url 'edit-proposal' pk=proposal.pk %}"
                                            class="action-link"
                                            title="Edit Proposal">
                                             <img

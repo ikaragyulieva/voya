@@ -28,7 +28,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, UpdateView
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
@@ -39,9 +39,12 @@ from weasyprint import HTML
 
 from voya.common.forms import SearchForm
 from voya.employees.models import EmployeeProfile
+from voya.proposals.choices import StatusChoices
 from voya.proposals.forms import CreateProposalForm, CreateItemForm, CreateBudgetForm, PDFOptionsForm
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.proposals.serializers import ProposalSerializer, ItemSerializer, BudgetSerializer
+from voya.proposals.utils import save_proposal, update_proposal
+from voya.requests.choices import CityChoices
 from voya.requests.models import TripRequests
 from voya.utils import get_user_obj, get_dashboard_multiple_search
 
@@ -60,7 +63,7 @@ class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
 
         proposal = self.proposal_form_class()
         item_form = self.create_item_form_class()
-        budget_form = self.create_budget_form_class
+        budget_form = self.create_budget_form_class()
         context['trip_id'] = trip_id
         context['profile'] = get_user_obj(self.request)
         context['current_request'] = current_request
@@ -78,7 +81,7 @@ class ProposalItemsAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-
+        """Handles creating a new proposal."""
         data = request.data
 
         # Validate Proposal
@@ -87,7 +90,7 @@ class ProposalItemsAPI(APIView):
             return Response({
                 'error': 'Proposal validation failed',
                 'details': proposal_serializer.errors
-            },status=status.HTTP_400_BAD_REQUEST)
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         # Validate Items
         items_serializer = ItemSerializer(data=data.get('items', []), many=True)
@@ -104,76 +107,54 @@ class ProposalItemsAPI(APIView):
                 'details': budget_serializer.errors},
                 status=status.HTTP_400_BAD_REQUEST)
 
-        # Extract proposal, items, and budget data
-        proposal_data = data.get('proposal', {})
-        items_data = data.get('items', [])
-        budget_data = data.get('budget', [])
+        try:
+            proposal, created_items, created_budgets = save_proposal(data, request.user)
+
+            # Return success response
+            return Response({
+                'success': 'Proposal, items, and budget saved successfully!',
+                'proposal_id': proposal.id,
+                'item_ids': [item.id for item in created_items],
+                'budget_ids': [budget.id for budget in created_budgets],
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProposalUpdateAPI(APIView):
+    """
+       API to handle updating an existing proposal, items, and budget.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, *args, **kwargs):
+        """Handles updating an existing proposal."""
+        data = request.data
         trip_id = data.get('trip_id', '')
-        trip = TripRequests.objects.get(id=trip_id)
 
         try:
-            with transaction.atomic():
+            proposal = Proposal.objects.get(trip_request_id=trip_id, user=request.user)
+        except Proposal.DoesNotExist:
+            return Response({'error': 'Proposal not found. Use Post to create a new one'},
+                            status=status.HTTP_404_NOT_FOUND)
 
-                # 1. Save the proposal
-                proposal = Proposal.objects.create(
-                    trip_request=trip,
-                    user=request.user,
-                    title=proposal_data.get('title'),
-                    is_draft=proposal_data.get('is_draft', True)
-                )
-
-                # 2. Saves the item
-                created_items = []
-                for item_data in items_data:
-                    # Fetch linked services
-
-                    # Create the item
-                    new_item = ProposalSectionItem.objects.create(
-                        proposal=proposal,
-                        section_name=item_data.get('section_name'),
-                        service_id=item_data.get('service_id', None),
-                        quantity=item_data.get('quantity'),
-                        additional_notes=item_data.get('additional_notes', ''),
-                        corresponding_trip_date=item_data.get('corresponding_trip_date'),
-                        price=item_data.get('price'),
-                        city=item_data.get('city'),
-                    )
-                    created_items.append(new_item)
-
-                # 3. Save the budget
-                created_budgets = []
-                for budget_entry in budget_data:
-                    budget = ProposalBudget.objects.create(
-                        proposal=proposal,
-                        pax=budget_entry.get('pax'),
-                        variable_cost=budget_entry.get('variable_cost'),
-                        fixed_cost=budget_entry.get('fixed_cost'),
-                        free_of_charge=budget_entry.get('free_of_charge'),
-                        free_of_charge_amount=budget_entry.get('free_of_charge_amount'),
-                        total_cost_per_person=budget_entry.get('total_cost_per_person'),
-                        total_cost=budget_entry.get('total_cost'),
-                        service_fee=budget_entry.get('service_fee'),
-                        margin=budget_entry.get('margin'),
-                        fina_price_per_person=budget_entry.get('fina_price_per_person'),
-                        final_price=budget_entry.get('final_price'),
-                    )
-                    created_budgets.append(budget)
-
-                # Return success response
-                return Response({
-                    'success': 'Proposal, items, and budget saved successfully!',
-                    'proposal_id': proposal.id,
-                    'item_ids': [item.id for item in created_items],
-                    'budget_ids': [budget.id for budget in created_budgets],
-                }, status=status.HTTP_201_CREATED)
+        try:
+            proposal, created_items, created_budgets = update_proposal(proposal, data)
+            return Response({
+                'success': 'Proposal updated successfully!',
+                'proposal_id': proposal.id,
+                'item_ids': [item.id for item in created_items],
+                'budget_ids': [budget.id for budget in created_budgets],
+            }, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required
-def proposal_detail(request, proposal_id):
-    proposal = get_object_or_404(Proposal, id=proposal_id)
+def proposal_detail(request, pk):
+    proposal = get_object_or_404(Proposal, id=pk)
     items = ProposalSectionItem.objects.filter(proposal=proposal)
     model_map = {
         'Accommodations': 'Hotel',
@@ -245,7 +226,7 @@ def proposal_detail(request, proposal_id):
             'other_items': other_items,
             'budget': budget,
             'current_request': current_request,
-            'foc_pax': foc_pax[0],
+            'foc_pax': foc_pax[0] if foc_pax else 0,
         }
         return render(request, 'proposals/proposal-detail-page.html', context)
 
@@ -270,6 +251,7 @@ def proposal_detail(request, proposal_id):
     else:
 
         return render(request, 'common/home-page.html')
+
 
 # @login_required
 # def client_proposal_detail(request, proposal_id):
@@ -483,7 +465,8 @@ def proposal_pdf_view(request, proposal_id):
             for budget_option in budget:
                 if commission > 0.00:
                     budget_final_price = budget_option.final_price * Decimal(1 + (commission / 100))
-                    budget_final_price_per_person = budget_option.fina_price_per_person * Decimal(1 + (commission / 100))
+                    budget_final_price_per_person = budget_option.fina_price_per_person * Decimal(
+                        1 + (commission / 100))
                 else:
                     budget_final_price = budget_option.final_price
                     budget_final_price_per_person = budget_option.fina_price_per_person
@@ -582,5 +565,103 @@ class ProposalDashboardView(mixins.LoginRequiredMixin, ListView):
         context["search_form"] = SearchForm(self.request.GET)
         context['all_proposals'] = all_proposals_query
         context['proposals_list'] = proposals_list
+
+        return context
+
+
+class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
+    model = Proposal
+    template_name = 'proposals/edit-proposal-page.html'
+    success_url = reverse_lazy('proposal-dashboard')
+
+    form_class = CreateProposalForm
+    create_item_form_class = CreateItemForm
+    create_budget_form_class = CreateBudgetForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        proposal = self.get_object()
+        items = ProposalSectionItem.objects.filter(proposal=proposal)
+
+        model_map = {
+            'Accommodations': 'Hotel',
+            'Public Transport': 'PublicTransport',
+            'Private Transport': 'PrivateTransport',
+            'Transfers': 'Transfer',
+            'Activity': 'Ticket',
+            'Local Guides': 'LocalGuide',
+            'Tour Leader': 'Staff',
+            # 'Other Services': 'Other',
+        }
+
+        accommodation_items = []
+        public_transport_items = []
+        private_transport_items = []
+        activity_items = []
+        transfer_items = []
+        guides_items = []
+        tour_leader_items = []
+        other_items = []
+
+        for item in items:
+            if item.section_name == 'Other Services':
+                pass
+            else:
+                model_name = model_map.get(item.section_name)
+
+                service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
+                if hasattr(service_object, 'name'):
+                    item.service_name = service_object.name
+                elif hasattr(service_object, 'type'):
+                    item.service_name = service_object.type
+
+            if item.section_name == 'Accommodations':
+                accommodation_items.append(item)
+            elif item.section_name == 'Public Transport':
+                public_transport_items.append(item)
+            elif item.section_name == 'Private Transport':
+                private_transport_items.append(item)
+            elif item.section_name == 'Activity':
+                activity_items.append(item)
+            elif item.section_name == 'Local Guides':
+                guides_items.append(item)
+            elif item.section_name == 'Transfers':
+                transfer_items.append(item)
+            elif item.section_name == 'Tour Leader':
+                tour_leader_items.append(item)
+            elif item.section_name == 'Other Services':
+                other_items.append(item)
+
+        budget = ProposalBudget.objects.filter(proposal=proposal)
+        foc_pax = [budget_option.free_of_charge for budget_option in budget]
+        current_request = TripRequests.objects.get(id=proposal.trip_request.id)
+
+        current_proposal = self.get_object()
+        trip_id = current_proposal.trip_request.id
+        proposal_form = self.form_class
+        item_form = self.create_item_form_class()
+        budget_form = self.create_budget_form_class()
+
+        context['trip_id'] = trip_id
+        context['item_form'] = item_form
+        context['budget_form'] = budget_form
+        context['profile'] = get_user_obj(self.request)
+        context['current_request'] = current_request
+        context['proposal'] = proposal
+        context['items'] = items
+        context['accommodation_items'] = accommodation_items
+        context['public_transport_items'] = public_transport_items
+        context['private_transport_items'] = private_transport_items
+        context['activity_items'] = activity_items
+        context['guides_items'] = guides_items
+        context['tour_leader_items'] = tour_leader_items
+        context['transfer_items'] = transfer_items
+        context['other_items'] = other_items
+        context['budget'] = budget
+        context['current_request'] = current_request
+        context['foc_pax'] = foc_pax[0] if foc_pax else 0
+        context['city_choices'] = CityChoices.choices
+        context['status_choices'] = StatusChoices.choices
 
         return context

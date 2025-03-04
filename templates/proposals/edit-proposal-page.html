@@ -1,0 +1,1728 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+    
+    <div class="proposal">
+        <div class="trip trip-proposal">
+            <div class="trip-title">
+                <!-- Trip title -->
+                <p>{{ current_request.slug }}</p>
+
+            </div>
+            <hr class="custom-line">
+            <div class="trip-section">
+                <h3 class="title">Group Information</h3>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Nationality:</th>
+                        <td><i> {{ current_request.get_nationality_display }} </i></td>
+                    </tr>
+                    <tr>
+                        <th>Age range:</th>
+                        <td><i>{{ current_request.age_range }} years old</i></td>
+                    </tr>
+                    <tr>
+                        <th>Min participants:</th>
+                        <td><i> {{ current_request.min_participants }} people</i></td>
+                    </tr>
+                    <tr>
+                        <th>Max participants:</th>
+                        <td><i> {{ current_request.max_participants }} people</i></td>
+                    </tr>
+                    <tr>
+                        <th>Group type:</th>
+                        <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
+                    </tr>
+                    {% if current_request.type_of_trip %}
+                        <tr>
+                            <th>Type of trip:</th>
+                            <td><i> {{ current_request.type_of_trip }} </i></td>
+                        </tr>
+                    {% endif %}
+                    {% if current_request.additional_observations %}
+                        <tr>
+                            <th>Additional observations:</th>
+                            <td><i> {{ current_request.additional_observations }} </i></td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Dates Information</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Start date:</th>
+                            <td><i> {{ current_request.trip_start_date }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>End date:</th>
+                            <td><i>{{ current_request.trip_end_date }}</i></td>
+                        </tr>
+                        <tr>
+                            <th>Trip duration:</th>
+                            <td><i> {{ current_request.trip_duration }} days </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Destination Information:</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Origin country:</th>
+                            <td><i> {{ current_request.get_country_origin_display }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>Destinations:</th>
+                            <td><i>{{ current_request.get_country_destinations_display }}</i></td>
+                        </tr>
+                        {% if current_request.other_destinations %}
+                            <tr>
+                                <th>Additional destinations info:</th>
+                                <td><i> {{ current_request.other_destinations }} </i></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Trip Information:</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Transportation:</th>
+                            <td><i> {{ current_request.get_transportation_type_display }} </i></td>
+                        </tr>
+
+                        {% if current_request.transportation_details %}
+                            <tr>
+                                <th>Transportation details:</th>
+                                <td><i>{{ current_request.transportation_details }}</i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Accommodation:</th>
+                            <td><i> {{ current_request.get_accommodations_display }} </i></td>
+                        </tr>
+                        {% if current_request.accommodations_details %}
+                            <tr>
+                                <th>Accommodation details:</th>
+                                <td><i> {{ current_request.accommodations_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Meals:</th>
+                            <td><i> {{ current_request.get_meals_display }} </i></td>
+                        </tr>
+                        {% if current_request.meals_details %}
+                            <tr>
+                                <th>Meals details:</th>
+                                <td><i> {{ current_request.meals_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Staff:</th>
+                            <td><i> {{ current_request.get_staff_display }} </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Billing Information:</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Budget:</th>
+                            <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Currency:</th>
+                            <td><i>{{ current_request.get_currency_display }}</i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Trip Proposal Template -->
+        <form id="proposal-form" method="post" action="#" onsubmit="return false">
+            {% csrf_token %}
+            <div class="trip proposal-edit proposal-create">
+
+                <div class="trip-title">
+                    <!-- Proposal title -->
+                    <p><input name="title" type="text" placeholder="Add a title" value="{{ proposal.title }}"></p>
+{#                    {% if proposal.errors.title %}#}
+{#                        <div class="error">{{ proposal.errors.title }}</div>#}
+{#                    {% endif %}#}
+
+                </div>
+                <hr class="custom-line">
+                <!-- Accommodation -->
+                <div class="trip-section">
+                    <h3 id="section" class="title">Accommodations</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        {% for item in accommodation_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        {% for service in available_services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% empty %}
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33" data-label="service details"><select id="service-dropdown"
+                                                                                             name="service">
+                                    <option value="">Select a Service</option>
+                                </select></div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="variable cost"><input type="text" id="service-price"
+                                                                                         name="service_price"
+                                                                                         placeholder="€ 0.00">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Private Transport -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Private Transport</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+
+                        {% for item in private_transport_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        {% for service in available_services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% empty %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="">Select a Service</option>
+                                    </select>
+                                </div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- Public Transport -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Public Transport</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+
+                        {% for item in public_transport_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        {% for service in available_services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% empty %}
+
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="">Select a Service</option>
+                                    </select>
+                                </div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- Activity -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Activity</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+
+                        {% for item in activity_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        {% for service in available_services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% empty %}
+
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="">Select a Service</option>
+                                    </select>
+                                </div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- Transfers -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Transfers</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+
+                        {% for item in transfer_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        {% for service in available_services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        {% empty %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="">Select a Service</option>
+                                    </select>
+                                </div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- Local Guides -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Local Guides</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        {% for item in guides_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        {% for service in available_services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        {% empty %}
+
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="">Select a Service</option>
+                                    </select>
+                                </div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+
+                                <!-- Remove Row-->
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- Tour Leader -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Tour Leader</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+
+                        {% for item in tour_leader_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        {% for service in available_services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        {% empty %}
+
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33" data-label="service details">
+                                    <select id="service-dropdown" name="service">
+                                        <option value="">Select a Service</option>
+                                    </select>
+                                </div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+
+                                <!-- Remove Row-->
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+
+                <!-- Other Services -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Other Services</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        {% for item in other_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city_value, city_label in city_choices %}
+                                            <option value="{{ city_value }}"
+                                                    {% if city_value == item.city %}selected{% endif %}>
+                                                {{ city_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33 note" data-label="service details">
+                                    <input type="text"
+                                           name="service_details"
+                                           id="service-details"
+                                           placeholder="Add service"
+                                           value="{{ item.additional_notes }}">
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        {% empty %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33 note"
+                                     data-label="service details">{{ item_form.additional_notes|placeholder:'Add service' }}</div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+
+                                <!-- Remove Row-->
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            </div>
+        </form>
+
+
+        <!-- Trip Proposal Budget Template -->
+        <div class="trip trip-proposal budget">
+
+            <div class="trip-title">
+                <!-- Budget title -->
+                <p>Proposal Budget</p>
+
+            </div>
+
+            <hr class="custom-line">
+
+            <div class="trip-section">
+                <form id="proposal-form" method="post" action="#" onsubmit="return false">
+                    {% csrf_token %}
+                    <div class="budget-container">
+                        <table class="budget-table" id="budget-table">
+
+                            <thead>
+                            <tr>
+                                <th></th>
+                                {#                            <th>Totals</th>#}
+                                <th>{{ current_request.min_participants }} pax</th>
+                                <th>{{ current_request.max_participants }} pax</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Variable cost:</th>
+                                <td><i> {{ budget_form.variable_cost }} € </i></td>
+                                <td><i> {{ budget_form.variable_cost }} € </i></td>
+                            </tr>
+                            <tr>
+                                <th class="fixed-cost">Fixed cost:</th>
+                                <td><i> {{ budget_form.fixed_cost }} € </i></td>
+                                <td><i> {{ budget_form.fixed_cost }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    FOC: &nbsp; &nbsp; <input type="number" id="foc-input" name="free_of_charge" min="0"
+                                                              placeholder="0"
+                                                              value="{{ foc_pax }}"> &nbsp;pax
+                                </th>
+                                <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
+                                <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total per person:</th>
+                                <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
+                                <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Cost:</th>
+                                <td><i> {{ budget_form.total_cost }} € </i></td>
+                                <td><i> {{ budget_form.total_cost }} € </i></td>
+                            </tr>
+
+                            <tr>
+                                <th>Service fee:</th>
+                                {% for budget_option in budget %}
+                                <td><i> €
+                                    <input type="number"
+                                           name="service-fee"
+                                           placeholder="500"
+                                           value="{{ budget_option.service_fee }}"> 
+                                </i></td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <th>Margin:</th>
+                                {% for budget_option in budget %}
+                                <td><i> 
+                                    <input type="number"
+                                           name="margin"
+                                           placeholder="10"
+                                           value="{{ budget_option.margin }}"> % 
+                                </i></td>
+                            {% endfor %}
+                            </tr>
+
+                            </tbody>
+
+
+                            <tfoot>
+                            <tr>
+                                <th>Price per person:</th>
+                                <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
+                                <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
+                            </tr>
+                            <tr>
+                                <th>Final Price:</th>
+                                {#                            <td><i> total € </i></td>#}
+                                <td><i> {{ budget_form.fina_price }} € </i></td>
+                                <td><i> {{ budget_form.fina_price }} € </i></td>
+                            </tr>
+                            </tfoot>
+
+                        </table>
+                        <div class="prop-status">
+                            <p>State:</p>
+                            <p id="draft-status">
+                                <select id="id_is_draft" name="status">
+                                        {% for status_value, status_label in status_choices %}
+                                            <option value="{{ status_value }}"
+                                                    {% if status_value == proposal.is_draft %}selected{% endif %}>
+                                                {{ status_label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                            </p>
+
+                        </div>
+
+                </form>
+            </div>
+            <button id="submit-proposal-btn" class="add-btn" type="submit">Edit Proposal</button>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+        // Items functionalities
+        document.addEventListener("DOMContentLoaded", function () {
+            const sections = document.querySelectorAll("[id=section]");
+            const servicesDataMap = {}; // Cache services data for each section dynamically
+
+            // Utility Functions: Initialize Flatpickr
+            const initializeFlatpickr = () => {
+                const flatpickrFields = document.querySelectorAll(".flatpickr");
+                flatpickrFields.forEach(field => {
+                    if (!field._flatpickr) {
+                        flatpickr(field, {dateFormat: "Y-m-d"});
+                    }
+                });
+            };
+
+            // Fetching service based on the section name
+            const fetchServices = (sectionName) => {
+                if (servicesDataMap[sectionName]) return Promise.resolve(servicesDataMap[sectionName]); // Use cached data
+                return fetch(`/proposals/api/services/${sectionName}/`)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => {
+                        servicesDataMap[sectionName] = data; // Cache data
+                        return data;
+                    })
+                    .catch(error => console.error(`Error fetching services for ${sectionName}:`, error));
+            };
+
+            // Logic to populate service dropdown with services based on the chosed city
+            const populateServiceDropdown = (serviceDropdown, sectionName, city) => {
+                fetchServices(sectionName).then(data => {
+                    const filteredServices = data.filter(service => service.city === city);
+                    serviceDropdown.innerHTML = "<option value=''>Select a Service</option>";
+                    filteredServices.forEach(service => {
+                        const option = document.createElement("option");
+                        option.value = service.id;
+                        option.textContent = service.display_field;
+                        serviceDropdown.appendChild(option);
+                    });
+                });
+            };
+
+            // Logic to clear row inputs (to be used when rows are added)
+            const clearRowInputs = (row) => {
+                const inputs = row.querySelectorAll("input, select");
+                inputs.forEach(input => {
+                    if (input.tagName === "SELECT") {
+                        input.selectedIndex = 0;
+                    } else {
+                        input.value = "";
+                    }
+                });
+            };
+
+            // Logic to update items price and quantity fields after service field is populated
+            const updatePriceQuantityField = (serviceDropdown, sectionName, priceField, quantityField) => {
+                serviceDropdown.addEventListener("change", function () {
+                    const selectedServiceId = serviceDropdown.value;
+                    fetchServices(sectionName).then(data => {
+                        const selectedService = data.find(service => service.id == selectedServiceId);
+                        quantityField.value = "1";
+                        priceField.value = selectedService
+                            ? `€ ${parseFloat(selectedService.price).toFixed(2)}`
+                            : "";
+                        calculateBudget();
+                    });
+                });
+            };
+
+            // Initialize Service Dropdowns
+            sections.forEach(section => {
+                const sectionName = section.textContent.trim();
+                const tripSection = section.closest(".trip-section");
+                const serviceDropdown = tripSection.querySelector("#service-dropdown");
+                const cityDropdown = tripSection.querySelector("#city-dropdown");
+                const servicePriceField = tripSection.querySelector("#service-price");
+                const serviceQuantityField = tripSection.querySelector("input[name='quantity']");
+
+                if (sectionName && serviceDropdown) {
+                    cityDropdown.addEventListener("change", function () {
+                        const selectedCity = cityDropdown.value;
+                        populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                        servicePriceField.value = "€ 0.00";
+                        serviceQuantityField.value = "0";
+                    });
+
+                    updatePriceQuantityField(serviceDropdown, sectionName, servicePriceField, serviceQuantityField);
+                }
+            });
+
+            // Add Row Functionality
+            const addRowButtons = document.querySelectorAll(".add-option a");
+            addRowButtons.forEach(button => {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const tripSection = button.closest(".trip-section");
+                    const table = tripSection.querySelector(".requests-table");
+                    const lastRow = table.querySelector(".table-row:last-of-type");
+                    const newRow = lastRow.cloneNode(true);
+
+                    // Clears the new rows
+                    {#clearRowInputs(newRow);#}
+
+                    // Copy all the input/select values from the last row
+                    const lastRowInputs = lastRow.querySelectorAll("input, select");
+                    const newRowInputs = newRow.querySelectorAll("input, select");
+
+                    newRowInputs.forEach((newInput, index) => {
+                        const lastInput = lastRowInputs[index];
+
+                        if (lastInput) {
+                            if (newInput.tagName === "SELECT") {
+                                newInput.value = lastInput.value; // Copy selected option in the new row
+                            } else {
+                                if (newInput.id === "id_corresponding_trip_date") {
+                                    // Handel date field: set to the next day
+                                    if (lastInput.value) {
+                                        const lastDate = lastInput.value ? new Date(lastInput.value) : new Date();
+                                        lastDate.setDate(lastDate.getDate() + 1); // Add 1 day
+                                        newInput.value = lastDate.toISOString().split("T")[0]; //Set format to YYYY-MM-DD
+                                    }
+                                } else {
+                                    newInput.value = lastInput.value; // Copy input values in the new row
+                                }
+                            }
+                        }
+                    });
+
+                    table.appendChild(newRow);
+                    initializeFlatpickr(); // Ensure date picker works for new row
+                    // Populate city and service dropdown and update price and quantity
+                    const sectionName = tripSection.querySelector(".title").textContent.trim();
+                    const cityDropdown = newRow.querySelector("#city-dropdown");
+                    const serviceDropdown = newRow.querySelector("#service-dropdown");
+                    const servicePriceField = newRow.querySelector("#service-price");
+                    const serviceQuantityField = newRow.querySelector("input[name='quantity']");
+
+                    if (cityDropdown && serviceDropdown) {
+                        cityDropdown.addEventListener("change", function () {
+                            const selectedCity = cityDropdown.value;
+                            populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                            servicePriceField.value = "€ 0.00";
+                            serviceQuantityField.value = "0";
+                        });
+
+                        updatePriceQuantityField(serviceDropdown, sectionName, servicePriceField, serviceQuantityField);
+                    }
+                });
+            });
+
+            // Remove Row Functionality
+            document.addEventListener("click", function (event) {
+                if (event.target.closest(".remove-row-button")) {
+                    event.preventDefault();
+                    const row = event.target.closest(".table-row");
+                    const table = row.parentNode;
+                    if (row && table.children.length > 2) {
+                        row.remove();
+                    }
+                }
+            });
+
+
+            // Initialize Flatpickr on Page Load
+            initializeFlatpickr();
+        });
+
+
+        // Functionality to submit proposal and budget forms and sends POST to the API to save dynamic rows
+        document.addEventListener("DOMContentLoaded", function () {
+            const submitButton = document.getElementById("submit-proposal-btn");
+
+            submitButton.addEventListener("click", function () {
+                console.log("Submit button clicked."); // Debugging
+                const tripId = "{{ trip_id }}";
+
+                // Getting the status of the proposal (Draft/In progress/Completed)
+                const draftStatusElement = document.querySelector("#id_is_draft");
+                const draftStatusField = draftStatusElement?.value || ""; // Ensure it has a fallback value
+                {#let draftStatus#}
+                {#draftStatus = draftStatusField === "Draft" || draftStatusField === "In progress";#}
+
+                let draftStatus = null;
+                if (draftStatusField === "Draft" || draftStatusField === "In progress") {
+                    draftStatus = true;
+                } else if (draftStatusField === "Done") {
+                    draftStatus = false;
+                }
+
+                // Collect proposal data
+                const proposalData = {
+                    title: document.querySelector("input[name='title']")?.value || "",
+                    is_draft: draftStatus,
+                };
+
+                console.log(`Proposal status is: ${draftStatusField}`); // Debugging
+
+                // Show Proposal validation errors if any
+                if (!proposalData.title) {
+                    alert(`Proposal title is required. Please add a proposal title.`);
+                    return;
+                } else if (!draftStatusField) {
+                    alert(`Please set the current state of the proposal`);
+                    return;
+                }
+
+                // Validate rows for completeness and collection of items
+                const itemsData = [];
+                const invalidRows = [];
+
+                // 1. Collect items data
+                document.querySelectorAll(".table-row").forEach((row, index) => {
+                    const section_name = row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || ""; // Must match SectionChoices
+                    const serviceDropdown = row.querySelector("#service-dropdown");
+                    let service_id
+                    if (section_name !== "Other Services") {
+                        const selectedServices = serviceDropdown
+                            ? Array.from(serviceDropdown.selectedOptions).map(option => parseInt(option.value, 10)).filter(Boolean)
+                            : [];
+                        service_id = selectedServices[0]
+                    } else if (section_name === "Other Services") {
+                        service_id = null;
+                    }
+
+                    const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
+                    const cityField = row.querySelector("#city-dropdown") || row.querySelector(".col-2");
+
+                    // Initialize a data object to store row-specific values
+                    const rowData = {
+                        corresponding_trip_date: row.querySelector(".col-1 input")?.value || "", // YYYY-MM-DD format
+                        section_name: section_name,
+                        city: cityField?.value && cityField.value !== "Select city" ? cityField.value : "", // Skip placeholder
+                        quantity: parseInt(row.querySelector(".col-4 input")?.value || "0", 10), // Ensure integer
+                        price: parseFloat(priceField || "0.00"), // Handle autofill or placeholder
+                        service_id: service_id,
+                    };
+
+                    const hasData = Boolean(
+                        rowData.corresponding_trip_date ||
+                        rowData.city ||
+                        rowData.quantity > 1 ||
+                        rowData.price > 0 ||
+                        rowData.additional_notes ||
+                        rowData.service_id
+                    );
+
+                    const isComplete = Boolean(
+                        rowData.corresponding_trip_date &&
+                        rowData.city &&
+                        rowData.service_id &&
+                        rowData.quantity > 0 &&
+                        rowData.price > 0
+                    );
+                    console.log(`Row ${index + 1} has data: ${hasData}, is complete: ${isComplete}`);
+                    {#console.log(`Has data: date - ${rowData.corresponding_trip_date}, #}
+                    {#city - ${rowData.city},#}
+                    {#quantity - ${rowData.quantity},#}
+                    {#price - ${rowData.price},#}
+                    {#notes - ${rowData.additional_notes},#}
+                    {#service - ${rowData.service_id},`);#}
+
+                    // Only validate rows with data
+                    if (hasData && !isComplete) {
+                        invalidRows.push(rowData.section_name || `Row ${index + 1}`);
+                        row.classList.add("error-row");
+                    } else {
+                        row.classList.remove("error-row");
+                    }
+
+                    // Add valid rows to itemsData
+                    if (hasData && isComplete) {
+                        rowData.additional_notes = row.querySelector(".note textarea")?.value || "No notes";
+                        itemsData.push(rowData)
+                    }
+
+                });
+                // Show validation errors if any
+                if (invalidRows.length > 0) {
+                    alert(`Please complete or clear the data rows in the following table(s): ${[...new Set(invalidRows)].join(", ")}`);
+                    return;
+                }
+                console.log("Final Items Data:", JSON.stringify(itemsData, null, 2));
+
+                // Collect budget data
+                const budgetData = [];
+                const budgetTable = document.querySelector(".budget-table");
+                const minPax = parseInt(budgetTable.querySelector("th:nth-child(2)").textContent.trim() || "0");
+                const maxPax = parseInt(budgetTable.querySelector("th:nth-child(3)").textContent.trim() || "0");
+                const focInput = budgetTable.querySelector("tbody tr:nth-child(3) th input")?.value || "0";
+                const focAmountMinCell = budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(2)")?.textContent.trim().replace("€", "") || "0";
+                const focAmountMaxCell = budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(3)")?.textContent.trim().replace("€", "") || "0";
+
+                // Min Pax Budget
+                budgetData.push({
+                    pax: minPax,
+                    variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "")),
+                    free_of_charge: parseInt(focInput, 10), // Ensure integer conversion
+                    free_of_charge_amount: parseFloat(focAmountMinCell), // Correctly read and pass from the UI
+                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2) input").value.replace("€", "").trim() || "500.00"),
+                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(2) input").value.replace("%", "").trim() || "10"),
+                    fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                    final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
+                });
+
+                // Max Pax Budget
+                budgetData.push({
+                    pax: maxPax,
+                    variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    free_of_charge: parseInt(focInput, 10),
+                    free_of_charge_amount: parseFloat(focAmountMinCell),
+                    total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3) input").value.replace("€", "").trim() || "500.00"),
+                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(3) input").value.replace("%", "").trim() || "10"),
+                    fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                    final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
+                });
+
+                // Combine data and send to API
+                const payload = {
+                    trip_id: tripId,
+                    proposal: proposalData,
+                    items: itemsData,
+                    budget: budgetData
+                };
+                console.log("Payload sent to API:", JSON.stringify(payload, null, 2));
+                const pk = "{{ proposal.id }}"
+                fetch(`/proposals/api/edit/${pk}/`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                    },
+                    body: JSON.stringify(payload),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                console.error("Full API Error Response:", err); // Print full API error
+                                throw new Error(err.detail || "Invalid item data");
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            alert("Proposal saved successfully!");
+                            window.location.href = `/proposals/${pk}/details/`;
+                        } else {
+                            throw new Error(data.error || "Failed to save proposal.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error saving proposal:", error);
+                        alert(`An error occurred: ${error.message}`);
+                        if (error.error) {
+                            alert(`Error: ${error.error}\nDetails: ${JSON.stringify(error.details, null, 2)}`);
+                        } else {
+                            alert("An unexpected error occurred. Please try again.");
+                        }
+
+                    });
+            });
+        });
+
+        // Functionality to calculate the budget table
+        const calculateBudget = () => {
+            const budgetTable = document.querySelector(".budget-table");
+            const proposalTables = document.querySelectorAll(".requests-table");
+
+            let variableCost = 0;
+            let fixedCost = 0;
+
+            // Calculate costs from the proposal tables
+            proposalTables.forEach(table => {
+                const rows = table.querySelectorAll(".table-row");
+
+                rows.forEach(row => {
+                    const priceField = row.querySelector("#service-price");
+                    const quantityField = row.querySelector("input[name='quantity']");
+                    const price = parseFloat(priceField?.value.replace("€", "").trim()) || 0;
+                    const quantity = parseInt(quantityField?.value) || 0;
+
+                    // Classify costs based on section title
+                    const sectionTitle = table.closest(".trip-section").querySelector(".title").textContent || "";
+                    if (["Local Guides", "Tour Leader", "Transfers", "Private Transport", "Others Services"].some(type => sectionTitle.includes(type))) {
+                        fixedCost += price * quantity;
+                    } else {
+                        variableCost += price;
+                    }
+                });
+            });
+
+            // Update the budget table based on column headers
+            const budgetHeaders = budgetTable.querySelectorAll("thead th");
+            const budgetRows = budgetTable.querySelectorAll("tbody tr");
+            const budgetFooterRows = budgetTable.querySelectorAll("tfoot tr")
+
+            budgetHeaders.forEach((header, columnIndex) => {
+                if (columnIndex === 0) {
+                    return
+                }
+
+                const headerText = header.textContent.trim();
+                let paxMultiplier = 1; // Default multiplier for "Totals"
+
+                if (headerText.includes("pax")) {
+                    paxMultiplier = parseInt(headerText.replace("pax", "").trim()) || 1;
+                }
+
+                // Safely update corresponding rows
+                const variableCostCell = budgetRows[0]?.querySelectorAll("td")[columnIndex - 1];
+                const fixedCostCell = budgetRows[1]?.querySelectorAll("td")[columnIndex - 1];
+                const focCell = budgetRows[2]?.querySelector("th input");
+                const focAmountCell = budgetRows[2]?.querySelectorAll("td")[columnIndex - 1];
+                const totalCostPerPersonCell = budgetRows[3]?.querySelectorAll("td")[columnIndex - 1];
+                const totalCostCell = budgetRows[4]?.querySelectorAll("td")[columnIndex - 1];
+                const serviceFeeCell = budgetRows[5]?.querySelectorAll("td")[columnIndex - 1];
+                const marginCell = budgetRows[6]?.querySelectorAll("td")[columnIndex - 1];
+                const finalPricePerPersonCell = budgetFooterRows[0]?.querySelectorAll("td")[columnIndex - 1];
+                const finalPriceCell = budgetFooterRows[1]?.querySelectorAll("td")[columnIndex - 1];
+
+                // Extract text content safely
+                const foc = parseFloat(focCell?.value || "0");
+                const serviceFee = parseFloat(serviceFeeCell?.querySelector("input")?.value || "500");
+                const margin = parseFloat(marginCell?.querySelector("input")?.value || "10");
+                const focAmount = variableCost * foc;
+                const totalPerPerson = variableCost + (focAmount / paxMultiplier) + (fixedCost / paxMultiplier);
+                const totalCost = (variableCost * paxMultiplier) + focAmount + fixedCost
+
+                if (variableCostCell) variableCostCell.textContent = `€ ${(variableCost).toFixed(2)}`;
+                if (fixedCostCell) fixedCostCell.textContent = `€ ${(fixedCost).toFixed(2)}`;
+                if (focAmountCell) focAmountCell.textContent = `€ ${(focAmount).toFixed(2)}`;
+                if (totalCostPerPersonCell) totalCostPerPersonCell.textContent = `€ ${(totalPerPerson).toFixed(2)}`;
+                if (totalCostCell) totalCostCell.textContent = `€ ${(totalCost).toFixed(2)}`;
+
+                if (finalPricePerPersonCell) {
+                    const finalPricePerPerson = (totalPerPerson + (serviceFee / paxMultiplier)) * (1 + (margin / 100));
+                    finalPricePerPersonCell.textContent = `€ ${finalPricePerPerson.toFixed(2)}`;
+                }
+                if (finalPriceCell) {
+                    const finalPrice = (totalCost + serviceFee) * (1 + (margin / 100));
+                    finalPriceCell.textContent = `€ ${finalPrice.toFixed(2)}`;
+                }
+
+            });
+        };
+        //Budget Tabel Functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const budgetTable = document.querySelector(".budget-table");
+            const proposalTables = document.querySelectorAll(".requests-table");
+            {#calculateBudget();#}
+
+            // Utility Functions
+
+
+            // Add listeners to "Service Fee" Free of charge ("FOC") and "Margin" inputs
+            const serviceFeeInputs = budgetTable.querySelectorAll(
+                "tbody tr:nth-child(6) td input"
+            );
+            const marginInputs = budgetTable.querySelectorAll(
+                "tbody tr:nth-child(7) td input"
+            );
+
+            const focInput = budgetTable.querySelectorAll(
+                "tbody tr:nth-child(3) th input"
+            );
+
+            if (serviceFeeInputs.length > 0) {
+                serviceFeeInputs.forEach((input) => {
+                    input.addEventListener("input", calculateBudget);
+                });
+            }
+
+            if (marginInputs.length > 0) {
+                marginInputs.forEach((input) => {
+                    input.addEventListener("input", calculateBudget);
+                });
+            }
+
+            if (focInput.length > 0) {
+                focInput.forEach((input) => {
+                    input.addEventListener("input", calculateBudget);
+                });
+            }
+
+            // Initial calculation on page load
+            calculateBudget();
+
+
+            // Set up a MutationObserver to watch for changes in the DOM
+            proposalTables.forEach(table => {
+                const observer = new MutationObserver(() => calculateBudget());
+
+                // Watch for additions or removals of child nodes
+                observer.observe(table, {childList: true});
+
+                // Add listeners for changes in input fields
+                table.addEventListener("input", (event) => {
+                    if (event.target.matches("#service-price, input[name='quantity'], select[id='service-dropdown']")) {
+                        calculateBudget();
+                    }
+                });
+            });
+
+            // Initial calculation on page load
+            calculateBudget();
+        });
+
+    </script>
+
+    <!-- flatpikr setup-->
+    <script src="{% static 'js/date-formatting.js' %}"></script>
+{% endblock %}

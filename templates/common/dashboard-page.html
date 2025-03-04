@@ -136,7 +136,7 @@
                                     {% if request.user.role == 'client' and request.user.is_authenticated %}
                                         {% if trip_request.request_proposal and not trip_request.request_proposal.is_draft %}
 
-                                            <a href="{% url 'client-proposal-detail' proposal_id=trip_request.request_proposal.pk %}"
+                                            <a href="{% url 'client-proposal-detail' pk=trip_request.request_proposal.pk %}"
                                                class="action-link" title="Check Proposal">
                                                 <img
                                                         src="{% static 'images/document-approved (1).png' %}"
@@ -221,7 +221,7 @@
 
                                         {% if trip_request.request_proposal %}
                                             <!-- Link to Check Proposal Page -->
-                                            <a href="{% url 'proposal-detail' proposal_id=trip_request.request_proposal.pk %}"
+                                            <a href="{% url 'proposal-detail' pk=trip_request.request_proposal.pk %}"
                                                class="action-link" title="Check Proposal">
                                                 <img
                                                         src="{% static 'images/document-approved (1).png' %}"

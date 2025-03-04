@@ -165,7 +165,8 @@
 
         <!-- Trip Proposal Template -->
         <form id="proposal-form" method="post" action="#" onsubmit="return false">
-            <div class="trip proposal-edit">
+            {% csrf_token %}
+            <div class="trip proposal-edit proposal-create">
 
                 <div class="trip-title">
                     <!-- Proposal title -->
@@ -631,6 +632,7 @@
 
             <div class="trip-section">
                 <form id="proposal-form" method="post" action="#" onsubmit="return false">
+                    {% csrf_token %}
                     <div class="budget-container">
                         <table class="budget-table" id="budget-table">
 
@@ -946,7 +948,7 @@
                             : [];
                         service_id = selectedServices[0]
                     } else if (section_name === "Other Services") {
-                        service_id = 1
+                        service_id = null;
                     }
 
                     const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
@@ -979,7 +981,14 @@
                         rowData.price > 0
                     );
                     console.log(`Row ${index + 1} has data: ${hasData}, is complete: ${isComplete}`);
-
+                    {#console.log(`Has data: date - ${Boolean(rowData.corresponding_trip_date)}, #}
+                    {#city - ${Boolean(rowData.city)},#}
+                    {#quantity - ${Boolean(rowData.quantity)},#}
+                    {#price - ${Boolean(rowData.price)},#}
+                    {#notes - ${Boolean(rowData.additional_notes)},#}
+                    {#service - ${Boolean(rowData.service_id)},`);#}
+                    {#console.log("----------------------------------------");#}
+                    
                     // Only validate rows with data
                     if (hasData && !isComplete) {
                         invalidRows.push(rowData.section_name || `Row ${index + 1}`);
@@ -1020,8 +1029,8 @@
                     free_of_charge_amount: parseFloat(focAmountMinCell), // Correctly read and pass from the UI
                     total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
-                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2)").textContent.replace("€", "").trim() || "500.00"),
-                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(2)").textContent.replace("%", "").trim() || "10"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(2) input").value.replace("€", "").trim() || "500.00"),
+                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(2) input").value.replace("%", "").trim() || "10"),
                     fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                     final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
                 });
@@ -1035,8 +1044,8 @@
                     free_of_charge_amount: parseFloat(focAmountMinCell),
                     total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
-                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3)").textContent.replace("€", "").trim() || "500.00"),
-                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(3)").textContent.replace("%", "").trim() || "10"),
+                    service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3) input").value.replace("€", "").trim() || "500.00"),
+                    margin: parseFloat(budgetTable.querySelector("tbody tr:nth-child(7) td:nth-child(3) input").value.replace("%", "").trim() || "10"),
                     fina_price_per_person: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                     final_price: parseFloat(budgetTable.querySelector("tfoot tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
                 });
@@ -1069,7 +1078,7 @@
                     .then(data => {
                         if (data.success) {
                             alert("Proposal saved successfully!");
-                            window.location.href = `/proposals/details/${data.proposal_id}/`;
+                            window.location.href = `/proposals/${data.proposal_id}/details/`;
                         } else {
                             throw new Error(data.error || "Failed to save proposal.");
                         }
