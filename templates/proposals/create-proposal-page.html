@@ -778,6 +778,7 @@
                     } else {
                         input.value = "";
                     }
+                    calculateBudget();
                 });
             };
 
@@ -885,6 +886,27 @@
                     const table = row.parentNode;
                     if (row && table.children.length > 2) {
                         row.remove();
+                    } else {
+                        clearRowInputs(row);
+                        initializeFlatpickr(); // Ensure date picker works for new row
+                        // Populate city and service dropdown and update price and quantity
+                        const tripSection = table.closest(".trip-section");
+                        const sectionName = tripSection.querySelector(".title").textContent.trim();
+                        const cityDropdown = row.querySelector("#city-dropdown");
+                        const serviceDropdown = row.querySelector("#service-dropdown");
+                        const servicePriceField = row.querySelector("#service-price");
+                        const serviceQuantityField = row.querySelector("input[name='quantity']");
+    
+                        if (cityDropdown && serviceDropdown) {
+                            cityDropdown.addEventListener("change", function () {
+                                const selectedCity = cityDropdown.value;
+                                populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                                servicePriceField.value = "€ 0.00";
+                                serviceQuantityField.value = "0";
+                            });
+    
+                            updatePriceQuantityField(serviceDropdown, sectionName, servicePriceField, serviceQuantityField);
+                        }
                     }
                 }
             });
@@ -948,7 +970,7 @@
                             : [];
                         service_id = selectedServices[0]
                     } else if (section_name === "Other Services") {
-                        service_id = null;
+                        service_id = 1;
                     }
 
                     const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
@@ -981,13 +1003,13 @@
                         rowData.price > 0
                     );
                     console.log(`Row ${index + 1} has data: ${hasData}, is complete: ${isComplete}`);
-                    {#console.log(`Has data: date - ${Boolean(rowData.corresponding_trip_date)}, #}
-                    {#city - ${Boolean(rowData.city)},#}
-                    {#quantity - ${Boolean(rowData.quantity)},#}
-                    {#price - ${Boolean(rowData.price)},#}
-                    {#notes - ${Boolean(rowData.additional_notes)},#}
-                    {#service - ${Boolean(rowData.service_id)},`);#}
-                    {#console.log("----------------------------------------");#}
+                    console.log(`Has data: date - ${Boolean(rowData.corresponding_trip_date)}, 
+                    city - ${Boolean(rowData.city)},
+                    quantity - ${Boolean(rowData.quantity)},
+                    price - ${Boolean(rowData.price)},
+                    notes - ${Boolean(row.querySelector(".note textarea")?.value || "No notes")},
+                    service - ${Boolean(rowData.service_id)},`);
+                    console.log("----------------------------------------");
                     
                     // Only validate rows with data
                     if (hasData && !isComplete) {
@@ -1119,7 +1141,7 @@
                     if (["Local Guides", "Tour Leader", "Transfers", "Private Transport", "Others Services"].some(type => sectionTitle.includes(type))) {
                         fixedCost += price * quantity;
                     } else {
-                        variableCost += price;
+                        variableCost += price * quantity;
                     }
                 });
             });

@@ -223,7 +223,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -329,7 +329,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -438,7 +438,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -548,7 +548,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -658,7 +658,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -768,7 +768,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -882,7 +882,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -996,7 +996,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -1009,11 +1009,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                     </select>
                                 </div>
                                 <div class="col col-33 note" data-label="service details">
-                                    <input type="text"
-                                           name="service_details"
-                                           id="service-details"
-                                           placeholder="Add service"
-                                           value="{{ item.additional_notes }}">
+                                    <textarea
+                                           name="additional_notes" cols="40" rows="10"
+                                           id="id_additional_notes"
+                                           placeholder="Add service">{{ item.additional_notes }} </textarea>
                                 </div>
                                 <div class="col col-4" data-label="quantity">
                                     <input type="number"
@@ -1256,9 +1255,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 inputs.forEach(input => {
                     if (input.tagName === "SELECT") {
                         input.selectedIndex = 0;
+                        input.value = "";
                     } else {
                         input.value = "";
                     }
+                    calculateBudget();
                 });
             };
 
@@ -1367,6 +1368,29 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     if (row && table.children.length > 2) {
                         row.remove();
                     }
+                    else {
+                        clearRowInputs(row);
+                        initializeFlatpickr(); // Ensure date picker works for new row
+                        // Populate city and service dropdown and update price and quantity
+                        const tripSection = table.closest(".trip-section");
+                        const sectionName = tripSection.querySelector(".title").textContent.trim();
+                        const cityDropdown = row.querySelector("#city-dropdown");
+                        const serviceDropdown = row.querySelector("#service-dropdown");
+                        const servicePriceField = row.querySelector("#service-price");
+                        const serviceQuantityField = row.querySelector("input[name='quantity']");
+    
+                        if (cityDropdown && serviceDropdown) {
+                            cityDropdown.addEventListener("change", function () {
+                                const selectedCity = cityDropdown.value;
+                                populateServiceDropdown(serviceDropdown, sectionName, selectedCity);
+                                servicePriceField.value = "€ 0.00";
+                                serviceQuantityField.value = "0";
+                            });
+    
+                            updatePriceQuantityField(serviceDropdown, sectionName, servicePriceField, serviceQuantityField);
+                        }
+                        
+                    }
                 }
             });
 
@@ -1429,12 +1453,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             : [];
                         service_id = selectedServices[0]
                     } else if (section_name === "Other Services") {
-                        service_id = null;
+                        service_id = 1;
                     }
 
                     const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
                     const cityField = row.querySelector("#city-dropdown") || row.querySelector(".col-2");
 
+                   
                     // Initialize a data object to store row-specific values
                     const rowData = {
                         corresponding_trip_date: row.querySelector(".col-1 input")?.value || "", // YYYY-MM-DD format
@@ -1448,7 +1473,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     const hasData = Boolean(
                         rowData.corresponding_trip_date ||
                         rowData.city ||
-                        rowData.quantity > 1 ||
+                        rowData.quantity > 0 ||
                         rowData.price > 0 ||
                         rowData.additional_notes ||
                         rowData.service_id
@@ -1462,12 +1487,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         rowData.price > 0
                     );
                     console.log(`Row ${index + 1} has data: ${hasData}, is complete: ${isComplete}`);
-                    {#console.log(`Has data: date - ${rowData.corresponding_trip_date}, #}
-                    {#city - ${rowData.city},#}
-                    {#quantity - ${rowData.quantity},#}
-                    {#price - ${rowData.price},#}
-                    {#notes - ${rowData.additional_notes},#}
-                    {#service - ${rowData.service_id},`);#}
+                    console.log(`Has data: date - ${rowData.corresponding_trip_date}, 
+                    city - ${rowData.city},
+                    quantity - ${rowData.quantity},
+                    price - ${rowData.price},
+                    notes - ${row.querySelector(".note textarea")?.value || "No notes"},
+                    service - ${rowData.service_id},`);
 
                     // Only validate rows with data
                     if (hasData && !isComplete) {
@@ -1600,7 +1625,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     if (["Local Guides", "Tour Leader", "Transfers", "Private Transport", "Others Services"].some(type => sectionTitle.includes(type))) {
                         fixedCost += price * quantity;
                     } else {
-                        variableCost += price;
+                        variableCost += price * quantity;
                     }
                 });
             });
