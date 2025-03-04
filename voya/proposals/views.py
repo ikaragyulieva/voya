@@ -380,7 +380,7 @@ class DynamicServiceView(APIView):
 
 
 @login_required
-def proposal_pdf_view(request, proposal_id):
+def proposal_pdf_view(request, pk):
     # Get user's profile
     user_profile = get_user_obj(request)
 
@@ -388,7 +388,7 @@ def proposal_pdf_view(request, proposal_id):
         form = PDFOptionsForm(request.POST)
 
         # Get Proposal data
-        proposal = get_object_or_404(Proposal, id=proposal_id)
+        proposal = get_object_or_404(Proposal, id=pk)
 
         # Get proposal's items
         items = ProposalSectionItem.objects.filter(proposal=proposal)

@@ -1,0 +1,81 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+[Project Name] is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% load static %}
+
+<div class="trip-title">
+    <p>{{ service.city }} - {{ service.get_country_display }}</p>
+</div>
+
+<hr class="custom-line">
+
+<div class="trip-section">
+    <h3 class="title">City Information</h3>
+    <table>
+        <tbody>
+        <tr>
+            <th>City:</th>
+            <td><i> {{ service.city }} </i></td>
+        </tr>
+        <tr>
+            <th>Country:</th>
+            <td><i> {{ service.get_country_display }} </i></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr class="custom-line">
+
+<div class="trip-section">
+    <h3 class="title">Entry Information</h3>
+    <table>
+        <tbody>
+        <tr>
+            <th>Last update:</th>
+            <td><i> {{ service.updated_at|date:"d-M-Y" }} </i></td>
+        </tr>
+        <tr>
+            <th>Updated by:</th>
+            <td><i>{{ service.created_by_user.email }}</i></td>
+        </tr>
+        <tr>
+            <th>Status:</th>
+            <td>
+                <div class="action-btn">
+                    {% if service.is_active %}
+                        <!-- Active Request Status -->
+                        <img
+                                src="{% static 'images/green-circle.png' %}"
+                                alt="Active"
+                        />
+
+                    {% else %}
+                        <!-- Closed Request Status -->
+                        <img
+                                src="{% static 'images/red-circle.png' %}"
+                                alt="Closed"
+                        />
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

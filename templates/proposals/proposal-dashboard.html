@@ -50,14 +50,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 </div>
                 <div class="table-wrapper table-services">
                     <!-- Add request button -->
-                    <div class="action-btn add-option">
-                        <a href="#">
-                            <img
-                                    src="{% static 'images/new-page.png' %}"
-                                    alt="Create new proposal"
-                            />
-                        </a>
-                    </div>
+{#                    <div class="action-btn add-option">#}
+{#                        <a href="#">#}
+{#                            <img#}
+{#                                    src="{% static 'images/new-page.png' %}"#}
+{#                                    alt="Create new proposal"#}
+{#                            />#}
+{#                        </a>#}
+{#                    </div>#}
 
 
                     <!-- Dashboard Table -->
@@ -140,6 +140,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                             <img
                                                     src="{% static 'images/check-mark.png' %}"
                                                     alt="Delete button"
+                                            />
+
+                                        </a>
+                                        
+                                        <a href="{% url 'proposal_download' pk=proposal.pk %}"
+                                           class="action-link delete-link" title="Download">
+                                            <img
+                                                    src="{% static 'images/download-file.png' %}"
+                                                    alt="Download button"
                                             />
 
                                         </a>

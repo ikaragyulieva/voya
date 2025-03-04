@@ -8,7 +8,11 @@
         {% if model_name == 'currency' %}
 
             {% include 'services/service-details-partials/currency-details.html' %}
-
+        
+        {% elif model_name == 'location' %}
+            
+            {% include 'services/service-details-partials/location-details.html' %}
+            
         {% else %}
 
             <div class="trip-title">

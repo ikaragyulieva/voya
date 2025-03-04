@@ -80,3 +80,4 @@ class ServiceBaseModel(TimestampedModel):
 
     class Meta:
         abstract = True
+

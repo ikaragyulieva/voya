@@ -32,6 +32,7 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
         'localguide',
         'staff',
         'currency',
+        'location',
         'other']
 
     def get_model(self):
@@ -69,6 +70,8 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
             model_title = 'tour leaders'
         elif model == 'currency':
             model_title = 'currencies'
+        elif model == 'location':
+            model_title = 'location'
 
         search_form = SearchForm(self.request.GET)
 
@@ -176,6 +179,8 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
             model_title = 'tour leader'
         elif model == 'currency':
             model_title = 'currency'
+        elif model == 'location':
+            model_title = 'location'
 
         context['model_name'] = model
         context['profile'] = get_user_obj(self.request)
@@ -261,6 +266,8 @@ class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
             model_title = 'tour leader'
         elif model == 'currency':
             model_title = 'currency'
+        elif model == 'location':
+            model_title = 'location'
 
         context['model_name'] = model
         context['model_title'] = model_title

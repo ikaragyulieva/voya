@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django_countries.fields import CountryField
 
 from voya.common.models import TimestampedModel, ServiceBaseModel
 from voya.proposals.choices import TransferTypeChoices
@@ -242,3 +243,28 @@ class PrivateTransport(ServiceBaseModel):
         blank=False,
         null=False,
     )
+
+
+class Location(TimestampedModel):
+    city = models.CharField(
+        max_length=100,
+        unique=True,
+    )
+    country = CountryField(
+        blank_label='Select country',
+        null=False,
+        blank=False,
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    created_by_user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='city_created_by',
+    )
+
+    def __str__(self):
+        return self.city

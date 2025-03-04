@@ -74,7 +74,7 @@
                             <nav>
                                 <menu>
                                     <menuitem>
-                                        <a>Dashboards</a>
+                                        <a href="{% url 'employee-dashboard' pk=profile.pk %}">Dashboards</a>
                                         <menu>
                                             <menuitem>
                                                 <a href="{% url 'employee-dashboard' pk=profile.pk %}">Requests</a>
@@ -180,6 +180,15 @@
                                                     <menuitem><a
                                                             href="{% url 'create-service' model_name='currency' %}">Add
                                                         New Currency</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+                                            
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='location' %}">Location</a>
+                                                <menu>
+                                                    <menuitem><a
+                                                            href="{% url 'create-service' model_name='location' %}">Add
+                                                        New Location</a></menuitem>
                                                 </menu>
                                             </menuitem>
 

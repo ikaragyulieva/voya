@@ -33,13 +33,17 @@ class CityChoices(models.TextChoices):
     GARBAGNATE_MILANESE = 'Garbagnate Milanese', 'Garbagnate Milanese'
     GENEVA = 'Geneva', 'Geneva'
     GHENT = 'Ghent', 'Ghent'
+    GLASGOW = 'Glasgow', 'Glasgow'
     GOTHENBURG = 'Gothenburg', 'Gothenburg'
+    HARROGATE = 'Harrogate', 'Harrogate'
     HELSINKI = 'Helsinki', 'Helsinki'
+    HIGHLANDS = 'Highlands', 'Highlands'
     HVAR = 'Hvar', 'Hvar'
     IBIZA = 'Ibiza', 'Ibiza'
     ISTANBUL = 'Istanbul', 'Istanbul'
     LISBON = 'Lisbon', 'Lisbon'
     LISIEUX = 'Lisieux', 'Lisieux'
+    LIVERPOOL = 'Liverpool', 'Liverpool'
     LOIRE = 'Loire', 'Loire'
     LONDON = 'London', 'London'
     LOURDES = 'Lourdes', 'Lourdes'
@@ -149,6 +153,7 @@ class CountryChoices(models.TextChoices):
     PORTUGAL = "PT", "Portugal"
     ROMANIA = "RO", "Romania"
     SAN_MARINO = "SM", "San Marino"
+    SCOTLAND = 'Scotland', 'Scotland'
     SERBIA = "RS", "Serbia"
     SLOVAKIA = "SK", "Slovakia"
     SLOVENIA = "SI", "Slovenia"

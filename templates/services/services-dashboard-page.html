@@ -59,6 +59,9 @@
                                 <div class="col col-33">To</div>
                                 <div class="col col-4">Exchange rate</div>
                                 <div class="col col-5">Date added</div>
+                            {% elif model_name == 'location' %}
+                                <div class="col col-2">City</div>
+                                <div class="col col-33">Country</div>
                             {% else %}
                                 <div class="col col-2">Country</div>
                                 <div class="col col-33">City</div>
@@ -99,6 +102,12 @@
                                          data-label="Exchange rate">{{ service.exchange_rate }} {{ service.get_currency_to_display }}</div>
                                     <div class="col col-5"
                                          data-label="Date added">{{ service.updated_at|date:"d-m-Y" }}</div>
+                                
+                                {% elif model_name == 'location' %}
+                                    <div class="col col-2"
+                                         data-label="From">{{ service.city }}</div>
+                                    <div class="col col-33" data-label="To">{{ service.get_country_display }}</div>
+                                    
                                 {% else %}
                                     <div class="col col-2" data-label="Country">{{ service.get_country_display }}</div>
                                     <div class="col col-33" data-label="City">{{ service.city }}</div>

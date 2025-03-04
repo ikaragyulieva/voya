@@ -14,7 +14,11 @@
                 {% if model_name == 'currency' %}
 
                     {% include 'services/create-edit-partials/currency-form.html' %}
-
+                    
+                {% elif model_name == 'location' %}
+                    
+                    {% include 'services/create-edit-partials/location-form.html' %}
+                    
                 {% else %}
 
                     {% if model_name == 'hotel' %}
