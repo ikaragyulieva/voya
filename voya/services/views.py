@@ -139,6 +139,9 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
                 model = self.get_model()
                 # fields = "__all__"
                 exclude = ['is_active', 'created_by_user']
+                widgets = {
+                    'city': forms.Select(),
+                }
 
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)

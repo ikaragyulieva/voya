@@ -771,10 +771,12 @@
 
             // Logic to clear row inputs (to be used when rows are added)
             const clearRowInputs = (row) => {
-                const inputs = row.querySelectorAll("input, select");
+                const inputs = row.querySelectorAll("input, select, textarea");
                 inputs.forEach(input => {
                     if (input.tagName === "SELECT") {
                         input.selectedIndex = 0;
+                    } else if (input.tagName === "TEXTAREA") {
+                        input.value = "";
                     } else {
                         input.value = "";
                     }
@@ -1092,6 +1094,7 @@
                     .then(response => {
                         if (!response.ok) {
                             return response.json().then(err => {
+                                console.error("Full API Error Response:", err);
                                 throw new Error(err.detail || "Invalid item data");
                             });
                         }

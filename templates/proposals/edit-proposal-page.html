@@ -1251,11 +1251,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
             // Logic to clear row inputs (to be used when rows are added)
             const clearRowInputs = (row) => {
-                const inputs = row.querySelectorAll("input, select");
+                const inputs = row.querySelectorAll("input, select, textarea");
                 inputs.forEach(input => {
                     if (input.tagName === "SELECT") {
                         input.selectedIndex = 0;
                         input.value = "";
+                    } else if (input.tagName === "TEXTAREA") {
+                        input.value = ""; // Clear textarea
                     } else {
                         input.value = "";
                     }
@@ -1459,7 +1461,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     const priceField = row.querySelector("#service-price")?.value.replace("€", "").trim();
                     const cityField = row.querySelector("#city-dropdown") || row.querySelector(".col-2");
 
-                   
+
                     // Initialize a data object to store row-specific values
                     const rowData = {
                         corresponding_trip_date: row.querySelector(".col-1 input")?.value || "", // YYYY-MM-DD format

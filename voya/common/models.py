@@ -35,6 +35,14 @@ class ServiceBaseModel(TimestampedModel):
         default="Select city",
     )
 
+    # city = models.ForeignKey(
+    #     'Location',
+    #     on_delete=models.RESTRICT,
+    #     blank=False,
+    #     null=False,
+    #     related_name='%(class)s_city',
+    # )
+
     capacity = models.PositiveIntegerField(
         default=1,
         blank=False,

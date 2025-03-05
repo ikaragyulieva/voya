@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from voya.services.models import Hotel, Transfer, LocalGuide, Ticket, Currency, PublicTransport, PrivateTransport
+from voya.services.models import Hotel, Transfer, LocalGuide, Ticket, Currency, PublicTransport, PrivateTransport, \
+    Location
 
 
 @admin.register(Hotel)
@@ -183,6 +184,32 @@ class CurrencyAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Currency Information', {
             'fields': ('currency_from', 'currency_to', 'exchange_rate')
+        }),
+        ('Status', {
+            'fields': ('is_active',)
+        }),
+        ('Created By', {
+            'fields': ('created_by_user',)
+        }),
+    )
+
+
+@admin.register(Location)
+class CurrencyAdmin(admin.ModelAdmin):
+    list_display = (
+        'city',
+        'country',
+    )
+
+    search_fields = ('city', 'country')
+
+    list_filter = ('city', 'country')
+
+    ordering = ('country', 'city')
+
+    fieldsets = (
+        ('Location Information', {
+            'fields': ('city', 'country')
         }),
         ('Status', {
             'fields': ('is_active',)
