@@ -90,6 +90,9 @@ class CityChoices(models.TextChoices):
     RABAT = 'Rabat', 'Rabat'
     TANGER = 'Tanger', 'Tanger'
     TARRAGONA = 'Tarragona', 'Tarragona'
+    DUDLEY = 'Dudley', 'Dudley'
+    LEICESTER = 'Leicester', 'Leicester'
+    GENERIC = 'Generic city', 'Generic city'
 
 
 
