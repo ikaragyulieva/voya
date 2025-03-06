@@ -82,6 +82,15 @@ class CityChoices(models.TextChoices):
     ZAGREB = 'Zagreb', 'Zagreb'
     ZARAGOZA = 'Zaragoza', 'Zaragoza'
     ZURICH = 'Zurich', 'Zurich'
+    REIMS = 'Reims', 'Reims'
+    GRENOBLE = 'Grenoble', 'Grenoble'
+    JEREZ_DE_LA_FRONTERA = 'Jerez de la Frontera', 'Jerez de la Frontera'
+    CHEFCHAOUEN = 'Chefchaouen', 'Chefchaouen'
+    FEZ = 'Fez', 'Fez'
+    RABAT = 'Rabat', 'Rabat'
+    TANGER = 'Tanger', 'Tanger'
+    TARRAGONA = 'Tarragona', 'Tarragona'
+
 
 
 
