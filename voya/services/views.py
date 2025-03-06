@@ -13,7 +13,7 @@ from django.apps import apps
 from voya.common.forms import SearchForm
 from voya.common.mixins import PlaceholderMixin
 from voya.providers.models import Providers
-from voya.services.models import LocalGuide, Hotel
+from voya.services.models import LocalGuide, Hotel, Location
 from voya.utils import get_user_obj
 
 
@@ -132,22 +132,26 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
         elif service_name == 'staff':
             service_name = 'tour leaders'
 
-        eligible_providers = Providers.objects.filter(services__icontains=service_name) | Providers.objects.filter(services__icontains='other')
+        eligible_providers = Providers.objects.filter(services__icontains=service_name) | Providers.objects.filter(
+            services__icontains='other')
+        cities = Location.objects.all().order_by('city_name')
 
         class DynamicModelForm(PlaceholderMixin, forms.ModelForm):
             class Meta:
                 model = self.get_model()
                 # fields = "__all__"
                 exclude = ['is_active', 'created_by_user']
-                widgets = {
-                    'city': forms.Select(),
-                }
+                # widgets = {
+                #     'city_name': forms.Select(),
+                # }
 
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 if 'provider' in self.fields:
                     self.fields['provider'].queryset = eligible_providers
                     self.fields['provider'].empty_label = "Select an option"
+                    self.fields['city'].queryset = cities
+                    self.fields['city'].empty_label = "Select a city"
 
         return DynamicModelForm
 
@@ -232,6 +236,7 @@ class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
 
         eligible_providers = Providers.objects.filter(services__icontains=service_name) | Providers.objects.filter(
             services__icontains='other')
+        cities = Location.objects.all().order_by('city_name')
 
         class DynamicModelForm(PlaceholderMixin, forms.ModelForm):
             class Meta:
@@ -244,6 +249,8 @@ class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
                 if 'provider' in self.fields:
                     self.fields['provider'].queryset = eligible_providers
                     self.fields['provider'].empty_label = "Select an option"
+                    self.fields['city'].queryset = cities
+                    self.fields['city'].empty_label = "Select an option"
 
         return DynamicModelForm
 

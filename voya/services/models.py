@@ -246,7 +246,7 @@ class PrivateTransport(ServiceBaseModel):
 
 
 class Location(TimestampedModel):
-    city = models.CharField(
+    city_name = models.CharField(
         max_length=100,
         unique=True,
     )
@@ -267,4 +267,4 @@ class Location(TimestampedModel):
     )
 
     def __str__(self):
-        return self.city
+        return self.city_name

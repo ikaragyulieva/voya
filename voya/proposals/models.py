@@ -93,11 +93,19 @@ class ProposalSectionItem(models.Model):
         null=False,
     )
 
-    city = models.CharField(
-        max_length=50,
-        choices=choices.CityChoices,
+    # city = models.CharField(
+    #     max_length=50,
+    #     choices=choices.CityChoices,
+    #     blank=False,
+    #     null=False,
+    # )
+
+    city = models.ForeignKey(
+        'services.Location',
+        on_delete=models.RESTRICT,
         blank=False,
         null=False,
+        related_name='item_city',
     )
 
     price = models.DecimalField(

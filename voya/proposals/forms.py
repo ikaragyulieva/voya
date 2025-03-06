@@ -21,6 +21,7 @@ from django import forms
 from voya.proposals.choices import StatusChoices, LogoChoices
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
+from voya.services.models import Location
 
 
 class CreateProposalForm(forms.ModelForm):
@@ -51,12 +52,22 @@ class CreateItemForm(forms.ModelForm):
         )
     )
 
-    city = forms.ChoiceField(
-        choices=choices.CityChoices,
-        label="City",
+    # city = forms.ChoiceField(
+    #     choices=choices.CityChoices,
+    #     label="City",
+    #     widget=forms.Select(
+    #         attrs={
+    #             'placeholder': 'Select City',
+    #             'id': 'city-dropdown',
+    #         }
+    #     ),
+    # )
+
+    city = forms.ModelChoiceField(
+        queryset=Location.objects.all(),
+        empty_label="Select city",
         widget=forms.Select(
             attrs={
-                'placeholder': 'Select City',
                 'id': 'city-dropdown',
             }
         ),

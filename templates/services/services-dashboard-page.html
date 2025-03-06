@@ -105,12 +105,12 @@
                                 
                                 {% elif model_name == 'location' %}
                                     <div class="col col-2"
-                                         data-label="From">{{ service.city }}</div>
+                                         data-label="From">{{ service.city_name }}</div>
                                     <div class="col col-33" data-label="To">{{ service.get_country_display }}</div>
                                     
                                 {% else %}
                                     <div class="col col-2" data-label="Country">{{ service.get_country_display }}</div>
-                                    <div class="col col-33" data-label="City">{{ service.city }}</div>
+                                    <div class="col col-33" data-label="City">{{ service.city.city_name }}</div>
                                     {% if model_name != 'transfers' %}
                                         <div class="col col-4" data-label="Name">
                                             {% if model_name == 'privatetransport' or model_name == 'publictransport' or model_name == 'transfer'%}

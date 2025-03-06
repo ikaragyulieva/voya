@@ -365,7 +365,8 @@ class DynamicServiceView(APIView):
                 {
                     'id': obj.id,
                     'display_field': getattr(obj, display_field),
-                    'city': obj.city,
+                    'city': obj.city.city_name,
+                    'city_id': obj.city.id,
                     'price': getattr(obj, price),
                 } for obj in queryset
             ]

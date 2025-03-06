@@ -1238,7 +1238,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             // Logic to populate service dropdown with services based on the chosed city
             const populateServiceDropdown = (serviceDropdown, sectionName, city) => {
                 fetchServices(sectionName).then(data => {
-                    const filteredServices = data.filter(service => service.city === city);
+                    city = parseInt(city, 10);
+                    const filteredServices = data.filter(service => parseInt(service.city_id, 10) === city);
                     serviceDropdown.innerHTML = "<option value=''>Select a Service</option>";
                     filteredServices.forEach(service => {
                         const option = document.createElement("option");

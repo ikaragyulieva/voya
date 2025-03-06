@@ -30,6 +30,8 @@ class ProviderCreateForm(forms.ModelForm):
         label="Select an option",
     )
 
+    city = forms.Select()
+
     class Meta:
         model = Providers
         fields = [
