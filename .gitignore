@@ -23,3 +23,4 @@ local-settings.py
 letsencrypt
 docker-compose.yml
 "letsencrypt/" 
+"*.pyc" 

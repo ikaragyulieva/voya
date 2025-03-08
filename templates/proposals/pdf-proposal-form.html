@@ -25,10 +25,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         <h2>Generate PDF Proposal</h2>
 
         <form method="post">
+            {{ form.non_field_errors }}
             {% csrf_token %}
-            <div class="form-section">
-                {{ form }}
+            <div class="pdf-form-section">
+                <div class="form-fields">
+                    <p>Logo</p>
+                    {{ form.logo_options }}
+                    {% if form.logo_options.errors %}
+                        <div class="error">{{ form.logo_options.errors }}</div>
+                    {% endif %}
 
+                    <p>Commission </p>
+                    {{ form.commission|placeholder:'0%' }}
+                    {% if form.commission.errors %}
+                        <div class="error">{{ form.commission.errors }}</div>
+                    {% endif %}
+                </div>
                 <button class="add-btn" type="submit">Generate PDF</button>
             </div>
         </form>

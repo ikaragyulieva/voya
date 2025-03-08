@@ -17,9 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 from django.db import transaction
+from rest_framework import status
+from rest_framework.response import Response
 
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests.models import TripRequests
+from voya.services.models import Location
 
 
 def save_proposal(data, user):
@@ -56,6 +59,13 @@ def update_proposal(proposal, data):
 
         for item_data in data.get('items', []):
             item_id = item_data.get('id')  # ID from the frontend, if exists
+            city_id = item_data.get('city')
+
+            try:
+                city = Location.objects.get(id=city_id)
+
+            except Location.DoesNotExist:
+                return Response({'error': 'Invalid city ID'}, status=status.HTTP_400_BAD_REQUEST)
 
             if item_id and item_id in existing_items_ids:
                 #  Update existing item
@@ -66,7 +76,7 @@ def update_proposal(proposal, data):
                 item.additional_notes = item_data.get('additional_notes', item.additional_notes)
                 item.corresponding_trip_date = item_data.get('corresponding_trip_date', item.corresponding_trip_date)
                 item.price = item_data.get('price', item.price)
-                item.city = item_data.get('city', item.city)
+                item.city = city
                 item.save()
             else:
                 #  Create new item if it doesn't exist
@@ -78,7 +88,7 @@ def update_proposal(proposal, data):
                     additional_notes=item_data.get('additional_notes', ''),
                     corresponding_trip_date=item_data.get('corresponding_trip_date'),
                     price=item_data.get('price'),
-                    city=item_data.get('city'),
+                    city=city,
                 )
 
             received_items_ids.add(item.id)
@@ -141,6 +151,15 @@ def save_items(proposal, items_data):
     created_items = []
     for item_data in items_data:
         # Fetch linked services
+        city_id = item_data.get('city') if isinstance(item_data.get('city'), int) else None
+
+        if city_id:
+            try:
+                city = Location.objects.get(id=city_id)
+            except Location.DoesNotExist:
+                return Response({'error': 'Invalid city ID'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'City ID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Create the item
         new_item = ProposalSectionItem.objects.create(
@@ -151,7 +170,7 @@ def save_items(proposal, items_data):
             additional_notes=item_data.get('additional_notes', ''),
             corresponding_trip_date=item_data.get('corresponding_trip_date'),
             price=item_data.get('price'),
-            city=item_data.get('city'),
+            city=city,
         )
         created_items.append(new_item)
 

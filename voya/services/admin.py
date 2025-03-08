@@ -195,21 +195,21 @@ class CurrencyAdmin(admin.ModelAdmin):
 
 
 @admin.register(Location)
-class CurrencyAdmin(admin.ModelAdmin):
+class LocationAdmin(admin.ModelAdmin):
     list_display = (
-        'city',
+        'city_name',
         'country',
     )
 
-    search_fields = ('city', 'country')
+    search_fields = ('city_name', 'country')
 
-    list_filter = ('city', 'country')
+    list_filter = ('city_name', 'country')
 
-    ordering = ('country', 'city')
+    ordering = ('country', 'city_name')
 
     fieldsets = (
         ('Location Information', {
-            'fields': ('city', 'country')
+            'fields': ('city_name', 'country')
         }),
         ('Status', {
             'fields': ('is_active',)

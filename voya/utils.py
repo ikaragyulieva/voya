@@ -62,8 +62,10 @@ def get_dashboard_multiple_search(request, queryset):
             for field in model_fields:
                 if isinstance(field, models.ForeignKey):
                     related_model = field.related_model
-                    if hasattr(related_model, 'commercial_name'):
-                        query |= Q(**{f'{field.name}__commercial_name__icontains': search_query})
+                    if hasattr(related_model, 'request') and hasattr(related_model.request, 'created_by_company'):
+                        query |= Q(**{f'{field.name}__request__created_by_company__commercial_name__icontains': search_query})
+                    if hasattr(related_model, 'request') and hasattr(related_model.request, 'slug'):
+                        query |= Q(**{f'{field.name}__request__slug__icontains': search_query})
                     if hasattr(related_model, 'email'):
                         query |= Q(**{f'{field.name}__email__icontains': search_query})
                     if hasattr(related_model, 'slug'):

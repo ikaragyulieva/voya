@@ -21,6 +21,7 @@ from django import forms
 from voya.proposals.choices import StatusChoices, LogoChoices
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
+from voya.services.models import Location
 
 
 class CreateProposalForm(forms.ModelForm):
@@ -51,12 +52,22 @@ class CreateItemForm(forms.ModelForm):
         )
     )
 
-    city = forms.ChoiceField(
-        choices=choices.CityChoices,
-        label="City",
+    # city = forms.ChoiceField(
+    #     choices=choices.CityChoices,
+    #     label="City",
+    #     widget=forms.Select(
+    #         attrs={
+    #             'placeholder': 'Select City',
+    #             'id': 'city-dropdown',
+    #         }
+    #     ),
+    # )
+
+    city = forms.ModelChoiceField(
+        queryset=Location.objects.all(),
+        empty_label="Select city",
         widget=forms.Select(
             attrs={
-                'placeholder': 'Select City',
                 'id': 'city-dropdown',
             }
         ),
@@ -102,7 +113,8 @@ class PDFOptionsForm(forms.Form):
 
     commission = forms.DecimalField(
         max_digits=10,
+        label="",
         decimal_places=2,
-        initial=0,
-        help_text='Commission should be added as percentage'
+        # initial=0,
+        # help_text='Commission should be added as percentage'
     )

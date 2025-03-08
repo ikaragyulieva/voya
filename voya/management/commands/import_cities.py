@@ -122,6 +122,7 @@ class Command(BaseCommand):
             {"city": "Dudley", "country": "GB"},
             {"city": "Leicester", "country": "GB"},
             {"city": "Generic", "country": "ES"},
+
         ]
 
         existing_cities = set(Location.objects.values_list("city", flat=True))

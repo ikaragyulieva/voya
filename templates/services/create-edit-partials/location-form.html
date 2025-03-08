@@ -20,7 +20,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 {% load custom_filters %}
 
 <p>City name *</p>
-{{ form.city|placeholder:'' }}
+{{ form.city_name|placeholder:'' }}
 {% if form.city.errors %}
     <div class="error">{{ form.city.errors }}</div>
 {% endif %}

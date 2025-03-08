@@ -33,13 +33,21 @@ class Providers(models.Model):
         blank_label="Select country",
     )
 
-    city = models.CharField(
-        max_length=50,
-        choices=CityChoices,
+    city = models.ForeignKey(
+        'services.Location',
+        on_delete=models.RESTRICT,
         blank=False,
         null=False,
-        default="Select city",
+        related_name='provider_city',
     )
+
+    # city = models.CharField(
+    #     max_length=50,
+    #     choices=CityChoices,
+    #     blank=False,
+    #     null=False,
+    #     default="Select city",
+    # )
 
     telephone_number = PhoneNumberField(
         blank=False,

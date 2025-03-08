@@ -27,21 +27,21 @@ class ServiceBaseModel(TimestampedModel):
         default='cc',
     )
 
-    city = models.CharField(
-        max_length=50,
-        choices=choices.CityChoices,
-        blank=False,
-        null=False,
-        default="Select city",
-    )
-
-    # city = models.ForeignKey(
-    #     'Location',
-    #     on_delete=models.RESTRICT,
+    # city = models.CharField(
+    #     max_length=50,
+    #     choices=choices.CityChoices,
     #     blank=False,
     #     null=False,
-    #     related_name='%(class)s_city',
+    #     default="Select city",
     # )
+
+    city = models.ForeignKey(
+        'Location',
+        on_delete=models.RESTRICT,
+        blank=False,
+        null=False,
+        related_name='%(class)s_city',
+    )
 
     capacity = models.PositiveIntegerField(
         default=1,

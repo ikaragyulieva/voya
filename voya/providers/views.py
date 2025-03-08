@@ -84,6 +84,8 @@ class ProvidersDashboardView(mixins.LoginRequiredMixin, ListView):
                             query |= Q(**{f'{field.name}__commercial_name__icontains': search_query})
                         if hasattr(related_model, 'email'):
                             query |= Q(**{f'{field.name}__email__icontains': search_query})
+                        if hasattr(related_model, 'city_name'):
+                            query |= Q(**{f'{field.name}__city_name__icontains': search_query})
                     else:
                         query |= Q(**{f'{field.name}__icontains': search_query})
 

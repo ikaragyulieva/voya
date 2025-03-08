@@ -3,6 +3,8 @@ from django.db import models
 
 class CityChoices(models.TextChoices):
     SELECT_CITY = '', 'Select a city'
+    GENERIC_CITY = 'Generic', 'Generic city'
+    NO_CITY = '-', '-'
     AMSTERDAM = 'Amsterdam', 'Amsterdam'
     ATHENS = 'Athens', 'Athens'
     ÁVILA = 'Ávila', 'Ávila'

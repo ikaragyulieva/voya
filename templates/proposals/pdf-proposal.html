@@ -321,11 +321,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% endfor %}
     {% endif %}
 
-    {% if transport_items %}
-        {% for item in transport_items %}
+    {% if private_transport_items %}
+        {% for item in private_transport_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
-                <td>Transport</td>
+                <td>Private transport</td>
+                <td>{{ item.service_name }}</td>
+                <td class="bold">{{ item.city }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    
+    {% if public_transport_items %}
+        {% for item in public_transport_items %}
+            <tr>
+                <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
+                <td>Public transport</td>
                 <td>{{ item.service_name }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
@@ -358,7 +369,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in guides_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
-                <td>Guide</td>
+                <td>Local guide</td>
+                <td>{{ item.service_name }}</td>
+                <td class="bold">{{ item.city }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    
+    {% if tour_leader_items %}
+        {% for item in tour_leader_items %}
+            <tr>
+                <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
+                <td>Tour leader</td>
                 <td>{{ item.service_name }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>

@@ -21,6 +21,7 @@ from rest_framework import serializers
 
 from voya.proposals.choices import SectionChoices
 from voya.requests import choices
+from voya.services.models import Location
 
 
 class ProposalSerializer(serializers.Serializer):
@@ -65,13 +66,24 @@ class ItemSerializer(serializers.Serializer):
         }
     )
     price = serializers.DecimalField(max_digits=10, decimal_places=2)
-    city = serializers.ChoiceField(
-        choices=choices.CityChoices,
+    # city = serializers.ChoiceField(
+    #     choices=choices.CityChoices,
+    #     error_messages={
+    #         'invalid_choice': 'Invalid city. Please select a valid city.',
+    #     }
+    # )
+
+    city = serializers.PrimaryKeyRelatedField(
+        queryset=Location.objects.all(),
         error_messages={
-            'invalid_choice': 'Invalid city. Please select a valid city.',
+            'does_not_exist': 'Invalid city section.'
         }
     )
 
+    # city = serializers.SlugRelatedField(
+    #     queryset=Location.objects.all(),
+    #     slug_field='city_name'  # Assuming Location model has a 'name' field
+    # )
 
 class BudgetSerializer(serializers.Serializer):
     pax = serializers.IntegerField()
