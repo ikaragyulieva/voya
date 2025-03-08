@@ -52,6 +52,10 @@
     color: #d7b241;
 }
 
+.pdf-form-section{
+	margin-bottom: 2.5em;
+}
+
 .error{
 	color: red;
 	font-style: italic;

@@ -59,14 +59,13 @@ def update_proposal(proposal, data):
 
         for item_data in data.get('items', []):
             item_id = item_data.get('id')  # ID from the frontend, if exists
-            if isinstance(item_data.get('city'), int):
-                city_id = item_data.get('city')
-            else:
-                try:
-                    city = Location.objects.get(id=item_data.get('city'))
-                    city_id = city.id
-                except Location.DoesNotExist:
-                    return Response({'error': 'Invalid city ID'}, status=status.HTTP_400_BAD_REQUEST)
+            city_id = item_data.get('city')
+
+            try:
+                city = Location.objects.get(id=city_id)
+
+            except Location.DoesNotExist:
+                return Response({'error': 'Invalid city ID'}, status=status.HTTP_400_BAD_REQUEST)
 
             if item_id and item_id in existing_items_ids:
                 #  Update existing item
@@ -77,7 +76,7 @@ def update_proposal(proposal, data):
                 item.additional_notes = item_data.get('additional_notes', item.additional_notes)
                 item.corresponding_trip_date = item_data.get('corresponding_trip_date', item.corresponding_trip_date)
                 item.price = item_data.get('price', item.price)
-                item.city = city_id
+                item.city = city
                 item.save()
             else:
                 #  Create new item if it doesn't exist
@@ -89,7 +88,7 @@ def update_proposal(proposal, data):
                     additional_notes=item_data.get('additional_notes', ''),
                     corresponding_trip_date=item_data.get('corresponding_trip_date'),
                     price=item_data.get('price'),
-                    city=city_id,
+                    city=city,
                 )
 
             received_items_ids.add(item.id)

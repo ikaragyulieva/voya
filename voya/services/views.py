@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth import mixins
 from django.contrib.auth.decorators import login_required
+from django.db import models
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -79,13 +80,27 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
             search_query = search_form.cleaned_data.get('search')
             if search_query:
                 model_fields = [field.name for field in self.get_queryset().model._meta.fields if
-                                field.name not in ['id', 'created_at', 'created_by_user']]
+                                field.name not in ['id', 'created_at', 'created_by_user', 'website']]
                 query = Q()
 
                 # Build a Q object using the field__icontains lookup to search for the query.
                 # Use the | operator to combine the Q objects into a single query.
                 for field in model_fields:
-                    query |= Q(**{f'{field}__icontains': search_query})
+                    field_type = self.get_queryset().model._meta.get_field(field)
+
+                    if isinstance(field_type, models.ForeignKey):
+                        if field == 'city':
+                            query |= Q(city__city_name__icontains=search_query)
+                        elif field == 'provider':
+                            query |= Q(provider__commercial_name__icontains=search_query)
+                        elif field == 'country':
+                            query |= Q(country__name__icontains=search_query)
+                        # elif field == 'country':
+
+                    else:
+                        query |= Q(**{f'{field}__icontains': search_query})
+
+                print(f"Final search query: {query}")
 
                 context['service_list'] = self.get_queryset().filter(query)
             else:

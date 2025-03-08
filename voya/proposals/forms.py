@@ -113,7 +113,8 @@ class PDFOptionsForm(forms.Form):
 
     commission = forms.DecimalField(
         max_digits=10,
+        label="",
         decimal_places=2,
-        initial=0,
-        help_text='Commission should be added as percentage'
+        # initial=0,
+        # help_text='Commission should be added as percentage'
     )

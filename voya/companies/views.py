@@ -1,5 +1,6 @@
 from django.contrib.auth import mixins
 from django.db import transaction
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -8,7 +9,7 @@ from django.views.generic import FormView, ListView, DetailView, UpdateView, Del
 from voya.common.forms import SearchForm
 from voya.companies import models
 from voya.companies.forms import CompanyProfileForm, AddressForm, PhoneNumberForm
-from voya.companies.models import CompanyProfile
+from voya.companies.models import CompanyProfile, Address
 from voya.employees.models import EmployeeProfile
 from voya.utils import get_user_obj
 
@@ -113,14 +114,25 @@ class CompaniesDashboardView(mixins.LoginRequiredMixin, ListView):
         company_query = CompanyProfile.objects.all().order_by('-is_active', '-created_at')
 
         for company in company_query:
-            company.first_addresses = company.addresses.all().first()
+            company.first_address = Address.objects.filter(company=company).first()
 
         if search_form.is_valid():
             search_query = search_form.cleaned_data.get('search')
+            fields = [field for field in self.get_queryset().model._meta.fields if
+                            field.name not in ['id', 'created_at'] and field.get_internal_type() not in [
+                                'OneToOneField']]
+            query = Q()
+
             if search_query:
-                context['companyprofile_list'] = company_query.filter(commercial_name__icontains=search_query)
-            else:
-                context['companyprofile_list'] = company_query
+                for field in fields:
+                    if hasattr(field, 'first_address'):
+                        query |= Q(first_addresses__country__name__icontains=search_query)
+                    else:
+                        query |= Q(**{f'{field.name}__icontains': search_query})
+
+            context['companyprofile_list'] = company_query.filter(query)
+        else:
+            context['companyprofile_list'] = company_query
 
         context["search_form"] = search_form
         context['all_companies'] = company_query

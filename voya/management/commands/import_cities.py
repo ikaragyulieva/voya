@@ -111,12 +111,24 @@ class Command(BaseCommand):
             {"city": "Zagreb", "country": "HR"},
             {"city": "Zaragoza", "country": "ES"},
             {"city": "Zurich", "country": "CH"},
+            {"city": "Grenoble", "country": "FR"},
+            {"city": "Jerez de la Frontera", "country": "ES"},
+            {"city": "Chefchaouen", "country": "MAR"},
+            {"city": "FEZ", "country": "MAR"},
+            {"city": "Rabat", "country": "MAR"},
+            {"city": "Reims", "country": "FR"},
+            {"city": "Tanger", "country": "MAR"},
+            {"city": "Tarragona", "country": "ES"},
+            {"city": "Dudley", "country": "GB"},
+            {"city": "Leicester", "country": "GB"},
+            {"city": "Generic", "country": "ES"},
+
         ]
 
-        existing_cities = set(Location.objects.values_list("city", flat=True))
+        existing_cities = set(Location.objects.values_list("city_name", flat=True))
 
         new_cities = [
-            Location(city=city_data["city"], country=city_data["country"], created_by_user=admin_user)
+            Location(city_name=city_data["city"], country=city_data["country"], created_by_user=admin_user)
             for city_data in cities if city_data["city"] not in existing_cities
         ]
 

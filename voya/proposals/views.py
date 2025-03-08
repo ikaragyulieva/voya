@@ -46,6 +46,7 @@ from voya.proposals.serializers import ProposalSerializer, ItemSerializer, Budge
 from voya.proposals.utils import save_proposal, update_proposal
 from voya.requests.choices import CityChoices
 from voya.requests.models import TripRequests
+from voya.services.models import Location
 from voya.utils import get_user_obj, get_dashboard_multiple_search
 
 
@@ -111,7 +112,7 @@ class ProposalItemsAPI(APIView):
             proposal, created_items, created_budgets = save_proposal(data, request.user)
 
             # Return success response
-            return Response({
+            return JsonResponse({
                 'success': 'Proposal, items, and budget saved successfully!',
                 'proposal_id': proposal.id,
                 'item_ids': [item.id for item in created_items],
@@ -119,7 +120,7 @@ class ProposalItemsAPI(APIView):
             }, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProposalUpdateAPI(APIView):
@@ -141,7 +142,7 @@ class ProposalUpdateAPI(APIView):
 
         try:
             proposal, created_items, created_budgets = update_proposal(proposal, data)
-            return Response({
+            return JsonResponse({
                 'success': 'Proposal updated successfully!',
                 'proposal_id': proposal.id,
                 'item_ids': [item.id for item in created_items],
@@ -149,7 +150,7 @@ class ProposalUpdateAPI(APIView):
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required
@@ -395,46 +396,56 @@ def proposal_pdf_view(request, pk):
         items = ProposalSectionItem.objects.filter(proposal=proposal)
         model_map = {
             'Accommodations': 'Hotel',
-            'Public Transport': 'Public Transport',
-            'Private Transport': 'Private Transport',
+            'Public Transport': 'PublicTransport',
+            'Private Transport': 'PrivateTransport',
             'Transfers': 'Transfer',
             'Activity': 'Ticket',
-            'Guides': 'LocalGuide',
+            'Local Guides': 'LocalGuide',
+            'Tour Leader': 'Staff',
             # 'Other Services': 'Other',
         }
         accommodation_items = []
-        transport_items = []
+        public_transport_items = []
+        private_transport_items = []
         activity_items = []
         transfer_items = []
         guides_items = []
+        tour_leader_items = []
         other_items = []
 
         for item in items:
-            model_name = model_map.get(item.section_name)
+            if item.section_name == 'Other Services':
+                pass
+            else:
+                model_name = model_map.get(item.section_name)
 
-            service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
-            if hasattr(service_object, 'name'):
-                item.service_name = service_object.name
-            elif hasattr(service_object, 'guide_name'):
-                item.service_name = service_object.guide_name
-            elif hasattr(service_object, 'type'):
-                item.service_name = service_object.type
+                service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
+                if hasattr(service_object, 'name'):
+                    item.service_name = service_object.name
+                elif hasattr(service_object, 'type'):
+                    item.service_name = service_object.type
 
             if item.section_name == 'Accommodations':
                 accommodation_items.append(item)
-            elif item.section_name == 'Transport':
-                transport_items.append(item)
+            elif item.section_name == 'Public Transport':
+                public_transport_items.append(item)
+            elif item.section_name == 'Private Transport':
+                private_transport_items.append(item)
             elif item.section_name == 'Activity':
                 activity_items.append(item)
-            elif item.section_name == 'Guides':
+            elif item.section_name == 'Local Guides':
                 guides_items.append(item)
             elif item.section_name == 'Transfers':
                 transfer_items.append(item)
+            elif item.section_name == 'Tour Leader':
+                tour_leader_items.append(item)
             elif item.section_name == 'Other Services':
                 other_items.append(item)
 
         # Get proposal's budget
         budget = ProposalBudget.objects.filter(proposal=proposal)
+        foc_pax = [budget_option.free_of_charge for budget_option in budget]
+
 
         if form.is_valid():
             logo_option = form.cleaned_data['logo_options']
@@ -494,10 +505,12 @@ def proposal_pdf_view(request, pk):
                 'profile': user_profile,
                 'items': items,
                 'accommodation_items': accommodation_items,
-                'transport_items': transport_items,
+                'public_transport_items': public_transport_items,
+                'private_transport_items': private_transport_items,
                 'activity_items': activity_items,
                 'guides_items': guides_items,
                 'transfer_items': transfer_items,
+                'tour_leader_items': tour_leader_items,
                 'other_items': other_items,
                 'budget': budget,
                 'current_date': current_date,
@@ -515,29 +528,6 @@ def proposal_pdf_view(request, pk):
             response = HttpResponse(pdf_file, content_type='application/pdf')
             response['Content-Disposition'] = 'attachment; filename="proposal.pdf"'
             return response
-            # return render(request, 'proposals/pdf-proposal.html', context={'logo_option': logo_option,
-            #                                                                'logo': logo,
-            #                                                                'commission': commission,
-            #
-            #                                                                'proposal_budget': proposal_budget,
-            #                                                                'proposal': proposal,
-            #                                                                'profile': user_profile,
-            #                                                                'items': items,
-            #                                                                'accommodation_items': accommodation_items,
-            #                                                                'transport_items': transport_items,
-            #                                                                'activity_items': activity_items,
-            #                                                                'guides_items': guides_items,
-            #                                                                'transfer_items': transfer_items,
-            #                                                                'other_items': other_items,
-            #                                                                'budget': budget,
-            #                                                                'current_date': current_date,
-            #                                                                'due_date': due_date,
-            #                                                                'company_name': company_name,
-            #                                                                'company_address': company_address,
-            #                                                                'company_address_2': company_address_2,
-            #                                                                'company_email': company_email,
-            #                                                                },)
-
     else:
         form = PDFOptionsForm()
 
@@ -662,7 +652,7 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['budget'] = budget
         context['current_request'] = current_request
         context['foc_pax'] = foc_pax[0] if foc_pax else 0
-        context['city_choices'] = CityChoices.choices
+        context['city_choices'] = Location.objects.all()
         context['status_choices'] = StatusChoices.choices
 
         return context
