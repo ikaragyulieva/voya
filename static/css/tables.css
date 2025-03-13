@@ -58,6 +58,8 @@ h2 {
 .col {
     text-overflow: ellipsis;
     align-content: center;
+    font-weight: 300;
+    font-size: 14px;
 }
 
 .responsive-table {
@@ -644,6 +646,34 @@ h2 {
     }
 
 }
+
+.trip-comments-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.trip-internal-note{
+    margin-top: 15px !important;
+
+}
+
+.internal-note{
+    width: 350px;
+}
+
+.trip-proposal textarea {
+        position: static;
+        width: 100%; /* Ensures it spans the full width of the parent div */
+        max-width: 100%; /* Prevents it from exceeding the parent's width */
+        border: 0.1px solid white;
+        border-radius: 3px;
+        height: 100px;
+        padding: 2px;
+        /*margin-top: 12px;*/
+        box-sizing: border-box; /* Includes padding and borders in width */
+        /*resize: none; !* Optional: Prevents resizing if that's desired *!*/
+    }
+
 
 @media all and (max-width: 1100px) {
     .dashboard-table {

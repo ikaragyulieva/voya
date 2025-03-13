@@ -5,6 +5,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django_countries.fields import CountryField
 from multiselectfield import MultiSelectField
+from simple_history.models import HistoricalRecords
+
 from voya.common.models import TimestampedModel
 from voya.companies.models import CompanyProfile
 from voya.requests import choices
@@ -50,8 +52,8 @@ class TripRequests(TimestampedModel):
     )
 
     trip_duration = models.PositiveIntegerField(
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
     )
 
     trip_start_date = models.DateField(
@@ -180,6 +182,8 @@ class TripRequests(TimestampedModel):
         blank=True,
         editable=False,
     )
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"{self.slug} - {self.created_by_company.commercial_name}"

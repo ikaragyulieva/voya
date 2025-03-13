@@ -97,34 +97,6 @@ class CityChoices(models.TextChoices):
     GENERIC = 'Generic city', 'Generic city'
 
 
-
-
-# CITIES_BY_COUNTRY = {
-#     'Austria': [('Vienna', 'Vienna'), ('Salzburg', 'Salzburg')],
-#     'Belgium': [('Bruges', 'Bruges'), ('Brussels', 'Brussels')],
-#     'Croatia': [('Split', 'Split'), ('Zagreb', 'Zagreb')],
-#     'Czech Republic': [('Prague', 'Prague')],
-#     'Denmark': [('Copenhagen', 'Copenhagen')],
-#     'Finland': [('Helsinki', 'Helsinki')],
-#     'France': [('Paris', 'Paris'), ('Nice', 'Nice')],
-#     'Germany': [('Berlin', 'Berlin'), ('Munich', 'Munich')],
-#     'Greece': [('Athens', 'Athens'), ('Santorini', 'Santorini')],
-#     'Hungary': [('Budapest', 'Budapest')],
-#     'Iceland': [('Reykjavik', 'Reykjavik')],
-#     'Ireland': [('Dublin', 'Dublin')],
-#     'Italy': [('Rome', 'Rome'), ('Florence', 'Florence'), ('Milan', 'Milan'), ('Venice', 'Venice'), ('Naples', 'Naples')],
-#     'Netherlands': [('Amsterdam', 'Amsterdam')],
-#     'Norway': [('Oslo', 'Oslo')],
-#     'Poland': [('Warsaw', 'Warsaw')],
-#     'Portugal': [('Lisbon', 'Lisbon')],
-#     'Russia': [('Moscow', 'Moscow')],
-#     'Spain': [('Madrid', 'Madrid'), ('Barcelona', 'Barcelona'), ('Seville', 'Seville')],
-#     'Sweden': [('Stockholm', 'Stockholm')],
-#     'Switzerland': [('Zurich', 'Zurich'), ('Lucerne', 'Lucerne')],
-#     'Turkey': [('Istanbul', 'Istanbul')],
-#     'United Kingdom': [('London', 'London'), ('Edinburgh', 'Edinburgh')],
-# }
-
 class CountryChoices(models.TextChoices):
     # European countries
     CHOOSE_COUNTRY = '', 'Select country'
@@ -193,13 +165,14 @@ class CountryChoices(models.TextChoices):
 
 class TransportationType(models.TextChoices):
     TRANSPORT = '', 'Select an option'
-    NO_TRANSPORTATION = 'no transportation', 'No transportation - I\'ll take care of it'
     PRIVATE_BUS = 'private bus', 'Private Bus'
     PUBLIC_BUSES = 'public buses', 'Public Buses'
     TRAINS = 'trains', 'Trains'
     FLIGHTS = 'flights', 'Flights'
     TAXI = 'taxi', 'Taxi'
     AIRPORT_STATION_TRANSFERS = 'airport/station transfers', 'Airport/Station Transfers'
+    NO_TRANSPORTATION = 'no transportation', 'No transportation'
+    OTHER = 'other', 'Other'
 
 
 class PublicTransportationType(models.TextChoices):
@@ -221,18 +194,18 @@ class PrivateTransportationType(models.TextChoices):
     LUXURY_CAR = 'luxury car (4pax)', 'Luxury car (4 pax)'
     LUXURY_VAN = 'luxury van (7pax)', 'Luxury van (7 pax)'
     LUXURY_BUS = 'luxury bus (8+pax)', 'Luxury bus (8+ pax)'
-
     OTHER = 'other', 'Other'
 
 
 class AccommodationsType(models.TextChoices):
     ACC = 'acc', 'Select accommodations type'
-    NONE = 'none', 'None -  I\'ll take care of it'
     TWO_TREE_STAR_HOTELS = '2-3 star hotels', '2-3 Star Hotels'
     FOUR_FIVE_STAR_HOTELS = '4-5 star hotels', '4-5 Star Hotels'
     HOSTELS_WITH_PRIVATE_BATHROOM = 'hostels with private bathroom', 'Hostels with private bathroom'
     APARTMENT = 'apartment', 'Apartment'
     CAMPING = 'camping', 'Camping'
+    NONE = 'none', 'None -  I\'ll take care of it'
+    OTHER = 'other', 'Other'
 
 
 class HotelType(models.TextChoices):
@@ -248,16 +221,19 @@ class HotelType(models.TextChoices):
 
 class MealsType(models.TextChoices):
     MEALS = 'meal', 'Select meals service'
-    NO_MEALS_INCLUDED = 'no meals included', 'No meals included'
     BREAKFAST_ONLY = 'breakfast only (BB)', 'Breakfast Only (BB)'
     BREAKFAST_AND_DINNER = 'breakfast & dinner (HB)', 'Breakfast & Dinner (HB)'
     BREAKFAST_LUNCH_DINNER = 'breakfast, lunch & dinner (FB)', 'Breakfast, Lunch & Dinner (FB)'
+    NO_MEALS_INCLUDED = 'no meals included', 'No meals included'
+    OTHER = 'other', 'Other'
 
 
 class StaffChoices(models.TextChoices):
     STAFF = 'staff', "Select staff service"
     TOUR_LEADER = 'Tour leader during the entire trip', 'Tour leader during the entire trip'
     OFFICIAL_TOURIST_GUIDES = 'Official tourist guides in each city'
+    NO_NEED = 'no need', 'No staff needed'
+    OTHER = 'other', 'Other'
 
 
 class GroupChoice(models.TextChoices):

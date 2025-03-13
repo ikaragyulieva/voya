@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from simple_history.models import HistoricalRecords
 
 from voya.providers.models import Providers
 from voya.requests import choices
@@ -85,6 +86,8 @@ class ServiceBaseModel(TimestampedModel):
         on_delete=models.CASCADE,
         related_name='%(class)s_created_by',
     )
+
+    history = HistoricalRecords(inherit=True)
 
     class Meta:
         abstract = True

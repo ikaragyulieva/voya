@@ -75,24 +75,27 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <li class="table-row">
                                 <div class="col col-1" data-label="Status">
                                     <div class="action-btn">
-                                        {% if proposal.created_at|date:"Y-m-d" == now|date:"Y-m-d" and proposal.is_draft %}
+                                        {% if proposal.status == 'Ready for review' %}
                                             <!-- New Proposal Status-->
                                             <img
-                                                    src="{% static 'images/new-icon.png' %}"
-                                                    alt="New Proposal"
+                                                    src="{% static 'images/review.png' %}"
+                                                    alt="Ready for review" 
+                                                    title="Ready for review"
                                             />
-                                        {% elif proposal.is_draft %}
+                                        {% elif proposal.status == 'Not finished' %}
                                             <!-- Active Proposal Status -->
                                             <img
-                                                    src="{% static 'images/green-circle.png' %}"
-                                                    alt="Active Proposal"
+                                                    src="{% static 'images/wip.png' %}"
+                                                    alt="WIP Proposal"
+                                                    title="Not finished"
                                             />
 
-                                        {% elif not proposal.is_draft %}
+                                        {% elif proposal.status == 'Send to client' %}
                                             <!-- Closed Proposal Status -->
                                             <img
-                                                    src="{% static 'images/red-circle.png' %}"
-                                                    alt="Closed Proposal"
+                                                    src="{% static 'images/share-with-client-green.png' %}"
+                                                    alt="Shared Proposal"
+                                                    title="Shared with client"
                                             />
                                         {% endif %}
                                     </div>
@@ -114,16 +117,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                     alt="View button"
                                             />
                                         </a>
-                                        <!-- Duplicate proposal-->
-                                        {#                                            <a href="{% url 'clone-request' pk=trip_request.pk %}"#}
-                                        {#                                               class="action-link"#}
-                                        {#                                               title="Duplicate Request">#}
-                                        {#                                                <img#}
-                                        {#                                                        src="{% static 'images/duplicate (1).png' %}"#}
-                                        {#                                                        alt="duplicate button"#}
-                                        {#                                                />#}
-                                        {#                                            </a>#}
-
+                                        
                                         <!-- Link to Edit Proposal Page -->
                                         <a href="{% url 'edit-proposal' pk=proposal.pk %}"
                                            class="action-link"

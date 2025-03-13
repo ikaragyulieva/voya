@@ -20,9 +20,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 from voya.common.models import TimestampedModel
-from voya.proposals.choices import SectionChoices
+from voya.proposals.choices import SectionChoices, StatusChoices
 from voya.requests import choices
 from voya.requests.models import TripRequests
 from voya.services.models import Currency
@@ -48,15 +49,29 @@ class Proposal(TimestampedModel):
         max_length=255,
     )
 
-    is_draft = models.BooleanField(
+    status = models.CharField(
+        max_length=50,
+        choices=StatusChoices,
+        blank=False,
+        null=False,
+    )
+
+    is_active = models.BooleanField(
         default=True,
     )
+
+    internal_comments = models.TextField(
+        blank=True,
+        null=True,
+    )
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return f'{self.title} - {self.trip_request.created_by_company.commercial_name}'
 
 
-class ProposalSectionItem(models.Model):
+class ProposalSectionItem(TimestampedModel):
     proposal = models.ForeignKey(
         Proposal,
         on_delete=models.CASCADE,
@@ -115,11 +130,13 @@ class ProposalSectionItem(models.Model):
         null=False,
     )
 
+    history = HistoricalRecords()
+
     def __str__(self):
         return f'{self.proposal.title} - {self.section_name}'
 
 
-class ProposalBudget(models.Model):
+class ProposalBudget(TimestampedModel):
     pax = models.PositiveIntegerField(
         blank=False,
         null=False,
@@ -199,3 +216,5 @@ class ProposalBudget(models.Model):
         on_delete=models.CASCADE,
         related_name='budget',
     )
+
+    history = HistoricalRecords()

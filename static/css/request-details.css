@@ -75,6 +75,17 @@ table tr{
     white-space: normal;
 }
 
+.trip-comments-wrapper table{
+    font-size: 14px;
+    width: 350px;
+    th{
+        width: 180px;
+    }
+    td{
+        max-width: 200px;
+    }
+}
+
 table th{
     font-weight: lighter;
     width: 200px;

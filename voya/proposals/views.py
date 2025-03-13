@@ -162,6 +162,7 @@ def proposal_detail(request, pk):
         'Public Transport': 'PublicTransport',
         'Private Transport': 'PrivateTransport',
         'Transfers': 'Transfer',
+        'Extra Activities': 'Ticket',
         'Activity': 'Ticket',
         'Local Guides': 'LocalGuide',
         'Tour Leader': 'Staff',
@@ -176,9 +177,11 @@ def proposal_detail(request, pk):
     guides_items = []
     tour_leader_items = []
     other_items = []
+    other_variable_items = []
+    other_fixed_items = []
 
     for item in items:
-        if item.section_name == 'Other Services':
+        if item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services':
             pass
         else:
             model_name = model_map.get(item.section_name)
@@ -195,6 +198,8 @@ def proposal_detail(request, pk):
             public_transport_items.append(item)
         elif item.section_name == 'Private Transport':
             private_transport_items.append(item)
+        elif item.section_name == 'Extra Activities':
+            activity_items.append(item)
         elif item.section_name == 'Activity':
             activity_items.append(item)
         elif item.section_name == 'Local Guides':
@@ -203,8 +208,12 @@ def proposal_detail(request, pk):
             transfer_items.append(item)
         elif item.section_name == 'Tour Leader':
             tour_leader_items.append(item)
-        elif item.section_name == 'Other Services':
+        elif item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
             other_items.append(item)
+            other_variable_items.append(item)
+        elif item.section_name == 'Other Services - Fixed':
+            other_items.append(item)
+            other_fixed_items.append(item)
 
     budget = ProposalBudget.objects.filter(proposal=proposal)
     foc_pax = [budget_option.free_of_charge for budget_option in budget]
@@ -224,7 +233,8 @@ def proposal_detail(request, pk):
             'guides_items': guides_items,
             'tour_leader_items': tour_leader_items,
             'transfer_items': transfer_items,
-            'other_items': other_items,
+            'other_variable_items': other_variable_items,
+            'other_fixed_items': other_fixed_items,
             'budget': budget,
             'current_request': current_request,
             'foc_pax': foc_pax[0] if foc_pax else 0,
@@ -254,82 +264,20 @@ def proposal_detail(request, pk):
         return render(request, 'common/home-page.html')
 
 
-# @login_required
-# def client_proposal_detail(request, proposal_id):
-#     proposal = get_object_or_404(Proposal, id=proposal_id)
-#     items = ProposalSectionItem.objects.filter(proposal=proposal)
-#     model_map = {
-#         'Accommodations': 'Hotel',
-#         'Public Transport': 'Public Transport',
-#         'Private Transport': 'Private Transport',
-#         'Transfers': 'Transfer',
-#         'Activity': 'Ticket',
-#         'Guides': 'LocalGuide',
-#         # 'Other Services': 'Other',
-#     }
-#     accommodation_items = []
-#     transport_items = []
-#     activity_items = []
-#     transfer_items = []
-#     guides_items = []
-#     other_items = []
-#
-#     for item in items:
-#         model_name = model_map.get(item.section_name)
-#
-#         service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
-#         if hasattr(service_object, 'name'):
-#             item.service_name = service_object.name
-#         elif hasattr(service_object, 'guide_name'):
-#             item.service_name = service_object.guide_name
-#         elif hasattr(service_object, 'type'):
-#             item.service_name = service_object.type
-#
-#         if item.section_name == 'Accommodations':
-#             accommodation_items.append(item)
-#         elif item.section_name == 'Transport':
-#             transport_items.append(item)
-#         elif item.section_name == 'Activity':
-#             activity_items.append(item)
-#         elif item.section_name == 'Guides':
-#             guides_items.append(item)
-#         elif item.section_name == 'Transfers':
-#             transfer_items.append(item)
-#         elif item.section_name == 'Other Services':
-#             other_items.append(item)
-#
-#     budget = ProposalBudget.objects.filter(proposal=proposal)
-#     user_profile = get_user_obj(request)
-#     current_request = TripRequests.objects.get(id=proposal.trip_request.id)
-#     context = {
-#         'proposal': proposal,
-#         'profile': user_profile,
-#         'items': items,
-#         'accommodation_items': accommodation_items,
-#         'transport_items': transport_items,
-#         'activity_items': activity_items,
-#         'guides_items': guides_items,
-#         'transfer_items': transfer_items,
-#         'other_items': other_items,
-#         'budget': budget,
-#         'current_request': current_request
-#     }
-#     return render(request, 'proposals/client-proposal-details-page.html', context)
-
-
 class DynamicServiceView(APIView):
     model_map = {
         'Accommodations': 'Hotel',
         'Public Transport': 'PublicTransport',
         'Private Transport': 'PrivateTransport',
         'Transfers': 'Transfer',
+        'Extra Activities': 'Ticket',
         'Activity': 'Ticket',
         'Local Guides': 'LocalGuide',
         'Tour Leader': 'Staff'
         # 'Other Services': 'Other',
     }
 
-    def get(self, request, section, *args, **kwargs):
+    def get(self, request, section, city_id=None, *args, **kwargs):
         model_name = self.model_map.get(section)
         if not model_name:
             return Response(
@@ -399,6 +347,7 @@ def proposal_pdf_view(request, pk):
             'Public Transport': 'PublicTransport',
             'Private Transport': 'PrivateTransport',
             'Transfers': 'Transfer',
+            'Extra Activities': 'Ticket',
             'Activity': 'Ticket',
             'Local Guides': 'LocalGuide',
             'Tour Leader': 'Staff',
@@ -414,7 +363,7 @@ def proposal_pdf_view(request, pk):
         other_items = []
 
         for item in items:
-            if item.section_name == 'Other Services':
+            if item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
                 pass
             else:
                 model_name = model_map.get(item.section_name)
@@ -431,6 +380,8 @@ def proposal_pdf_view(request, pk):
                 public_transport_items.append(item)
             elif item.section_name == 'Private Transport':
                 private_transport_items.append(item)
+            elif item.section_name == 'Extra Activities':
+                activity_items.append(item)
             elif item.section_name == 'Activity':
                 activity_items.append(item)
             elif item.section_name == 'Local Guides':
@@ -439,7 +390,9 @@ def proposal_pdf_view(request, pk):
                 transfer_items.append(item)
             elif item.section_name == 'Tour Leader':
                 tour_leader_items.append(item)
-            elif item.section_name == 'Other Services':
+            elif item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
+                other_items.append(item)
+            elif item.section_name == 'Other Services - Fixed':
                 other_items.append(item)
 
         # Get proposal's budget
@@ -540,7 +493,7 @@ class ProposalDashboardView(mixins.LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Proposal.objects.all().order_by('-is_draft', '-created_at')
+        return Proposal.objects.all().order_by('-is_active', '-created_at')
 
     def get_object(self, queryset=None):
         # Fetch the ClientProfile based on the URL pk
@@ -580,6 +533,7 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
             'Public Transport': 'PublicTransport',
             'Private Transport': 'PrivateTransport',
             'Transfers': 'Transfer',
+            'Extra Activities': 'Ticket',
             'Activity': 'Ticket',
             'Local Guides': 'LocalGuide',
             'Tour Leader': 'Staff',
@@ -593,10 +547,11 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         transfer_items = []
         guides_items = []
         tour_leader_items = []
-        other_items = []
+        other_variable_items = []
+        other_fixed_items = []
 
         for item in items:
-            if item.section_name == 'Other Services':
+            if item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services':
                 pass
             else:
                 model_name = model_map.get(item.section_name)
@@ -613,6 +568,8 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
                 public_transport_items.append(item)
             elif item.section_name == 'Private Transport':
                 private_transport_items.append(item)
+            elif item.section_name == 'Extra Activities':
+                activity_items.append(item)
             elif item.section_name == 'Activity':
                 activity_items.append(item)
             elif item.section_name == 'Local Guides':
@@ -621,8 +578,10 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
                 transfer_items.append(item)
             elif item.section_name == 'Tour Leader':
                 tour_leader_items.append(item)
-            elif item.section_name == 'Other Services':
-                other_items.append(item)
+            elif item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
+                other_variable_items.append(item)
+            elif item.section_name == 'Other Services - Fixed':
+                other_fixed_items.append(item)
 
         budget = ProposalBudget.objects.filter(proposal=proposal)
         foc_pax = [budget_option.free_of_charge for budget_option in budget]
@@ -648,7 +607,8 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['guides_items'] = guides_items
         context['tour_leader_items'] = tour_leader_items
         context['transfer_items'] = transfer_items
-        context['other_items'] = other_items
+        context['other_variable_items'] = other_variable_items
+        context['other_fixed_items'] = other_fixed_items
         context['budget'] = budget
         context['current_request'] = current_request
         context['foc_pax'] = foc_pax[0] if foc_pax else 0
@@ -656,3 +616,5 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['status_choices'] = StatusChoices.choices
 
         return context
+
+

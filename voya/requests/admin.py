@@ -1,10 +1,11 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 
 from voya.requests.models import TripRequests
 
 
 @admin.register(TripRequests)
-class TripRequestsAdmin(admin.ModelAdmin):
+class TripRequestsAdmin(SimpleHistoryAdmin):
     list_display = (
         'slug',
         'country_origin',
@@ -96,3 +97,10 @@ class TripRequestsAdmin(admin.ModelAdmin):
 
     list_per_page = 10
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"

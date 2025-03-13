@@ -18,17 +18,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 
 from voya.proposals.models import ProposalBudget, ProposalSectionItem, Proposal
 
 
 @admin.register(Proposal)
-class ProposalAdmin(admin.ModelAdmin):
+class ProposalAdmin(SimpleHistoryAdmin):
     """Admin configuration for Proposal."""
     list_display = (
         'title',
         'trip_request',
-        'is_draft',
+        'status',
         'created_at',
         'user',
     )
@@ -40,7 +41,7 @@ class ProposalAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
-        'is_draft',
+        'status',
         'created_at',
     )
 
@@ -51,28 +52,38 @@ class ProposalAdmin(admin.ModelAdmin):
                 'title',
                 'user',
                 'trip_request',
-                'is_draft',
+                'status',
             )
         }),
     )
 
-    actions = ['mark_as_draft', 'mark_as_published']
-
-    def mark_as_draft(self, request, queryset):
-        queryset.update(is_draft=True)
-        self.message_user(request, "Selected proposals have been marked as draft.")
-    mark_as_draft.short_description = "Mark selected proposals as draft"
-
-    def mark_as_published(self, request, queryset):
-        queryset.update(is_draft=False)
-        self.message_user(request, "Selected proposals have been marked as published.")
-    mark_as_published.short_description = "Mark selected proposals as published"
+    # actions = ['mark_as_draft', 'mark_as_published']
+    #
+    # def mark_as_draft(self, request, queryset):
+    #     queryset.update(is_draft=True)
+    #     self.message_user(request, "Selected proposals have been marked as draft.")
+    #
+    # mark_as_draft.short_description = "Mark selected proposals as draft"
+    #
+    # def mark_as_published(self, request, queryset):
+    #     queryset.update(is_draft=False)
+    #     self.message_user(request, "Selected proposals have been marked as published.")
+    #
+    # mark_as_published.short_description = "Mark selected proposals as published"
 
     list_per_page = 10
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
+
 
 @admin.register(ProposalSectionItem)
-class ProposalSectionItemAdmin(admin.ModelAdmin):
+class ProposalSectionItemAdmin(SimpleHistoryAdmin):
     """Admin configuration for ProposalSectionItem."""
     list_display = (
         'proposal',
@@ -108,9 +119,17 @@ class ProposalSectionItemAdmin(admin.ModelAdmin):
         }),
     )
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
+
 
 @admin.register(ProposalBudget)
-class ProposalBudgetAdmin(admin.ModelAdmin):
+class ProposalBudgetAdmin(SimpleHistoryAdmin):
     """Admin configuration for ProposalBudget."""
     list_display = (
         'proposal',
@@ -148,3 +167,11 @@ class ProposalBudgetAdmin(admin.ModelAdmin):
             )
         }),
     )
+
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"

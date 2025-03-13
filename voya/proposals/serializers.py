@@ -19,7 +19,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from rest_framework import serializers
 
-from voya.proposals.choices import SectionChoices
+from voya.proposals.choices import SectionChoices, StatusChoices
 from voya.requests import choices
 from voya.services.models import Location
 
@@ -33,7 +33,14 @@ class ProposalSerializer(serializers.Serializer):
         }
     )
 
-    is_draft = serializers.BooleanField(default=True)
+    status = serializers.ChoiceField(
+        choices=StatusChoices,
+        error_messages={
+            'invalid_choice': 'Invalid status. Please select a valid status from the dropdown.',
+        }
+    )
+
+    internal_comments = serializers.CharField(allow_blank=True)
 
 
 class ItemSerializer(serializers.Serializer):
@@ -66,12 +73,6 @@ class ItemSerializer(serializers.Serializer):
         }
     )
     price = serializers.DecimalField(max_digits=10, decimal_places=2)
-    # city = serializers.ChoiceField(
-    #     choices=choices.CityChoices,
-    #     error_messages={
-    #         'invalid_choice': 'Invalid city. Please select a valid city.',
-    #     }
-    # )
 
     city = serializers.PrimaryKeyRelatedField(
         queryset=Location.objects.all(),
@@ -80,10 +81,6 @@ class ItemSerializer(serializers.Serializer):
         }
     )
 
-    # city = serializers.SlugRelatedField(
-    #     queryset=Location.objects.all(),
-    #     slug_field='city_name'  # Assuming Location model has a 'name' field
-    # )
 
 class BudgetSerializer(serializers.Serializer):
     pax = serializers.IntegerField()

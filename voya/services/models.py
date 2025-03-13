@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django_countries.fields import CountryField
+from simple_history.models import HistoricalRecords
 
 from voya.common.models import TimestampedModel, ServiceBaseModel
 from voya.proposals.choices import TransferTypeChoices
@@ -209,6 +210,8 @@ class Currency(TimestampedModel):
         on_delete=models.CASCADE,
         related_name='currency_created_by',
     )
+
+    history = HistoricalRecords()
 
 
 class PublicTransport(ServiceBaseModel):

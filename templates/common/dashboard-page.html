@@ -134,7 +134,7 @@
                                     <!-- Client Buttons -->
 
                                     {% if request.user.role == 'client' and request.user.is_authenticated %}
-                                        {% if trip_request.request_proposal and not trip_request.request_proposal.is_draft %}
+                                        {% if trip_request.request_proposal and not trip_request.request_proposal.status == 'Send to client' %}
 
                                             <a href="{% url 'client-proposal-detail' pk=trip_request.request_proposal.pk %}"
                                                class="action-link" title="Check Proposal">

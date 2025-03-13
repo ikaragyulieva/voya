@@ -97,7 +97,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     }
 
     .line-items-container td {
-        padding: 15px 0;
+        padding: 10px 0;
     }
 
     .line-items-container tbody tr:first-child td {
@@ -118,6 +118,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     }
 
     .line-items-container th.heading-type {
+    {#text-align: right;#} width: 120px;
+    }
+    
+    .line-items-container th.heading-service-details {
     {#text-align: right;#} width: 200px;
     }
 
@@ -262,7 +266,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             {{ company_name }}
         </td>
         <td class="client-name">
-            Client name: <strong>{{ proposal.trip_request.created_by_company }} </strong>
+            <strong>{{ proposal.trip_request.created_by_company }} </strong>
         </td>
     </tr>
     <tr>
@@ -347,7 +351,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in activity_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
-                <td>Activity</td>
+                <td>Extra Activities</td>
                 <td>{{ item.service_name }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>

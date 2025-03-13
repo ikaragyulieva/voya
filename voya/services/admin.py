@@ -1,11 +1,12 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 
 from voya.services.models import Hotel, Transfer, LocalGuide, Ticket, Currency, PublicTransport, PrivateTransport, \
     Location
 
 
 @admin.register(Hotel)
-class HotelsAdmin(admin.ModelAdmin):
+class HotelsAdmin(SimpleHistoryAdmin):
     list_display = (
         'name',
         'category',
@@ -50,9 +51,17 @@ class HotelsAdmin(admin.ModelAdmin):
         self.message_user(request, "Selected hotels have been marked as inactive.")
     mark_inactive.short_description = "Mark selected hotels as inactive"
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
+
 
 @admin.register(Transfer)
-class TransfersAdmin(admin.ModelAdmin):
+class TransfersAdmin(SimpleHistoryAdmin):
     list_display = (
         'transfer_name',
         'type',
@@ -88,9 +97,17 @@ class TransfersAdmin(admin.ModelAdmin):
         self.message_user(request, "Selected transfers have been marked as inactive.")
     mark_inactive.short_description = "Mark selected transfers as inactive"
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
+
 
 @admin.register(LocalGuide)
-class LocalGuidesAdmin(admin.ModelAdmin):
+class LocalGuidesAdmin(SimpleHistoryAdmin):
     list_display = (
         'name',
         'price',
@@ -126,9 +143,17 @@ class LocalGuidesAdmin(admin.ModelAdmin):
         self.message_user(request, "Selected guides have been marked as inactive.")
     mark_inactive.short_description = "Mark selected guides as inactive"
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
+
 
 @admin.register(Ticket)
-class TicketsAdmin(admin.ModelAdmin):
+class TicketsAdmin(SimpleHistoryAdmin):
     list_display = (
         'name',
         'price',
@@ -164,9 +189,17 @@ class TicketsAdmin(admin.ModelAdmin):
         self.message_user(request, "Selected tickets have been marked as inactive.")
     mark_inactive.short_description = "Mark selected tickets as inactive"
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
+
 
 @admin.register(Currency)
-class CurrencyAdmin(admin.ModelAdmin):
+class CurrencyAdmin(SimpleHistoryAdmin):
     list_display = (
         'currency_from',
         'currency_to',
@@ -192,6 +225,14 @@ class CurrencyAdmin(admin.ModelAdmin):
             'fields': ('created_by_user',)
         }),
     )
+
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
 
 
 @admin.register(Location)
@@ -221,7 +262,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 
 @admin.register(PublicTransport)
-class PublicTransportAdmin(admin.ModelAdmin):
+class PublicTransportAdmin(SimpleHistoryAdmin):
     list_display = (
         'type',
         'price',
@@ -256,9 +297,17 @@ class PublicTransportAdmin(admin.ModelAdmin):
         self.message_user(request, "Selected public transport options have been marked as inactive.")
     mark_inactive.short_description = "Mark selected public transport as inactive"
 
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"
+
 
 @admin.register(PrivateTransport)
-class PrivateTransportAdmin(admin.ModelAdmin):
+class PrivateTransportAdmin(SimpleHistoryAdmin):
     list_display = (
         'type',
         'price',
@@ -292,3 +341,11 @@ class PrivateTransportAdmin(admin.ModelAdmin):
         queryset.update(is_active=False)
         self.message_user(request, "Selected private transport options have been marked as inactive.")
     mark_inactive.short_description = "Mark selected private transport as inactive"
+
+    # Display latest historical record timestamp
+    def history_latest(self, obj):
+        latest_record = obj.history.first()
+        return latest_record.history_date if latest_record else "No history"
+
+    history_latest.admin_order_field = 'history__history_date'
+    history_latest.short_description = "Last Modified"

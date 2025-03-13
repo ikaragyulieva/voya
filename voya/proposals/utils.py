@@ -36,7 +36,8 @@ def save_proposal(data, user):
             trip_request=trip,
             user=user,
             title=data['proposal'].get('title'),
-            is_draft=data['proposal'].get('is_draft', True),
+            status=data['proposal'].get('status'),
+            internal_comments=data['proposal'].get('internal_comments'),
         )
 
         # Save items and budget
@@ -50,7 +51,8 @@ def update_proposal(proposal, data):
     """Updates an existing proposal along with its items and budget."""
     with transaction.atomic():
         proposal.title = data['proposal'].get('title', proposal.title)
-        proposal.is_draft = data['proposal'].get('is_draft', proposal.is_draft)
+        proposal.status = data['proposal'].get('status', proposal.status)
+        proposal.internal_comments = data['proposal'].get('internal_comments', proposal.internal_comments)
         proposal.save()
 
         # Update or recreate proposal items

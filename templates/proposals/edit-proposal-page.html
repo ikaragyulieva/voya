@@ -22,176 +22,194 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 {% load custom_filters %}
 
 {% block content %}
-    
+
     <div class="proposal">
-        <div class="trip trip-proposal">
-            <div class="trip-title">
-                <!-- Trip title -->
-                <p>{{ current_request.slug }}</p>
+        <div class="trip-comments-wrapper">
+            <div class="trip trip-proposal">
+                <div class="trip-title">
+                    <!-- Trip title -->
+                    <p>{{ current_request.slug }}</p>
 
+                </div>
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 class="title">Group Information</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Nationality:</th>
+                            <td><i> {{ current_request.get_nationality_display }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>Age range:</th>
+                            <td><i>{{ current_request.age_range }} years old</i></td>
+                        </tr>
+                        <tr>
+                            <th>Min participants:</th>
+                            <td><i> {{ current_request.min_participants }} people</i></td>
+                        </tr>
+                        <tr>
+                            <th>Max participants:</th>
+                            <td><i> {{ current_request.max_participants }} people</i></td>
+                        </tr>
+                        <tr>
+                            <th>Group type:</th>
+                            <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
+                        </tr>
+                        {% if current_request.type_of_trip %}
+                            <tr>
+                                <th>Type of trip:</th>
+                                <td><i> {{ current_request.type_of_trip }} </i></td>
+                            </tr>
+                        {% endif %}
+                        {% if current_request.additional_observations %}
+                            <tr>
+                                <th>Additional observations:</th>
+                                <td><i> {{ current_request.additional_observations }} </i></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    <hr class="custom-line">
+                    <div class="trip-section">
+                        <h3 class="title">Dates Information</h3>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>Start date:</th>
+                                <td><i> {{ current_request.trip_start_date }} </i></td>
+                            </tr>
+                            <tr>
+                                <th>End date:</th>
+                                <td><i>{{ current_request.trip_end_date }}</i></td>
+                            </tr>
+                            <tr>
+                                <th>Trip duration:</th>
+                                <td><i> {{ current_request.trip_duration }} days </i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <hr class="custom-line">
+                    <div class="trip-section">
+                        <h3 class="title">Destination Information:</h3>
+
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>Origin country:</th>
+                                <td><i> {{ current_request.get_country_origin_display }} </i></td>
+                            </tr>
+                            <tr>
+                                <th>Destinations:</th>
+                                <td><i>{{ current_request.get_country_destinations_display }}</i></td>
+                            </tr>
+                            {% if current_request.other_destinations %}
+                                <tr>
+                                    <th>Additional destinations info:</th>
+                                    <td><i> {{ current_request.other_destinations }} </i></td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="custom-line">
+                    <div class="trip-section">
+                        <h3 class="title">Trip Information:</h3>
+
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>Transportation:</th>
+                                <td><i> {{ current_request.get_transportation_type_display }} </i></td>
+                            </tr>
+
+                            {% if current_request.transportation_details %}
+                                <tr>
+                                    <th>Transportation details:</th>
+                                    <td><i>{{ current_request.transportation_details }}</i></td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <th>Accommodation:</th>
+                                <td><i> {{ current_request.get_accommodations_display }} </i></td>
+                            </tr>
+                            {% if current_request.accommodations_details %}
+                                <tr>
+                                    <th>Accommodation details:</th>
+                                    <td><i> {{ current_request.accommodations_details }} </i></td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <th>Meals:</th>
+                                <td><i> {{ current_request.get_meals_display }} </i></td>
+                            </tr>
+                            {% if current_request.meals_details %}
+                                <tr>
+                                    <th>Meals details:</th>
+                                    <td><i> {{ current_request.meals_details }} </i></td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <th>Staff:</th>
+                                <td><i> {{ current_request.get_staff_display }} </i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <hr class="custom-line">
+                    <div class="trip-section">
+                        <h3 class="title">Billing Information:</h3>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>Budget:</th>
+                                <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Currency:</th>
+                                <td><i>{{ current_request.get_currency_display }}</i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
             </div>
-            <hr class="custom-line">
-            <div class="trip-section">
-                <h3 class="title">Group Information</h3>
-                <table>
-                    <tbody>
-                    <tr>
-                        <th>Nationality:</th>
-                        <td><i> {{ current_request.get_nationality_display }} </i></td>
-                    </tr>
-                    <tr>
-                        <th>Age range:</th>
-                        <td><i>{{ current_request.age_range }} years old</i></td>
-                    </tr>
-                    <tr>
-                        <th>Min participants:</th>
-                        <td><i> {{ current_request.min_participants }} people</i></td>
-                    </tr>
-                    <tr>
-                        <th>Max participants:</th>
-                        <td><i> {{ current_request.max_participants }} people</i></td>
-                    </tr>
-                    <tr>
-                        <th>Group type:</th>
-                        <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
-                    </tr>
-                    {% if current_request.type_of_trip %}
-                        <tr>
-                            <th>Type of trip:</th>
-                            <td><i> {{ current_request.type_of_trip }} </i></td>
-                        </tr>
-                    {% endif %}
-                    {% if current_request.additional_observations %}
-                        <tr>
-                            <th>Additional observations:</th>
-                            <td><i> {{ current_request.additional_observations }} </i></td>
-                        </tr>
-                    {% endif %}
-                    </tbody>
-                </table>
-                <hr class="custom-line">
-                <div class="trip-section">
-                    <h3 class="title">Dates Information</h3>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <th>Start date:</th>
-                            <td><i> {{ current_request.trip_start_date }} </i></td>
-                        </tr>
-                        <tr>
-                            <th>End date:</th>
-                            <td><i>{{ current_request.trip_end_date }}</i></td>
-                        </tr>
-                        <tr>
-                            <th>Trip duration:</th>
-                            <td><i> {{ current_request.trip_duration }} days </i></td>
-                        </tr>
-                        </tbody>
-                    </table>
 
+            <!--Internal comments box -->
+
+            <div class="trip trip-proposal trip-internal-note">
+
+                <div class="trip-section">
+                    <h3 class="title">Internal Comments</h3>
                 </div>
                 <hr class="custom-line">
-                <div class="trip-section">
-                    <h3 class="title">Destination Information:</h3>
-
-                    <table>
-                        <tbody>
-                        <tr>
-                            <th>Origin country:</th>
-                            <td><i> {{ current_request.get_country_origin_display }} </i></td>
-                        </tr>
-                        <tr>
-                            <th>Destinations:</th>
-                            <td><i>{{ current_request.get_country_destinations_display }}</i></td>
-                        </tr>
-                        {% if current_request.other_destinations %}
-                            <tr>
-                                <th>Additional destinations info:</th>
-                                <td><i> {{ current_request.other_destinations }} </i></td>
-                            </tr>
-                        {% endif %}
-                        </tbody>
-                    </table>
-                </div>
-                <hr class="custom-line">
-                <div class="trip-section">
-                    <h3 class="title">Trip Information:</h3>
-
-                    <table>
-                        <tbody>
-                        <tr>
-                            <th>Transportation:</th>
-                            <td><i> {{ current_request.get_transportation_type_display }} </i></td>
-                        </tr>
-
-                        {% if current_request.transportation_details %}
-                            <tr>
-                                <th>Transportation details:</th>
-                                <td><i>{{ current_request.transportation_details }}</i></td>
-                            </tr>
-                        {% endif %}
-                        <tr>
-                            <th>Accommodation:</th>
-                            <td><i> {{ current_request.get_accommodations_display }} </i></td>
-                        </tr>
-                        {% if current_request.accommodations_details %}
-                            <tr>
-                                <th>Accommodation details:</th>
-                                <td><i> {{ current_request.accommodations_details }} </i></td>
-                            </tr>
-                        {% endif %}
-                        <tr>
-                            <th>Meals:</th>
-                            <td><i> {{ current_request.get_meals_display }} </i></td>
-                        </tr>
-                        {% if current_request.meals_details %}
-                            <tr>
-                                <th>Meals details:</th>
-                                <td><i> {{ current_request.meals_details }} </i></td>
-                            </tr>
-                        {% endif %}
-                        <tr>
-                            <th>Staff:</th>
-                            <td><i> {{ current_request.get_staff_display }} </i></td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-                <hr class="custom-line">
-                <div class="trip-section">
-                    <h3 class="title">Billing Information:</h3>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <th>Budget:</th>
-                            <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Currency:</th>
-                            <td><i>{{ current_request.get_currency_display }}</i></td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
+                <form id="proposal-form" method="post" action="#" onsubmit="return false" data-mode="edit" data-proposal-id="{{ proposal.id }}" data-trip-id="{{ trip_id }}">
+                    <div class="internal-note">
+                        <textarea name="internal-comments" cols="40" rows="10" id="id_internal-comments" 
+                                  placeholder="Add internal notes here">{{ proposal.internal_comments }} </textarea>
+                    </div>
+                </form>
             </div>
         </div>
 
-
         <!-- Trip Proposal Template -->
-        <form id="proposal-form" method="post" action="#" onsubmit="return false" data-mode="edit" data-proposal-id="{{proposal.id}}" data-trip-id="{{ trip_id }}">
+        <form id="proposal-form" method="post" action="#" onsubmit="return false" data-mode="edit"
+              data-proposal-id="{{ proposal.id }}" data-trip-id="{{ trip_id }}">
             {% csrf_token %}
             <div class="trip proposal-edit proposal-create">
 
                 <div class="trip-title">
                     <!-- Proposal title -->
                     <p><input name="title" type="text" placeholder="Add a title" value="{{ proposal.title }}"></p>
-{#                    {% if proposal.errors.title %}#}
-{#                        <div class="error">{{ proposal.errors.title }}</div>#}
-{#                    {% endif %}#}
+                    {#                    {% if proposal.errors.title %}#}
+                    {#                        <div class="error">{{ proposal.errors.title }}</div>#}
+                    {#                    {% endif %}#}
 
                 </div>
                 <hr class="custom-line">
@@ -222,8 +240,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         {% for item in accommodation_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -328,8 +348,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         {% for item in private_transport_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -437,8 +459,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         {% for item in public_transport_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -521,7 +545,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <!-- Activity -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Activity</h3>
+                    <h3 id="section" class="title">Extra Activities</h3>
                     <!-- Add row button -->
 
                     <div class="action-btn add-option">
@@ -547,8 +571,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         {% for item in activity_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -657,12 +683,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         {% for item in transfer_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
-                                       {% for city in city_choices %}
+                                        {% for city in city_choices %}
                                             <option value="{{ city.id }}"
                                                     {% if city.id == item.city.id %}selected{% endif %}>
                                                 {{ city.city_name }}
@@ -767,8 +795,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         {% for item in guides_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -881,8 +911,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         {% for item in tour_leader_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
@@ -966,10 +998,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 </div>
 
 
-                <!-- Other Services -->
+                <!-- Other Services - Variable -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Other Services</h3>
+                    <h3 id="section" class="title">Other Services - Variable</h3>
                     <!-- Add row button -->
 
                     <div class="action-btn add-option">
@@ -992,15 +1024,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <div class="col col-6 empty-space">Btn</div>
 
                         </li>
-                        {% for item in other_items %}
+                        {% for item in other_variable_items %}
                             <li class="table-row">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date" class="flatpickr"
-                                          placeholder="Select date" value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
                                 </div>
                                 <div class="col col-2" data-label="city">
                                     <select id="city-dropdown" name="city">
-                                       {% for city in city_choices %}
+                                        {% for city in city_choices %}
                                             <option value="{{ city.id }}"
                                                     {% if city.id == item.city.id %}selected{% endif %}>
                                                 {{ city.city_name }}
@@ -1010,9 +1044,119 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                 </div>
                                 <div class="col col-33 note" data-label="service details">
                                     <textarea
-                                           name="additional_notes" cols="40" rows="10"
-                                           id="id_additional_notes"
-                                           placeholder="Add service">{{ item.additional_notes }} </textarea>
+                                            name="additional_notes" cols="40" rows="10"
+                                            id="id_additional_notes"
+                                            placeholder="Add service">{{ item.additional_notes }} </textarea>
+                                </div>
+                                <div class="col col-4" data-label="quantity">
+                                    <input type="number"
+                                           name="quantity"
+                                           placeholder="0"
+                                           value="{{ item.quantity }}">
+                                </div>
+                                <div class="col col-5" data-label="variable cost">
+                                    <input type="text"
+                                           name="service_price"
+                                           id="service-price"
+                                           placeholder="€ 0.00"
+                                           value="€ {{ item.price }}">
+                                </div>
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        {% empty %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                                <div class="col col-33 note"
+                                     data-label="service details">{{ item_form.additional_notes|placeholder:'Add service' }}</div>
+                                <div class="col col-4"
+                                     data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                                <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                                 name="service_price"
+                                                                                 placeholder="€ 0.00">
+                                </div>
+
+                                <!-- Remove Row-->
+                                <div class="col col-6" data-label="remove">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+
+                                        <a href="#" class="remove-row-button">
+                                            <img
+                                                    src="{% static 'images/close.png' %}"
+                                                    alt="remove row button"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+            
+            
+            <!-- Other Services - Fixed -->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Other Services - Fixed </h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header fixed-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        {% for item in other_fixed_items %}
+                            <li class="table-row">
+                                <div class="col col-1" data-label="date">
+                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                           class="flatpickr"
+                                           placeholder="Select date"
+                                           value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col col-2" data-label="city">
+                                    <select id="city-dropdown" name="city">
+                                        {% for city in city_choices %}
+                                            <option value="{{ city.id }}"
+                                                    {% if city.id == item.city.id %}selected{% endif %}>
+                                                {{ city.city_name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col col-33 note" data-label="service details">
+                                    <textarea
+                                            name="additional_notes" cols="40" rows="10"
+                                            id="id_additional_notes"
+                                            placeholder="Add service">{{ item.additional_notes }} </textarea>
                                 </div>
                                 <div class="col col-4" data-label="quantity">
                                     <input type="number"
@@ -1139,24 +1283,24 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <tr>
                                 <th>Service fee:</th>
                                 {% for budget_option in budget %}
-                                <td><i> €
-                                    <input type="number"
-                                           name="service-fee"
-                                           placeholder="500"
-                                           value="{{ budget_option.service_fee }}"> 
-                                </i></td>
+                                    <td><i> €
+                                        <input type="number"
+                                               name="service-fee"
+                                               placeholder="500"
+                                               value="{{ budget_option.service_fee }}">
+                                    </i></td>
                                 {% endfor %}
                             </tr>
                             <tr>
                                 <th>Margin:</th>
                                 {% for budget_option in budget %}
-                                <td><i> 
-                                    <input type="number"
-                                           name="margin"
-                                           placeholder="10"
-                                           value="{{ budget_option.margin }}"> % 
-                                </i></td>
-                            {% endfor %}
+                                    <td><i>
+                                        <input type="number"
+                                               name="margin"
+                                               placeholder="10"
+                                               value="{{ budget_option.margin }}"> %
+                                    </i></td>
+                                {% endfor %}
                             </tr>
 
                             </tbody>
@@ -1180,21 +1324,21 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         <div class="prop-status">
                             <p>State:</p>
                             <p id="draft-status">
-                                <select id="id_is_draft" name="status">
-                                        {% for status_value, status_label in status_choices %}
-                                            <option value="{{ status_value }}"
-                                                    {% if status_value == proposal.is_draft %}selected{% endif %}>
-                                                {{ status_label }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
+                                <select id="id_status" name="status">
+                                    {% for status_value, status_label in status_choices %}
+                                        <option value="{{ status_value }}"
+                                                {% if status_value == proposal.status %}selected{% endif %}>
+                                            {{ status_label }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                             </p>
 
                         </div>
-
+                    
                 </form>
             </div>
-            <button id="submit-proposal-btn" class="add-btn" type="submit">Edit Proposal</button>
+            <button id="submit-proposal-btn" class="add-btn" type="submit">Save Proposal</button>
 
         </div>
 

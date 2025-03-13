@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'cloudinary',
     'cloudinary_storage',
+    'simple_history',
 
 ] + PROJECT_APPS
 
@@ -81,6 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'voya.urls'

@@ -25,17 +25,18 @@ from voya.services.models import Location
 
 
 class CreateProposalForm(forms.ModelForm):
-    is_draft = forms.ChoiceField(
+    status = forms.ChoiceField(
         choices=StatusChoices,
         label="",
-        widget=forms.Select(attrs={'placeholder': 'Draft'}),
+        # widget=forms.Select(attrs={'placeholder': 'Draft'}),
     )
 
     class Meta:
         model = Proposal
         fields = [
             'title',
-            'is_draft',
+            'status',
+            'internal_comments'
         ]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Add Proposal Title'}),

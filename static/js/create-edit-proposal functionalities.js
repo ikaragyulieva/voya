@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// Functionality to submit proposal and budget forms and sends POST to the API to save dynamic rows
+// Functionality to submit proposal and budget forms and sends POST or PUT request to the API to save dynamic rows
 document.addEventListener("DOMContentLoaded", function () {
     const submitButton = document.getElementById("submit-proposal-btn");
     const proposalForm = document.getElementById("proposal-form");
@@ -232,33 +232,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         // Getting the status of the proposal (Draft/In progress/Completed)
-        const draftStatusElement = document.querySelector("#id_is_draft");
-        const draftStatusField = draftStatusElement?.value || ""; // Ensure it has a fallback value
+        const draftStatusElement = document.querySelector("#id_status");
+        const draftStatus = draftStatusElement?.value; // Ensure it has a fallback value
+
 
         // let draftStatus
         // draftStatus = draftStatusField === "Draft" || draftStatusField === "In progress";
 
 
-        let draftStatus = null;
-        if (draftStatusField === "Draft" || draftStatusField === "In progress") {
-            draftStatus = true;
-        } else if (draftStatusField === "Done") {
-            draftStatus = false;
-        }
+        // let draftStatusCheck = null;
+        // if (draftStatus === "Not finished" || draftStatus === "In progress") {
+        //     draftStatusCheck = true;
+        // } else if (draftStatus === "Done") {
+        //     draftStatusCheck = false;
+        // }
 
         // Collect proposal data
         const proposalData = {
             title: document.querySelector("input[name='title']")?.value || "",
-            is_draft: draftStatus,
+            status: draftStatus,
+            internal_comments: document.querySelector(".internal-note textarea")?.value || "No notes",
         };
 
-        console.log(`Proposal status is: ${draftStatusField}`); // Debugging
+        console.log(`Proposal status is: ${draftStatus}`); // Debugging
 
         // Show Proposal validation errors if any
         if (!proposalData.title) {
             alert(`Proposal title is required. Please add a proposal title.`);
             return;
-        } else if (!draftStatusField) {
+        } else if (!draftStatus) {
             alert(`Please set the current state of the proposal`);
             return;
         }
@@ -272,12 +274,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const section_name = row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || ""; // Must match SectionChoices
             const serviceDropdown = row.querySelector("#service-dropdown");
             let service_id = null;
-            if (section_name !== "Other Services") {
+            if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable") {
                 const selectedServices = serviceDropdown
                     ? Array.from(serviceDropdown.selectedOptions).map(option => parseInt(option.value, 10)).filter(Boolean)
                     : [];
                 service_id = selectedServices[0]
-            } else if (section_name === "Other Services") {
+            } else if (section_name === "Other Services - Fixed" && section_name !== "Other Services - Variable") {
                 service_id = null;
             }
 
@@ -311,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             let isComplete
-            if (section_name !== "Other Services") {
+            if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable" && section_name !== "Other Services") {
                 isComplete = Boolean(
                     rowData.corresponding_trip_date &&
                     rowData.city &&
@@ -319,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     rowData.quantity > 0 &&
                     rowData.price > 0
                 );
-            } else if (section_name === "Other Services") {
+            } else if (section_name === "Other Services - Fixed" || section_name === "Other Services - Variable") {
                 isComplete = Boolean(
                     rowData.corresponding_trip_date &&
                     rowData.city &&
@@ -479,7 +481,7 @@ const calculateBudget = () => {
 
             // Classify costs based on section title
             const sectionTitle = table.closest(".trip-section").querySelector(".title").textContent || "";
-            if (["Local Guides", "Tour Leader", "Transfers", "Private Transport", "Others Services"].some(type => sectionTitle.includes(type))) {
+            if (["Local Guides", "Tour Leader", "Transfers", "Private Transport", "Other Services - Fixed"].some(type => sectionTitle.includes(type))) {
                 fixedCost += price * quantity;
             } else {
                 variableCost += price * quantity;
@@ -541,7 +543,8 @@ const calculateBudget = () => {
 
     });
 };
-//Budget Tabel Functionality
+
+//Budget Tabel Actions
 document.addEventListener("DOMContentLoaded", function () {
     const budgetTable = document.querySelector(".budget-table");
     const proposalTables = document.querySelectorAll(".requests-table");
