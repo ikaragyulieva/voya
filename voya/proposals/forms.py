@@ -53,17 +53,6 @@ class CreateItemForm(forms.ModelForm):
         )
     )
 
-    # city = forms.ChoiceField(
-    #     choices=choices.CityChoices,
-    #     label="City",
-    #     widget=forms.Select(
-    #         attrs={
-    #             'placeholder': 'Select City',
-    #             'id': 'city-dropdown',
-    #         }
-    #     ),
-    # )
-
     city = forms.ModelChoiceField(
         queryset=Location.objects.all(),
         empty_label="Select city",
@@ -72,6 +61,14 @@ class CreateItemForm(forms.ModelForm):
                 'id': 'city-dropdown',
             }
         ),
+    )
+
+    additional_notes = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'class': 'description-field'
+            }
+        )
     )
 
     class Meta:

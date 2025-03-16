@@ -44,12 +44,7 @@ class ProposalSerializer(serializers.Serializer):
 
 
 class ItemSerializer(serializers.Serializer):
-    section_name = serializers.ChoiceField(
-        choices=SectionChoices,
-        error_messages={
-            'invalid_choice': 'Invalid section name. Please select a valid section.',
-        }
-    )
+    section_name = serializers.CharField()
 
     service_id = serializers.IntegerField(
         required=False,  # Allow missing service_id

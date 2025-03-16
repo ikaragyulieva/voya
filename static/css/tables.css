@@ -16,7 +16,7 @@
 .proposal-item-btn img{
     width: 1em;
     height: 1em;
-    margin-top: 3px;
+    /*margin-top: 3px;*/
 }
 
 .request-action-btn {
@@ -62,8 +62,31 @@ h2 {
     font-size: 14px;
 }
 
+.table-row {
+    cursor: grab;
+    transition: background 0.2s ease-in-out;
+}
+
+.table-row:active {
+    cursor: grabbing;
+}
+
+.table-row.dragging {
+    opacity: 0.5;
+    background: #f1f1f1;
+    border: 2px dashed #007bff;
+}
+
 .responsive-table {
     li {
+        border-radius: 3px;
+        padding: 25px 30px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .columns{
         border-radius: 3px;
         padding: 25px 30px;
         display: flex;
@@ -81,6 +104,16 @@ h2 {
     .table-row {
         background-color: #ffffff;
         box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-row {
+        background-color: rgb(240, 239, 230);
+        box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-row textarea {
+        border: none;
+        margin-top: unset;
     }
 
 
@@ -321,6 +354,11 @@ h2 {
         margin-top: 10px;
     }
 
+    .proposal-item-btn{
+        height: unset;
+        width: 100%;
+    }
+
     .trip-title input {
         font-size: 1em;
         height: 2em;
@@ -368,11 +406,11 @@ h2 {
     }
 
     .col-33 {
-        flex-basis: 30%;
+        flex-basis: 26%;
     }
 
     .col-4 {
-        flex-basis: 10%;
+        flex-basis: 8%;
         text-align: right;
         input{
         text-align: right;
@@ -388,7 +426,9 @@ h2 {
     }
 
     .col-6 {
-        flex-basis: 3%;
+        flex-basis: 9%;
+        display: flex;
+
     }
 
     .empty-space {

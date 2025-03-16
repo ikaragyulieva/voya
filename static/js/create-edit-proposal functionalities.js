@@ -119,16 +119,44 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function (event) {
             event.preventDefault();
             const tripSection = button.closest(".trip-section");
+            const section = tripSection.querySelector(".title").textContent.trim();
             const table = tripSection.querySelector(".requests-table");
-            const lastRow = table.querySelector(".table-row:last-of-type");
+
+            let lastRow
+            let lastDescriptionRow
+            let newDescriptionRow
+
+            if (section === "Other Services" || section === "Other Services - Fixed" || section === "Other Services - Variable") {
+                lastRow = table.querySelector(".table-row:last-of-type");
+            } else {
+                // Get all table rows and exclude headers
+                let rows = [...table.querySelectorAll(".table-row")];
+
+                // Ensure we get the last actual `.table-row` (the one before the last row)
+                lastRow = rows.length > 1 ? rows[rows.length - 2] : rows[0];
+                lastDescriptionRow = lastRow ? lastRow.nextElementSibling : null;
+
+
+                if (!lastRow || !lastDescriptionRow.classList.contains("description-row")) {
+                    console.error("Error:  Description row not found.");
+                    return;
+                }
+            }
+
             const newRow = lastRow.cloneNode(true);
+            if (lastDescriptionRow) {
+                newDescriptionRow = lastDescriptionRow.cloneNode(true);
+            }
 
             // Clears the new rows
             // clearRowInputs(newRow);
 
-            // Copy all the input/select values from the last row
+
+            // Copy all the input/select values from the last rows
             const lastRowInputs = lastRow.querySelectorAll("input, select");
+            // const lastDescriptionRowInputs = lastDescriptionRow.querySelectorAll("input, select");
             const newRowInputs = newRow.querySelectorAll("input, select");
+            // const newDescriptionRowInputs = newDescriptionRow.querySelectorAll("input, select");
 
             newRowInputs.forEach((newInput, index) => {
                 const lastInput = lastRowInputs[index];
@@ -152,6 +180,14 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             table.appendChild(newRow);
+            if (newDescriptionRow) {
+                table.appendChild(newDescriptionRow);
+                initializeToggleDescription();
+            }
+
+            initializeDragAndDrop(table); //Re-enable drag-and-drop for new row
+            updateRowOrder(); // Assign new order
+
             initializeFlatpickr(); // Ensure date picker works for new row
             // Populate city and service dropdown and update price and quantity
             const sectionName = tripSection.querySelector(".title").textContent.trim();
@@ -178,11 +214,26 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target.closest(".remove-row-button")) {
             event.preventDefault();
             const row = event.target.closest(".table-row");
+            const descriptionRow = row.nextElementSibling;
             const table = row.parentNode;
-            if (row && table.children.length > 2) {
+
+            // Count only main rows (exclude description rows)
+            const mainRows = Array.from(table.children).filter(
+                (r) => !r.classList.contains("description-row")
+            );
+            if (mainRows.length > 2) {
                 row.remove();
+                if (descriptionRow && descriptionRow.classList.contains("description-row")) {
+                    descriptionRow.remove()
+                }
             } else {
-                clearRowInputs(row);
+                if (row) {
+                    clearRowInputs(row);
+                }
+
+                if (descriptionRow) {
+                    clearRowInputs(descriptionRow);
+                }
                 initializeFlatpickr(); // Ensure date picker works for new row
                 // Populate city and service dropdown and update price and quantity
                 const tripSection = table.closest(".trip-section");
@@ -212,6 +263,236 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeFlatpickr();
 });
 
+
+// Toggle description initializer filed function
+function initializeToggleDescription() {
+    document.querySelectorAll(".toggle-description-btn").forEach(button => {
+        button.removeEventListener("click", toggleDescription); //Prevent duplicate event listeners
+        button.addEventListener("click", toggleDescription);
+    });
+}
+
+// Toggle description filed function
+function toggleDescription(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const row = button.closest(".table-row");
+    const descriptionRow = row.nextElementSibling; // Find the next row
+    const img = button.querySelector("img");
+
+    if (descriptionRow && descriptionRow.classList.contains("description-row")) {
+        //Toggle visibility
+        if (descriptionRow.style.display === "none" || descriptionRow.style.display === "") {
+            descriptionRow.style.display = "block";
+            img.src = img.getAttribute("data-open");
+        } else {
+            descriptionRow.style.display = "none";
+            img.src = img.getAttribute("data-close");
+        }
+
+    }
+
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    initializeToggleDescription();
+});
+
+
+function initializeDragAndDrop(table) {
+    const rows = table.querySelectorAll(".table-row:not(.description-row)");
+
+    rows.forEach((row) => {
+        row.draggable = true;
+
+        let draggedRow = null;
+        let draggedDescriptionRow = null;
+
+        row.addEventListener("dragstart", function (event) {
+            draggedRow = this;
+            draggedRow.classList.add("dragging");
+            event.dataTransfer.setData("text/plain", null);
+
+            // Find and track its associated description row
+            draggedDescriptionRow = draggedRow.nextElementSibling;
+            if (draggedDescriptionRow && draggedDescriptionRow.classList.contains("description-row")) {
+                draggedDescriptionRow.classList.add("dragging");
+            } else {
+                draggedDescriptionRow = null;
+            }
+
+        });
+
+        row.addEventListener("dragover", function (event) {
+            event.preventDefault();
+            const afterElement = getDragAfterElement(table, event.clientY);
+
+            if (afterElement && afterElement !== draggedRow) {
+                // Find the description row of the afterElement
+                let targetDescriptionRow = afterElement.nextElementSibling;
+                if (!targetDescriptionRow || !targetDescriptionRow.classList.contains("description-row")) {
+                    targetDescriptionRow = null;
+                }
+
+                // **STEP 1: Move dragged row**
+                if (draggedRow && afterElement) {
+                    table.insertBefore(draggedRow, afterElement);
+                }
+
+                // **STEP 2: Move dragged description row (if exists)**
+                if (draggedDescriptionRow && draggedDescriptionRow.classList.contains("description-row") && draggedRow.nextSibling) {
+                    table.insertBefore(draggedDescriptionRow, draggedRow.nextSibling);
+                }
+
+                // **STEP 3: Move target's description row to maintain correct pair**
+                if (targetDescriptionRow && targetDescriptionRow.classList.contains("description-row")) {
+                    table.insertBefore(targetDescriptionRow, afterElement.nextSibling);
+                }
+            }
+        });
+
+        row.addEventListener("dragend", function () {
+            draggedRow.classList.remove("dragging");
+
+            // Also remove the "dragging" class from the description row
+
+            if (draggedDescriptionRow && draggedDescriptionRow.classList.contains("description-row")) {
+                draggedDescriptionRow.classList.remove("dragging");
+            }
+
+            fixMisplacedDescriptionRows(table);
+
+            updateRowOrder();
+        });
+
+        row.addEventListener("drop", function (event) {
+            event.preventDefault();
+            if (draggedRow) {
+                draggedRow.style.opacity = "1";
+            }
+            if (draggedDescriptionRow) {
+                draggedDescriptionRow.style.opacity = "1";
+            }
+
+            fixMisplacedDescriptionRows(table);
+
+            updateRowOrder();
+        })
+    });
+}
+
+function fixMisplacedDescriptionRows(table) {
+    const rows = table.querySelectorAll(".table-row:not(.description-row)");
+
+    rows.forEach(row => {
+        const nextRow = row.nextElementSibling;
+        if (!nextRow || !nextRow.classList.contains("description-row")) {
+            const correctDescriptionRow = findMatchingDescriptionRow(row);
+            if (correctDescriptionRow) {
+                table.insertBefore(correctDescriptionRow, row.nextSibling);
+            }
+        }
+    });
+
+    // Ensure last row retains its description row
+    const lastRow = table.querySelector(".table-row:last-of-type:not(.description-row)");
+    if (lastRow) {
+        const lastDescriptionRow = lastRow.nextElementSibling;
+        if (!lastDescriptionRow || !lastDescriptionRow.classList.contains("description-row")) {
+            const correctLastDescriptionRow = findMatchingDescriptionRow(lastRow);
+            if (correctLastDescriptionRow) {
+                table.appendChild(correctLastDescriptionRow);
+            }
+        }
+    }
+}
+
+// Function to find the correct description row for a given row
+function findMatchingDescriptionRow(row) {
+    let nextRow = row.nextElementSibling;
+    return nextRow && nextRow.classList.contains("description-row") ? nextRow : null;
+}
+
+function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll(".table-row:not(.dragging)")];
+
+    return draggableElements.reduce(
+        (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+
+            if (offset < 0 && offset > closest.offset) {
+                return {offset, element: child};
+            } else {
+                return closest;
+            }
+        },
+        {offset: Number.NEGATIVE_INFINITY}
+    ).element;
+}
+
+// Function to update row order
+function updateRowOrder() {
+    document.querySelectorAll("table-row:not(.description-row)").forEach((row, index) => {
+        row.setAttribute("data-order", index + 1); // Assign the row dynamically
+    });
+}
+
+
+// Row dragging functionality
+document.addEventListener("DOMContentLoaded", function () {
+    const tables = document.querySelectorAll(".requests-table");
+
+
+    // Apply drag-and-drop to all existing tables on page load
+    tables.forEach(table => initializeDragAndDrop(table));
+
+    tables.forEach(table => {
+        let draggedRow = null;
+
+        // Enable dragging
+        table.querySelectorAll(".table-row").forEach(row => {
+            row.addEventListener("dragstart", function (event) {
+                draggedRow = this;
+                event.dataTransfer.effectAllowed = "move";
+                setTimeout(() => (this.style.opacity = "0.5"), 0);
+            });
+
+            row.addEventListener("dragover", function (event) {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+
+                const bounding = this.getBoundingClientRect();
+                const offset = bounding.y + bounding.height / 2;
+
+                if (event.clientY - offset > 0) {
+                    this.parentNode.insertBefore(draggedRow, this.nextSibling);
+
+                } else {
+                    this.parentNode.insertBefore(draggedRow, this);
+                }
+            });
+
+            row.addEventListener("dragend", function () {
+                draggedRow.style.opacity = "1";
+                updateRowOrder(table);
+            });
+
+            row.addEventListener("drop", function (event) {
+                event.preventDefault();
+                draggedRow.style.opacity = "1";
+                updateRowOrder(table);
+            });
+        });
+    });
+
+    // Function to update row order
+    // function updateRowIndexes(table) {
+    //     table.querySelectorAll(".table-row").forEach((row, index) => {
+    //         row.setAttribute("data-index", index + 1); // Assigning order dynamically
+    //     });
+    // }
+});
 
 // Functionality to submit proposal and budget forms and sends POST or PUT request to the API to save dynamic rows
 document.addEventListener("DOMContentLoaded", function () {
@@ -273,6 +554,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".table-row").forEach((row, index) => {
             const section_name = row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || ""; // Must match SectionChoices
             const serviceDropdown = row.querySelector("#service-dropdown");
+
             let service_id = null;
             if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable") {
                 const selectedServices = serviceDropdown
@@ -288,6 +570,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let cityValue = cityField?.value && cityField.value !== "Select city" ? parseInt(cityField.value, 10) : null;
 
+            const additionalNotesField = row.querySelector(".note textarea") || row.nextElementSibling?.querySelector(".description-field");
+            const additionalNotes = additionalNotesField ? additionalNotesField.value.trim() : "No notes";
+
             // if (!cityValue || isNaN(cityValue)) {
             //     console.warn(`Invalid city value at row ${index + 1}:`, cityValue);
             // }
@@ -300,7 +585,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 quantity: parseInt(row.querySelector(".col-4 input")?.value || "0", 10), // Ensure integer
                 price: parseFloat(priceField || "0.00"), // Handle autofill or placeholder
                 service_id: service_id,
-                additional_notes: row.querySelector(".note textarea")?.value || "",
+                additional_notes: additionalNotes,
+                order: parseInt(row.getAttribute("data-order"), 10) || index + 1 // Track order dynamically
             };
 
             const hasData = Boolean(
@@ -331,7 +617,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
             }
 
-            console.log(`Row ${index + 1} has data: ${hasData}, is complete: ${isComplete}`);
+            console.log(`Row ${rowData.order + 1} has data: ${hasData}, is complete: ${isComplete}`);
             console.log(`Has data: date - ${rowData.corresponding_trip_date}, 
                     city - ${rowData.city},
                     quantity - ${rowData.quantity},
@@ -349,7 +635,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Add valid rows to itemsData
             if (hasData && isComplete) {
-                rowData.additional_notes = row.querySelector(".note textarea")?.value || "No notes";
+                // rowData.additional_notes = row.querySelector(".note textarea")?.value || descriptionRow?.classList.contains("description-row")
+                //     ? descriptionRow.querySelector(".description-field")?.value || "No notes" : "No notes";
                 itemsData.push(rowData)
             }
 

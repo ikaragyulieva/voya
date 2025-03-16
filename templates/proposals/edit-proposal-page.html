@@ -189,9 +189,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     <h3 class="title">Internal Comments</h3>
                 </div>
                 <hr class="custom-line">
-                <form id="proposal-form" method="post" action="#" onsubmit="return false" data-mode="edit" data-proposal-id="{{ proposal.id }}" data-trip-id="{{ trip_id }}">
+                <form id="proposal-form" method="post" action="#" onsubmit="return false" data-mode="edit"
+                      data-proposal-id="{{ proposal.id }}" data-trip-id="{{ trip_id }}">
                     <div class="internal-note">
-                        <textarea name="internal-comments" cols="40" rows="10" id="id_internal-comments" 
+                        <textarea name="internal-comments" cols="40" rows="10" id="id_internal-comments"
                                   placeholder="Add internal notes here">{{ proposal.internal_comments }} </textarea>
                     </div>
                 </form>
@@ -238,7 +239,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in accommodation_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -276,16 +277,35 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                            placeholder="€ 0.00"
                                            value="€ {{ item.price }}">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
+                                </div>
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    <textarea name="description" class="description-field"
+                                              placeholder="Add additional details here...">{{ item.additional_notes }}</textarea>
                                 </div>
                             </li>
                         {% empty %}
@@ -302,18 +322,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                                                          name="service_price"
                                                                                          placeholder="€ 0.00">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <!-- Action buttons-->
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -346,7 +384,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in private_transport_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -384,18 +422,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                            placeholder="€ 0.00"
                                            value="€ {{ item.price }}">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    <textarea name="description" class="description-field"
+                                              placeholder="Add additional details here...">{{ item.additional_notes }}</textarea>
+                                </div>
                             </li>
                         {% empty %}
                             <li class="table-row">
@@ -412,18 +468,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                                                  name="service_price"
                                                                                  placeholder="€ 0.00">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <!-- Action buttons-->
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -457,7 +531,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in public_transport_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -495,18 +569,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                            placeholder="€ 0.00"
                                            value="€ {{ item.price }}">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    <textarea name="description" class="description-field"
+                                              placeholder="Add additional details here...">{{ item.additional_notes }}</textarea>
+                                </div>
                             </li>
                         {% empty %}
 
@@ -524,18 +616,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                                                  name="service_price"
                                                                                  placeholder="€ 0.00">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <!-- Action buttons-->
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -569,7 +679,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in activity_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -607,18 +717,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                            placeholder="€ 0.00"
                                            value="€ {{ item.price }}">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    <textarea name="description" class="description-field"
+                                              placeholder="Add additional details here...">{{ item.additional_notes }}</textarea>
+                                </div>
                             </li>
                         {% empty %}
 
@@ -636,18 +764,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                                                  name="service_price"
                                                                                  placeholder="€ 0.00">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <!-- Action buttons-->
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -681,7 +827,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in transfer_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -719,18 +865,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                            placeholder="€ 0.00"
                                            value="€ {{ item.price }}">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    <textarea name="description" class="description-field"
+                                              placeholder="Add additional details here...">{{ item.additional_notes }}</textarea>
+                                </div>
                             </li>
 
                         {% empty %}
@@ -748,17 +912,35 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                                                  name="service_price"
                                                                                  placeholder="€ 0.00">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <!-- Action buttons-->
+                                <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
-
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
+                                    <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
+                                </div>
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
                                 </div>
                             </li>
                         {% endfor %}
@@ -793,7 +975,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in guides_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -831,18 +1013,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                            placeholder="€ 0.00"
                                            value="€ {{ item.price }}">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    <textarea name="description" class="description-field"
+                                              placeholder="Add additional details here...">{{ item.additional_notes }}</textarea>
+                                </div>
                             </li>
 
                         {% empty %}
@@ -862,19 +1062,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                                                  placeholder="€ 0.00">
                                 </div>
 
-                                <!-- Remove Row-->
-                                <div class="col col-6" data-label="remove">
+                                <!-- Action buttons-->
+                                <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
-
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -909,9 +1126,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in tour_leader_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
-                                    <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
+                                    <input type="text" name="corresponding_trip_date"
+                                           id="id_corresponding_trip_date"
                                            class="flatpickr"
                                            placeholder="Select date"
                                            value="{{ item.corresponding_trip_date|date:'Y-m-d' }}">
@@ -928,7 +1146,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                 </div>
                                 <div class="col col-33" data-label="service details">
                                     <select id="service-dropdown" name="service">
-                                        <option value="{{ item.service_id }}" selected>{{ item.service_name }}</option>
+                                        <option value="{{ item.service_id }}"
+                                                selected>{{ item.service_name }}</option>
                                         {% for service in available_services %}
                                             <option value="{{ service.id }}">{{ service.name }}</option>
                                         {% endfor %}
@@ -947,18 +1166,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                            placeholder="€ 0.00"
                                            value="€ {{ item.price }}">
                                 </div>
-                                <div class="col col-6" data-label="remove">
+                                <div class="col col-6" data-label="actions">
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    <textarea name="description" class="description-field"
+                                              placeholder="Add additional details here...">{{ item.additional_notes }}</textarea>
+                                </div>
                             </li>
 
                         {% empty %}
@@ -978,19 +1215,36 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                                                                  placeholder="€ 0.00">
                                 </div>
 
-                                <!-- Remove Row-->
-                                <div class="col col-6" data-label="remove">
+                                <!-- Action buttons-->
+                                <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
-
+                                        <!-- Description button-->
+                                        <a href="#" class="toggle-description-btn">
+                                            <img
+                                                    src="{% static 'images/down-arrow.png' %}"
+                                                    alt="toggle description"
+                                                    title="Add description"
+                                                    data-open="{% static 'images/arrow-up.png' %}"
+                                                    data-close="{% static 'images/down-arrow.png' %}"
+                                            />
+                                        </a>
+                                    </div>
+                                    <div class="action-btn request-action-btn proposal-item-btn">
+                                        <!-- Remove Row-->
                                         <a href="#" class="remove-row-button">
                                             <img
                                                     src="{% static 'images/close.png' %}"
-                                                    alt="remove row button"
+                                                    alt="remove row button" title="Remove row"
                                             />
                                         </a>
                                     </div>
                                 </div>
-
+                            </li>
+                            <!-- Hidden description row -->
+                            <li class="table-row description-row" style="display: none;">
+                                <div class="col col-full">
+                                    {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -1025,7 +1279,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in other_variable_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -1106,9 +1360,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
                 </div>
-            
-            
-            <!-- Other Services - Fixed -->
+
+
+                <!-- Other Services - Fixed -->
                 <hr class="custom-line">
                 <div class="trip-section">
                     <h3 id="section" class="title">Other Services - Fixed </h3>
@@ -1135,7 +1389,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in other_fixed_items %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -1182,11 +1436,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                         </a>
                                     </div>
                                 </div>
-
                             </li>
 
                         {% empty %}
-                            <li class="table-row">
+                            <li class="table-row" draggable="true" data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item_form.city }}</div>
                                 <div class="col col-33 note"
@@ -1292,7 +1545,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                 {% endfor %}
                             </tr>
                             <tr>
-                                <th>Margin:</th>
+                                <th>Markup:</th>
                                 {% for budget_option in budget %}
                                     <td><i>
                                         <input type="number"
@@ -1335,7 +1588,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             </p>
 
                         </div>
-                    
+
                 </form>
             </div>
             <button id="submit-proposal-btn" class="add-btn" type="submit">Save Proposal</button>
