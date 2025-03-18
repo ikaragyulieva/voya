@@ -39,7 +39,7 @@ from weasyprint import HTML
 
 from voya.common.forms import SearchForm
 from voya.employees.models import EmployeeProfile
-from voya.proposals.choices import StatusChoices
+from voya.proposals.choices import StatusChoices, MealChoices
 from voya.proposals.forms import CreateProposalForm, CreateItemForm, CreateBudgetForm, PDFOptionsForm
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.proposals.serializers import ProposalSerializer, ItemSerializer, BudgetSerializer
@@ -71,6 +71,7 @@ class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
         context['proposal'] = proposal
         context['item_form'] = item_form
         context['budget_form'] = budget_form
+        context['meal_options'] = MealChoices
 
         return context
 
@@ -179,9 +180,10 @@ def proposal_detail(request, pk):
     other_items = []
     other_variable_items = []
     other_fixed_items = []
+    meal_items = []
 
     for item in items:
-        if item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services':
+        if item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services' or item.section_name == 'Meals':
             pass
         else:
             model_name = model_map.get(item.section_name)
@@ -214,6 +216,8 @@ def proposal_detail(request, pk):
         elif item.section_name == 'Other Services - Fixed':
             other_items.append(item)
             other_fixed_items.append(item)
+        elif item.section_name == 'Meals':
+            meal_items.append(item)
 
     budget = ProposalBudget.objects.filter(proposal=proposal)
     foc_pax = [budget_option.free_of_charge for budget_option in budget]
@@ -235,6 +239,7 @@ def proposal_detail(request, pk):
             'transfer_items': transfer_items,
             'other_variable_items': other_variable_items,
             'other_fixed_items': other_fixed_items,
+            'meal_items': meal_items,
             'budget': budget,
             'current_request': current_request,
             'foc_pax': foc_pax[0] if foc_pax else 0,
@@ -255,6 +260,7 @@ def proposal_detail(request, pk):
             'tour_leader_items': tour_leader_items,
             'transfer_items': transfer_items,
             'other_items': other_items,
+            'meal_items': meal_items,
             'budget': budget,
             'current_request': current_request
         }
@@ -361,9 +367,10 @@ def proposal_pdf_view(request, pk):
         guides_items = []
         tour_leader_items = []
         other_items = []
+        meal_items = []
 
         for item in items:
-            if item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
+            if item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services' or item.section_name == 'Meals':
                 pass
             else:
                 model_name = model_map.get(item.section_name)
@@ -394,6 +401,8 @@ def proposal_pdf_view(request, pk):
                 other_items.append(item)
             elif item.section_name == 'Other Services - Fixed':
                 other_items.append(item)
+            elif item.section_name == 'Meals':
+                meal_items.append(item)
 
         # Get proposal's budget
         budget = ProposalBudget.objects.filter(proposal=proposal)
@@ -465,6 +474,7 @@ def proposal_pdf_view(request, pk):
                 'transfer_items': transfer_items,
                 'tour_leader_items': tour_leader_items,
                 'other_items': other_items,
+                'meal_items': meal_items,
                 'budget': budget,
                 'current_date': current_date,
                 'due_date': due_date,
@@ -549,9 +559,13 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         tour_leader_items = []
         other_variable_items = []
         other_fixed_items = []
+        meals_items = []
 
         for item in items:
-            if item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services':
+            if (item.section_name == 'Other Services - Variable'
+                    or item.section_name == 'Other Services - Fixed'
+                    or item.section_name == 'Other Services'
+                    or item.section_name == 'Meals'):
                 pass
             else:
                 model_name = model_map.get(item.section_name)
@@ -582,6 +596,8 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
                 other_variable_items.append(item)
             elif item.section_name == 'Other Services - Fixed':
                 other_fixed_items.append(item)
+            elif item.section_name == 'Meals':
+                meals_items.append(item)
 
         budget = ProposalBudget.objects.filter(proposal=proposal)
         foc_pax = [budget_option.free_of_charge for budget_option in budget]
@@ -609,11 +625,13 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['transfer_items'] = transfer_items
         context['other_variable_items'] = other_variable_items
         context['other_fixed_items'] = other_fixed_items
+        context['meal_items'] = meals_items
         context['budget'] = budget
         context['current_request'] = current_request
         context['foc_pax'] = foc_pax[0] if foc_pax else 0
         context['city_choices'] = Location.objects.all()
         context['status_choices'] = StatusChoices.choices
+        context['meal_options'] = MealChoices
 
         return context
 

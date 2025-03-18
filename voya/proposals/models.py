@@ -188,7 +188,7 @@ class ProposalBudget(TimestampedModel):
         decimal_places=2,
         blank=False,
         null=False,
-        default=500.00,
+        default=500,
     )
 
     margin = models.PositiveIntegerField(

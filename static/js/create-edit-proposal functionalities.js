@@ -26,7 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const flatpickrFields = document.querySelectorAll(".flatpickr");
         flatpickrFields.forEach(field => {
             if (!field._flatpickr) {
-                flatpickr(field, {dateFormat: "Y-m-d"});
+                flatpickr(field, {
+                    dateFormat: "Y-m-d"
+                });
             }
         });
     };
@@ -126,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let lastDescriptionRow
             let newDescriptionRow
 
-            if (section === "Other Services" || section === "Other Services - Fixed" || section === "Other Services - Variable") {
+            if (section === "Other Services" || section === "Other Services - Fixed" || section === "Other Services - Variable" || section === "Meals") {
                 lastRow = table.querySelector(".table-row:last-of-type");
             } else {
                 // Get all table rows and exclude headers
@@ -264,39 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// Toggle description initializer filed function
-function initializeToggleDescription() {
-    document.querySelectorAll(".toggle-description-btn").forEach(button => {
-        button.removeEventListener("click", toggleDescription); //Prevent duplicate event listeners
-        button.addEventListener("click", toggleDescription);
-    });
-}
 
-// Toggle description filed function
-function toggleDescription(event) {
-    event.preventDefault();
-    const button = event.currentTarget;
-    const row = button.closest(".table-row");
-    const descriptionRow = row.nextElementSibling; // Find the next row
-    const img = button.querySelector("img");
-
-    if (descriptionRow && descriptionRow.classList.contains("description-row")) {
-        //Toggle visibility
-        if (descriptionRow.style.display === "none" || descriptionRow.style.display === "") {
-            descriptionRow.style.display = "block";
-            img.src = img.getAttribute("data-open");
-        } else {
-            descriptionRow.style.display = "none";
-            img.src = img.getAttribute("data-close");
-        }
-
-    }
-
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    initializeToggleDescription();
-});
 
 
 function initializeDragAndDrop(table) {
@@ -556,12 +526,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const serviceDropdown = row.querySelector("#service-dropdown");
 
             let service_id = null;
-            if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable") {
+            if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable" && section_name !== "Meals") {
                 const selectedServices = serviceDropdown
                     ? Array.from(serviceDropdown.selectedOptions).map(option => parseInt(option.value, 10)).filter(Boolean)
                     : [];
                 service_id = selectedServices[0]
-            } else if (section_name === "Other Services - Fixed" && section_name !== "Other Services - Variable") {
+            } else if (section_name === "Other Services - Fixed" && section_name !== "Other Services - Variable" && section_name !== "Meals") {
                 service_id = null;
             }
 
@@ -570,7 +540,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let cityValue = cityField?.value && cityField.value !== "Select city" ? parseInt(cityField.value, 10) : null;
 
-            const additionalNotesField = row.querySelector(".note textarea") || row.nextElementSibling?.querySelector(".description-field");
+            const additionalNotesField = row.querySelector(".note textarea") || row.nextElementSibling?.querySelector(".description-field") || row.querySelector("#meal-dropdown");
             const additionalNotes = additionalNotesField ? additionalNotesField.value.trim() : "No notes";
 
             // if (!cityValue || isNaN(cityValue)) {
@@ -599,7 +569,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             let isComplete
-            if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable" && section_name !== "Other Services") {
+            if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable" && section_name !== "Other Services" && section_name !== "Meals") {
                 isComplete = Boolean(
                     rowData.corresponding_trip_date &&
                     rowData.city &&
@@ -607,7 +577,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     rowData.quantity > 0 &&
                     rowData.price > 0
                 );
-            } else if (section_name === "Other Services - Fixed" || section_name === "Other Services - Variable") {
+            } else if (section_name === "Other Services - Fixed" || section_name === "Other Services - Variable" || section_name === "Meals") {
                 isComplete = Boolean(
                     rowData.corresponding_trip_date &&
                     rowData.city &&
@@ -678,7 +648,7 @@ document.addEventListener("DOMContentLoaded", function () {
             variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
             fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
             free_of_charge: parseInt(focInput, 10),
-            free_of_charge_amount: parseFloat(focAmountMinCell),
+            free_of_charge_amount: parseFloat(focAmountMaxCell),
             total_cost_per_person: parseFloat(budgetTable.querySelector("tbody tr:nth-child(4) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
             total_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(5) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
             service_fee: parseFloat(budgetTable.querySelector("tbody tr:nth-child(6) td:nth-child(3) input").value.replace("€", "").trim() || "500.00"),
@@ -722,7 +692,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (response) => {
                 if (!response.ok) {
                     const errorData = await response.json();  // Read error response
-                    console.error("Full API Error Response:", errorData);
+                    console.error("Full API Error Response:", JSON.stringify(errorData, null, 2));
                     throw new Error(errorData.error || "Invalid item data");
                 }
                 return response.json();

@@ -54,3 +54,10 @@ class LogoChoices(models.TextChoices):
     NONE = "None", "None"
     VOYA_LOGO = "Voya logo", "Voya logo"
     COMPANY_LOGO = "My company's logo", "My company's logo"
+
+
+class MealChoices(models.TextChoices):
+    BREAKFAST = "Breakfast", "Breakfast"
+    LUNCH = "Lunch", "Lunch"
+    DINNER = "Dinner", "Dinner"
+    OTHER = "Other", "Other"

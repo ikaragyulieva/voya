@@ -241,6 +241,36 @@
                     </ul>
                 </div>
             {% endif %}
+        
+        <!-- Meals Section-->
+
+            {% if meal_items %}
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Meals</h3>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                        </li>
+                        {% for item in meal_items %}
+
+                            <li class="table-row">
+                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-2" data-label="city">{{ item.city }}</div>
+                                <div class="col col-33" data-label="service details">{{ item.additional_notes }}</div>
+                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
+                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
 
             <!-- Public Transport Section-->
 
@@ -522,7 +552,7 @@
                         </li>
                         {% for item in tour_leader_items %}
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
+                                <div class="col col-1" data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
@@ -664,7 +694,7 @@
                         </tr>
 
                         <tr>
-                            <th>Total per person:</th>
+                            <th>Total per pax:</th>
                             {% for budget_option in budget %}
                                 <td><i> {{ budget_option.total_cost_per_person }} € </i></td>
                             {% endfor %}
@@ -686,7 +716,7 @@
                         <tr>
                             <th>Markup:</th>
                             {% for budget_option in budget %}
-                                <td><i> {{ budget_option.margin }} € </i></td>
+                                <td><i> {{ budget_option.margin }} % </i></td>
                             {% endfor %}
                         </tr>
 
@@ -695,7 +725,7 @@
 
                         <tfoot>
                         <tr>
-                            <th>Price per person:</th>
+                            <th>Price per pax:</th>
                             {% for budget_option in budget %}
                                 <td><i> {{ budget_option.fina_price_per_person }} € </i></td>
                             {% endfor %}
@@ -726,5 +756,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/create-edit-proposal functionalities.js' %}"></script>
+    <script src="{% static 'js/toggle-row.js' %}"></script>
 {% endblock %}

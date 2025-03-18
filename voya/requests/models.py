@@ -90,12 +90,11 @@ class TripRequests(TimestampedModel):
 
     )
 
-    transportation_type = models.CharField(
+    transportation_type = MultiSelectField(
         max_length=100,
         choices=choices.TransportationType,
         blank=False,
         null=False,
-        default='transport',
     )
 
     transportation_details = models.CharField(

@@ -200,6 +200,7 @@ class PrivateTransportationType(models.TextChoices):
 class AccommodationsType(models.TextChoices):
     ACC = 'acc', 'Select accommodations type'
     TWO_TREE_STAR_HOTELS = '2-3 star hotels', '2-3 Star Hotels'
+    TREE_FOUR_STAR_HOTELS = '3-4 star hotels', '3-4 Star Hotels'
     FOUR_FIVE_STAR_HOTELS = '4-5 star hotels', '4-5 Star Hotels'
     HOSTELS_WITH_PRIVATE_BATHROOM = 'hostels with private bathroom', 'Hostels with private bathroom'
     APARTMENT = 'apartment', 'Apartment'
@@ -255,6 +256,7 @@ class GroupChoice(models.TextChoices):
     THEME_TOUR = "theme_tour", "Theme Tour (Urban Art, Architecture, Science, Cinema...)"
     PHOTO_TOURS = "photo_tours", "Photo Tours"
     CRUISES = "cruises", "Cruises"
+    VACATION = "vacation", "Vacation"
 
 
 class CurrencyChoices(models.TextChoices):

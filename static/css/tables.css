@@ -6,7 +6,7 @@
     display: block;
 }
 
-.action-btn img {
+.action-btn img, .top-btn img {
     width: 1.5em;
     height: 1.5em;
     object-fit: cover;
@@ -560,6 +560,7 @@ h2 {
         font-size: 12px;
         text-align: right;
         font-weight: 300 !important;
+        border-bottom: 0.1px solid #999;
     }
 
     #foc-input {
@@ -584,6 +585,17 @@ h2 {
 
 }
 
+.state-save-btn{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+#id_status{
+    width: 150px !important;
+    margin-top: unset;
+}
+
 .trip-section {
     display: flex;
     flex-direction: column;
@@ -605,6 +617,18 @@ h2 {
     align-content: center;
 
     }
+
+.trip-section .top-btn{
+    margin-top: unset;
+    background: transparent;
+    border-color: transparent;
+    align-content: end;
+
+}
+
+.budget-section{
+    margin-top: unset !important;
+}
 
 .error-row {
     background-color: #f8d7da;

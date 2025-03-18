@@ -16,6 +16,14 @@ class CreateRequestForm(forms.ModelForm):
     trip_start_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'flatpickr'}))
     trip_end_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'flatpickr'}))
 
+    transportation_type = forms.MultipleChoiceField(
+        choices=choices.TransportationType,
+        widget=forms.SelectMultiple(attrs={
+            'class': 'multi-select',
+            'placeholder': 'Select an option'
+        })
+        )
+
     created_by_company = forms.ModelChoiceField(
         queryset=CompanyProfile.objects.filter(is_active=True),
         required=False,  # Optional, if it should only be set by employees

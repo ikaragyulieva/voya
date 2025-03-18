@@ -2,6 +2,7 @@
 {% load static %}
 {% load custom_filters %}
 
+
 {% block content %}
 
     {% csrf_token %}
@@ -59,11 +60,11 @@
                             <tbody>
                             <tr>
                                 <th>Start date:</th>
-                                <td><i> {{ current_request.trip_start_date }} </i></td>
+                                <td><i> {{ current_request.trip_start_date|date:"d-M-Y" }} </i></td>
                             </tr>
                             <tr>
                                 <th>End date:</th>
-                                <td><i>{{ current_request.trip_end_date }}</i></td>
+                                <td><i>{{ current_request.trip_end_date|date:"d-M-Y" }}</i></td>
                             </tr>
                             <tr>
                                 <th>Trip duration:</th>
@@ -148,7 +149,8 @@
                             <tbody>
                             <tr>
                                 <th>Budget:</th>
-                                <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
+                                <td>
+                                    <i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
                                 </td>
                             </tr>
                             <tr>
@@ -263,6 +265,64 @@
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
                                 {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Meals-->
+                <hr class="custom-line">
+                <div class="trip-section">
+                    <h3 id="section" class="title">Meals</h3>
+                    <!-- Add row button -->
+
+                    <div class="action-btn add-option">
+                        <a href="#" class="add-row-button">
+                            <img
+                                    src="{% static 'images/new-page.png' %}"
+                                    alt="Add row"
+                            />
+                        </a>
+                    </div>
+
+                    <ul class="responsive-table requests-table">
+
+                        <li class="table-header variable-cost">
+                            <div class="col col-1">Date</div>
+                            <div class="col col-2">City</div>
+                            <div class="col col-33">Service</div>
+                            <div class="col col-4">Units</div>
+                            <div class="col col-5">Price</div>
+                            <div class="col col-6 empty-space">Btn</div>
+
+                        </li>
+                        <li class="table-row">
+                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
+                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-33 note" data-label="service details">
+                                <select id="meal-dropdown" name="meal">
+                                    <option value="">Select an option</option>
+                                    {% for meal_value in meal_options %}
+                                        <option value="{{ meal_value }}">{{ meal_value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
+                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
+                                                                             name="service_price" placeholder="€ 0.00">
+                            </div>
+
+                            <!-- Remove Row-->
+                            <div class="col col-6" data-label="remove">
+                                <div class="action-btn request-action-btn proposal-item-btn">
+
+                                    <a href="#" class="remove-row-button">
+                                        <img
+                                                src="{% static 'images/close.png' %}"
+                                                alt="remove row button"
+                                        />
+                                    </a>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -703,7 +763,6 @@
 
                 </div>
 
-
                 <!-- Other Services - Variable-->
                 <hr class="custom-line">
                 <div class="trip-section">
@@ -823,9 +882,24 @@
 
             <hr class="custom-line">
 
-            <div class="trip-section">
+            <div class="trip-section budget-section">
                 <form id="proposal-form" method="post" action="#" onsubmit="return false">
                     {% csrf_token %}
+                    <div class="state-save-btn">
+                        <div class="prop-status">
+                            <p>State:</p>
+                            <p id="draft-status">{{ proposal.status }}</p>
+
+                        </div>
+
+                        <button id="submit-proposal-btn" class="top-btn" type="submit">
+                            <img
+                                    src="{% static 'images/save (1).png' %}"
+                                    alt="Add row"
+                                    title="Save proposal"
+                            />
+                        </button>
+                    </div>
                     <div class="budget-container">
                         <table class="budget-table" id="budget-table">
 
@@ -860,7 +934,7 @@
                             </tr>
 
                             <tr>
-                                <th>Total per person:</th>
+                                <th>Total per pax:</th>
                                 <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
                                 <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
                             </tr>
@@ -887,7 +961,7 @@
 
                             <tfoot>
                             <tr>
-                                <th>Price per person:</th>
+                                <th>Price per pax:</th>
                                 <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
                                 <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
                             </tr>
@@ -900,15 +974,15 @@
                             </tfoot>
 
                         </table>
-                        <div class="prop-status">
-                            <p>State:</p>
-                            <p id="draft-status">{{ proposal.status }}</p>
-
-                        </div>
-
+                        {#                        <div class="prop-status">#}
+                        {#                            <p>State:</p>#}
+                        {#                            <p id="draft-status">{{ proposal.status }}</p>#}
+                        {##}
+                        {#                        </div>#}
+                    </div>
                 </form>
             </div>
-            <button id="submit-proposal-btn" class="add-btn" type="submit">Submit Proposal</button>
+            {#            <button id="submit-proposal-btn" class="add-btn" type="submit">Submit Proposal</button>#}
 
         </div>
 
@@ -918,6 +992,7 @@
 
 {% block scripts %}
     <script src="{% static 'js/create-edit-proposal functionalities.js' %}"></script>
+    <script src="{% static 'js/toggle-row.js' %}"></script>
     <!-- flatpikr setup-->
     <script src="{% static 'js/date-formatting.js' %}"></script>
 {% endblock %}
