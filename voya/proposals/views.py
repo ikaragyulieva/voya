@@ -698,7 +698,7 @@ class HistoryLogView(ListView):
                         })
 
             service_name = None
-
+            model_name = entry._meta.model_name
             # Try ro resolve service name if it is Proposal Section Item
             if model_name == "Proposal Section Item":
                 section = getattr(entry, "section_name", "")

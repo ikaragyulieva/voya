@@ -28,7 +28,8 @@ class SectionChoices(models.TextChoices):
     ACTIVITY = 'Activity', 'Activity'
     LOCAL_GUIDES = 'Local Guides', 'Local Guides'
     TOUR_LEADERS = 'Tour Leader', 'Tour Leader'
-    OTHER_SERVICES = 'Other Services', 'Other Services'
+    OTHER_SERVICES = 'Other Services - Variable', 'Other Services - Variable'
+    OTHER_SERVICES_FIXED = 'Other Services - Fixed', 'Other Services - Fixed'
 
 
 class TransferTypeChoices(models.TextChoices):
