@@ -44,7 +44,7 @@ PROJECT_APPS = [
     'voya.services',
     'voya.proposals',
     'voya.providers',
-
+    'voya.global_settings',
 ]
 
 INSTALLED_APPS = [
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'simple_history',
+    'django.contrib.humanize',
 
 ] + PROJECT_APPS
 
@@ -83,6 +84,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+
 ]
 
 ROOT_URLCONF = 'voya.urls'
@@ -149,6 +151,8 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 

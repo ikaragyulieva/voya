@@ -146,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const newRow = lastRow.cloneNode(true);
+            newRow.removeAttribute("data-id")
             if (lastDescriptionRow) {
                 newDescriptionRow = lastDescriptionRow.cloneNode(true);
             }
@@ -264,9 +265,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize Flatpickr on Page Load
     initializeFlatpickr();
 });
-
-
-
 
 
 function initializeDragAndDrop(table) {
@@ -500,6 +498,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Collect proposal data
         const proposalData = {
+            id:parseInt(proposalId),
             title: document.querySelector("input[name='title']")?.value || "",
             status: draftStatus,
             internal_comments: document.querySelector(".internal-note textarea")?.value || "No notes",
@@ -543,10 +542,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const additionalNotesField = row.querySelector(".note textarea") || row.nextElementSibling?.querySelector(".description-field") || row.querySelector("#meal-dropdown");
             const additionalNotes = additionalNotesField ? additionalNotesField.value.trim() : "No notes";
 
-            // if (!cityValue || isNaN(cityValue)) {
-            //     console.warn(`Invalid city value at row ${index + 1}:`, cityValue);
-            // }
-
+            const itemId = row.getAttribute("data-id");
+            const orderAttr = row.getAttribute("data-order");
             // Initialize a data object to store row-specific values
             const rowData = {
                 corresponding_trip_date: row.querySelector(".col-1 input")?.value || "", // YYYY-MM-DD format
@@ -556,8 +553,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 price: parseFloat(priceField || "0.00"), // Handle autofill or placeholder
                 service_id: service_id,
                 additional_notes: additionalNotes,
-                order: parseInt(row.getAttribute("data-order"), 10) || index + 1 // Track order dynamically
+                order: orderAttr !== null ? parseInt(orderAttr, 10) : index + 1 // Track order dynamically
             };
+            if (itemId) {
+                rowData.id=parseInt(itemId);
+            }
 
             const hasData = Boolean(
                 rowData.corresponding_trip_date ||
@@ -626,10 +626,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const focInput = budgetTable.querySelector("tbody tr:nth-child(3) th input")?.value || "0";
         const focAmountMinCell = budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(2)")?.textContent.trim().replace("€", "") || "0";
         const focAmountMaxCell = budgetTable.querySelector("tbody tr:nth-child(3) td:nth-child(3)")?.textContent.trim().replace("€", "") || "0";
-
+        const minBudgetId = parseInt(budgetTable.querySelector("th:nth-child(2)").getAttribute("data-id"));
+        const maxBudgetId = parseInt(budgetTable.querySelector("th:nth-child(3)").getAttribute("data-id"));
         // Min Pax Budget
         budgetData.push({
             pax: minPax,
+            id: minBudgetId,
             variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(2)").textContent.replace("€", "").trim() || "0"),
             fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(2)").textContent.replace("€", "")),
             free_of_charge: parseInt(focInput, 10), // Ensure integer conversion
@@ -645,6 +647,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Max Pax Budget
         budgetData.push({
             pax: maxPax,
+            id: maxBudgetId,
             variable_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(1) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
             fixed_cost: parseFloat(budgetTable.querySelector("tbody tr:nth-child(2) td:nth-child(3)").textContent.replace("€", "").trim() || "0"),
             free_of_charge: parseInt(focInput, 10),
@@ -661,10 +664,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let apiURL, apiMethod
         if (mode === "create") {
             apiURL = `/proposals/api/create/${tripId}/`;
-            apiMethod = "POST";
+            apiMethod = 'POST';
         } else if (mode === "edit" && proposalId) {
             apiURL = `/proposals/api/edit/${proposalId}/`;
-            apiMethod = "PUT";
+            apiMethod = 'PUT';
         } else {
             console.error("Invalid page mode or missing proposal ID.");
             alert("Something went wrong. Please refresh and try again.");

@@ -46,8 +46,8 @@ class TransferTypeChoices(models.TextChoices):
 class StatusChoices(models.TextChoices):
     SELECT_CHOICE = '', 'Select an option'
     DRAFT = 'Not finished', 'Not finished'
-    DONE = 'Send to client', 'Send to client'
     IN_PROGRESS = 'Ready for review', 'Ready for review'
+    DONE = 'Send to client', 'Send to client'
 
 
 class LogoChoices(models.TextChoices):

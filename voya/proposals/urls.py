@@ -28,6 +28,7 @@ urlpatterns = [
         path('details/', views.proposal_detail, name='proposal-detail'),
         path('proposal_details/', views.proposal_detail, name='client-proposal-detail'),
         path('edit/', views.EditProposalView.as_view(), name='edit-proposal'),
+        path('history/', views.HistoryLogView.as_view(), name='proposal-history'),
         path('download/', views.proposal_pdf_view, name='proposal_download'),
 
     ])),

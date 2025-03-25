@@ -20,11 +20,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 from rest_framework import serializers
 
 from voya.proposals.choices import SectionChoices, StatusChoices
+from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
 from voya.services.models import Location
 
 
-class ProposalSerializer(serializers.Serializer):
+class ProposalSerializer(serializers.ModelSerializer):
     title = serializers.CharField(
         max_length=255,
         error_messages={
@@ -42,8 +43,21 @@ class ProposalSerializer(serializers.Serializer):
 
     internal_comments = serializers.CharField(allow_blank=True)
 
+    class Meta:
+        model = Proposal
+        fields = ["title", "status", "internal_comments"]
 
-class ItemSerializer(serializers.Serializer):
+    def create(self, validated_data):
+        return Proposal.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
+
+class ItemSerializer(serializers.ModelSerializer):
     section_name = serializers.CharField()
 
     service_id = serializers.IntegerField(
@@ -76,8 +90,32 @@ class ItemSerializer(serializers.Serializer):
         }
     )
 
+    order = serializers.IntegerField(required=False)
 
-class BudgetSerializer(serializers.Serializer):
+    class Meta:
+        model = ProposalSectionItem
+        fields = [
+            "section_name",
+            "service_id",
+            "quantity",
+            "additional_notes",
+            "corresponding_trip_date",
+            "price",
+            "city",
+            "order",
+        ]
+
+    def create(self, validated_data):
+        return ProposalSectionItem.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
+
+class BudgetSerializer(serializers.ModelSerializer):
     pax = serializers.IntegerField()
     variable_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
     fixed_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
@@ -89,3 +127,28 @@ class BudgetSerializer(serializers.Serializer):
     margin = serializers.IntegerField()
     fina_price_per_person = serializers.DecimalField(max_digits=10, decimal_places=2)
     final_price = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        model = ProposalBudget
+        fields = [
+            "pax",
+            "variable_cost",
+            "fixed_cost",
+            "free_of_charge",
+            "free_of_charge_amount",
+            "total_cost_per_person",
+            "total_cost",
+            "service_fee",
+            "margin",
+            "fina_price_per_person",
+            "final_price",
+        ]
+
+    def create(self, validated_data):
+        return ProposalBudget.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance

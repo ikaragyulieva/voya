@@ -60,9 +60,18 @@
                         <li class="nav-item">
 
                             <!-- Log out -->
-                            <a href="{% url 'logout' %}">
-                                Log out
-                            </a>
+                            <div class="logo">
+                                <a href="{% url 'logout' %}">
+                                    <img width="22px" src="{% static 'images/power-off.png' %}"
+                                         alt="img1"
+                                         title="Logout"
+                                    >
+                                </a>
+
+                            </div>
+{#                            <a href="{% url 'logout' %}">#}
+{#                                Log out#}
+{#                            </a>#}
                         </li>
                     {% elif request.user.is_authenticated and request.user.role == 'employee' or request.user.is_staff %}
                         <li class="nav-item">
@@ -175,24 +184,6 @@
                                             </menuitem>
 
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='currency' %}">Currency</a>
-                                                <menu>
-                                                    <menuitem><a
-                                                            href="{% url 'create-service' model_name='currency' %}">Add
-                                                        New Currency</a></menuitem>
-                                                </menu>
-                                            </menuitem>
-                                            
-                                            <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='location' %}">Location</a>
-                                                <menu>
-                                                    <menuitem><a
-                                                            href="{% url 'create-service' model_name='location' %}">Add
-                                                        New Location</a></menuitem>
-                                                </menu>
-                                            </menuitem>
-
-                                            <menuitem>
                                                 <a href="{% url 'providers-dashboard' %}">Providers</a>
                                                 <menu>
                                                     <menuitem><a href="{% url 'create-provider' %}">Add
@@ -206,20 +197,78 @@
                             </nav>
                         </li>
 
+                        <!-- Settings page -->
                         <li class="nav-item">
+                            <nav>
+                                <menu>
+                                    <menuitem id="demo1">
+                                        <a>Settings</a>
+                                        <menu>
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='hotel' %}">Payment terms</a>
+                                                <menu>
+                                                    <menuitem><a href="{% url 'create-service' model_name='hotel' %}">Add
+                                                        payment term</a></menuitem>
+                                                </menu>
+                                            </menuitem>
 
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='currency' %}">Cancellation terms</a>
+                                                <menu>
+                                                    <menuitem><a
+                                                            href="{% url 'create-service' model_name='currency' %}">Add
+                                                        cancellation terms</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='ticket' %}">Bank account</a>
+                                                <menu>
+                                                    <menuitem><a href="{% url 'create-service' model_name='ticket' %}">Add
+                                                        bank account</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+                                            
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='location' %}">Location</a>
+                                                <menu>
+                                                    <menuitem><a
+                                                            href="{% url 'create-service' model_name='location' %}">Add
+                                                        New Location</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+                                            
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='currency' %}">Currency</a>
+                                                <menu>
+                                                    <menuitem><a
+                                                            href="{% url 'create-service' model_name='currency' %}">Add
+                                                        New Currency</a></menuitem>
+                                                </menu>
+                                            </menuitem>
+                                        </menu>
+                                    </menuitem>
+                                </menu>
+                            </nav>
+                        </li>
+                        
+                        <li class="nav-item">
                             <!-- Link to Login Page -->
                             <a href="{% url 'employee-profile' pk=profile.pk %}">
                                 Profile
                             </a>
                         </li>
-
+                        
+                        <!-- Log out -->
                         <li class="nav-item">
-
-                            <!-- Log out -->
-                            <a href="{% url 'logout' %}">
-                                Log out
-                            </a>
+                            <div class="logo">
+                                <a href="{% url 'logout' %}">
+                                    <img width="22px" src="{% static 'images/power-off.png' %}"
+                                         alt="img1"
+                                         title="Logout"
+                                    >
+                                </a>
+                            </div>
                         </li>
                     {% else %}
                         <li class="nav-item">

@@ -309,6 +309,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         <th class="heading-date">Date</th>
         <th class="heading-type">Type</th>
         <th class="heading-service-details">Service Details</th>
+        <th class="heading-service-details">Description</th>
         <th class="heading-city">City</th>
     </tr>
     </thead>
@@ -319,7 +320,20 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
                 <td>Accommodation</td>
-                <td>{{ item.service_name }}</td>
+                <td>{{ item.service_name }} {{ item.category }}</td>
+                <td>{{ item.additional_notes }}</td>
+                <td class="bold">{{ item.city }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    
+    {% if meal_items %}
+        {% for item in meal_items %}
+            <tr>
+                <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
+                <td>Meals</td>
+                <td>{{ item.additional_notes }}</td>
+                <td></td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}
@@ -331,6 +345,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
                 <td>Private transport</td>
                 <td>{{ item.service_name }}</td>
+                <td>{{ item.additional_notes }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}
@@ -342,6 +357,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
                 <td>Public transport</td>
                 <td>{{ item.service_name }}</td>
+                <td>{{ item.additional_notes }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}
@@ -353,6 +369,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
                 <td>Extra Activities</td>
                 <td>{{ item.service_name }}</td>
+                <td>{{ item.additional_notes }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}
@@ -364,6 +381,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
                 <td>Transfer</td>
                 <td>{{ item.service_name }}</td>
+                <td>{{ item.additional_notes }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}
@@ -375,6 +393,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
                 <td>Local guide</td>
                 <td>{{ item.service_name }}</td>
+                <td>{{ item.additional_notes }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}
@@ -386,6 +405,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <td>{{ item.corresponding_trip_date|date:"j M Y" }}</td>
                 <td>Tour leader</td>
                 <td>{{ item.service_name }}</td>
+                <td>{{ item.additional_notes }}</td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}
@@ -396,7 +416,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Other</td>
-                <td>{{ item.service_name }}</td>
+                <td>{{ item.additional_notes }}</td>
+                <td></td>
                 <td class="bold">{{ item.city }}</td>
             </tr>
         {% endfor %}

@@ -130,6 +130,10 @@ class ProposalSectionItem(TimestampedModel):
         null=False,
     )
 
+    order = models.PositiveIntegerField(
+        default=0
+    )
+
     history = HistoricalRecords()
 
     def __str__(self):

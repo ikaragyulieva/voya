@@ -16,7 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
+import logging
 from datetime import timedelta
+from itertools import chain
+from operator import attrgetter
 
 from django.apps import apps
 from django.contrib.auth import mixins
@@ -28,6 +31,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.text import capfirst
 from django.views.generic import CreateView, TemplateView, ListView, UpdateView
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
@@ -48,6 +52,8 @@ from voya.requests.choices import CityChoices
 from voya.requests.models import TripRequests
 from voya.services.models import Location
 from voya.utils import get_user_obj, get_dashboard_multiple_search
+
+logger = logging.getLogger(__name__)
 
 
 class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
@@ -131,6 +137,7 @@ class ProposalUpdateAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
+        logger.warning("PUT request received")
         """Handles updating an existing proposal."""
         data = request.data
         trip_id = data.get('trip_id', '')
@@ -142,10 +149,10 @@ class ProposalUpdateAPI(APIView):
                             status=status.HTTP_404_NOT_FOUND)
 
         try:
-            proposal, created_items, created_budgets = update_proposal(proposal, data)
+            updated_proposal, created_items, created_budgets = update_proposal(proposal, data, request.user)
             return JsonResponse({
                 'success': 'Proposal updated successfully!',
-                'proposal_id': proposal.id,
+                'proposal_id': updated_proposal.id,
                 'item_ids': [item.id for item in created_items],
                 'budget_ids': [budget.id for budget in created_budgets],
             }, status=status.HTTP_200_OK)
@@ -157,7 +164,8 @@ class ProposalUpdateAPI(APIView):
 @login_required
 def proposal_detail(request, pk):
     proposal = get_object_or_404(Proposal, id=pk)
-    items = ProposalSectionItem.objects.filter(proposal=proposal)
+    items = ProposalSectionItem.objects.filter(proposal=proposal).order_by('order')
+
     model_map = {
         'Accommodations': 'Hotel',
         'Public Transport': 'PublicTransport',
@@ -347,7 +355,7 @@ def proposal_pdf_view(request, pk):
         proposal = get_object_or_404(Proposal, id=pk)
 
         # Get proposal's items
-        items = ProposalSectionItem.objects.filter(proposal=proposal)
+        items = ProposalSectionItem.objects.filter(proposal=proposal).order_by("order")
         model_map = {
             'Accommodations': 'Hotel',
             'Public Transport': 'PublicTransport',
@@ -397,7 +405,8 @@ def proposal_pdf_view(request, pk):
                 transfer_items.append(item)
             elif item.section_name == 'Tour Leader':
                 tour_leader_items.append(item)
-            elif item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
+            elif (item.section_name == 'Other Services - Variable'
+                  or item.section_name == 'Other Services'):
                 other_items.append(item)
             elif item.section_name == 'Other Services - Fixed':
                 other_items.append(item)
@@ -407,7 +416,6 @@ def proposal_pdf_view(request, pk):
         # Get proposal's budget
         budget = ProposalBudget.objects.filter(proposal=proposal)
         foc_pax = [budget_option.free_of_charge for budget_option in budget]
-
 
         if form.is_valid():
             logo_option = form.cleaned_data['logo_options']
@@ -536,7 +544,7 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
 
         proposal = self.get_object()
-        items = ProposalSectionItem.objects.filter(proposal=proposal)
+        items = ProposalSectionItem.objects.filter(proposal=proposal).order_by("order")
 
         model_map = {
             'Accommodations': 'Hotel',
@@ -600,6 +608,7 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
                 meals_items.append(item)
 
         budget = ProposalBudget.objects.filter(proposal=proposal)
+        budget_id_min, budget_id_max = [b.id for b in budget]
         foc_pax = [budget_option.free_of_charge for budget_option in budget]
         current_request = TripRequests.objects.get(id=proposal.trip_request.id)
 
@@ -632,7 +641,92 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['city_choices'] = Location.objects.all()
         context['status_choices'] = StatusChoices.choices
         context['meal_options'] = MealChoices
+        context['budget_id_min'] = budget_id_min
+        context['budget_id_max'] = budget_id_max
 
         return context
 
 
+class HistoryLogView(ListView):
+    template_name = "proposals/history-log.html"
+    context_object_name = "history_entries"
+
+    # paginate_by = 50
+
+    def get_queryset(self):
+        proposal_id = self.kwargs.get("pk")
+        proposal = get_object_or_404(Proposal, pk=proposal_id)
+
+        proposal_history = Proposal.history.filter(id=proposal_id)
+        items_history = ProposalSectionItem.history.filter(proposal=proposal)
+        budget_history = ProposalBudget.history.filter(proposal=proposal)
+
+        model_map = {
+            'Accommodations': 'Hotel',
+            'Public Transport': 'PublicTransport',
+            'Private Transport': 'PrivateTransport',
+            'Transfers': 'Transfer',
+            'Extra Activities': 'Ticket',
+            'Activity': 'Ticket',
+            'Local Guides': 'LocalGuide',
+            'Tour Leader': 'Staff',
+        }
+
+        combined_history = list(chain(
+            proposal_history,
+            items_history,
+            budget_history,
+        ))
+
+        combined_history.sort(key=attrgetter("history_date"), reverse=True)
+
+        enriched_history = []
+
+        for entry in combined_history:
+            prev_record = entry.prev_record
+            changes = []
+
+            if prev_record and type(prev_record) is type(entry):
+                delta = entry.diff_against(prev_record)
+                print(f"[DEBUG] Entry ID: {entry.id} | Changes: {delta.changes}")
+                for change in delta.changes:
+                    if str(change.old).strip() != str(change.new).strip():
+                        changes.append({
+                            "field": change.field,
+                            "old": change.old,
+                            "new": change.new,
+                        })
+
+            service_name = None
+
+            # Try ro resolve service name if it is Proposal Section Item
+            if model_name == "Proposal Section Item":
+                section = getattr(entry, "section_name", "")
+                service_id = getattr(entry, "service_id", None)
+
+                model_key = model_map.get(section)
+                if service_id and model_key:
+                    try:
+                        model_class = apps.get_model("services", model_key)
+                        service_obj = model_class.objects.filter(id=service_id).first()
+                        if service_obj:
+                            service_name = service_obj.name
+
+                    except LookupError:
+                        service_name = "Unknown model"
+
+            enriched_history.append({
+                "entry": entry,
+                "changes": changes,
+                "model_name":  entry.instance._meta.verbose_name.title(),
+                "service_name": service_name,
+                "timestamp": entry.history_date.astimezone(timezone.get_current_timezone()),  # Localized datetime
+            })
+
+        return enriched_history
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = get_user_obj(self.request)
+        context["proposal"] = get_object_or_404(Proposal, pk=self.kwargs.get("pk"))
+        return context
