@@ -136,14 +136,14 @@ class ProposalUpdateAPI(APIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def put(self, request, *args, **kwargs):
+    def put(self, request, pk, *args, **kwargs):
         logger.warning("PUT request received")
         """Handles updating an existing proposal."""
         data = request.data
         trip_id = data.get('trip_id', '')
 
         try:
-            proposal = Proposal.objects.get(trip_request_id=trip_id, user=request.user)
+            proposal = Proposal.objects.get(pk=pk)
         except Proposal.DoesNotExist:
             return Response({'error': 'Proposal not found. Use Post to create a new one'},
                             status=status.HTTP_404_NOT_FOUND)
