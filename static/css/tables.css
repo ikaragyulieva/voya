@@ -725,6 +725,12 @@ h2 {
     width: 350px;
 }
 
+.internal-note textarea{
+    resize: vertical;
+    max-height: unset;
+    min-height: 300px;
+}
+
 .trip-proposal textarea {
         position: static;
         width: 100%; /* Ensures it spans the full width of the parent div */

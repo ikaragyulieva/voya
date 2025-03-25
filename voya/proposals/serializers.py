@@ -41,7 +41,7 @@ class ProposalSerializer(serializers.ModelSerializer):
         }
     )
 
-    internal_comments = serializers.CharField(allow_blank=True)
+    internal_comments = serializers.CharField(allow_blank=True, max_length=None)
 
     class Meta:
         model = Proposal
