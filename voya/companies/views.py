@@ -1,6 +1,6 @@
 from django.contrib.auth import mixins
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -111,10 +111,17 @@ class CompaniesDashboardView(mixins.LoginRequiredMixin, ListView):
         context['profile'] = self.get_object()
 
         search_form = SearchForm(self.request.GET)
-        company_query = CompanyProfile.objects.all().order_by('-is_active', '-created_at')
+        address_prefetch = Prefetch(
+            'addresses',
+            queryset=Address.objects.order_by('created_at'),
+            to_attr='prefetched_addresses'
+        )
+        company_query = (CompanyProfile.objects.all()
+                         .prefetch_related(address_prefetch)
+                         .order_by('-is_active', '-created_at'))
 
-        for company in company_query:
-            company.first_address = Address.objects.filter(company=company).first()
+        # for company in company_query:
+        #     company.first_address = Address.objects.filter(company=company).first()
 
         if search_form.is_valid():
             search_query = search_form.cleaned_data.get('search')

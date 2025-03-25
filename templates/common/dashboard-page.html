@@ -49,14 +49,15 @@
                     <li class="table-header">
                         <div class="col col-1">Submitted On</div>
                         <div class="col col-2">Status</div>
-                        <div class="col col-33">Title</div>
-                        <div class="col col-4">Destinations</div>
-                        <div class="col col-5">Starts At</div>
-                        <div class="col col-6">Submitted By</div>
+                        <div class="col col-33">ID</div>
+                        <div class="col col-4">Title</div>
+                        <div class="col col-5">Destinations</div>
+                        <div class="col col-6">Starts At</div>
+                        <div class="col col-7">Submitted By</div>
                         {% if request.user.role == 'employee' and request.user.is_authenticated %}
-                            <div class="col col-7">Company</div>
+                            <div class="col col-8">Company</div>
                         {% endif %}
-                        <div class="col col-8">Actions</div>
+                        <div class="col col-99">Actions</div>
 
                     </li>
                     {% for trip_request in triprequests_list %}
@@ -87,54 +88,29 @@
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="col col-33" data-label="Title">{{ trip_request.slug }}</div>
-                            <div class="col col-4"
+                            <div class="col col-33" data-label="Request ID">{{ trip_request.id }}</div>
+                            <div class="col col-4" data-label="Title">
+                                <a href="{% url 'request-details' pk=trip_request.pk %}"
+                                           class="action-link" title="View Request">
+                                            {{ trip_request.slug }}
+                                </a>
+                            </div>
+                            <div class="col col-5"
                                  data-label="Destinations">{{ trip_request.country_destinations }}</div>
-                            <div class="col col-5" data-label="Starts At">{{ trip_request.trip_start_date }}</div>
-                            <div class="col col-6"
+                            <div class="col col-6" data-label="Starts At">{{ trip_request.trip_start_date }}</div>
+                            <div class="col col-7"
                                  data-label="Submitted By">{{ trip_request.created_by_user.email }}</div>
                             {% if request.user.role == 'employee' and request.user.is_authenticated %}
-                                <div class="col col-7"
+                                <div class="col col-8"
                                      data-label="Company">{{ trip_request.created_by_company.commercial_name }}</div>
                             {% endif %}
 
-                            <div class="col col-8" data-label="Actions">
+                            <div class="col col-99" data-label="Actions">
                                 <div class="action-btn request-action-btn">
-
-
-                                    {#                            {% if request.user.role == 'client' and request.user.is_authenticated %}#}
-                                    {#                            <div class="col col-8" data-label="Actions">#}
-                                    {#                                <div class="action-btn request-action-btn">#}
-                                    {#                                    <!-- View Request Page-->#}
-                                    {#                                    <a href="{% url 'request-details' pk=trip_request.pk %}" class="action-link"#}
-                                    {#                                       title="View Request">#}
-                                    {#                                        <img#}
-                                    {#                                                src="{% static 'images/view-icon.png' %}"#}
-                                    {#                                                alt="view button"#}
-                                    {#                                        />#}
-                                    {#                                    </a>#}
-                                    {#                                    <!-- Duplicate request-->#}
-                                    {#                                    <a href="{% url 'clone-request' pk=trip_request.pk %}" class="action-link"#}
-                                    {#                                       title="Duplicate Request">#}
-                                    {#                                        <img#}
-                                    {#                                                src="{% static 'images/duplicate (1).png' %}"#}
-                                    {#                                                alt="duplicate button"#}
-                                    {#                                        />#}
-                                    {#                                    </a>#}
-                                    {##}
-                                    {#                                    <!-- Link to Edit Request Page -->#}
-                                    {#                                    <a href="{% url 'edit-request' pk=trip_request.pk %}" class="action-link"#}
-                                    {#                                       title="Edit Request">#}
-                                    {#                                        <img#}
-                                    {#                                                src="{% static 'images/edit-icon.png' %}"#}
-                                    {#                                                alt="edit button"#}
-                                    {#                                        />#}
-                                    {#                                    </a>#}
-
                                     <!-- Client Buttons -->
 
                                     {% if request.user.role == 'client' and request.user.is_authenticated %}
-                                        {% if trip_request.request_proposal and not trip_request.request_proposal.status == 'Send to client' %}
+                                        {% if trip_request.request_proposal and trip_request.request_proposal.status == 'Send to client' %}
 
                                             <a href="{% url 'client-proposal-detail' pk=trip_request.request_proposal.pk %}"
                                                class="action-link" title="Check Proposal">
@@ -184,13 +160,12 @@
                                     {% if request.user.role == 'employee' and request.user.is_authenticated %}
 
                                         <!-- View Request Page-->
-                                        <a href="{% url 'request-details' pk=trip_request.pk %}"
-                                           class="action-link" title="View Request">
-                                            <img
-                                                    src="{% static 'images/view-icon.png' %}"
-                                                    alt="view button"
-                                            />
-                                        </a>
+{#                                        #}
+{#                                            <img#}
+{#                                                    src="{% static 'images/view-icon.png' %}"#}
+{#                                                    alt="view button"#}
+{#                                            />#}
+{#                                        </a>#}
                                         <!-- Duplicate request-->
                                         <a href="{% url 'clone-request' pk=trip_request.pk %}"
                                            class="action-link" title="Duplicate Request">
@@ -223,10 +198,29 @@
                                             <!-- Link to Check Proposal Page -->
                                             <a href="{% url 'proposal-detail' pk=trip_request.request_proposal.pk %}"
                                                class="action-link" title="Check Proposal">
-                                                <img
-                                                        src="{% static 'images/document-approved (1).png' %}"
-                                                        alt="create proposal button"
-                                                />
+                                                {% if trip_request.request_proposal.status == 'Ready for review' %}
+                                                    <!-- New Proposal Status-->
+                                                    <img
+                                                            src="{% static 'images/review.png' %}"
+                                                            alt="Ready for review"
+                                                            title="Ready for review"
+                                                    />
+                                                {% elif trip_request.request_proposal.status == 'Not finished' %}
+                                                    <!-- Active Proposal Status -->
+                                                    <img
+                                                            src="{% static 'images/wip.png' %}"
+                                                            alt="WIP Proposal"
+                                                            title="Not finished"
+                                                    />
+
+                                                {% elif trip_request.request_proposal.status == 'Send to client' %}
+                                                    <!-- Closed Proposal Status -->
+                                                    <img
+                                                            src="{% static 'images/share-with-client-green.png' %}"
+                                                            alt="Shared Proposal"
+                                                            title="Shared with client"
+                                                    />
+                                                {% endif %}
 
                                             </a>
                                         {% else %}

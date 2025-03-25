@@ -13,7 +13,7 @@
     margin-right: 0.2em;
 }
 
-.proposal-item-btn img{
+.proposal-item-btn img {
     width: 1em;
     height: 1em;
     /*margin-top: 3px;*/
@@ -62,20 +62,27 @@ h2 {
     font-size: 14px;
 }
 
-.table-row {
-    cursor: grab;
-    transition: background 0.2s ease-in-out;
+.col a{
+    color: black;
 }
 
-.table-row:active {
-    cursor: grabbing;
+.items-table {
+    .table-row {
+        cursor: grab;
+        transition: background 0.2s ease-in-out;
+    }
+
+    .table-row:active {
+        cursor: grabbing;
+    }
+
+    .table-row.dragging {
+        opacity: 0.5;
+        background: #f1f1f1;
+        border: 2px dashed #007bff;
+    }
 }
 
-.table-row.dragging {
-    opacity: 0.5;
-    background: #f1f1f1;
-    border: 2px dashed #007bff;
-}
 
 .responsive-table {
     li {
@@ -86,7 +93,7 @@ h2 {
         margin-bottom: 10px;
     }
 
-    .columns{
+    .columns {
         border-radius: 3px;
         padding: 25px 30px;
         display: flex;
@@ -144,7 +151,7 @@ h2 {
 
 
     @media all and (max-width: 1100px) {
-        .dashboard-table{
+        .dashboard-table {
             display: flex;
         }
 
@@ -170,6 +177,10 @@ h2 {
 
         }
 
+        .col a{
+            color: black;
+        }
+
         .col {
             /*display: flex;*/
             /*padding: 10px 0;*/
@@ -183,7 +194,7 @@ h2 {
             }
         }
 
-        .request-action-btn{
+        .request-action-btn {
             flex-wrap: wrap;
             row-gap: 3px;
         }
@@ -191,7 +202,6 @@ h2 {
 
     }
 }
-
 
 
 .requests-table {
@@ -204,28 +214,33 @@ h2 {
     }
 
     .col-33 {
-        flex-basis: 15%;
+        flex-basis: 6%;
     }
 
     .col-4 {
-        flex-basis: 12%;
-    }
-
-    .col-5 {
-        flex-basis: 10%;
-    }
-
-    .col-6 {
         flex-basis: 15%;
     }
 
-    .col-7 {
+    .col-5 {
+        flex-basis: 12%;
+    }
+
+    .col-6 {
         flex-basis: 10%;
     }
 
+    .col-7 {
+        flex-basis: 15%;
+    }
+
     .col-8 {
+        flex-basis: 10%;
+    }
+
+    .col-99 {
         flex-basis: 8%;
     }
+
 
     @media all and (max-width: 1500px) {
         .col {
@@ -233,18 +248,21 @@ h2 {
             padding: 5px;
             word-break: break-word;
         }
-        .request-action-btn{
+
+        .col a{
+            color: black;
+        }
+
+        .request-action-btn {
             flex-wrap: wrap;
             row-gap: 3px;
         }
-        .requests-table{
+
+        .requests-table {
             overflow: auto;
         }
     }
 }
-
-
-
 
 
 .table-services {
@@ -354,7 +372,7 @@ h2 {
         margin-top: 10px;
     }
 
-    .proposal-item-btn{
+    .proposal-item-btn {
         height: unset;
         width: 100%;
     }
@@ -382,15 +400,17 @@ h2 {
 
     .responsive-table {
         width: 100%;
+
         li {
             padding: 15px;
         }
+
         @media all and (max-width: 1100px) {
-            .col{
+            .col {
                 min-width: 80px;
             }
 
-    }
+        }
     }
 
     .trip-section .add-option {
@@ -412,16 +432,19 @@ h2 {
     .col-4 {
         flex-basis: 8%;
         text-align: right;
-        input{
-        text-align: right;
+
+        input {
+            text-align: right;
         }
     }
 
     .col-5 {
         flex-basis: 16%;
-        input{
-        text-align: right;
+
+        input {
+            text-align: right;
         }
+
         text-align: right;
     }
 
@@ -437,15 +460,15 @@ h2 {
 
 }
 
-.fixed-cost{
-        background-color: black !important;
-        color: white;
-    }
+.fixed-cost {
+    background-color: black !important;
+    color: white;
+}
 
 /*budget table*/
 
 
-.budget{
+.budget {
     position: sticky;
     top: 15rem;
     z-index: 10;
@@ -476,7 +499,7 @@ h2 {
         background-color: #ffffff;
     }
 
-    thead th, tbody th, tfoot th{
+    thead th, tbody th, tfoot th {
         /*position: -webkit-sticky;*/
         position: sticky;
         top: 0;
@@ -488,7 +511,7 @@ h2 {
         letter-spacing: 0.03em;
     }
 
-    thead th{
+    thead th {
         text-align: center;
     }
 
@@ -516,7 +539,7 @@ h2 {
         text-align: center;
     }
 
-    tfoot th{
+    tfoot th {
         font-weight: 500;
 
     }
@@ -530,7 +553,7 @@ h2 {
         height: 200px;
     }
 
-    tbody td{
+    tbody td {
         font-size: 12px;
         font-weight: 300;
         text-align: center;
@@ -585,13 +608,13 @@ h2 {
 
 }
 
-.state-save-btn{
+.state-save-btn {
     display: flex;
     justify-content: space-between;
     padding: 0 12px;
 }
 
-#id_status{
+#id_status {
     width: 150px !important;
     margin-top: unset;
 }
@@ -616,9 +639,9 @@ h2 {
     cursor: pointer;
     align-content: center;
 
-    }
+}
 
-.trip-section .top-btn{
+.trip-section .top-btn {
     margin-top: unset;
     background: transparent;
     border-color: transparent;
@@ -626,7 +649,7 @@ h2 {
 
 }
 
-.budget-section{
+.budget-section {
     margin-top: unset !important;
 }
 
@@ -635,11 +658,12 @@ h2 {
     border: 1px solid #f5c6cb;
 }
 
-.prop-status{
+.prop-status {
     display: flex;
     align-items: center;
     gap: 10px;
-    p{
+
+    p {
         font-size: 14px;
         font-weight: 400;
         text-transform: uppercase;
@@ -651,7 +675,8 @@ h2 {
 .action-link:hover {
     transform: scale(1.1); /* Slight zoom on hover */
     background-color: rgba(0, 0, 0, 0.1); /* Subtle background highlight */
-    border-radius: 50%; /* Circular highlight */
+    padding: 3px 5px;
+    /*border-radius: 50%; !* Circular highlight *!*/
 }
 
 /* Tooltips */
@@ -711,44 +736,45 @@ h2 {
 
 }
 
-.trip-comments-wrapper{
+.trip-comments-wrapper {
     display: flex;
     flex-direction: column;
 }
 
-.trip-internal-note{
+.trip-internal-note {
     margin-top: 15px !important;
 
 }
 
-.internal-note{
+.internal-note {
     width: 350px;
 }
 
-.internal-note textarea{
+.internal-note textarea {
     resize: vertical;
     max-height: unset;
     min-height: 300px;
 }
 
 .trip-proposal textarea {
-        position: static;
-        width: 100%; /* Ensures it spans the full width of the parent div */
-        max-width: 100%; /* Prevents it from exceeding the parent's width */
-        border: 0.1px solid white;
-        border-radius: 3px;
-        height: 100px;
-        padding: 2px;
-        /*margin-top: 12px;*/
-        box-sizing: border-box; /* Includes padding and borders in width */
-        /*resize: none; !* Optional: Prevents resizing if that's desired *!*/
-    }
+    position: static;
+    width: 100%; /* Ensures it spans the full width of the parent div */
+    max-width: 100%; /* Prevents it from exceeding the parent's width */
+    border: 0.1px solid white;
+    border-radius: 3px;
+    height: 100px;
+    padding: 2px;
+    /*margin-top: 12px;*/
+    box-sizing: border-box; /* Includes padding and borders in width */
+    /*resize: none; !* Optional: Prevents resizing if that's desired *!*/
+}
 
-.table-history{
-    li{
+.table-history {
+    li {
         justify-content: unset;
         gap: 5px;
     }
+
     .col-1 {
         flex-basis: 13%;
     }
@@ -772,7 +798,7 @@ h2 {
         display: flex;
     }
 
-    .table-company, .table-services, .providers-table{
-            width: 100%;
-        }
+    .table-company, .table-services, .providers-table {
+        width: 100%;
+    }
 }

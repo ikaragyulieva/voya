@@ -202,6 +202,9 @@ class TripRequests(TimestampedModel):
 
     def save(self, *args, **kwargs):
 
+        if not self.pk:
+            super().save(*args, **kwargs)
+
         date_part = self.trip_start_date.strftime('%y.%m')
 
         destinations_part = '_'.join([country.upper() for country in self.country_destinations])
