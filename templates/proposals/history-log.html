@@ -62,7 +62,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             <div class="col col-2" data-label="Object">{{ record.entry.section_name }}</div>
                             <div class="col col-33"
                                  data-label="Change">{% if record.entry.history_type == "+" %}
-                                    {% if record.model_name == "Proposal Section Item" %}
+                                    {% if record.model_name == "ProposalSectionItem" %}
                                         {% if record.entry.section_name == "Meals" or record.entry.section_name == "Other Services - Variable" or record.entry.section_name == "Other Services - Fixed" %}
                                             <strong>{{ record.entry.section_name }}</strong> added:
                                             “{{ record.entry.additional_notes|default:"No notes" }}”
@@ -70,7 +70,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                             on {{ record.entry.corresponding_trip_date }} in {{ record.entry.city.city_name }}
                                         {% else %}
                                             <strong>{{ record.entry.section_name }}</strong> added:
-                                            “{{ record.entry.service_name }}”
+                                            “{{ record.service_name }}”
                                             – €{{ record.entry.price }} x {{ record.entry.quantity }}
                                             on {{ record.entry.corresponding_trip_date }} in {{ record.entry.city.city_name }}
                                         {% endif %}
@@ -79,15 +79,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                     {% endif %}
 
                                 {% elif record.entry.history_type == "-" %}
-                                    {% if record.model_name == "Proposal Section Item" %}
+                                <pre>{{ record }}</pre>
+                                    {% if record.model_name == "ProposalSectionItem" %}
                                         {% if record.entry.section_name == "Meals" or record.entry.section_name == "Other Services - Variable" or record.entry.section_name == "Other Services - Fixed" %}
                                             <strong>{{ record.entry.section_name }}</strong> removed:
-                                            “{{ record.entry.additional_notes|default:"No notes" }}”
-                                            – €{{ record.entry.price }} x {{ record.entry.quantity }}
-                                            on {{ record.entry.corresponding_trip_date }} in {{ record.entry.city.city_name }}
+                                            {{ record.change_reason|default:"-"  }}
+{#                                            “{{ record.entry.additional_notes|default:"No notes" }}”#}
+{#                                            – €{{ record.entry.price }} x {{ record.entry.quantity }}#}
+{#                                            on {{ record.entry.corresponding_trip_date }} in {{ record.entry.city.city_name }}#}
                                         {% else %}
                                             <strong>{{ record.entry.section_name }}</strong> removed:
-                                            “{{ record.entry.service_name }}”
+                                            “{{ record.service_name }}”
                                             – €{{ record.entry.price }} x {{ record.entry.quantity }}
                                             on {{ record.entry.corresponding_trip_date }} in {{ record.entry.city.city_name }}
                                         {% endif %}

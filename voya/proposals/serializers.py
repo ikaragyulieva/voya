@@ -31,7 +31,7 @@ class ProposalSerializer(serializers.ModelSerializer):
         error_messages={
             'blank': 'The proposal title is required.',
             'max_length': 'The title must not exceed 255 characters.',
-        }
+        },
     )
 
     status = serializers.ChoiceField(

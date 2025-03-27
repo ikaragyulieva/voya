@@ -114,6 +114,7 @@ def update_proposal(proposal, data, user):
                     item,
                     f"Item {action}: {item.section_name} - “{item.additional_notes or 'No notes'}” – €{item.price} x {item.quantity} on {item.corresponding_trip_date} in {item.city}")
                 # item.save()
+                logger.warning(f"🗑️ Logged item update {item.history.latest().history_change_reason}")
                 logger.warning(f"✅ Item {action}: ID {item.id}")
 
                 created_or_updated_items.append(item)
@@ -123,14 +124,18 @@ def update_proposal(proposal, data, user):
         # delete removed items
         to_delete_items = ProposalSectionItem.objects.filter(proposal=proposal).exclude(id__in=received_items_ids)
         for item in to_delete_items:
-            item.history_user = user
             update_change_reason(
                 item,
                 f"Item deleted: {item.section_name} – “{item.additional_notes or 'No notes'}” – €{item.price} x {item.quantity} on {item.corresponding_trip_date} in {item.city}"
             )
+            item.history_user = user
+            item.pk = item.pk
+            item.save(update_fields=[])
+            logger.warning(f"🗑️ Logged deletion Deleting {item.history.latest().history_change_reason}")
+            item.delete()
 
         logger.warning(f"🗑️ Deleting {to_delete_items.count()} items: {[i.id for i in to_delete_items]}")
-        to_delete_items.delete()
+        # to_delete_items.delete()
 
         # Update or create proposal budgets
         existing_budgets = ProposalBudget.objects.filter(proposal=proposal)

@@ -199,6 +199,91 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     </div>
                 </form>
             </div>
+
+            <!--Last history -->
+
+            <div class="trip trip-proposal trip-internal-note">
+
+                <div class="trip-section">
+                    <h3 class="title">Last Change </h3>
+                    <p>{{ last_change_logs.0.timestamp|date:"d M Y H:i" }}</p>
+
+                    <hr class="custom-line">
+
+                    <table>
+                        <tbody>
+                        {#                        <tr>#}
+                        {#                            <th>Item</th>#}
+                        {#                            <th>Change</th>#}
+                        {#                            <th>User</th>#}
+                        {#                        </tr>#}
+                        {% for log in last_change_logs %}
+                            <tr>
+                                <td>
+                                    <h3><strong><u>
+                                        {{ log.model_name }}{% if log.service_name %}-{{ log.service_name }}{% endif %}
+                                    </u></strong></h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% if log.entry.history_type == "+" %}
+                                        {% if log.model_name == "ProposalSectionItem" %}
+                                            {% if log.entry.section_name == "Meals" or log.entry.section_name == "Other Services - Variable" or log.entry.section_name == "Other Services - Fixed" %}
+                                                <strong>{{ log.entry.section_name }}</strong> added:
+                                                “{{ log.entry.additional_notes|default:"No notes" }}”
+                                                – €{{ log.entry.price }} x {{ log.entry.quantity }}
+                                                on {{ log.entry.corresponding_trip_date }} in
+                                                {{ log.entry.city.city_name }}
+                                            {% else %}
+                                                <strong>{{ log.entry.section_name }}</strong> added:
+                                                “{{ log.service_name }}”
+                                                – €{{ log.entry.price }} x {{ log.entry.quantity }}
+                                                on {{ log.entry.corresponding_trip_date }} in
+                                                {{ log.entry.city.city_name }}
+                                            {% endif %}
+                                        {% else %}
+                                            Created: {{ log.entry }}
+                                        {% endif %}
+
+                                    {% elif log.entry.history_type == "-" %}
+                                        {% if log.model_name == "ProposalSectionItem" %}
+                                            {% if log.entry.section_name == "Meals" or log.entry.section_name == "Other Services - Variable" or log.entry.section_name == "Other Services - Fixed" %}
+                                                <strong>{{ log.entry.section_name }}</strong> removed:
+                                                “{{ log.entry.additional_notes|default:"No notes" }}”
+                                                – €{{ log.entry.price }} x {{ log.entry.quantity }}
+                                                on {{ log.entry.corresponding_trip_date }} in
+                                                {{ log.entry.city.city_name }}
+                                            {% else %}
+                                                <strong>{{ log.entry.section_name }}</strong> removed:
+                                                “{{ log.service_name }}”
+                                                – €{{ log.entry.price }} x {{ log.entry.quantity }}
+                                                on {{ log.entry.corresponding_trip_date }} in
+                                                {{ log.entry.city.city_name }}
+                                            {% endif %}
+                                        {% else %}
+                                            Deleted: {{ log.entry }}
+                                        {% endif %}
+                                    {% elif log.entry.history_type == "~" %}
+                                        <strong>Updated</strong>:
+                                        {% for change in log.changes %}
+                                            <div><strong>{{ change.field }}</strong>:
+                                                <del>{{ change.old }}</del>
+                                                →
+                                                <ins>{{ change.new }}</ins>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
         </div>
 
         <!-- Trip Proposal Template -->
@@ -241,7 +326,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in accommodation_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -283,7 +369,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
-                                            <img 
+                                            <img
                                                     src="{% static 'images/down-arrow.png' %}"
                                                     alt="toggle description"
                                                     title="Add description"
@@ -386,7 +472,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in meal_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -504,7 +591,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in private_transport_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -651,7 +739,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in public_transport_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -799,7 +888,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in activity_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -947,7 +1037,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in transfer_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -1095,7 +1186,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in guides_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -1246,7 +1338,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
 
                         {% for item in tour_leader_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date"
                                            id="id_corresponding_trip_date"
@@ -1399,7 +1492,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in other_variable_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"
@@ -1509,7 +1603,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
                         </li>
                         {% for item in other_fixed_items %}
-                            <li class="table-row" draggable="true" data-id="{{ item.id }}" data-index="{{ forloop.counter0 }}">
+                            <li class="table-row" draggable="true" data-id="{{ item.id }}"
+                                data-index="{{ forloop.counter0 }}">
                                 <div class="col col-1" data-label="date">
                                     <input type="text" name="corresponding_trip_date" id="id_corresponding_trip_date"
                                            class="flatpickr"

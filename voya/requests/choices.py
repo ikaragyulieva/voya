@@ -194,6 +194,10 @@ class PrivateTransportationType(models.TextChoices):
     LUXURY_CAR = 'luxury car (4pax)', 'Luxury car (4 pax)'
     LUXURY_VAN = 'luxury van (7pax)', 'Luxury van (7 pax)'
     LUXURY_BUS = 'luxury bus (8+pax)', 'Luxury bus (8+ pax)'
+    CHECK_POINT = 'check point', 'Check point'
+    DRIVER_ACCOMMODATION = 'driver accommodation', 'Driver accommodation'
+    DRIVER_MEALS = 'driver meals', 'Driver meals'
+    MOTORWAYS_PARKINGS = 'motorways and parkings', 'Motorways and parkings'
     OTHER = 'other', 'Other'
 
 

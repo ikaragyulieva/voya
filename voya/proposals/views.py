@@ -68,7 +68,7 @@ class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
         trip_id = self.kwargs.get('trip_id')
         current_request = get_object_or_404(TripRequests, pk=trip_id)
 
-        proposal = self.proposal_form_class()
+        proposal = self.proposal_form_class(trip_request=current_request)
         item_form = self.create_item_form_class()
         budget_form = self.create_budget_form_class()
         context['trip_id'] = trip_id
@@ -555,6 +555,7 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
             'Activity': 'Ticket',
             'Local Guides': 'LocalGuide',
             'Tour Leader': 'Staff',
+
             # 'Other Services': 'Other',
         }
 
@@ -644,6 +645,69 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['budget_id_min'] = budget_id_min
         context['budget_id_max'] = budget_id_max
 
+        # Show all entries from latest history_date
+        combined_history = list(chain(
+            Proposal.history.filter(id=proposal.id),
+            ProposalSectionItem.history.filter(proposal=proposal),
+            ProposalBudget.history.filter(proposal=proposal),
+        ))
+
+        if not combined_history:
+            context["last_change_logs"] = []
+            return context
+
+        # Sort and find the latest history_date
+        combined_history.sort(key=attrgetter("history_date"), reverse=True)
+        latest_timestamp = combined_history[0].history_date
+        window_seconds = 20
+
+        # Filter all entries with the same timestamp (from the last save)
+        recent_entries = [
+            h for h in combined_history
+            if abs((h.history_date - latest_timestamp).total_seconds()) < window_seconds
+        ]
+
+        # Process changes per entry
+        latest_change_logs = []
+
+        for entry in recent_entries:
+            changes = []
+            prev_record = entry.prev_record
+
+            if prev_record and type(prev_record) is type(entry):
+                delta = entry.diff_against(prev_record)
+                for change in delta.changes:
+                    if str(change.old).strip() != str(change.new).strip():
+                        changes.append({
+                            "field": change.field,
+                            "old": change.old,
+                            "new": change.new,
+                        })
+
+            service_name = None
+            if hasattr(entry, "section_name"):
+                section = getattr(entry, "section_name")
+                service_id = getattr(entry, "service_id", None)
+                model_key = model_map.get(section)
+                if model_key and service_id:
+                    try:
+                        model_class = apps.get_model("services", model_key)
+                        service_obj = model_class.objects.filter(id=service_id).first()
+                        service_name = getattr(service_obj, "name", None) or getattr(service_obj, "type", None)
+                    except LookupError:
+                        service_name = "Unknown model"
+
+            latest_change_logs.append({
+                "entry": entry,
+                "changes": changes,
+                "model_name": entry.instance._meta.verbose_name.title(),
+                "service_name": service_name,
+                "timestamp": latest_timestamp.astimezone(timezone.get_current_timezone())
+
+            })
+
+            context["last_change_logs"] = latest_change_logs
+
         return context
 
 
@@ -700,7 +764,7 @@ class HistoryLogView(ListView):
             service_name = None
             model_name = entry._meta.model_name
             # Try ro resolve service name if it is Proposal Section Item
-            if model_name == "Proposal Section Item":
+            if isinstance(entry.instance, ProposalSectionItem):
                 section = getattr(entry, "section_name", "")
                 service_id = getattr(entry, "service_id", None)
 
@@ -710,7 +774,7 @@ class HistoryLogView(ListView):
                         model_class = apps.get_model("services", model_key)
                         service_obj = model_class.objects.filter(id=service_id).first()
                         if service_obj:
-                            service_name = service_obj.name
+                            service_name = getattr(service_obj, "name", None) or getattr(service_obj, "type", None)
 
                     except LookupError:
                         service_name = "Unknown model"
@@ -718,10 +782,14 @@ class HistoryLogView(ListView):
             enriched_history.append({
                 "entry": entry,
                 "changes": changes,
-                "model_name":  entry.instance._meta.verbose_name.title(),
+                "model_name": entry.instance._meta.verbose_name.title(),
                 "service_name": service_name,
                 "timestamp": entry.history_date.astimezone(timezone.get_current_timezone()),  # Localized datetime
+                "change_reason": getattr(entry, "history_change_reason", "-"),
+                "history_user": getattr(entry, "history_user", None),
             })
+
+            logger.warning(f"🧪 DEBUG | ID: {entry.id} | Change Reason: {getattr(entry, 'history_change_reason', None)}")
 
         return enriched_history
 
