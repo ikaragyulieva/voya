@@ -215,10 +215,10 @@ class AccommodationsType(models.TextChoices):
 
 class HotelType(models.TextChoices):
     ACC = '', 'Select an option'
-    TWO_STAR_HOTEL = '2 star hotel', '2 Stars hotel'
-    THREE_STAR_HOTEL = '3 star hotel', '3 Stars hotel'
-    FOUR_STAR_HOTEL = '4 star hotel', '4 Stars hotel'
-    FIVE_STAR_HOTEL = '5 star hotel', '5 Stars hotel'
+    TWO_STAR_HOTEL = '2 Stars hotel', '2 Stars hotel'
+    THREE_STAR_HOTEL = '3 Stars hotel', '3 Stars hotel'
+    FOUR_STAR_HOTEL = '4 Stars hotel', '4 Stars hotel'
+    FIVE_STAR_HOTEL = '5 Stars hotel', '5 Stars hotel'
     HOSTEL_WITH_PRIVATE_BATHROOM = 'hostel private bathroom', 'Hostel with private bathroom'
     APARTMENT = 'apartment', 'Apartment'
     CAMPING = 'camping', 'Camping'
