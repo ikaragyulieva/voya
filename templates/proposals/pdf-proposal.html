@@ -73,7 +73,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     .invoice-info-container td {
         padding: 4px 0;
-        width: 300px;
+        width: 340px;
     }
 
     .client-name {
@@ -91,8 +91,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         color: #d7b241;
         border-bottom: 2px solid #ddd;
         padding: 10px 0 15px 0;
-        {#font-size: 0.75em;#}
-        text-transform: uppercase;
+    {#font-size: 0.75em;#} text-transform: uppercase;
     }
 
     .line-items-container.pax-total,
@@ -128,6 +127,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         width: 100px;
     }
 
+    .line-items-container th.heading-units {
+    {#text-align: right;#} width: 40px;
+    }
+
     .line-items-container th.heading-type {
     {#text-align: right;#} width: 140px;
     }
@@ -158,8 +161,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     .payment-info {
         width: 38%;
-        {#font-size: 0.75em;#}
-        line-height: 1.5;
+    {#font-size: 0.75em;#} line-height: 1.5;
     }
 
     .footer {
@@ -167,11 +169,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     }
 
     .footer-thanks {
-        {#font-size: 1.125em;#}
-        margin-top: 20px;
+    {#font-size: 1.125em;#} margin-top: 20px;
         text-align: right;
         vertical-align: center;
     }
+
     .footer-thanks img {
         display: inline-block;
         position: relative;
@@ -180,21 +182,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         margin-right: 4px;
     }
 
-    {#.footer-info {#}
-    {#    float: right;#}
-    {#    margin-top: 5px;#}
-    {#    font-size: 0.75em;#}
-    {#    color: #ccc;#}
-    {##}
-    {##}
-    {#.footer-info span {#}
-    {#    padding: 0 5px;#}
-    {#    color: black;#}
-    {##}
-
-    .footer-info span:last-child {
-        padding-right: 0;
+    .footer-info {
+        line-height: 1.8;
+        text-align: left;
     }
+
+    .footer-info span {
+        {#min-width: 100px;#}
+        padding: 0 5px;
+        color: black;
+        
+        
+    }
+
+    {#.footer-info span:last-child {#}
+    {#    padding-right: 0;#}
+    {##}
 
     .page-container {
         display: none;
@@ -213,12 +216,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         margin-top: -25px;
         font-size: 10px;
         text-align: right;
+        {#height: 80px;#}
+        padding: 30px 0;
         color: #999;
     }
 
     {#.footer-info {#}
     {#    float: none;#}
-        {#position: running(footer);#}
+    {#position: running(footer);#}
     {#    margin-top: -25px;#}
     {##}
 
@@ -251,7 +256,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
     @page {
         size: A4;
-        margin: 250px 80px 60px 80px;
+        margin: 250px 60px 60px 60px;
 
         @top-center {
             content: element(invoiceHeader);
@@ -334,8 +339,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 <div class="footer">
     <div class="footer-info">
-        <span>TITULAR DE LA CUENTA: DROMO SA</span> |
-        <span> IBAN: BE38967279021472</span> |
+        <span>Dromo SA</span> |
+        <span>Rue de Madame de Stael 5 </span> |
+        <span>1201, Genève, Suisse</span> |
+        <span>{{ company_email }}</span>
+    </div>
+    <div class="footer-info">
+        <span>Cuenta corriente</span> |
+        <span>Titular: Dromo SA</span> |
+        <span>IBAN: BE38967279021472</span> |
         <span>BIC: TRWIBEB1XXX</span>
     </div>
 </div>
@@ -347,7 +359,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <tr>
         <th class="heading-date">Fecha</th>
         <th class="heading-type">Tipo</th>
-        <th class="heading-service-details">Detalles del servicio</th>
+        <th class="heading-units">Ud.</th>
+        <th class="heading-service-details">Servicios</th>
         <th class="heading-service-details">Descripción</th>
         <th class="heading-city">Ciudad</th>
     </tr>
@@ -359,6 +372,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Alojamiento</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.service_name }}</td>
                 <td>{{ item.category }}
                     {% if item.additional_notes %}
@@ -375,6 +389,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Comidas</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.additional_notes }}</td>
                 <td>-</td>
                 <td class="bold">{{ item.city }}</td>
@@ -387,6 +402,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Transporte privado</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -405,6 +421,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Transporte publico</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -423,6 +440,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Actividades extra</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -441,6 +459,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Traslado</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -459,6 +478,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Guía local</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.label }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -477,6 +497,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Tour leader</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.label }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -495,6 +516,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
                 <td>Otros</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.additional_notes }}</td>
                 <td>-</td>
                 <td class="bold">{{ item.city }}</td>
@@ -551,7 +573,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     </thead>
     <tbody>
     <tr>
-        <td class="payment-info">La propuesta es válida por <strong>7 días</strong> a partir de la fecha de recepción.<br>
+        <td class="payment-info">La propuesta es válida por <strong>7 días</strong> a partir de la fecha de
+            recepción.<br>
             Tras este período, nos reservamos el derecho de emitir una propuesta revisada.
         </td>
     </tr>
@@ -592,7 +615,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             {% if guides_items %}
                 <div>Guías mencionados anteriormente</div>
             {% endif %}
-        
+
             {% if tour_leader_items %}
                 <div>Tour leaders mencionados anteriormente</div>
             {% endif %}
@@ -617,18 +640,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <tr>
         <td class="payment-info">
 
-            Las cancelaciones realizadas con <strong>90 días</strong> de antelación a la fecha de llegada del grupo 
-            incurrirán en una penalización equivalente al <strong>depósito no reembolsable (30%)</strong> del importe total.<br>
+            Las cancelaciones realizadas con <strong>90 días</strong> de antelación a la fecha de llegada del grupo
+            incurrirán en una penalización equivalente al <strong>depósito no reembolsable (30%)</strong> del importe
+            total.<br>
 
-            Las cancelaciones realizadas con <strong>60 días</strong> de antelación incurrirán en una penalización 
+            Las cancelaciones realizadas con <strong>60 días</strong> de antelación incurrirán en una penalización
             del <strong>50%</strong> del importe total contratado.<br>
 
-            Las cancelaciones realizadas con <strong>30 días o menos</strong> de antelación incurrirán 
+            Las cancelaciones realizadas con <strong>30 días o menos</strong> de antelación incurrirán
             en una penalización del <strong>100%</strong> del importe total contratado.<br><br>
 
-            <strong>Estas penalizaciones aplican independientemente del cumplimiento del calendario de pagos 
+            <strong>Estas penalizaciones aplican independientemente del cumplimiento del calendario de pagos
                 acordado por parte del cliente.</strong>
-            
+
         </td>
     </tr>
     </tbody>
@@ -644,11 +668,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <tbody>
     <tr>
         <td class="payment-info">
-           Un pago del <strong>30%</strong> del costo total del viaje debe realizarse 
+            Un pago del <strong>30%</strong> del costo total del viaje debe realizarse
             al momento de la firma del contrato – este importe es <strong>no reembolsable</strong>.<br>
-            Un pago adicional del <strong>30%</strong> debe abonarse <strong>90 días</strong> antes de la 
+            Un pago adicional del <strong>30%</strong> debe abonarse <strong>90 días</strong> antes de la
             llegada del grupo, de modo que para ese momento se haya abonado el <strong>60% del total</strong>.<br>
-            El <strong>40%</strong> restante debe abonarse <strong>30 días antes de la llegada del grupo</strong>, 
+            El <strong>40%</strong> restante debe abonarse <strong>30 días antes de la llegada del grupo</strong>,
             completando así el <strong>100% del pago</strong>.
         </td>
     </tr>
@@ -666,27 +690,41 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     </thead>
     <tbody>
     {% for b in proposal_budget %}
-    <tr>
-        <td class="payment-info large">30% Depósito</td>
-        <td class="large">{{ payment_terms.deposit_due_date|date:"F j, Y" }}</td>
-        <td class="large"><div>{{ b.pax }}</div></td>
-        <td class="large total"><div>€ {{ b.deposit|format_price_whitespace }}</div></td>
-    </tr>
-    
-    <tr>
-        <td class="payment-info large">30% Segundo pago (60% del total)</td>
-        <td class="large">{{ payment_terms.second_due_date|date:"F j, Y" }}</td>
-        <td class="large"><div>{{ b.pax }}</div></td>
-        <td class="large total"><div>€ {{ b.deposit|format_price_whitespace }}</div></td>
-    </tr>
-    
-    <tr>
-        <td class="payment-info large">40% Pago final (100% del total)</td>
-        <td class="large">{{ payment_terms.final_due_date|date:"F j, Y" }}</td>
-        <td class="large"><div>{{ b.pax }}</div></td>
-        <td class="large total"><div>€ {{ b.final_payment|format_price_whitespace }}</div></td>
-    </tr>
-        <tr> <td colspan="4">&nbsp;</td> </tr>
+        <tr>
+            <td class="payment-info large">30% Depósito</td>
+            <td class="large">{{ payment_terms.deposit_due_date|date:"F j, Y" }}</td>
+            <td class="large">
+                <div>{{ b.pax }}</div>
+            </td>
+            <td class="large total">
+                <div>€ {{ b.deposit|format_price_whitespace }}</div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="payment-info large">30% Segundo pago (60% del total)</td>
+            <td class="large">{{ payment_terms.second_due_date|date:"F j, Y" }}</td>
+            <td class="large">
+                <div>{{ b.pax }}</div>
+            </td>
+            <td class="large total">
+                <div>€ {{ b.deposit|format_price_whitespace }}</div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="payment-info large">40% Pago final (100% del total)</td>
+            <td class="large">{{ payment_terms.final_due_date|date:"F j, Y" }}</td>
+            <td class="large">
+                <div>{{ b.pax }}</div>
+            </td>
+            <td class="large total">
+                <div>€ {{ b.final_payment|format_price_whitespace }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">&nbsp;</td>
+        </tr>
     {% endfor %}
     </tbody>
 </table>

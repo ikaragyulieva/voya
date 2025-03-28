@@ -165,52 +165,52 @@ class CountryChoices(models.TextChoices):
 
 class TransportationType(models.TextChoices):
     TRANSPORT = '', 'Select an option'
-    PRIVATE_BUS = 'private bus', 'Private Bus'
-    PUBLIC_BUSES = 'public buses', 'Public Buses'
-    TRAINS = 'trains', 'Trains'
-    FLIGHTS = 'flights', 'Flights'
-    TAXI = 'taxi', 'Taxi'
-    AIRPORT_STATION_TRANSFERS = 'airport/station transfers', 'Airport/Station Transfers'
-    NO_TRANSPORTATION = 'no transportation', 'No transportation'
-    OTHER = 'other', 'Other'
+    PRIVATE_BUS = 'Private bus', 'Private bus'
+    PUBLIC_BUSES = 'Public buses', 'Public buses'
+    TRAINS = 'Trains', 'Trains'
+    FLIGHTS = 'Flights', 'Flights'
+    TAXI = 'Taxi', 'Taxi'
+    AIRPORT_STATION_TRANSFERS = 'Airport/Station transfers', 'Airport/Station transfers'
+    NO_TRANSPORTATION = 'No transportation', 'No transportation'
+    OTHER = 'Other', 'Other'
 
 
 class PublicTransportationType(models.TextChoices):
     PUB_TRANSP = '', 'Select an option'
-    PUBLIC_BUS = 'public bus', 'Public Bus'
-    TRAIN = 'train', 'Train'
-    FLIGHTS = 'flights', 'Flights'
-    FERRY = 'ferry', 'Ferry'
-    METRO = 'metro', 'Metro'
-    OTHER = 'other', 'Other'
+    PUBLIC_BUS = 'Public bus', 'Public bus'
+    TRAIN = 'Train', 'Train'
+    FLIGHTS = 'Flights', 'Flights'
+    FERRY = 'Ferry', 'Ferry'
+    METRO = 'Metro', 'Metro'
+    OTHER = 'Other', 'Other'
 
 
 class PrivateTransportationType(models.TextChoices):
     PR_TRANSP = '', 'Select an option'
-    PRIVATE_BUS = 'private bus', 'Private bus'
-    PRIVATE_CAR = 'private car', 'Private car'
-    PRIVATE_VAN = 'private van', 'Private van'
-    PRIVATE_BOAT = 'private boat', 'Private boat'
-    LUXURY_CAR = 'luxury car (4pax)', 'Luxury car (4 pax)'
-    LUXURY_VAN = 'luxury van (7pax)', 'Luxury van (7 pax)'
-    LUXURY_BUS = 'luxury bus (8+pax)', 'Luxury bus (8+ pax)'
-    CHECK_POINT = 'check point', 'Check point'
-    DRIVER_ACCOMMODATION = 'driver accommodation', 'Driver accommodation'
-    DRIVER_MEALS = 'driver meals', 'Driver meals'
-    MOTORWAYS_PARKINGS = 'motorways and parkings', 'Motorways and parkings'
-    OTHER = 'other', 'Other'
+    PRIVATE_BUS = 'Private bus', 'Private bus'
+    PRIVATE_CAR = 'Private car', 'Private car'
+    PRIVATE_VAN = 'Private van', 'Private van'
+    PRIVATE_BOAT = 'Private boat', 'Private boat'
+    LUXURY_CAR = 'Luxury car (4pax)', 'Luxury car (4 pax)'
+    LUXURY_VAN = 'Luxury van (7pax)', 'Luxury van (7 pax)'
+    LUXURY_BUS = 'Luxury bus (8+pax)', 'Luxury bus (8+ pax)'
+    CHECK_POINT = 'Check point', 'Check point'
+    DRIVER_ACCOMMODATION = 'Driver accommodation', 'Driver accommodation'
+    DRIVER_MEALS = 'Driver meals', 'Driver meals'
+    MOTORWAYS_PARKINGS = 'Motorways and parkings', 'Motorways and parkings'
+    OTHER = 'Other', 'Other'
 
 
 class AccommodationsType(models.TextChoices):
     ACC = 'acc', 'Select accommodations type'
-    TWO_TREE_STAR_HOTELS = '2-3 star hotels', '2-3 Star Hotels'
-    TREE_FOUR_STAR_HOTELS = '3-4 star hotels', '3-4 Star Hotels'
-    FOUR_FIVE_STAR_HOTELS = '4-5 star hotels', '4-5 Star Hotels'
-    HOSTELS_WITH_PRIVATE_BATHROOM = 'hostels with private bathroom', 'Hostels with private bathroom'
-    APARTMENT = 'apartment', 'Apartment'
-    CAMPING = 'camping', 'Camping'
-    NONE = 'none', 'None -  I\'ll take care of it'
-    OTHER = 'other', 'Other'
+    TWO_TREE_STAR_HOTELS = '2-3 Star hotels', '2-3 Star Hotels'
+    TREE_FOUR_STAR_HOTELS = '3-4 Star hotels', '3-4 Star Hotels'
+    FOUR_FIVE_STAR_HOTELS = '4-5 Star hotels', '4-5 Star Hotels'
+    HOSTELS_WITH_PRIVATE_BATHROOM = 'Hostels with private bathroom', 'Hostels with private bathroom'
+    APARTMENT = 'Apartment', 'Apartment'
+    CAMPING = 'Camping', 'Camping'
+    NONE = 'None', 'None -  I\'ll take care of it'
+    OTHER = 'Other', 'Other'
 
 
 class HotelType(models.TextChoices):
@@ -219,26 +219,26 @@ class HotelType(models.TextChoices):
     THREE_STAR_HOTEL = '3 Stars hotel', '3 Stars hotel'
     FOUR_STAR_HOTEL = '4 Stars hotel', '4 Stars hotel'
     FIVE_STAR_HOTEL = '5 Stars hotel', '5 Stars hotel'
-    HOSTEL_WITH_PRIVATE_BATHROOM = 'hostel private bathroom', 'Hostel with private bathroom'
-    APARTMENT = 'apartment', 'Apartment'
-    CAMPING = 'camping', 'Camping'
+    HOSTEL_WITH_PRIVATE_BATHROOM = 'Hostel private bathroom', 'Hostel with private bathroom'
+    APARTMENT = 'Apartment', 'Apartment'
+    CAMPING = 'Camping', 'Camping'
 
 
 class MealsType(models.TextChoices):
-    MEALS = 'meal', 'Select meals service'
-    BREAKFAST_ONLY = 'breakfast only (BB)', 'Breakfast Only (BB)'
-    BREAKFAST_AND_DINNER = 'breakfast & dinner (HB)', 'Breakfast & Dinner (HB)'
-    BREAKFAST_LUNCH_DINNER = 'breakfast, lunch & dinner (FB)', 'Breakfast, Lunch & Dinner (FB)'
-    NO_MEALS_INCLUDED = 'no meals included', 'No meals included'
-    OTHER = 'other', 'Other'
+    MEALS = 'Meal', 'Select meals service'
+    BREAKFAST_ONLY = 'Breakfast only (BB)', 'Breakfast only (BB)'
+    BREAKFAST_AND_DINNER = 'Breakfast & dinner (HB)', 'Breakfast & dinner (HB)'
+    BREAKFAST_LUNCH_DINNER = 'Breakfast, lunch & dinner (FB)', 'Breakfast, lunch & dinner (FB)'
+    NO_MEALS_INCLUDED = 'No meals included', 'No meals included'
+    OTHER = 'Other', 'Other'
 
 
 class StaffChoices(models.TextChoices):
     STAFF = 'staff', "Select staff service"
     TOUR_LEADER = 'Tour leader during the entire trip', 'Tour leader during the entire trip'
     OFFICIAL_TOURIST_GUIDES = 'Official tourist guides in each city'
-    NO_NEED = 'no need', 'No staff needed'
-    OTHER = 'other', 'Other'
+    NO_NEED = 'No need', 'No staff needed'
+    OTHER = 'Other', 'Other'
 
 
 class GroupChoice(models.TextChoices):
@@ -273,6 +273,6 @@ class CurrencyChoices(models.TextChoices):
 
 class ActivityTypeChoices(models.TextChoices):
     CHOICE = '', 'Select an option'
-    TICKET = 'ticket', 'Ticket'
-    PACK = 'pack', 'Package'
-    OTHER = 'other', 'Other'
+    TICKET = 'Ticket', 'Ticket'
+    PACK = 'Pack', 'Package'
+    OTHER = 'Other', 'Other'
