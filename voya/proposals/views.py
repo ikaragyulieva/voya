@@ -389,6 +389,12 @@ def proposal_pdf_view(request, pk):
                 elif hasattr(service_object, 'type'):
                     item.service_name = service_object.type
 
+                if hasattr(service_object, 'category'):
+                    item.category = service_object.category
+
+                if hasattr(service_object, 'label'):
+                    item.label = service_object.label
+
             if item.section_name == 'Accommodations':
                 accommodation_items.append(item)
             elif item.section_name == 'Public Transport':
@@ -414,7 +420,7 @@ def proposal_pdf_view(request, pk):
                 meal_items.append(item)
 
         # Get proposal's budget
-        budget = ProposalBudget.objects.filter(proposal=proposal)
+        budget = ProposalBudget.objects.filter(proposal=proposal).order_by('pax')
         foc_pax = [budget_option.free_of_charge for budget_option in budget]
 
         if form.is_valid():
@@ -441,10 +447,14 @@ def proposal_pdf_view(request, pk):
                 company_email = proposal.trip_request.created_by_company.billing_email
 
             proposal_budget = []
+            previous_paxs = []
 
             # Calculate final price if a commission is added
 
             for budget_option in budget:
+                if budget_option.pax in previous_paxs:
+                    continue
+
                 if commission > 0.00:
                     budget_final_price = budget_option.final_price * Decimal(1 + (commission / 100))
                     budget_final_price_per_person = budget_option.fina_price_per_person * Decimal(
@@ -453,18 +463,33 @@ def proposal_pdf_view(request, pk):
                     budget_final_price = budget_option.final_price
                     budget_final_price_per_person = budget_option.fina_price_per_person
 
-                pre_payment = budget_final_price * Decimal(0.20)
+                deposit = budget_final_price * Decimal(0.30)
+                final_payment = budget_final_price * Decimal(0.40)
 
                 proposal_budget.append({
                     'id': budget_option.id,
                     'pax': budget_option.pax,
                     'final_price': budget_final_price,
                     'final_price_per_person': budget_final_price_per_person,
-                    'pre_payment': pre_payment,
+                    'deposit': deposit,
+                    'final_payment': final_payment,
                 })
 
+                previous_paxs.append(budget_option.pax)
+
+            trip_start_date = TripRequests.objects.get(request_proposal=proposal).trip_start_date
             current_date = timezone.now()
-            due_date = current_date + timedelta(days=7)
+            deposit_due_date = current_date + timedelta(days=7)
+            second_due_date = trip_start_date - timedelta(days=90)
+            final_due_date = trip_start_date - timedelta(days=31)
+
+            payment_terms = {
+                'deposit_due_date': deposit_due_date,
+                'second_due_date': second_due_date,
+                'final_due_date': final_due_date,
+
+            }
+
             # Render template to HTML with the user's choices
             html_string = render_to_string('proposals/pdf-proposal.html', {
                 'logo_option': logo_option,
@@ -485,7 +510,7 @@ def proposal_pdf_view(request, pk):
                 'meal_items': meal_items,
                 'budget': budget,
                 'current_date': current_date,
-                'due_date': due_date,
+                'payment_terms': payment_terms,
                 'company_name': company_name,
                 'company_address': company_address,
                 'company_address_2': company_address_2,
@@ -497,8 +522,9 @@ def proposal_pdf_view(request, pk):
 
             # 4. Return as a download
             response = HttpResponse(pdf_file, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="proposal.pdf"'
+            response['Content-Disposition'] = 'attachment; filename="voya-proposal.pdf"'
             return response
+            # return HttpResponse(html_string)
     else:
         form = PDFOptionsForm()
 
@@ -718,7 +744,7 @@ class HistoryLogView(ListView):
             enriched_history.append({
                 "entry": entry,
                 "changes": changes,
-                "model_name":  entry.instance._meta.verbose_name.title(),
+                "model_name": entry.instance._meta.verbose_name.title(),
                 "service_name": service_name,
                 "timestamp": entry.history_date.astimezone(timezone.get_current_timezone()),  # Localized datetime
             })

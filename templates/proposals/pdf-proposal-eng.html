@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
+
 {% load number_formatting %}
 
 <style>
@@ -166,19 +167,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         display: none;
     }
 
-    .footer-thanks {
-        {#font-size: 1.125em;#}
-        margin-top: 20px;
-        text-align: right;
-        vertical-align: center;
-    }
-    .footer-thanks img {
-        display: inline-block;
-        position: relative;
-        top: 1px;
-        width: 13px;
-        margin-right: 4px;
-    }
+    {#.footer-thanks {#}
+    {#    font-size: 1.125em;#}
+    {##}
+    {##}
+    {#.footer-thanks img {#}
+    {#    display: inline-block;#}
+    {#    position: relative;#}
+    {#    top: 1px;#}
+    {#    width: 16px;#}
+    {#    margin-right: 4px;#}
+    {##}
 
     {#.footer-info {#}
     {#    float: right;#}
@@ -285,7 +284,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             </div>
         </td>
         <td class="title">
-            <strong>PROPUESTA</strong>
+            <strong>PROPOSAL</strong>
         </td>
     </tr>
     <tr>
@@ -307,7 +306,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             {{ company_address_2 }}
         </td>
         <td>
-            Fecha de emisión: <strong>{% now "F j, Y" %}</strong>
+            Issue Date: <strong>{% now "F j, Y" %}</strong>
         </td>
     </tr>
     <tr>
@@ -315,7 +314,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             {{ company_email }}
         </td>
         <td>
-            ID de propuesta: <strong>{{ proposal.trip_request.slug }}</strong>
+            Proposal ID: <strong>{{ proposal.trip_request.slug }}</strong>
         </td>
 
     </tr>
@@ -324,9 +323,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <!-- Page Counter -->
 
 <div class="page-container">
-    Página
+    Page
     <span class="page"></span>
-    de
+    of
     <span class="pages"></span>
 </div>
 
@@ -334,7 +333,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 <div class="footer">
     <div class="footer-info">
-        <span>TITULAR DE LA CUENTA: DROMO SA</span> |
+        <span>Account Holder: Dromo SA</span> |
         <span> IBAN: BE38967279021472</span> |
         <span>BIC: TRWIBEB1XXX</span>
     </div>
@@ -345,11 +344,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <table class="line-items-container">
     <thead>
     <tr>
-        <th class="heading-date">Fecha</th>
-        <th class="heading-type">Tipo</th>
-        <th class="heading-service-details">Detalles del servicio</th>
-        <th class="heading-service-details">Descripción</th>
-        <th class="heading-city">Ciudad</th>
+        <th class="heading-date">Date</th>
+        <th class="heading-type">Type</th>
+        <th class="heading-service-details">Service Details</th>
+        <th class="heading-service-details">Description</th>
+        <th class="heading-city">City</th>
     </tr>
     </thead>
     <tbody>
@@ -358,7 +357,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in accommodation_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Alojamiento</td>
+                <td>Accommodation</td>
                 <td>{{ item.service_name }}</td>
                 <td>{{ item.category }}
                     {% if item.additional_notes %}
@@ -374,7 +373,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in meal_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Comidas</td>
+                <td>Meals</td>
                 <td>{{ item.additional_notes }}</td>
                 <td>-</td>
                 <td class="bold">{{ item.city }}</td>
@@ -386,7 +385,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in private_transport_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Transporte privado</td>
+                <td>Private transport</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -404,7 +403,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in public_transport_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Transporte publico</td>
+                <td>Public transport</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -422,7 +421,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in activity_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Actividades extra</td>
+                <td>Extra Activities</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -440,7 +439,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in transfer_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Traslado</td>
+                <td>Transfer</td>
                 <td>{{ item.service_name }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -458,7 +457,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in guides_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Guía local</td>
+                <td>Local guide</td>
                 <td>{{ item.label }}</td>
                 <td>
                     {% if item.additional_notes %}
@@ -494,7 +493,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in other_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Otros</td>
+                <td>Other</td>
                 <td>{{ item.additional_notes }}</td>
                 <td>-</td>
                 <td class="bold">{{ item.city }}</td>
@@ -511,8 +510,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     <thead>
     <tr>
         <th class="total-prices heading-pax">PAX</th>
-        <th class="total-prices heading-price-person">Precio por persona</th>
-        <th class="total-prices heading-total-price">Precio total</th>
+        <th class="total-prices heading-price-person">Price per person</th>
+        <th class="total-prices heading-total-price">Total price</th>
     </tr>
     </thead>
     <tbody>
@@ -546,13 +545,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <table class="line-items-container cancellation">
     <thead>
     <tr>
-        <th>Validez de la propuesta:</th>
+        <th>Proposal Validity:</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td class="payment-info">La propuesta es válida por <strong>7 días</strong> a partir de la fecha de recepción.<br>
-            Tras este período, nos reservamos el derecho de emitir una propuesta revisada.
+        <td class="payment-info">The proposal is valid for <strong>7 days</strong> from the date of receipt.<br>
+            After this period, we reserve the right to reissue a revised proposal.
         </td>
     </tr>
     </tbody>
@@ -563,42 +562,42 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <table class="line-items-container price-includes">
     <thead>
     <tr>
-        <th>El precio incluye:</th>
+        <th>Price Include:</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td class="payment-info">
             {% if accommodation_items %}
-                <div>Alojamientos mencionados anteriormente</div>
+                <div>Accommodations mentioned above</div>
             {% endif %}
 
             {% if meal_items %}
-                <div>Comidas mencionadas anteriormente</div>
+                <div>Meals mentioned above</div>
             {% endif %}
 
             {% if transport_items %}
-                <div>Transportes mencionados anteriormente</div>
+                <div>Transport mentioned above</div>
             {% endif %}
 
             {% if activity_items %}
-                <div>Actividades mencionadas anteriormente</div>
+                <div>Activities mentioned above</div>
             {% endif %}
 
             {% if transfer_items %}
-                <div>Traslados mencionados anteriormente</div>
+                <div>Transfers mentioned above</div>
             {% endif %}
 
             {% if guides_items %}
-                <div>Guías mencionados anteriormente</div>
+                <div>Guides mentioned above</div>
             {% endif %}
         
             {% if tour_leader_items %}
-                <div>Tour leaders mencionados anteriormente</div>
+                <div>Tour leaders mentioned above</div>
             {% endif %}
 
             {% if other_items %}
-                <div>Otros elementos mencionados anteriormente</div>
+                <div>Other items mentioned above</div>
             {% endif %}
         </td>
     </tr>
@@ -610,25 +609,26 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <table class="line-items-container cancellation">
     <thead>
     <tr>
-        <th>Política de cancelación:</th>
+        <th>Cancellation Terms:</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td class="payment-info">
 
-            Las cancelaciones realizadas con <strong>90 días</strong> de antelación a la fecha de llegada del grupo 
-            incurrirán en una penalización equivalente al <strong>depósito no reembolsable (30%)</strong> del importe total.<br>
+            Cancellations made <strong>90 days</strong> prior to the group's scheduled arrival date will incur a
+            penalty equivalent to the <strong>non-refundable deposit (30%) </strong> of the total amount.<br>
 
-            Las cancelaciones realizadas con <strong>60 días</strong> de antelación incurrirán en una penalización 
-            del <strong>50%</strong> del importe total contratado.<br>
+            Cancellations made <strong>60 days</strong> prior to arrival will incur a penalty of <strong>50%</strong> of the
+            total contracted amount. <br>
 
-            Las cancelaciones realizadas con <strong>30 días o menos</strong> de antelación incurrirán 
-            en una penalización del <strong>100%</strong> del importe total contratado.<br><br>
+            Cancellations made <strong>30 days or fewer</strong> prior to arrival will incur a penalty of <strong>100%</strong>
+            of the total contracted amount. <br><br>
 
-            <strong>Estas penalizaciones aplican independientemente del cumplimiento del calendario de pagos 
-                acordado por parte del cliente.</strong>
-            
+            <strong>Cancellation fees shall apply irrespective of the client's compliance with the agreed payment
+                schedule</strong>.
+
+
         </td>
     </tr>
     </tbody>
@@ -638,18 +638,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <table class="line-items-container cancellation">
     <thead>
     <tr>
-        <th>Condiciones y calendario de pago:</th>
+        <th>Payment Terms and Schedule:</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td class="payment-info">
-           Un pago del <strong>30%</strong> del costo total del viaje debe realizarse 
-            al momento de la firma del contrato – este importe es <strong>no reembolsable</strong>.<br>
-            Un pago adicional del <strong>30%</strong> debe abonarse <strong>90 días</strong> antes de la 
-            llegada del grupo, de modo que para ese momento se haya abonado el <strong>60% del total</strong>.<br>
-            El <strong>40%</strong> restante debe abonarse <strong>30 días antes de la llegada del grupo</strong>, 
-            completando así el <strong>100% del pago</strong>.
+            A <strong>30%</strong> payment of the total trip cost is due upon signing the contract – this amount is <strong>non-refundable</strong>.<br>
+            An additional <strong>30%</strong> payment is required <strong>90 days</strong> prior to the group’s arrival, meaning that <strong>60% of the total cost</strong> must be paid by that time.<br>
+            The remaining <strong>40%</strong> of the total trip cost, completing <strong>100% of the payment</strong>, is due <strong>30 days before the group’s arrival</strong>.
         </td>
     </tr>
     </tbody>
@@ -658,30 +655,30 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <table class="line-items-container has-bottom-border payment">
     <thead>
     <tr>
-        <th>Cuota de pago</th>
-        <th>Fecha límite</th>
+        <th>Payment Quota</th>
+        <th>Due By</th>
         <th>PAX</th>
-        <th>Importe</th>
+        <th>Amount</th>
     </tr>
     </thead>
     <tbody>
     {% for b in proposal_budget %}
     <tr>
-        <td class="payment-info large">30% Depósito</td>
+        <td class="payment-info large">30% Deposit</td>
         <td class="large">{{ payment_terms.deposit_due_date|date:"F j, Y" }}</td>
         <td class="large"><div>{{ b.pax }}</div></td>
         <td class="large total"><div>€ {{ b.deposit|format_price_whitespace }}</div></td>
     </tr>
     
     <tr>
-        <td class="payment-info large">30% Segundo pago (60% del total)</td>
+        <td class="payment-info large">30% Second Payment (60% of the total)</td>
         <td class="large">{{ payment_terms.second_due_date|date:"F j, Y" }}</td>
         <td class="large"><div>{{ b.pax }}</div></td>
         <td class="large total"><div>€ {{ b.deposit|format_price_whitespace }}</div></td>
     </tr>
     
     <tr>
-        <td class="payment-info large">40% Pago final (100% del total)</td>
+        <td class="payment-info large">40% Final Payment (100% of the total)</td>
         <td class="large">{{ payment_terms.final_due_date|date:"F j, Y" }}</td>
         <td class="large"><div>{{ b.pax }}</div></td>
         <td class="large total"><div>€ {{ b.final_payment|format_price_whitespace }}</div></td>
@@ -714,8 +711,5 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 {#    </tr>#}
 {#    </tbody>#}
 {#</table>#}
-<div class="footer-thanks">
-    <img src="https://cdn-user-icons.flaticon.com/158017/158017163/1743167285557.svg?token=exp=1743168200~hmac=db0c22df35be83849578f7d03e511b41" alt="heart">
-    <span>Hecho con amor por el equipo de Dromo!</span>
-</div>
+
 </body>
