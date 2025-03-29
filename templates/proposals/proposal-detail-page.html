@@ -241,8 +241,8 @@
                     </ul>
                 </div>
             {% endif %}
-        
-        <!-- Meals Section-->
+
+            <!-- Meals Section-->
 
             {% if meal_items %}
                 <hr class="custom-line">
@@ -365,7 +365,7 @@
                                     </div>
                                 </div>
                             </li>
-                             <!-- Hidden description row -->
+                            <!-- Hidden description row -->
                             <li class="table-row description-row" style="display: none;">
                                 <div class="col col-full">
                                     {{ item.additional_notes }}
@@ -418,7 +418,7 @@
                                     </div>
                                 </div>
                             </li>
-                             <!-- Hidden description row -->
+                            <!-- Hidden description row -->
                             <li class="table-row description-row" style="display: none;">
                                 <div class="col col-full">
                                     {{ item.additional_notes }}
@@ -470,7 +470,7 @@
                                     </div>
                                 </div>
                             </li>
-                             <!-- Hidden description row -->
+                            <!-- Hidden description row -->
                             <li class="table-row description-row" style="display: none;">
                                 <div class="col col-full">
                                     {{ item.additional_notes }}
@@ -521,7 +521,7 @@
                                     </div>
                                 </div>
                             </li>
-                             <!-- Hidden description row -->
+                            <!-- Hidden description row -->
                             <li class="table-row description-row" style="display: none;">
                                 <div class="col col-full">
                                     {{ item.additional_notes }}
@@ -572,7 +572,7 @@
                                     </div>
                                 </div>
                             </li>
-                             <!-- Hidden description row -->
+                            <!-- Hidden description row -->
                             <li class="table-row description-row" style="display: none;">
                                 <div class="col col-full">
                                     {{ item.additional_notes }}
@@ -659,7 +659,60 @@
 
             <hr class="custom-line">
 
-            <div class="trip-section">
+            <div class="trip-section budget-section">
+                <div class="state-details-btn">
+{#                    <div class="prop-status">#}
+{#                        <p>State:</p>#}
+{#                        <p id="draft-status">{{ proposal.status }}</p>#}
+{##}
+{#                    </div>#}
+                    <div class="action-btn request-action-btn proposal-action-btn">
+
+                        {% if proposal.status == 'Ready for review' %}
+                            <!-- New Proposal Status-->
+                            <img
+                                    src="{% static 'images/review.png' %}"
+                                    alt="Ready for review"
+                                    title="Status: Ready for review"
+                            />
+                        {% elif proposal.status == 'Not finished' %}
+                            <!-- Active Proposal Status -->
+                            <img
+                                    src="{% static 'images/wip.png' %}"
+                                    alt="WIP Proposal"
+                                    title="Status: Not finished"
+                            />
+
+                        {% elif proposal.status == 'Send to client' %}
+                            <!-- Closed Proposal Status -->
+                            <img
+                                    src="{% static 'images/share-with-client-green.png' %}"
+                                    alt="Shared Proposal"
+                                    title="Status: Shared with client"
+                            />
+                        {% endif %}
+                                    
+                        <!-- Link to Edit Proposal Page -->
+                        <a href="{% url 'edit-proposal' pk=proposal.pk %}"
+                           class="action-link"
+                           title="Edit Proposal">
+                            <img
+                                    src="{% static 'images/edit-icon.png' %}"
+                                    alt="Edit button"
+                            />
+                        </a>
+
+                        <a href="{% url 'proposal_download' pk=proposal.pk %}"
+                           class="action-link delete-link">
+                            <img
+                                    src="{% static 'images/download.png' %}"
+                                    alt="Download button"
+                                    title="Download"
+                            />
+
+                        </a>
+                    </div>
+                </div>
                 <div class="budget-container">
                     <table class="budget-table" id="budget-table">
 
@@ -739,12 +792,6 @@
                         </tfoot>
 
                     </table>
-
-                    <div class="prop-status">
-                        <p>State:</p>
-                        <p id="draft-status">{{ proposal.status }}</p>
-
-                    </div>
 
                 </div>
 

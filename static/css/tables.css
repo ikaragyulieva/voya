@@ -25,6 +25,16 @@
     justify-content: space-around;
 }
 
+.proposal-action-btn {
+    gap: 10px;
+}
+
+.proposal-action-btn a:hover{
+    transform: unset; /* Slight zoom on hover */
+    background-color: unset; /* Subtle background highlight */
+    padding: unset;
+}
+
 .table_img img {
     width: 2em;
     height: 2em;
@@ -477,6 +487,7 @@ h2 {
         text-align: right;
     }
 
+
 }
 
 .budget-container {
@@ -614,6 +625,14 @@ h2 {
     padding: 0 12px;
 }
 
+.state-details-btn{
+    width: 100%;
+    padding: 0 12px;
+    .request-action-btn{
+        justify-content: right;
+    }
+}
+
 #id_status {
     width: 150px !important;
     margin-top: unset;
@@ -646,6 +665,7 @@ h2 {
     background: transparent;
     border-color: transparent;
     align-content: end;
+    cursor: pointer;
 
 }
 

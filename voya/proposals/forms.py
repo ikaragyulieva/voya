@@ -106,7 +106,7 @@ class PDFOptionsForm(forms.Form):
         choices=LogoChoices,
         label="",
         widget=forms.Select(attrs={'placeholder': 'Draft'}),
-        initial='Voya logo'
+        initial='Dromo'
     )
 
     commission = forms.DecimalField(

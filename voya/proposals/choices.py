@@ -53,7 +53,7 @@ class StatusChoices(models.TextChoices):
 
 class LogoChoices(models.TextChoices):
     NONE = "None", "None"
-    VOYA_LOGO = "Voya logo", "Voya logo"
+    DROMO_LOGO = "Dromo", "Dromo"
     COMPANY_LOGO = "My company's logo", "My company's logo"
 
 

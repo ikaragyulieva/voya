@@ -353,6 +353,7 @@ def proposal_pdf_view(request, pk):
 
         # Get Proposal data
         proposal = get_object_or_404(Proposal, id=pk)
+        trip_start_date = TripRequests.objects.get(request_proposal=proposal).trip_start_date
 
         # Get proposal's items
         items = ProposalSectionItem.objects.filter(proposal=proposal).order_by("order")
@@ -388,9 +389,11 @@ def proposal_pdf_view(request, pk):
                     item.service_name = service_object.name
                 elif hasattr(service_object, 'type'):
                     item.service_name = service_object.type
+                elif hasattr(service_object, 'object.get_type_display'):
+                    item.service_name = service_object.get_type_display()
 
                 if hasattr(service_object, 'category'):
-                    item.category = service_object.category
+                    item.category = service_object.get_category_display()
 
                 if hasattr(service_object, 'label'):
                     item.label = service_object.label
@@ -421,8 +424,20 @@ def proposal_pdf_view(request, pk):
 
         # Get proposal's budget
         budget = ProposalBudget.objects.filter(proposal=proposal).order_by('pax')
-        foc_pax = [budget_option.free_of_charge for budget_option in budget]
+        foc_pax = [budget_option.free_of_charge for budget_option in budget][0]
+        foc_amount = [budget_option.free_of_charge_amount for budget_option in budget][0]
+        item = {
+            'proposal': proposal,
+            'section_name': 'Other Services - Variable',
+            'quantity': foc_pax,
+            'additional_notes': 'Gratuidad',
+            'corresponding_trip_date': trip_start_date,
+            'city': '-',
+            'price': foc_amount,
 
+        }
+
+        other_items.append(item)
         if form.is_valid():
             logo_option = form.cleaned_data['logo_options']
             commission = form.cleaned_data['commission']
@@ -435,7 +450,7 @@ def proposal_pdf_view(request, pk):
             # Set logo
             if logo_option == 'None':
                 logo = None
-            elif logo_option == 'Voya logo':
+            elif logo_option == 'Dromo':
                 logo = 'https://dromo.travel/wp-content/uploads/128px_Logo_Dromo.png'
             elif logo_option == "My company's logo":
                 logo = proposal.trip_request.created_by_company.logo.url
@@ -477,7 +492,7 @@ def proposal_pdf_view(request, pk):
 
                 previous_paxs.append(budget_option.pax)
 
-            trip_start_date = TripRequests.objects.get(request_proposal=proposal).trip_start_date
+
             current_date = timezone.now()
             deposit_due_date = current_date + timedelta(days=7)
             second_due_date = trip_start_date - timedelta(days=90)
