@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 import logging
-from datetime import timedelta
+from datetime import timedelta, datetime
 from itertools import chain
 from operator import attrgetter
 
@@ -31,6 +31,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.formats import date_format
 from django.utils.text import capfirst
 from django.views.generic import CreateView, TemplateView, ListView, UpdateView
 from drf_spectacular.utils import extend_schema
@@ -532,12 +533,14 @@ def proposal_pdf_view(request, pk):
                 'company_email': company_email,
             })
 
+            file_name = f"DromoProposal-{proposal.trip_request.slug}-{current_date:%Y-%m-%d}.pdf"
+
             # 3. Convert the HTML to PDF
             pdf_file = HTML(string=html_string).write_pdf()
 
             # 4. Return as a download
             response = HttpResponse(pdf_file, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="voya-proposal.pdf"'
+            response['Content-Disposition'] = f'attachment; filename="{file_name}"'
             return response
             # return HttpResponse(html_string)
     else:
@@ -679,7 +682,7 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['budget'] = budget
         context['current_request'] = current_request
         context['foc_pax'] = foc_pax[0] if foc_pax else 0
-        context['city_choices'] = Location.objects.all()
+        context['city_choices'] = Location.objects.all().order_by("city_name")
         context['status_choices'] = StatusChoices.choices
         context['meal_options'] = MealChoices
         context['budget_id_min'] = budget_id_min

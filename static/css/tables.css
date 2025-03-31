@@ -213,7 +213,6 @@ h2 {
     }
 }
 
-
 .requests-table {
     .col-1 {
         flex-basis: 10%;
@@ -274,6 +273,9 @@ h2 {
     }
 }
 
+.table-totals-row {
+    margin-bottom: unset !important;
+}
 
 .table-services {
     width: 65%;

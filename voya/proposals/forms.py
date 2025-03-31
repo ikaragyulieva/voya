@@ -54,7 +54,7 @@ class CreateItemForm(forms.ModelForm):
     )
 
     city = forms.ModelChoiceField(
-        queryset=Location.objects.all(),
+        queryset=Location.objects.all().order_by("city_name"),
         empty_label="Select city",
         widget=forms.Select(
             attrs={
@@ -67,6 +67,16 @@ class CreateItemForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'class': 'description-field'
+            }
+        )
+    )
+
+    item_totals = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(
+            attrs={
+                'readonly': 'readonly',
+                'placeholder': '€ 0.00',
             }
         )
     )
@@ -113,6 +123,6 @@ class PDFOptionsForm(forms.Form):
         max_digits=10,
         label="",
         decimal_places=2,
-        # initial=0,
+        initial=0,
         # help_text='Commission should be added as percentage'
     )

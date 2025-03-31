@@ -76,6 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 input.value = "";
             }
             calculateBudget();
+            calculateSectionItemsTotals();
+
         });
     };
 
@@ -90,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ? `€ ${parseFloat(selectedService.price).toFixed(2)}`
                     : "";
                 calculateBudget();
+                calculateSectionItemsTotals();
             });
         });
     };
@@ -209,6 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 updatePriceQuantityField(serviceDropdown, sectionName, servicePriceField, serviceQuantityField);
             }
+
+            calculateSectionItemsTotals();
+
         });
     });
 
@@ -258,6 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
             }
+            calculateSectionItemsTotals();
         }
     });
 
@@ -265,6 +272,34 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize Flatpickr on Page Load
     initializeFlatpickr();
 });
+
+// Calculate totals for each Section Item table
+function calculateSectionItemsTotals() {
+    const sections = document.querySelectorAll(".trip-section");
+
+    sections.forEach(section => {
+        const table = section.querySelector(".requests-table");
+        const totalCell = section.querySelector(".table-total");
+        let sectionTotal = 0;
+
+        if (table) {
+            const rows = table.querySelectorAll(".table-row:not(.description-row)");
+            rows.forEach(row => {
+                const priceField = row.querySelector("#service-price");
+                const quantityField = row.querySelector("input[name='quantity']");
+
+                const price = parseFloat(priceField?.value.replace("€", "").trim()) || 0;
+                const quantity = parseInt(quantityField?.value) || 0;
+
+                sectionTotal += price * quantity;
+            })
+        }
+
+        if (totalCell) {
+            totalCell.textContent = `€ ${sectionTotal.toFixed(2)}`;
+        }
+    });
+}
 
 
 function initializeDragAndDrop(table) {
@@ -860,10 +895,12 @@ document.addEventListener("DOMContentLoaded", function () {
         table.addEventListener("input", (event) => {
             if (event.target.matches("#service-price, input[name='quantity'], select[id='service-dropdown']")) {
                 calculateBudget();
+                calculateSectionItemsTotals();
             }
         });
     });
 
     // Initial calculation on page load
     calculateBudget();
+    calculateSectionItemsTotals();
 });
