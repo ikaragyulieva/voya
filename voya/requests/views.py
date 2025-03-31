@@ -5,6 +5,8 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from voya.clients.models import ClientProfile
 from voya.employees.models import EmployeeProfile
+from voya.proposals.models import Proposal
+from voya.proposals.utils import clone_proposal_data
 from voya.requests import models, forms
 from voya.utils import get_user_obj
 
@@ -69,8 +71,23 @@ class CloneRequestView(NewRequestView):
         return initial_data
 
     def form_valid(self, form):
+        # Get original request before it is overwritten, to use it for cloning proposal
+        original_request = get_object_or_404(models.TripRequests, pk=self.kwargs['pk'])
+
+        # Prevent updating the original request
         form.instance.pk = None
-        return super().form_valid(form)
+        # Save the new trip request
+        response = super().form_valid(form)
+
+        # Clone proposal if it exists
+        if hasattr(original_request, 'request_proposal'):
+            try:
+                original_proposal = original_request.request_proposal
+                clone_proposal_data(original_proposal, self.object, self.request.user)
+            except Proposal.DoesNotExist:
+                pass
+
+        return response
 
 
 class EditRequestView(mixins.LoginRequiredMixin, UpdateView):

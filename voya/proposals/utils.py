@@ -76,7 +76,6 @@ def update_proposal(proposal, data, user):
         else:
             logger.warning("⚪ No changes for Proposal")
 
-
         # Update or recreate proposal items
         existing_items = ProposalSectionItem.objects.filter(proposal=proposal)
         existing_items_map = {str(item.id): item for item in existing_items}
@@ -179,6 +178,52 @@ def update_proposal(proposal, data, user):
         to_delete_budgets.delete()
 
         return proposal, created_or_updated_items, created_or_updated_budgets
+
+
+def clone_proposal_data(original_proposal, new_request, user):
+    """Clones an existing proposal along with its items and budget."""
+
+    items_data = []
+    for item in original_proposal.items.all():
+        items_data.append({
+            'section_name': item.section_name,
+            'service_id': item.service_id,
+            'quantity': item.quantity,
+            'additional_notes': item.additional_notes,
+            'corresponding_trip_date': item.corresponding_trip_date,
+            'price': item.price,
+            'city': item.city_id,
+        })
+
+    budget_data = []
+    for budget in original_proposal.budget.all():
+        budget_data.append({
+            'pax': budget.pax,
+            'variable_cost': budget.variable_cost,
+            'fixed_cost': budget.fixed_cost,
+            'free_of_charge': budget.free_of_charge,
+            'free_of_charge_amount': budget.free_of_charge_amount,
+            'total_cost_per_person': budget.total_cost_per_person,
+            'total_cost': budget.total_cost,
+            'service_fee': budget.service_fee,
+            'margin': budget.margin,
+            'fina_price_per_person': budget.fina_price_per_person,
+            'final_price': budget.final_price,
+        })
+
+    # Construct the payload and call proposal, items and budget save functions
+    payload = {
+        'trip_id': new_request.id,
+        'proposal': {
+            'title': f"{new_request.slug}",
+            'status': 'Not finished',
+            'internal_comments': original_proposal.internal_comments or "",
+        },
+        'items': items_data,
+        'budget': budget_data,
+    }
+
+    save_proposal(payload, user)
 
 
 def save_items(proposal, items_data):

@@ -69,7 +69,7 @@ class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
         trip_id = self.kwargs.get('trip_id')
         current_request = get_object_or_404(TripRequests, pk=trip_id)
 
-        proposal = self.proposal_form_class()
+        proposal = self.proposal_form_class(trip_request=current_request)
         item_form = self.create_item_form_class()
         budget_form = self.create_budget_form_class()
         context['trip_id'] = trip_id

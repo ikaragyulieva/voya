@@ -42,6 +42,13 @@ class CreateProposalForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Add Proposal Title'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        trip_request = kwargs.pop("trip_request", None)
+        super().__init__(*args, **kwargs)
+
+        if trip_request:
+            self.fields['title'].initial = trip_request.slug
+
 
 class CreateItemForm(forms.ModelForm):
     corresponding_trip_date = forms.DateField(
