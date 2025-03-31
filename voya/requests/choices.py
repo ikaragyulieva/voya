@@ -164,7 +164,7 @@ class CountryChoices(models.TextChoices):
 
 
 class TransportationType(models.TextChoices):
-    TRANSPORT = '', 'Select an option'
+    # TRANSPORT = '', 'Select an option'
     PRIVATE_BUS = 'Private bus', 'Private bus'
     PUBLIC_BUSES = 'Public buses', 'Public buses'
     TRAINS = 'Trains', 'Trains'
@@ -176,7 +176,7 @@ class TransportationType(models.TextChoices):
 
 
 class PublicTransportationType(models.TextChoices):
-    PUB_TRANSP = '', 'Select an option'
+    # PUB_TRANSP = '', 'Select an option'
     PUBLIC_BUS = 'Public bus', 'Public bus'
     TRAIN = 'Train', 'Train'
     FLIGHTS = 'Flights', 'Flights'
@@ -186,7 +186,7 @@ class PublicTransportationType(models.TextChoices):
 
 
 class PrivateTransportationType(models.TextChoices):
-    PR_TRANSP = '', 'Select an option'
+    # PR_TRANSP = '', 'Select an option'
     PRIVATE_BUS = 'Private bus', 'Private bus'
     PRIVATE_CAR = 'Private car', 'Private car'
     PRIVATE_VAN = 'Private van', 'Private van'
@@ -202,7 +202,7 @@ class PrivateTransportationType(models.TextChoices):
 
 
 class AccommodationsType(models.TextChoices):
-    ACC = 'acc', 'Select accommodations type'
+    # ACC = 'acc', 'Select accommodations type'
     TWO_TREE_STAR_HOTELS = '2-3 Star hotels', '2-3 Star Hotels'
     TREE_FOUR_STAR_HOTELS = '3-4 Star hotels', '3-4 Star Hotels'
     FOUR_FIVE_STAR_HOTELS = '4-5 Star hotels', '4-5 Star Hotels'
@@ -214,7 +214,7 @@ class AccommodationsType(models.TextChoices):
 
 
 class HotelType(models.TextChoices):
-    ACC = '', 'Select an option'
+    # ACC = '', 'Select an option'
     TWO_STAR_HOTEL = '2 Stars hotel', '2 Stars hotel'
     THREE_STAR_HOTEL = '3 Stars hotel', '3 Stars hotel'
     FOUR_STAR_HOTEL = '4 Stars hotel', '4 Stars hotel'
@@ -225,7 +225,7 @@ class HotelType(models.TextChoices):
 
 
 class MealsType(models.TextChoices):
-    MEALS = 'Meal', 'Select meals service'
+    # MEALS = 'Meal', 'Select meals service'
     BREAKFAST_ONLY = 'Breakfast only (BB)', 'Breakfast only (BB)'
     BREAKFAST_AND_DINNER = 'Breakfast & dinner (HB)', 'Breakfast & dinner (HB)'
     BREAKFAST_LUNCH_DINNER = 'Breakfast, lunch & dinner (FB)', 'Breakfast, lunch & dinner (FB)'
@@ -234,7 +234,7 @@ class MealsType(models.TextChoices):
 
 
 class StaffChoices(models.TextChoices):
-    STAFF = 'staff', "Select staff service"
+    # STAFF = 'staff', "Select staff service"
     TOUR_LEADER = 'Tour leader during the entire trip', 'Tour leader during the entire trip'
     OFFICIAL_TOURIST_GUIDES = 'Official tourist guides in each city'
     NO_NEED = 'No need', 'No staff needed'
@@ -242,7 +242,7 @@ class StaffChoices(models.TextChoices):
 
 
 class GroupChoice(models.TextChoices):
-    GROUP = "group", "Select type of group"
+    # GROUP = "group", "Select type of group"
     CULTURAL_SIGHTSEEING = "cultural_sightseeing", "Cultural Group - Sightseeing"
     SCHOOLS_YOUTH = "schools_youth", "Schools, Students or Youth"
     BACKPACKERS = "backpackers", "Backpackers"
@@ -264,7 +264,7 @@ class GroupChoice(models.TextChoices):
 
 
 class CurrencyChoices(models.TextChoices):
-    CURRENCY = '', 'Select an option'
+    # CURRENCY = '', 'Select an option'
     EUR = 'eur', 'EUR'
     USD = 'usd', 'USD'
     MXN = 'mxn', 'MXN'
@@ -272,7 +272,7 @@ class CurrencyChoices(models.TextChoices):
 
 
 class ActivityTypeChoices(models.TextChoices):
-    CHOICE = '', 'Select an option'
+    # CHOICE = '', 'Select an option'
     TICKET = 'Ticket', 'Ticket'
     PACK = 'Pack', 'Package'
     OTHER = 'Other', 'Other'

@@ -86,7 +86,7 @@ class TripRequests(TimestampedModel):
         choices=choices.CurrencyChoices.choices,
         null=False,
         blank=False,
-        default='currency',
+        # default='currency',
 
     )
 
@@ -108,7 +108,7 @@ class TripRequests(TimestampedModel):
         choices=choices.AccommodationsType,
         blank=False,
         null=False,
-        default='acc',
+        # default='acc',
     )
 
     accommodations_details = models.CharField(
@@ -122,7 +122,7 @@ class TripRequests(TimestampedModel):
         choices=choices.MealsType,
         null=True,
         blank=True,
-        default='meal',
+        # default='meal',
     )
 
     meals_details = models.CharField(
@@ -136,7 +136,7 @@ class TripRequests(TimestampedModel):
         choices=choices.StaffChoices,
         null=True,
         blank=True,
-        default='staff',
+        # default='staff',
     )
 
     kind_of_group = models.CharField(
@@ -144,7 +144,7 @@ class TripRequests(TimestampedModel):
         choices=choices.GroupChoice,
         null=True,
         blank=True,
-        default='group',
+        # default='group',
     )
 
     type_of_trip = models.CharField(

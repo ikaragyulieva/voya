@@ -32,6 +32,31 @@ class CreateRequestForm(forms.ModelForm):
         initial='Select Company',
     )
 
+    currency = forms.ChoiceField(
+        choices=[('', 'Select an option')] + list(choices.CurrencyChoices.choices),
+        widget=forms.Select(),
+    )
+
+    accommodations = forms.ChoiceField(
+        choices=[('', 'Select an option')] + list(choices.AccommodationsType.choices),
+        widget=forms.Select(),
+    )
+
+    meals = forms.ChoiceField(
+        choices=[('', 'Select an option')] + list(choices.MealsType.choices),
+        widget=forms.Select(),
+    )
+
+    staff = forms.ChoiceField(
+        choices=[('', 'Select an option')] + list(choices.StaffChoices.choices),
+        widget=forms.Select(),
+    )
+
+    kind_of_group = forms.ChoiceField(
+        choices=[('', 'Select an option')] + list(choices.GroupChoice.choices),
+        widget=forms.Select(),
+    )
+
     class Meta:
         model = TripRequests
         fields = [
