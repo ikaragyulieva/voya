@@ -100,7 +100,7 @@ class ProposalItemsAPI(APIView):
 
         for item in items:
             label = item.get("section_name")
-            item["section_name"] = REVERSE_SECTION_KEYS.get(label, label)
+            item["section_name"] = REVERSE_SECTION_KEYS.get(label)
 
         # Validate Proposal
         proposal_serializer = ProposalSerializer(data=data.get('proposal'))
@@ -155,7 +155,7 @@ class ProposalUpdateAPI(APIView):
 
         for item in items:
             label = item.get('section_name')
-            item["section_name"] = REVERSE_SECTION_KEYS.get(label, label)
+            item["section_name"] = REVERSE_SECTION_KEYS.get(label)
 
         data['items'] = items
 
@@ -195,16 +195,16 @@ def proposal_detail(request, pk):
             'proposal': proposal,
             'profile': user_profile,
             'items': items,
-            'accommodation_items': section_items_map['ACCOMMODATIONS'],
-            'public_transport_items': section_items_map["PUBLIC_TRANSPORT"],
-            'private_transport_items': section_items_map["PRIVATE_TRANSPORT"],
-            'activity_items': section_items_map["ACTIVITY"] + section_items_map["EXTRA_ACTIVITIES"],
-            'guides_items': section_items_map["LOCAL_GUIDES"],
-            'tour_leader_items': section_items_map["TOUR_LEADER"],
-            'transfer_items': section_items_map["TRANSFERS"],
-            'other_variable_items': section_items_map["OTHER_VARIABLE"] + section_items_map["OTHER_SERVICES"],
-            'other_fixed_items': section_items_map["OTHER_FIXED"],
-            'meal_items': section_items_map["MEALS"],
+            'accommodation_items': section_items_map['Accommodations'],
+            'public_transport_items': section_items_map["Public Transport"],
+            'private_transport_items': section_items_map["Private Transport"],
+            'activity_items': section_items_map["Activity"] + section_items_map["Extra Activities"],
+            'guides_items': section_items_map["Local Guides"],
+            'tour_leader_items': section_items_map["Tour Leader"],
+            'transfer_items': section_items_map["Transfers"],
+            'other_variable_items': section_items_map["Other Services - Variable"] + section_items_map["Other Services"],
+            'other_fixed_items': section_items_map["Other Services - Fixed"],
+            'meal_items': section_items_map["Meals"],
             'budget': budget,
             'current_request': current_request,
             'foc_pax': foc_pax[0] if foc_pax else 0,
@@ -217,16 +217,16 @@ def proposal_detail(request, pk):
             'proposal': proposal,
             'profile': user_profile,
             'items': items,
-            'accommodation_items': section_items_map['ACCOMMODATIONS'],
-            'public_transport_items': section_items_map["PUBLIC_TRANSPORT"],
-            'private_transport_items': section_items_map["PRIVATE_TRANSPORT"],
-            'activity_items': section_items_map["ACTIVITY"] + section_items_map["EXTRA_ACTIVITIES"],
-            'guides_items': section_items_map["LOCAL_GUIDES"],
-            'tour_leader_items': section_items_map["TOUR_LEADER"],
-            'transfer_items': section_items_map["TRANSFERS"],
-            'other_variable_items': section_items_map["OTHER_VARIABLE"] + section_items_map["OTHER_SERVICES"],
-            'other_fixed_items': section_items_map["OTHER_FIXED"],
-            'meal_items': section_items_map["MEALS"],
+            'accommodation_items': section_items_map['Accommodations'],
+            'public_transport_items': section_items_map["Public Transport"],
+            'private_transport_items': section_items_map["Private Transport"],
+            'activity_items': section_items_map["Activity"] + section_items_map["Extra Activities"],
+            'guides_items': section_items_map["Local Guides"],
+            'tour_leader_items': section_items_map["Tour Leader"],
+            'transfer_items': section_items_map["Transfers"],
+            'other_variable_items': section_items_map["Other Services - Variable"] + section_items_map["Other Services"],
+            'other_fixed_items': section_items_map["Other Services - Fixed"],
+            'meal_items': section_items_map["Meals"],
             'budget': budget,
             'current_request': current_request
         }
@@ -568,16 +568,16 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['current_request'] = current_request
         context['proposal'] = proposal
         context['items'] = items
-        context['accommodation_items'] = section_items_map['ACCOMMODATIONS']
-        context['public_transport_items'] = section_items_map["PUBLIC_TRANSPORT"]
-        context['private_transport_items'] = section_items_map["PRIVATE_TRANSPORT"]
-        context['activity_items'] = section_items_map["ACTIVITY"] + section_items_map["EXTRA_ACTIVITIES"]
-        context['guides_items'] = section_items_map["LOCAL_GUIDES"]
-        context['tour_leader_items'] = section_items_map["TOUR_LEADER"]
-        context['transfer_items'] = section_items_map["TRANSFERS"]
-        context['other_variable_items'] = section_items_map["OTHER_VARIABLE"] + section_items_map["OTHER_SERVICES"]
-        context['other_fixed_items'] = section_items_map["OTHER_FIXED"]
-        context['meal_items'] = section_items_map["MEALS"]
+        context['accommodation_items'] = section_items_map['Accommodations']
+        context['public_transport_items'] = section_items_map["Public Transport"]
+        context['private_transport_items'] = section_items_map["Private Transport"]
+        context['activity_items'] = section_items_map["Activity"] + section_items_map["Extra Activities"]
+        context['guides_items'] = section_items_map["Local Guides"]
+        context['tour_leader_items'] = section_items_map["Tour Leader"]
+        context['transfer_items'] = section_items_map["Transfers"]
+        context['other_variable_items'] = section_items_map["Other Services - Variable"] + section_items_map["Other Services"]
+        context['other_fixed_items'] = section_items_map["Other Services - Fixed"]
+        context['meal_items'] = section_items_map["Meals"]
         context['budget'] = budget
         context['current_request'] = current_request
         context['foc_pax'] = foc_pax[0] if foc_pax else 0

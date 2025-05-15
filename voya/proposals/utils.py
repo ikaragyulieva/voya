@@ -34,18 +34,18 @@ logger = logging.getLogger(__name__)
 
 # SECTION KEYS (internal identifiers)
 SECTION_KEYS = {
-    "ACCOMMODATIONS": _("Accommodations"),
-    "PUBLIC_TRANSPORT": _("Public Transport"),
-    "PRIVATE_TRANSPORT": _("Private Transport"),
-    "TRANSFERS": _("Transfers"),
-    "EXTRA_ACTIVITIES": _("Extra Activities"),
-    "ACTIVITY": _("Activity"),
-    "LOCAL_GUIDES": _("Local Guides"),
-    "TOUR_LEADER": _("Tour Leader"),
-    "MEALS": _("Meals"),
-    "OTHER_VARIABLE": _("Other Services - Variable"),
-    "OTHER_SERVICES": _("Other Services"),
-    "OTHER_FIXED": _("Other Services - Fixed"),
+    "Accommodations": _("Accommodations"),
+    "Public Transport": _("Public Transport"),
+    "Private Transport": _("Private Transport"),
+    "Transfers": _("Transfers"),
+    "Extra Activities": _("Extra Activities"),
+    "Activity": _("Activity"),
+    "Local Guides": _("Local Guides"),
+    "Tour Leader": _("Tour Leader"),
+    "Meals": _("Meals"),
+    "Other Services - Variable": _("Other Services - Variable"),
+    "Other Services": _("Other Services"),
+    "Other Services - Fixed": _("Other Services - Fixed"),
 
 }
 
@@ -54,14 +54,14 @@ REVERSE_SECTION_KEYS = {str(v): k for k, v in SECTION_KEYS.items()}
 
 # MODEL MAP based on SECTION KEY
 SECTION_MODEL_MAP = {
-    "ACCOMMODATIONS": "Hotel",
-    "PUBLIC_TRANSPORT": "PublicTransport",
-    "PRIVATE_TRANSPORT": "PrivateTransport",
-    "TRANSFERS": "Transfer",
-    "EXTRA_ACTIVITIES": "Ticket",
-    "ACTIVITY": "Ticket",
-    "LOCAL_GUIDES": "LocalGuide",
-    "TOUR_LEADER": "Staff",
+    "Accommodations": "Hotel",
+    "Public Transport": "PublicTransport",
+    "Private Transport": "PrivateTransport",
+    "Transfers": "Transfer",
+    "Extra Activities": "Ticket",
+    "Activity": "Ticket",
+    "Local Guides": "LocalGuide",
+    "Tour Leader": "Staff",
     # MEALS / OTHER_FIXED / OTHER_VARIABLE don't map to services directly
 }
 
