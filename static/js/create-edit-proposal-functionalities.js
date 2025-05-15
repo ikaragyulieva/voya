@@ -7,7 +7,7 @@
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// [Project Name] is distributed in the hope that it will be useful,
+// Voya is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
@@ -15,10 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+// Normalize section names across languages using Django context variables
+
+const getSectionKey = (el) => {
+    return el?.dataset?.sectionKey?.trim() || el?.textContent?.trim() || "Unknown";
+};
 
 // Items functionalities
 document.addEventListener("DOMContentLoaded", function () {
-    const sections = document.querySelectorAll("[id=section]");
+    const sections = document.querySelectorAll(".trip-section");
     const servicesDataMap = {}; // Cache services data for each section dynamically
 
     // Utility Functions: Initialize Flatpickr
@@ -34,23 +39,28 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Fetching service based on the section name
-    const fetchServices = (sectionName) => {
-        if (servicesDataMap[sectionName]) return Promise.resolve(servicesDataMap[sectionName]); // Use cached data
-        return fetch(`/proposals/api/services/${sectionName}/`)
+    const fetchServices = (rawLabel) => {
+        const label = rawLabel.trim();
+        if (servicesDataMap[label]) return Promise.resolve(servicesDataMap[label]); // Use cached data
+
+        const encodedLabel = encodeURIComponent(label)
+        console.log("Calling:", `/api/proposals/services/${encodedLabel}/`);
+        return fetch(`/api/proposals/services/${encodedLabel}/`)
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 return response.json();
             })
             .then(data => {
-                servicesDataMap[sectionName] = data; // Cache data
+                servicesDataMap[label] = data; // Cache data
                 return data;
             })
-            .catch(error => console.error(`Error fetching services for ${sectionName}:`, error));
+            .catch(error => console.error(`Error fetching services for ${label}:`, error));
     };
 
-    // Logic to populate service dropdown with services based on the chosed city
+    // Logic to populate service dropdown with services based on the chose city
     const populateServiceDropdown = (serviceDropdown, sectionName, city) => {
         fetchServices(sectionName).then(data => {
+            if (!data) return;
             city = parseInt(city, 10);
             const filteredServices = data.filter(service => parseInt(service.city_id, 10) === city);
             serviceDropdown.innerHTML = "<option value=''>Select a Service</option>";
@@ -99,7 +109,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize Service Dropdowns
     sections.forEach(section => {
-        const sectionName = section.textContent.trim();
+        const rawLabel = section.querySelector(".title");
+        const sectionName = getSectionKey(rawLabel);
         const tripSection = section.closest(".trip-section");
         const serviceDropdown = tripSection.querySelector("#service-dropdown");
         const cityDropdown = tripSection.querySelector("#city-dropdown");
@@ -124,7 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function (event) {
             event.preventDefault();
             const tripSection = button.closest(".trip-section");
-            const section = tripSection.querySelector(".title").textContent.trim();
+            const rawSectionLabel = tripSection.querySelector(".title");
+            const section = getSectionKey(rawSectionLabel)
             const table = tripSection.querySelector(".requests-table");
 
             let lastRow
@@ -196,7 +208,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             initializeFlatpickr(); // Ensure date picker works for new row
             // Populate city and service dropdown and update price and quantity
-            const sectionName = tripSection.querySelector(".title").textContent.trim();
+            const rawLabel = tripSection.querySelector(".title");
+            const sectionName = getSectionKey(rawLabel);
             const cityDropdown = newRow.querySelector("#city-dropdown");
             const serviceDropdown = newRow.querySelector("#service-dropdown");
             const servicePriceField = newRow.querySelector("#service-price");
@@ -246,7 +259,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 initializeFlatpickr(); // Ensure date picker works for new row
                 // Populate city and service dropdown and update price and quantity
                 const tripSection = table.closest(".trip-section");
-                const sectionName = tripSection.querySelector(".title").textContent.trim();
+                const rawLabel = tripSection.querySelector(".title");
+                const sectionName = getSectionKey(rawLabel);
                 const cityDropdown = row.querySelector("#city-dropdown");
                 const serviceDropdown = row.querySelector("#service-dropdown");
                 const servicePriceField = row.querySelector("#service-price");
@@ -556,7 +570,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // 1. Collect items data
         document.querySelectorAll(".table-row").forEach((row, index) => {
-            const section_name = row.closest(".trip-section")?.querySelector(".title")?.textContent.trim() || ""; // Must match SectionChoices
+            const rawSectionName = row.closest(".trip-section")?.querySelector(".title") || ""; // Must match SectionChoices
+            const section_name = getSectionKey(rawSectionName);
             const serviceDropdown = row.querySelector("#service-dropdown");
 
             let service_id = null;
@@ -574,8 +589,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let cityValue = cityField?.value && cityField.value !== "Select city" ? parseInt(cityField.value, 10) : null;
 
-            const additionalNotesField = row.querySelector(".note textarea") || row.nextElementSibling?.querySelector(".description-field") || row.querySelector("#meal-dropdown");
-            const additionalNotes = additionalNotesField ? additionalNotesField.value.trim() : "No notes";
+            const additionalNotesField =
+                row.querySelector(".note textarea") ||
+                row.nextElementSibling?.querySelector(".description-field") ||
+                row.querySelector("#meal-dropdown");
+            const additionalNotes = additionalNotesField?.value?.trim() || "No notes";
 
             const itemId = row.getAttribute("data-id");
             const orderAttr = row.getAttribute("data-order");
@@ -604,7 +622,13 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             let isComplete
-            if (section_name !== "Other Services - Fixed" && section_name !== "Other Services - Variable" && section_name !== "Other Services" && section_name !== "Meals") {
+            const isMealOrOtherService =
+                section_name === "Other Services - Fixed" ||
+                section_name === "Other Services - Variable" ||
+                section_name === "Other Services" ||
+                section_name === "Meals"
+
+            if (!isMealOrOtherService) {
                 isComplete = Boolean(
                     rowData.corresponding_trip_date &&
                     rowData.city &&
@@ -612,7 +636,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     rowData.quantity > 0 &&
                     rowData.price > 0
                 );
-            } else if (section_name === "Other Services - Fixed" || section_name === "Other Services - Variable" || section_name === "Meals") {
+            } else if (isMealOrOtherService) {
                 isComplete = Boolean(
                     rowData.corresponding_trip_date &&
                     rowData.city &&
@@ -698,10 +722,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // Determine API endpoint and method dynamically
         let apiURL, apiMethod
         if (mode === "create") {
-            apiURL = `/proposals/api/create/${tripId}/`;
+            apiURL = `/api/proposals/create/${tripId}/`;
             apiMethod = 'POST';
         } else if (mode === "edit" && proposalId) {
-            apiURL = `/proposals/api/edit/${proposalId}/`;
+            apiURL = `/api/proposals/edit/${proposalId}/`;
             apiMethod = 'PUT';
         } else {
             console.error("Invalid page mode or missing proposal ID.");
@@ -775,7 +799,9 @@ const calculateBudget = () => {
             const quantity = parseInt(quantityField?.value) || 0;
 
             // Classify costs based on section title
-            const sectionTitle = table.closest(".trip-section").querySelector(".title").textContent || "";
+            const tripSection = table.closest(".trip-section")
+            const rawLabel = tripSection.querySelector(".title");
+            const sectionTitle = getSectionKey(rawLabel);
             if (["Local Guides", "Tour Leader", "Transfers", "Private Transport", "Other Services - Fixed"].some(type => sectionTitle.includes(type))) {
                 fixedCost += price * quantity;
             } else {

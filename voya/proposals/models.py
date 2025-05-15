@@ -108,13 +108,6 @@ class ProposalSectionItem(TimestampedModel):
         null=False,
     )
 
-    # city = models.CharField(
-    #     max_length=50,
-    #     choices=choices.CityChoices,
-    #     blank=False,
-    #     null=False,
-    # )
-
     city = models.ForeignKey(
         'services.Location',
         on_delete=models.RESTRICT,

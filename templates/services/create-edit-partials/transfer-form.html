@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -17,30 +17,31 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 {% load custom_filters %}
+{% load i18n %}
 
 <div class="form-section">
-    <h3>Service Information </h3>
+    <h3>{% trans "Service Information" %} </h3>
     <div class="form-fields">
 
-        <p>Transfer name *</p>
+        <p>{% trans "Transfer name" %} *</p>
         {{ form.transfer_name|placeholder:'' }}
         {% if form.transfer_name.errors %}
             <div class="error">{{ form.transfer_name.errors }}</div>
         {% endif %}
 
-        <p>Transfer type *</p>
+        <p>{% trans "Transfer type" %} *</p>
         {{ form.type }}
         {% if form.type.errors %}
             <div class="error">{{ form.type.errors }}</div>
         {% endif %}
 
-        <p>Transfer price * (€)</p>
-        {{ form.price|placeholder:'Price in €' }}
+        <p>{% trans "Transfer price" %} * (€)</p>
+        {{ form.price|placeholder:_('Price in €') }}
         {% if form.price.errors %}
             <div class="error">{{ form.price.errors }}</div>
         {% endif %}
 
-        <p>Max capacity * (e.g. 4 Pax)</p>
+        <p>{% trans "Max capacity" %} * (e.g. 4 Pax)</p>
         {{ form.capacity }}
         {% if form.capacity.errors %}
             <div class="error">{{ form.capacity.errors }}</div>

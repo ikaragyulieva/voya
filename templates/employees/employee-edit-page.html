@@ -1,55 +1,81 @@
+<!--Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load custom_filters %}
+{% load i18n %}
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Edit Profile</h2>
+        <h2>{% trans "Edit Profile" %}</h2>
 
         <form method="post" action="{% url 'employee-edit' pk=profile.pk %}">
             {% csrf_token %}
             
             {{ form.non_field_errors }}
             <div class="form-section">
-                <h3>Personal Information</h3>
+                <h3>{% trans "Personal Information" %}</h3>
                 <div class="form-fields">
 
-                    <p>Title</p>
+                    <p>{% trans "Title" %}</p>
                     {{ form.title }}
                     {% if form.title.errors %}
                         <div class="error">{{ form.title.errors }}</div>
                     {% endif %}
 
-                    <p>First name</p>
+                    <p>{% trans "First name" %}</p>
                     {{ form.first_name }}
                     {% if form.first_name.errors %}
                         <div class="error">{{ form.first_name.errors }}</div>
                     {% endif %}
 
-                    <p>Last name</p>
+                    <p>{% trans "Last name" %}</p>
                     {{ form.last_name }}
                     {% if form.last_name.errors %}
                         <div class="error">{{ form.last_name.errors }}</div>
                     {% endif %}
 
-                    <p>Job title</p>
+                    <p>{% trans "Job title" %}</p>
                     {{ form.job_title }}
                     {% if form.job_title.errors %}
                         <div class="error">{{ form.job_title.errors }}</div>
                     {% endif %}
 
-                    <p>Whatsapp number</p>
-                    {{ form.phone_number|placeholder:'e.g. +1234567890' }}
+                    <p>{% trans "Whatsapp number" %}</p>
+                    {{ form.phone_number|placeholder:_('e.g. +1234567890') }}
                     {% if form.phone_number.errors %}
                         <div class="error">{{ form.phone_number.errors }}</div>
+                    {% endif %}
+                
+                    <p>{% trans "Language" %}</p>
+                    {{ form.preferred_language|placeholder:_('Select language') }}
+                    {% if form.preferred_language.errors %}
+                        <div class="error">{{ form.preferred_language.errors }}</div>
                     {% endif %}
 
                 </div>
             </div>
             
             <div class="action-btns">
-                <button class="add-btn" type="submit">Save Changes</button>
+                <button class="add-btn" type="submit">{% trans "Save Changes" %}</button>
                 <button class="add-btn" type="button"
-                        onclick="window.location.href='{% url 'employee-profile' pk=profile.pk %}'">Cancel
+                        onclick="window.location.href='{% url 'employee-profile' pk=profile.pk %}'">
+                    {% trans "Cancel" %}
                 </button>
             </div>
         </form>

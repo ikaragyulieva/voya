@@ -1,5 +1,26 @@
+<!-- 
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see
+<https://www.gnu.org/licenses/>. 
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -10,7 +31,7 @@
             <div class="profile_img">
                 <div class="image">
                     <!-- Profile Image -->
-                    <img src="{{ object.company.logo.url }}" alt="Company Logo'"/>
+                    <img src="{{ object.company.logo.url }}" alt='{% trans "Company logo" %}'/>
                 </div>
             </div>
             <div class="personal">
@@ -27,7 +48,7 @@
                         <img
                                 class="edit-img"
                                 src="{% static 'images/edit-icon.png' %}"
-                                alt="edit button"
+                                alt='{% trans "Edit button" %}'
                         />
                     </a>
 
@@ -36,23 +57,10 @@
                         <img
                                 class="bin-img"
                                 src="{% static 'images/remove-icon.png' %}"
-                                alt="bin button"
+                                alt='{% trans "Bin button" %}'
                         />
                     </a>
                 </div>
-                {#                <div class="data">#}
-                {#                    <!-- Total Number of Photos by the User -->#}
-                {#                    <span>4</span>#}
-                {#                    <p>Total Requests</p>#}
-                {##}
-                {#                    <!-- Total Number of Pets owned by the User -->#}
-                {#                    <span>2</span>#}
-                {#                    <p>Pending</p>#}
-                {##}
-                {#                    <!-- Total Number of Likes for the User -->#}
-                {#                    <span>2</span>#}
-                {#                    <p>Closed</p>#}
-                {#                </div>#}
 
                 <h3 class="names">{{ object.job_title }}</h3>
                 <p class="email">{{ object.phone_number }}</p>
@@ -62,24 +70,24 @@
                         <img
                                 class="status-img"
                                 src="{% static 'images/green-circle.png' %}"
-                                alt="bin button"
+                                alt='{% trans "Active account" %}'
                         />
-                        <p>Active User</p>
+                        <p>{% trans "Active User" %}</p>
 
                     {% else %}
                         <div>
                             <img
                                     class="status-img"
                                     src="{% static 'images/red-circle.png' %}"
-                                    alt="user-status"
+                                    alt='{% trans "Inactive account" %}'
                             />
                         </div>
-                        <p>Inactive User</p>
+                        <p>{% trans "Inactive User" %}</p>
 
                     {% endif %}
                 </div>
                         
-                <a href="{% url 'password_change' %}" class="change-pass-btn">Change password</a>
+                <a href="{% url 'password_change' %}" class="change-pass-btn">{% trans "Change password" %}</a>
 
             </div>
         </div>

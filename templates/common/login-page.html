@@ -1,27 +1,49 @@
+<!-- 
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see
+<https://www.gnu.org/licenses/>. 
+-->
+
 {% extends 'base.html' %}
 {% load custom_filters %}
+{% load i18n %}
+
 {% block content %}
 
     <div class="edit-delete edit-photo login">
-        <h2>Log In</h2>
+        <h2>{% trans "Log In" %}</h2>
 
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div class="form-section">
-                {{ form.username|placeholder:'Email' }}
+                {{ form.username|placeholder:_('Email') }}
                 {{ form.username.errors }}
-                {{ form.password|placeholder:'Password' }}
+                {{ form.password|placeholder:_('Password') }}
                 {{ form.password.errors }}
 {#            {{ form }}#}
             </div>
         <div class="forgot-password">
-            <a href="{% url 'password_reset' %}">Forgot password?</a>
+            <a href="{% url 'password_reset' %}">{% trans "Forgot password?" %}</a>
         </div>
-            <button class="add-btn" type="submit">Log in</button>
+            <button class="add-btn" type="submit">{% trans "Log in" %}</button>
         </form>
         <div class="no-account">
-            <a href="{% url 'create-client' %}"><i>Still don't have an account? <u>Sign up here!</u></i> </a>
+            <a href="{% url 'create-client' %}"><i>{% trans "Still don't have an account?" %} <u>{% trans "Sign up here!" %}</u></i> </a>
         </div>
     </div>
 

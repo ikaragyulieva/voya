@@ -7,6 +7,8 @@ from voya.providers.models import Providers
 from voya.requests import choices
 from voya.users.models import CustomUser
 
+from django.utils.translation import gettext_lazy as _
+
 
 # Create your models here.
 
@@ -28,14 +30,6 @@ class ServiceBaseModel(TimestampedModel):
         default='cc',
     )
 
-    # city = models.CharField(
-    #     max_length=50,
-    #     choices=choices.CityChoices,
-    #     blank=False,
-    #     null=False,
-    #     default="Select city",
-    # )
-
     city = models.ForeignKey(
         'Location',
         on_delete=models.RESTRICT,
@@ -53,7 +47,7 @@ class ServiceBaseModel(TimestampedModel):
     telephone_number = PhoneNumberField(
         blank=True,
         null=True,
-        help_text="Enter phone number in international format. Example: +123456789"
+        help_text=_("Enter phone number in international format. Example: +123456789")
     )
 
     email = models.EmailField(

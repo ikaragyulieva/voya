@@ -5,6 +5,7 @@ from voya.companies.models import CompanyProfile, Address, PhoneNumber
 from cloudinary.forms import CloudinaryFileField
 
 from voya.companies.validators import FileSizeValidator
+from django.utils.translation import gettext_lazy as _
 
 
 class CompanyProfileForm(forms.ModelForm):
@@ -15,7 +16,7 @@ class CompanyProfileForm(forms.ModelForm):
             'resource_type': 'auto',
             'editable': True,
         },
-        help_text="Please upload your logo here",
+        help_text=_("Please upload your logo here"),
         validators=[
             FileSizeValidator(5),
         ]

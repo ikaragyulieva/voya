@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from multiselectfield import MultiSelectField
 from simple_history.models import HistoricalRecords
@@ -19,13 +20,13 @@ from voya.users.models import CustomUser
 class TripRequests(TimestampedModel):
 
     country_origin = CountryField(
-        blank_label='Select country',
+        blank_label=_('Select country'),
         null=False,
         blank=False,
     )
 
     nationality = CountryField(
-        blank_label='Select nationality',
+        blank_label=_('Select nationality'),
         null=False,
         blank=False,
     )
@@ -33,7 +34,7 @@ class TripRequests(TimestampedModel):
     country_destinations = MultiSelectField(
         max_length=100,
         choices=choices.CountryChoices,
-        help_text='Choose the countries you would like to visit',
+        help_text=_('Choose the countries you would like to visit'),
     )
 
     city_destinations = MultiSelectField(
@@ -191,14 +192,14 @@ class TripRequests(TimestampedModel):
 
         if self.trip_start_date and self.trip_end_date:
             if self.trip_end_date <= self.trip_start_date:
-                raise ValidationError("End date must be after the start date.")
+                raise ValidationError(_("End date must be after the start date."))
 
             today = timezone.now().date()
             if self.trip_start_date <= today:
-                raise ValidationError("Start date must be in the future.")
+                raise ValidationError(_("Start date must be in the future."))
 
         else:
-            raise ValidationError("Both start and end dates must be specified.")
+            raise ValidationError(_("Both start and end dates must be specified."))
 
     def save(self, *args, **kwargs):
 

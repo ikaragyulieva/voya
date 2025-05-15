@@ -18,6 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from simple_history.admin import SimpleHistoryAdmin
 
 from voya.proposals.models import ProposalBudget, ProposalSectionItem, Proposal
@@ -47,7 +48,7 @@ class ProposalAdmin(SimpleHistoryAdmin):
 
     ordering = ('-created_at',)
     fieldsets = (
-        ('Basic Information', {
+        (_('Basic Information'), {
             'fields': (
                 'title',
                 'user',
@@ -76,7 +77,7 @@ class ProposalAdmin(SimpleHistoryAdmin):
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
     history_latest.short_description = "Last Modified"
@@ -105,7 +106,7 @@ class ProposalSectionItemAdmin(SimpleHistoryAdmin):
     ordering = ('proposal', 'section_name', 'corresponding_trip_date')
 
     fieldsets = (
-        ('Section Item Details', {
+        (_('Section Item Details'), {
             'fields': (
                 'proposal',
                 'section_name',
@@ -122,7 +123,7 @@ class ProposalSectionItemAdmin(SimpleHistoryAdmin):
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
     history_latest.short_description = "Last Modified"
@@ -150,7 +151,7 @@ class ProposalBudgetAdmin(SimpleHistoryAdmin):
     ordering = ('proposal', 'pax')
 
     fieldsets = (
-        ('Budget Details', {
+        (_('Budget Details'), {
             'fields': (
                 'proposal',
                 'pax',
@@ -171,7 +172,7 @@ class ProposalBudgetAdmin(SimpleHistoryAdmin):
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
     history_latest.short_description = "Last Modified"

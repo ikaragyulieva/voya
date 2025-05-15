@@ -18,16 +18,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 from django.apps import apps
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class ServiceChoices(models.TextChoices):
-    SELECT = '', 'Select an option'
-    TRANSFERS = 'transfers', 'Transfers'
-    ACTIVITY = 'activity', 'Activity'
-    ACCOMMODATION = 'accommodation', 'Accommodation'
-    LOCAL_GUIDES = 'local guides', 'Local guides'
-    TOUR_LEADERS = 'tour leaders', 'Tour leaders'
-    PUBLIC_TRANSPORT = 'public transport', 'Public Transport'
-    PRIVATE_TRANSPORT = 'private transport', 'Private Transport'
-    OTHER = 'other', 'Other'
+    SELECT = '', _('Select an option')
+    TRANSFERS = 'transfers', _('Transfers')
+    ACTIVITY = 'activity', _('Activity')
+    ACCOMMODATION = 'accommodation', _('Accommodation')
+    FOOD_AND_BEVERAGE = 'food and beverage', _('Food & Beverage')
+    LOCAL_GUIDES = 'local guides', _('Local guides')
+    TOUR_LEADERS = 'tour leaders', _('Tour leaders')
+    PUBLIC_TRANSPORT = 'public transport', _('Public Transport')
+    PRIVATE_TRANSPORT = 'private transport', _('Private Transport')
+    OTHER = 'other', _('Other')
 

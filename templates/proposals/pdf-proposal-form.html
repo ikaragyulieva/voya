@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -19,29 +19,31 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 {% extends 'base.html' %}
 {% load custom_filters %}
+{% load i18n %}
+
 
 {% block content %}
     <div class="edit-delete edit-photo login">
-        <h2>Generate PDF Proposal</h2>
+        <h2>{% trans "Generate PDF Proposal" %}</h2>
 
         <form method="post">
             {{ form.non_field_errors }}
             {% csrf_token %}
             <div class="pdf-form-section">
                 <div class="form-fields">
-                    <p>Logo</p>
+                    <p>{% trans "Logo" %}</p>
                     {{ form.logo_options }}
                     {% if form.logo_options.errors %}
                         <div class="error">{{ form.logo_options.errors }}</div>
                     {% endif %}
 
-                    <p>Markup </p>
+                    <p>{% trans "Markup" %}</p>
                     {{ form.commission|placeholder:'0%' }}
                     {% if form.commission.errors %}
                         <div class="error">{{ form.commission.errors }}</div>
                     {% endif %}
                 </div>
-                <button class="add-btn" type="submit">Generate PDF</button>
+                <button class="add-btn" type="submit">{% trans "Generate PDF" %}</button>
             </div>
         </form>
     </div>

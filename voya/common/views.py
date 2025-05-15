@@ -12,7 +12,7 @@ from voya.common import forms
 
 from voya.utils import get_user_obj, send_activation_email, send_custom_email
 from voya.common.tokens import account_activation_token
-
+from django.utils.translation import gettext_lazy as _
 
 # Create your views here.
 
@@ -66,10 +66,10 @@ def activate_account(request, uidb64, token):
         user.is_active = True
         user.save()
 
-        messages.success(request, 'Your account has been confirmed successfully. You can now log in.')
+        messages.success(request, _('Your account has been confirmed successfully. You can now log in.'))
         return render(request, template_name='common/successful-account-activation.html', context=context)
     else:
-        messages.error(request, 'Activation link is invalid or has expired.')
+        messages.error(request, _('Activation link is invalid or has expired.'))
         return render(request, template_name='common/unsuccessful-account-activation.html', context=context)
 
 
@@ -111,7 +111,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
             user=user,
             template_name='emails/new-password-confirmation.html',
             activation_link=None,
-            email_subject='Your Voya password has been changed successfully',
+            email_subject=_('Your Voya password has been changed successfully'),
             send_to=[user.email, ]
         )
 

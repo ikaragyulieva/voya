@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -18,6 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
     <div class="edit-delete edit-photo pass-change">
@@ -32,14 +33,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                               autoplay></dotlottie-player>
         </div>
 
-        <h2> Account confirmed successfully! </h2>
+        <h2> {% trans "Account confirmed successfully!" %} </h2>
         {% if user.role == 'client' %}
-            <p> Your account has been confirmed successfully. You can now log in. </p>
-            <button class="add-btn verify-btn" type="button" onclick="window.location.href='{% url 'login' %}'">Login</button>
+            <p> {% trans "Your account has been confirmed successfully. You can now log in." %} </p>
+            <button class="add-btn verify-btn" type="button" onclick="window.location.href='{% url 'login' %}'">
+                {% trans "Login" %}
+            </button>
         {% elif user.role == 'employee' %}
-            <p> The employee account has been confirmed successfully. </p>
-            <p><b>{{ user.email }}</b> &nbsp;can now log in. </p>
-            <button class="add-btn verify-btn" type="button" onclick="window.location.href='{% url 'home' %}'">Close</button>
+            <p> {% trans "The employee account has been confirmed successfully." %} </p>
+            <p><b>{{ user.email }}</b> &nbsp;{% trans "can now log in." %} </p>
+            <button class="add-btn verify-btn" type="button" onclick="window.location.href='{% url 'home' %}'">
+                {% trans "Close" %}
+            </button>
         {% endif %}
 
 

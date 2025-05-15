@@ -1,6 +1,6 @@
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
-
+from django.utils.translation import gettext_lazy as _
 from voya.services.models import Hotel, Transfer, LocalGuide, Ticket, Currency, PublicTransport, PrivateTransport, \
     Location
 
@@ -26,7 +26,7 @@ class HotelsAdmin(SimpleHistoryAdmin):
     ordering = ('name',)
 
     fieldsets = (
-        ('Hotel Information', {
+        (_('Hotel Information'), {
             'fields': (
                 'name',
                 'category',
@@ -34,7 +34,7 @@ class HotelsAdmin(SimpleHistoryAdmin):
                 'low_season_price'
             )
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
     )
@@ -43,21 +43,21 @@ class HotelsAdmin(SimpleHistoryAdmin):
 
     def mark_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected hotels have been marked as active.")
-    mark_active.short_description = "Mark selected hotels as active"
+        self.message_user(request, _("Selected hotels have been marked as active."))
+    mark_active.short_description = _("Mark selected hotels as active")
 
     def mark_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected hotels have been marked as inactive.")
-    mark_inactive.short_description = "Mark selected hotels as inactive"
+        self.message_user(request, _("Selected hotels have been marked as inactive."))
+    mark_inactive.short_description = _("Mark selected hotels as inactive")
 
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
-    history_latest.short_description = "Last Modified"
+    history_latest.short_description = _("Last Modified")
 
 
 @admin.register(Transfer)
@@ -77,10 +77,10 @@ class TransfersAdmin(SimpleHistoryAdmin):
     ordering = ('transfer_name',)
 
     fieldsets = (
-        ('Transfer Information', {
+        (_('Transfer Information'), {
             'fields': ('transfer_name', 'type', 'price')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
     )
@@ -89,21 +89,21 @@ class TransfersAdmin(SimpleHistoryAdmin):
 
     def mark_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected transfers have been marked as active.")
-    mark_active.short_description = "Mark selected transfers as active"
+        self.message_user(request, _("Selected transfers have been marked as active."))
+    mark_active.short_description = _("Mark selected transfers as active")
 
     def mark_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected transfers have been marked as inactive.")
-    mark_inactive.short_description = "Mark selected transfers as inactive"
+        self.message_user(request, _("Selected transfers have been marked as inactive."))
+    mark_inactive.short_description = _("Mark selected transfers as inactive")
 
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
-    history_latest.short_description = "Last Modified"
+    history_latest.short_description = _("Last Modified")
 
 
 @admin.register(LocalGuide)
@@ -123,10 +123,10 @@ class LocalGuidesAdmin(SimpleHistoryAdmin):
     ordering = ('name',)
 
     fieldsets = (
-        ('Guide Information', {
+        (_('Guide Information'), {
             'fields': ('name', 'price', 'price_includes', 'tour_duration')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
     )
@@ -135,21 +135,21 @@ class LocalGuidesAdmin(SimpleHistoryAdmin):
 
     def mark_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected guides have been marked as active.")
-    mark_active.short_description = "Mark selected guides as active"
+        self.message_user(request, _("Selected guides have been marked as active."))
+    mark_active.short_description = _("Mark selected guides as active")
 
     def mark_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected guides have been marked as inactive.")
-    mark_inactive.short_description = "Mark selected guides as inactive"
+        self.message_user(request, _("Selected guides have been marked as inactive."))
+    mark_inactive.short_description = _("Mark selected guides as inactive")
 
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
-    history_latest.short_description = "Last Modified"
+    history_latest.short_description = _("Last Modified")
 
 
 @admin.register(Ticket)
@@ -169,10 +169,10 @@ class TicketsAdmin(SimpleHistoryAdmin):
     ordering = ('name',)
 
     fieldsets = (
-        ('Ticket Information', {
+        (_('Ticket Information'), {
             'fields': ('name', 'price', 'description')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
     )
@@ -181,21 +181,21 @@ class TicketsAdmin(SimpleHistoryAdmin):
 
     def mark_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected tickets have been marked as active.")
-    mark_active.short_description = "Mark selected tickets as active"
+        self.message_user(request, _("Selected tickets have been marked as active."))
+    mark_active.short_description = _("Mark selected tickets as active")
 
     def mark_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected tickets have been marked as inactive.")
-    mark_inactive.short_description = "Mark selected tickets as inactive"
+        self.message_user(request, _("Selected tickets have been marked as inactive."))
+    mark_inactive.short_description = _("Mark selected tickets as inactive")
 
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
-    history_latest.short_description = "Last Modified"
+    history_latest.short_description = _("Last Modified")
 
 
 @admin.register(Currency)
@@ -215,13 +215,13 @@ class CurrencyAdmin(SimpleHistoryAdmin):
     ordering = ('currency_from', 'currency_to')
 
     fieldsets = (
-        ('Currency Information', {
+        (_('Currency Information'), {
             'fields': ('currency_from', 'currency_to', 'exchange_rate')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
-        ('Created By', {
+        (_('Created By'), {
             'fields': ('created_by_user',)
         }),
     )
@@ -229,10 +229,10 @@ class CurrencyAdmin(SimpleHistoryAdmin):
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
-    history_latest.short_description = "Last Modified"
+    history_latest.short_description = _("Last Modified")
 
 
 @admin.register(Location)
@@ -249,13 +249,13 @@ class LocationAdmin(admin.ModelAdmin):
     ordering = ('country', 'city_name')
 
     fieldsets = (
-        ('Location Information', {
+        (_('Location Information'), {
             'fields': ('city_name', 'country')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
-        ('Created By', {
+        (_('Created By'), {
             'fields': ('created_by_user',)
         }),
     )
@@ -277,10 +277,10 @@ class PublicTransportAdmin(SimpleHistoryAdmin):
     ordering = ('type',)
 
     fieldsets = (
-        ('Transport Information', {
+        (_('Transport Information'), {
             'fields': ('type', 'price')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
     )
@@ -289,21 +289,21 @@ class PublicTransportAdmin(SimpleHistoryAdmin):
 
     def mark_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected public transport options have been marked as active.")
-    mark_active.short_description = "Mark selected public transport as active"
+        self.message_user(request, _("Selected public transport options have been marked as active."))
+    mark_active.short_description = _("Mark selected public transport as active")
 
     def mark_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected public transport options have been marked as inactive.")
-    mark_inactive.short_description = "Mark selected public transport as inactive"
+        self.message_user(request, _("Selected public transport options have been marked as inactive."))
+    mark_inactive.short_description = _("Mark selected public transport as inactive")
 
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
-    history_latest.short_description = "Last Modified"
+    history_latest.short_description = _("Last Modified")
 
 
 @admin.register(PrivateTransport)
@@ -322,10 +322,10 @@ class PrivateTransportAdmin(SimpleHistoryAdmin):
     ordering = ('type',)
 
     fieldsets = (
-        ('Transport Information', {
+        (_('Transport Information'), {
             'fields': ('type', 'price')
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
     )
@@ -334,18 +334,18 @@ class PrivateTransportAdmin(SimpleHistoryAdmin):
 
     def mark_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected private transport options have been marked as active.")
-    mark_active.short_description = "Mark selected private transport as active"
+        self.message_user(request, _("Selected private transport options have been marked as active."))
+    mark_active.short_description = _("Mark selected private transport as active")
 
     def mark_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected private transport options have been marked as inactive.")
-    mark_inactive.short_description = "Mark selected private transport as inactive"
+        self.message_user(request, _("Selected private transport options have been marked as inactive."))
+    mark_inactive.short_description = _("Mark selected private transport as inactive")
 
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
-    history_latest.short_description = "Last Modified"
+    history_latest.short_description = _("Last Modified")

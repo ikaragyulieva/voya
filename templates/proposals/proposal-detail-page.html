@@ -1,228 +1,275 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
     <div class="proposal">
-        <div class="trip-comments-wrapper">
-            <div class="trip trip-proposal">
-                <div class="trip-title">
-                    <!-- Trip title -->
-                    <p>{{ current_request.slug }}</p>
 
+        <!--Request, Internal comments and History -->
+        <div class="trip-comments-wrapper">
+
+            <!-- Request Section -->
+            <div class="trip trip-proposal">
+
+                <!-- Trip title -->
+                <div class="trip-title">
+                    <p>{{ current_request.slug }}</p>
                 </div>
+
                 <hr class="custom-line">
+
+                <!-- Group Information section -->
                 <div class="trip-section">
-                    <h3 class="title">Group Information</h3>
+                    <h3 class="title">{% trans "Group Information" %}</h3>
                     <table>
                         <tbody>
                         <tr>
-                            <th>Nationality:</th>
+                            <th>{% trans "Nationality:" %}</th>
                             <td><i> {{ current_request.get_nationality_display }} </i></td>
                         </tr>
                         <tr>
-                            <th>Age range:</th>
-                            <td><i>{{ current_request.age_range }} years old</i></td>
+                            <th>{% trans "Age range:" %}</th>
+                            <td><i>{{ current_request.age_range }} {% trans "years old" %}</i></td>
                         </tr>
                         <tr>
-                            <th>Min participants:</th>
-                            <td><i> {{ current_request.min_participants }} people</i></td>
+                            <th>{% trans "Min participants:" %}</th>
+                            <td><i> {{ current_request.min_participants }} {% trans "people" %}</i></td>
                         </tr>
                         <tr>
-                            <th>Max participants:</th>
-                            <td><i> {{ current_request.max_participants }} people</i></td>
+                            <th>{% trans "Max participants:" %}</th>
+                            <td><i> {{ current_request.max_participants }} {% trans "people" %}</i></td>
                         </tr>
                         <tr>
-                            <th>Group type:</th>
+                            <th>{% trans "Group type:" %}</th>
                             <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
                         </tr>
                         {% if current_request.type_of_trip %}
                             <tr>
-                                <th>Type of trip:</th>
+                                <th>{% trans "Type of trip:" %}</th>
                                 <td><i> {{ current_request.type_of_trip }} </i></td>
                             </tr>
                         {% endif %}
                         {% if current_request.additional_observations %}
                             <tr>
-                                <th>Additional observations:</th>
+                                <th>{% trans "Additional observations:" %}</th>
                                 <td><i> {{ current_request.additional_observations }} </i></td>
                             </tr>
                         {% endif %}
                         </tbody>
                     </table>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Dates Information</h3>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Start date:</th>
-                                <td><i> {{ current_request.trip_start_date }} </i></td>
-                            </tr>
-                            <tr>
-                                <th>End date:</th>
-                                <td><i>{{ current_request.trip_end_date }}</i></td>
-                            </tr>
-                            <tr>
-                                <th>Trip duration:</th>
-                                <td><i> {{ current_request.trip_duration }} days </i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Destination Information:</h3>
-
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Origin country:</th>
-                                <td><i> {{ current_request.get_country_origin_display }} </i></td>
-                            </tr>
-                            <tr>
-                                <th>Destinations:</th>
-                                <td><i>{{ current_request.get_country_destinations_display }}</i></td>
-                            </tr>
-                            {% if current_request.other_destinations %}
-                                <tr>
-                                    <th>Additional destinations info:</th>
-                                    <td><i> {{ current_request.other_destinations }} </i></td>
-                                </tr>
-                            {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Trip Information:</h3>
-
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Transportation:</th>
-                                <td><i> {{ current_request.get_transportation_type_display }} </i></td>
-                            </tr>
-
-                            {% if current_request.transportation_details %}
-                                <tr>
-                                    <th>Transportation details:</th>
-                                    <td><i>{{ current_request.transportation_details }}</i></td>
-                                </tr>
-                            {% endif %}
-                            <tr>
-                                <th>Accommodation:</th>
-                                <td><i> {{ current_request.get_accommodations_display }} </i></td>
-                            </tr>
-                            {% if current_request.accommodations_details %}
-                                <tr>
-                                    <th>Accommodation details:</th>
-                                    <td><i> {{ current_request.accommodations_details }} </i></td>
-                                </tr>
-                            {% endif %}
-                            <tr>
-                                <th>Meals:</th>
-                                <td><i> {{ current_request.get_meals_display }} </i></td>
-                            </tr>
-                            {% if current_request.meals_details %}
-                                <tr>
-                                    <th>Meals details:</th>
-                                    <td><i> {{ current_request.meals_details }} </i></td>
-                                </tr>
-                            {% endif %}
-                            <tr>
-                                <th>Staff:</th>
-                                <td><i> {{ current_request.get_staff_display }} </i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Billing Information:</h3>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Budget:</th>
-                                <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Currency:</th>
-                                <td><i>{{ current_request.get_currency_display }}</i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-
                 </div>
+
+                <hr class="custom-line">
+
+                <!-- Itinerary Information section -->
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Itinerary Information" %}</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Start date:" %}</th>
+                            <td><i> {{ current_request.trip_start_date }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "End date:" %}</th>
+                            <td><i>{{ current_request.trip_end_date }}</i></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Trip duration:" %}</th>
+                            <td><i> {{ current_request.trip_duration }} {% trans "days" %} </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="custom-line">
+
+                <!-- Destination Information section -->
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Destination Information:" %}</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Origin country:" %}</th>
+                            <td><i> {{ current_request.get_country_origin_display }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Destinations:" %}</th>
+                            <td><i>{{ current_request.get_country_destinations_display }}</i></td>
+                        </tr>
+                        {% if current_request.other_destinations %}
+                            <tr>
+                                <th>{% trans "Additional destinations info:" %}</th>
+                                <td><i> {{ current_request.other_destinations }} </i></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="custom-line">
+
+                <!-- Trip Information section -->
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Trip Information:" %}</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Transportation:" %}</th>
+                            <td><i> {{ current_request.get_transportation_type_display }} </i></td>
+                        </tr>
+
+                        {% if current_request.transportation_details %}
+                            <tr>
+                                <th>{% trans "Transportation details:" %}</th>
+                                <td><i>{{ current_request.transportation_details }}</i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans "Accommodation:" %}</th>
+                            <td><i> {{ current_request.get_accommodations_display }} </i></td>
+                        </tr>
+                        {% if current_request.accommodations_details %}
+                            <tr>
+                                <th>{% trans "Accommodation details:" %}</th>
+                                <td><i> {{ current_request.accommodations_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans "Meals:" %}</th>
+                            <td><i> {{ current_request.get_meals_display }} </i></td>
+                        </tr>
+                        {% if current_request.meals_details %}
+                            <tr>
+                                <th>{% trans "Meals details:" %}</th>
+                                <td><i> {{ current_request.meals_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans "Staff:" %}</th>
+                            <td><i> {{ current_request.get_staff_display }} </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="custom-line">
+
+                <!-- Billing Information section -->
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Billing Information:" %}</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Budget:" %}</th>
+                            <td><i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Currency:" %}</th>
+                            <td><i>{{ current_request.get_currency_display }}</i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
             <!--Internal comments box -->
 
             <div class="trip trip-proposal trip-internal-note">
-
                 <div class="trip-section">
-                    <h3 class="title">Internal Comments</h3>
+                    <h3 class="title">{% trans "Internal Comments" %}</h3>
                 </div>
                 <hr class="custom-line">
-                <form id="proposal-form" method="post" action="#" onsubmit="return false" data-mode="edit"
-                      data-proposal-id="{{ proposal.id }}" data-trip-id="{{ trip_id }}">
-                    <div class="internal-note">
+                <div class="internal-note">
                         <textarea name="internal-comments" cols="40" rows="10" id="id_internal-comments"
-                                  placeholder="Add internal notes here">{{ proposal.internal_comments }} </textarea>
-                    </div>
-                </form>
+                                  placeholder="{% trans 'Add internal notes here' %}">{{ proposal.internal_comments }} 
+                        </textarea>
+                </div>
             </div>
         </div>
 
 
         <!-- Trip Proposal Template -->
-
         <div class="trip proposal-edit">
-            <div class="trip-title">
-                <!-- Proposal title -->
-                <p>{{ proposal.title }}</p>
 
+            <!-- Proposal title -->
+            <div class="trip-title">
+                <p>{{ proposal.title }}</p>
             </div>
 
             <!-- Accommodation Section-->
-
             {% if accommodation_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Accommodations</h3>
+                    <h3 id="section" class="title">{% trans "Accommodations" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Accommodation headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
-                        {% for item in accommodation_items %}
 
+                        <!-- Accommodation rows -->
+                        {% for item in accommodation_items %}
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.service_name }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
+
                                 <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
                                             <img
                                                     src="{% static 'images/down-arrow.png' %}"
-                                                    alt="toggle description"
-                                                    title="Add description"
+                                                    alt='{% trans "toggle description" %}'
+                                                    title='{% trans "Add description" %}'
                                                     data-open="{% static 'images/arrow-up.png' %}"
                                                     data-close="{% static 'images/down-arrow.png' %}"
                                             />
@@ -230,42 +277,57 @@
                                     </div>
                                 </div>
                             </li>
+
                             <!-- Hidden description row -->
                             <li class="table-row description-row" style="display: none;">
                                 <div class="col col-full">
                                     {{ item.additional_notes }}
                                 </div>
                             </li>
-
                         {% endfor %}
                     </ul>
                 </div>
             {% endif %}
 
             <!-- Meals Section-->
-
             {% if meal_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Meals</h3>
+                    <h3 id="section" class="title">{% trans "Meals" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Meals headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
+                            <div class="col col-6 empty-space">Btn</div>
                         </li>
+                        <!-- Meals rows -->
                         {% for item in meal_items %}
-
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.additional_notes }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.additional_notes }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -273,38 +335,52 @@
             {% endif %}
 
             <!-- Public Transport Section-->
-
             {% if public_transport_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Public Transport</h3>
+                    <h3 id="section" class="title">{% trans "Public Transport" %}</h3>
+
                     <ul class="responsive-table requests-table">
-
+                        <!-- Public Transport headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Public Transport rows -->
                         {% for item in public_transport_items %}
-
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.service_name }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
+
                                 <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
                                             <img
                                                     src="{% static 'images/down-arrow.png' %}"
-                                                    alt="toggle description"
-                                                    title="Add description"
+                                                    alt='{% trans "toggle description" %}'
+                                                    title='{% trans "Add description" %}'
                                                     data-open="{% static 'images/arrow-up.png' %}"
                                                     data-close="{% static 'images/down-arrow.png' %}"
                                             />
@@ -326,38 +402,51 @@
             {% endif %}
 
             <!-- Private Transport Section-->
-
             {% if private_transport_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Private Transport</h3>
+                    <h3 id="section" class="title">{% trans "Private Transport" %}</h3>
                     <ul class="responsive-table requests-table">
-
+                        <!-- Private Transport headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Private Transport rows -->
                         {% for item in private_transport_items %}
-
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.service_name }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
+
                                 <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
                                             <img
                                                     src="{% static 'images/down-arrow.png' %}"
-                                                    alt="toggle description"
-                                                    title="Add description"
+                                                    alt='{% trans "toggle description" %}'
+                                                    title='{% trans "Add description" %}'
                                                     data-open="{% static 'images/arrow-up.png' %}"
                                                     data-close="{% static 'images/down-arrow.png' %}"
                                             />
@@ -379,38 +468,52 @@
             {% endif %}
 
             <!-- Activity/Tickets Section-->
-
             {% if activity_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Extra Activities</h3>
+                    <h3 id="section" class="title">{% trans "Extra Activities" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Activity headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
                         </li>
+                        <!-- Activity rows -->
                         {% for item in activity_items %}
-
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.service_name }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
+
                                 <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
                                             <img
                                                     src="{% static 'images/down-arrow.png' %}"
-                                                    alt="toggle description"
-                                                    title="Add description"
+                                                    alt='{% trans "toggle description" %}'
+                                                    title='{% trans "Add description" %}'
                                                     data-open="{% static 'images/arrow-up.png' %}"
                                                     data-close="{% static 'images/down-arrow.png' %}"
                                             />
@@ -432,37 +535,52 @@
             {% endif %}
 
             <!-- Transfers Section-->
-
             {% if transfer_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Transfers</h3>
+                    <h3 id="section" class="title">{% trans "Transfers" %}</h3>
+
                     <ul class="responsive-table requests-table">
-
+                        <!-- Transfers headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Transfers rows -->
                         {% for item in transfer_items %}
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.service_name }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
+
                                 <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
                                             <img
                                                     src="{% static 'images/down-arrow.png' %}"
-                                                    alt="toggle description"
-                                                    title="Add description"
+                                                    alt='{% trans "toggle description" %}'
+                                                    title='{% trans "Add description" %}'
                                                     data-open="{% static 'images/arrow-up.png' %}"
                                                     data-close="{% static 'images/down-arrow.png' %}"
                                             />
@@ -483,37 +601,52 @@
             {% endif %}
 
             <!-- Local Guides Section-->
-
             {% if guides_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Guides</h3>
+                    <h3 id="section" class="title">{% trans "Local Guides" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Local Guides headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
                         </li>
+                        <!-- Local Guides rows -->
                         {% for item in guides_items %}
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.service_name }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
+
                                 <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
                                             <img
                                                     src="{% static 'images/down-arrow.png' %}"
-                                                    alt="toggle description"
-                                                    title="Add description"
+                                                    alt='{% trans "toggle description" %}'
+                                                    title='{% trans "Add description" %}'
                                                     data-open="{% static 'images/arrow-up.png' %}"
                                                     data-close="{% static 'images/down-arrow.png' %}"
                                             />
@@ -534,37 +667,52 @@
             {% endif %}
 
             <!-- Tour Leader Section-->
-
             {% if tour_leader_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Tour Leader</h3>
+                    <h3 id="section" class="title">{% trans "Tour Leader" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Tour Leader headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
                         </li>
+                        <!-- Tour Leader rows -->
                         {% for item in tour_leader_items %}
                             <li class="table-row">
-                                <div class="col col-1" data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1" data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.service_name }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
+
                                 <div class="col col-6" data-label="actions">
                                     <div class="action-btn request-action-btn proposal-item-btn">
                                         <!-- Description button-->
                                         <a href="#" class="toggle-description-btn">
                                             <img
                                                     src="{% static 'images/down-arrow.png' %}"
-                                                    alt="toggle description"
-                                                    title="Add description"
+                                                    alt='{% trans "toggle description" %}'
+                                                    title='{% trans "Add description" %}'
                                                     data-open="{% static 'images/arrow-up.png' %}"
                                                     data-close="{% static 'images/down-arrow.png' %}"
                                             />
@@ -585,33 +733,46 @@
             {% endif %}
 
             <!-- Other Variable Services Section-->
-
             {% if other_variable_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Other Services - Variable</h3>
+                    <h3 id="section" class="title">{% trans "Other Services - Variable" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Other Services - Variable headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
+                            <div class="col col-6 empty-space">Btn</div>
                         </li>
+                        <!-- Other Services - Variable rows -->
                         {% for item in other_variable_items %}
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.additional_notes }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.additional_notes }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
-
-
                 </div>
             {% endif %}
 
@@ -620,24 +781,40 @@
             {% if other_fixed_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Other Services - Fixed</h3>
+                    <h3 id="section" class="title">{% trans "Other Services - Fixed" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Other Services - Fixed headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
+                            <div class="col col-6 empty-space">Btn</div>
                         </li>
+                        <!-- Other Services - Fixed rows -->
                         {% for item in other_fixed_items %}
                             <li class="table-row">
-                                <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
-                                <div class="col col-2" data-label="city">{{ item.city }}</div>
-                                <div class="col col-33" data-label="service details">{{ item.additional_notes }}</div>
-                                <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">€ {{ item.price }}</div>
+                                <div class="col col-1 " data-label="date">
+                                    {{ item.corresponding_trip_date }}
+                                </div>
+
+                                <div class="col col-2" data-label="city">
+                                    {{ item.city }}
+                                </div>
+
+                                <div class="col col-33" data-label="service details">
+                                    {{ item.additional_notes }}
+                                </div>
+
+                                <div class="col col-4" data-label="quantity">
+                                    {{ item.quantity }}
+                                </div>
+
+                                <div class="col col-5" data-label="variable cost">
+                                    € {{ item.price }}
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -647,72 +824,87 @@
         </div>
 
         <!-- Trip Proposal Budget Template -->
-
-
         <div class="trip trip-proposal budget">
 
+            <!-- Budget title -->
             <div class="trip-title">
-                <!-- Budget title -->
                 <p>Proposal Budget</p>
-
             </div>
 
             <hr class="custom-line">
 
             <div class="trip-section budget-section">
                 <div class="state-details-btn">
-{#                    <div class="prop-status">#}
-{#                        <p>State:</p>#}
-{#                        <p id="draft-status">{{ proposal.status }}</p>#}
-{##}
-{#                    </div>#}
+
+                    <!-- Buttons section -->
                     <div class="action-btn request-action-btn proposal-action-btn">
 
+                        <!-- State -->
                         {% if proposal.status == 'Ready for review' %}
-                            <!-- New Proposal Status-->
+                            <!-- Ready for review Status-->
                             <img
                                     src="{% static 'images/review.png' %}"
-                                    alt="Ready for review"
-                                    title="Status: Ready for review"
+                                    alt='{% trans "Ready for review" %}'
+                                    title='{% trans "Status: Ready for review" %}'
                             />
                         {% elif proposal.status == 'Not finished' %}
-                            <!-- Active Proposal Status -->
+                            <!-- Not finished Status -->
                             <img
                                     src="{% static 'images/wip.png' %}"
-                                    alt="WIP Proposal"
-                                    title="Status: Not finished"
+                                    alt='{% trans "WIP Proposal" %}'
+                                    title='{% trans "Status: Not finished" %}'
                             />
 
                         {% elif proposal.status == 'Send to client' %}
-                            <!-- Closed Proposal Status -->
+                            <!-- Shared with client Status -->
                             <img
                                     src="{% static 'images/share-with-client-green.png' %}"
-                                    alt="Shared Proposal"
-                                    title="Status: Shared with client"
+                                    alt='{% trans "Shared Proposal" %}'
+                                    title='{% trans "Status: Shared with client" %}'
+                            />
+                            
+                        {% elif proposal.status == 'Approved by client' %}
+                            <!-- Approved by the client Status -->
+                            <img
+                                    src="{% static 'images/approved.png' %}"
+                                    alt='{% trans "Proposal approved by the client" %}'
+                                    title='{% trans "Status: Approved by the client" %}'
+                            />  
+                        
+                        {% elif proposal.status == 'Rejected by client' %}
+                            <!-- Rejected by the client Status -->
+                            <img
+                                    src="{% static 'images/rejected.png' %}"
+                                    alt='{% trans "Rejected by the client" %}'
+                                    title='{% trans "Status: Rejected by the client" %}'
                             />
                         {% endif %}
-                                    
+                    
+                    
                         <!-- Link to Edit Proposal Page -->
-                        <a href="{% url 'edit-proposal' pk=proposal.pk %}"
-                           class="action-link"
-                           title="Edit Proposal">
+                        <a href="{% url 'edit-proposal' pk=proposal.pk %}" class="action-link">
                             <img
                                     src="{% static 'images/edit-icon.png' %}"
-                                    alt="Edit button"
+                                    alt='{% trans "Edit button" %}'
+                                    title='{% trans "Edit Proposal" %}'
                             />
                         </a>
 
+                        <!-- Link to Download Proposal Page -->
                         <a href="{% url 'proposal_download' pk=proposal.pk %}"
                            class="action-link delete-link">
                             <img
                                     src="{% static 'images/download.png' %}"
-                                    alt="Download button"
-                                    title="Download"
+                                    alt='{% trans "Download button" %}'
+                                    title='{% trans "Download" %}'
                             />
 
                         </a>
+
                     </div>
                 </div>
+
+                <!-- Budget table section -->
                 <div class="budget-container">
                     <table class="budget-table" id="budget-table">
 
@@ -727,47 +919,47 @@
 
                         <tbody>
                         <tr>
-                            <th>Variable cost:</th>
+                            <th>{% trans "Variable cost:" %}</th>
                             {% for budget_option in budget %}
-                                <td><i> {{ budget_option.variable_cost }} € </i></td>
+                                <td><i> {{ budget_option.variable_cost|floatformat:2 }} € </i></td>
                             {% endfor %}
                         </tr>
                         <tr>
-                            <th class="fixed-cost">Fixed cost:</th>
+                            <th class="fixed-cost">{% trans "Fixed cost:" %}</th>
                             {% for budget_option in budget %}
-                                <td><i> {{ budget_option.fixed_cost }} € </i></td>
+                                <td><i> {{ budget_option.fixed_cost|floatformat:2 }} € </i></td>
                             {% endfor %}
                         </tr>
 
                         <tr>
-                            <th>FOC: {{ foc_pax }} pax</th>
+                            <th>{% trans "FOC:" %} {{ foc_pax }} pax</th>
                             {% for budget_option in budget %}
                                 <td><i> {{ budget_option.free_of_charge_amount }} € </i></td>
                             {% endfor %}
                         </tr>
 
                         <tr>
-                            <th>Total per pax:</th>
+                            <th>{% trans "Total per pax:" %}</th>
                             {% for budget_option in budget %}
-                                <td><i> {{ budget_option.total_cost_per_person }} € </i></td>
+                                <td><i> {{ budget_option.total_cost_per_person|floatformat:2 }} € </i></td>
                             {% endfor %}
                         </tr>
 
                         <tr>
-                            <th>Total Cost:</th>
+                            <th>{% trans "Total cost:" %}</th>
                             {% for budget_option in budget %}
-                                <td><i> {{ budget_option.total_cost }} € </i></td>
+                                <td><i> {{ budget_option.total_cost|floatformat:2 }} € </i></td>
                             {% endfor %}
                         </tr>
 
                         <tr>
-                            <th>Service fee:</th>
+                            <th>{% trans "Service fee:" %}</th>
                             {% for budget_option in budget %}
                                 <td><i> {{ budget_option.service_fee }} € </i></td>
                             {% endfor %}
                         </tr>
                         <tr>
-                            <th>Markup:</th>
+                            <th>{% trans "Markup:" %}</th>
                             {% for budget_option in budget %}
                                 <td><i> {{ budget_option.margin }} % </i></td>
                             {% endfor %}
@@ -778,25 +970,21 @@
 
                         <tfoot>
                         <tr>
-                            <th>Price per pax:</th>
+                            <th>{% trans "Price per pax:" %}</th>
                             {% for budget_option in budget %}
-                                <td><i> {{ budget_option.fina_price_per_person }} € </i></td>
+                                <td><i> {{ budget_option.fina_price_per_person|floatformat:2 }} € </i></td>
                             {% endfor %}
                         </tr>
                         <tr>
-                            <th>Final Price:</th>
+                            <th>{% trans "Final Price:" %}</th>
                             {% for budget_option in budget %}
-                                <td><i> {{ budget_option.final_price }} € </i></td>
+                                <td><i> {{ budget_option.final_price|floatformat:2 }} € </i></td>
                             {% endfor %}
                         </tr>
                         </tfoot>
-
                     </table>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 

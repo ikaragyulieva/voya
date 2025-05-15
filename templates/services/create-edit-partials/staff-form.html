@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -18,48 +18,49 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 {% load custom_filters %}
+{% load i18n %}
 
 <div class="form-section">
-    <h3>Information </h3>
+    <h3>{% trans "Information" %} </h3>
     <div class="form-fields">
-        <p>Name *</p>
+        <p>{% trans "Name" %} *</p>
         {{ form.name|placeholder:'' }}
         {% if form.name.errors %}
             <div class="error">{{ form.name.errors }}</div>
         {% endif %}
 
-        <p>Mansion *</p>
+        <p>{% trans "Mansion" %} *</p>
         {{ form.mansion|placeholder:'' }}
         {% if form.mansion.errors %}
             <div class="error">{{ form.mansion.errors }}</div>
         {% endif %}
 
-        <p>Price * (€)</p>
+        <p>{% trans "Price" %} * (€)</p>
         {{ form.price|placeholder:'Price in €' }}
         {% if form.price.errors %}
             <div class="error">{{ form.price.errors }}</div>
         {% endif %}
 
-        <p>Max group capacity * (e.g. 30 pax)</p>
+        <p>{% trans "Max group capacity * (e.g. 30 pax)" %}</p>
         {{ form.capacity|placeholder:'' }}
         {% if form.capacity.errors %}
             <div class="error">{{ form.capacity.errors }}</div>
         {% endif %}
 
-        <p>Price includes</p>
+        <p>{% trans "Price includes" %}</p>
         {{ form.price_includes|placeholder:'e.g. 1 day tour leader' }}
         {% if form.price_includes.errors %}
             <div class="error">{{ form.price_includes.errors }}</div>
         {% endif %}
 
-        <p>Tour description/duration</p>
+        <p>{% trans "Tour description/duration" %}</p>
         {{ form.tour_description|placeholder:'' }}
         {% if form.tour_description.errors %}
             <div class="error">{{ form.tour_description.errors }}</div>
         {% endif %}
 
-        <p>Label *</p>
-        {{ form.label|placeholder:'Text that the client will see' }}
+        <p>{% trans "Label" %} *</p>
+        {{ form.label|placeholder:_('Text that the client will see') }}
         {% if form.label.errors %}
             <div class="error">{{ form.label.errors }}</div>
         {% endif %}

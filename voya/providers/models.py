@@ -1,6 +1,7 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django_countries.fields import CountryField
+from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -24,13 +25,13 @@ class Providers(models.Model):
         blank=False,
         null=False,
         choices=choices.ServiceChoices,
-        help_text='Select a service',
+        help_text=_('Select a service'),
     )
 
     country = CountryField(
         blank=False,
         null=False,
-        blank_label="Select country",
+        blank_label=_("Select country"),
     )
 
     city = models.ForeignKey(
@@ -41,18 +42,10 @@ class Providers(models.Model):
         related_name='provider_city',
     )
 
-    # city = models.CharField(
-    #     max_length=50,
-    #     choices=CityChoices,
-    #     blank=False,
-    #     null=False,
-    #     default="Select city",
-    # )
-
     telephone_number = PhoneNumberField(
         blank=False,
         null=False,
-        help_text="Enter phone number in international format. Example: +123456789"
+        help_text=_("Enter phone number in international format. Example: +123456789")
     )
 
     email = models.EmailField(

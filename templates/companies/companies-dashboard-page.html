@@ -1,20 +1,40 @@
+<!-- Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     <main class="dashboard-table">
         <div class="container-table">
 
+            <!-- Title section -->
             {% if all_companies %}
-                <h2>Active Companies</h2>
+                <h2>{% trans "Active Companies" %}</h2>
 
                 <!-- Display a heading if there are NO companies -->
             {% else %}
-                <h2>No Active Companies</h2>
+                <h2>{% trans "No Active Companies" %}</h2>
             {% endif %}
 
+            <!-- Search section -->
             <div class="col-9">
-
                 <!-- Start Searchbar Form -->
                 <form class="searchbar" method="get">
 
@@ -26,52 +46,72 @@
                     </button>
                 </form>
                 <!-- End Searchbar Form -->
-
             </div>
+        
+            <!-- Table section -->
             <div class="table-wrapper table-company">
+                
                 <!-- Add company button -->
                 <div class="action-btn add-option">
                     <a href="{% url "create-company" %}">
                         <img
                                 src="{% static 'images/new-page.png' %}"
-                                alt="Create new company"
+                                alt='{% trans "Create new company" %}'
                         />
                     </a>
                 </div>
 
                 <!-- Dashboard Table -->
                 <ul class="responsive-table">
+                
+                    <!-- Table header-->
                     <li class="table-header">
-                        <div class="col col-1">Logo</div>
-                        <div class="col col-2">Commercial Name</div>
-                        <div class="col col-33">Legal Name</div>
-                        <div class="col col-4">City</div>
-                        <div class="col col-5">Country</div>
-                        <div class="col col-6">Actions</div>
-
+                        <div class="col col-1">{% trans "Logo" %}</div>
+                        <div class="col col-2">{% trans "Commercial Name" %}</div>
+                        <div class="col col-33">{% trans "Legal Name" %}</div>
+                        <div class="col col-4">{% trans "City" %}</div>
+                        <div class="col col-5">{% trans "Country" %}</div>
+                        <div class="col col-6">{% trans "Actions" %}</div>
                     </li>
+                
+                    <!-- Table rows-->
                     {% for company in companyprofile_list %}
                         {% with first_address=company.prefetched_addresses.0 %}
                         <li class="table-row">
+                        
                             <div class="col col-1" data-label="Logo">
                                 <div class="table_img"><img
                                         class="image"
                                         src="{{ company.logo.url }}"
-                                        alt="Company Logo"
+                                        alt='{% trans "Company Logo" %}'
                                 />
                                 </div>
                             </div>
-                            <div class="col col-2" data-label="Commercial Name">{{ company.commercial_name }}</div>
-                            <div class="col col-33" data-label="Legal Name">{{ company.legal_name }}</div>
-                            <div class="col col-4" data-label="City">{{ first_address.city }}</div>
-                            <div class="col col-5" data-label="Country">{{ first_address.get_country_display }}</div>
+                            
+                            <div class="col col-2" data-label="Commercial Name">
+                                {{ company.commercial_name }}
+                            </div>
+                            
+                            <div class="col col-33" data-label="Legal Name">
+                                {{ company.legal_name }}
+                            </div>
+                            
+                            <div class="col col-4" data-label="City">
+                                {{ first_address.city }}
+                            </div>
+                            
+                            <div class="col col-5" data-label="Country">
+                                {{ first_address.get_country_display }}
+                            </div>
+                            
                             <div class="col col-6" data-label="Actions">
+                                
                                 <div class="action-btn">
                                     <!-- View Profile Page-->
                                     <a href="{% url 'company-details' pk=company.pk %}">
                                         <img
                                                 src="{% static 'images/view-icon.png' %}"
-                                                alt="View Profile"
+                                                alt='{% trans "View Profile" %}'
                                         />
                                     </a>
 
@@ -79,7 +119,7 @@
                                     <a href="{% url 'company-edit' pk=company.pk %}">
                                         <img
                                                 src="{% static 'images/edit-icon.png' %}"
-                                                alt="edit button"
+                                                alt='{% trans "Edit button" %}'
                                         />
                                     </a>
 
@@ -87,7 +127,7 @@
                                     <a href="{% url 'company-delete' pk=company.pk %}">
                                         <img
                                                 src="{% static 'images/remove-icon.png' %}"
-                                                alt="bin button"
+                                                alt='{% trans "Delete button" %}'
                                         />
                                     </a>
                                 </div>

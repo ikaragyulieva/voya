@@ -8,7 +8,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
-
+from django.utils.translation import gettext_lazy as _
 from django.apps import apps
 
 from voya.common.forms import SearchForm
@@ -18,7 +18,17 @@ from voya.services.models import LocalGuide, Hotel, Location
 from voya.utils import get_user_obj
 
 
-# Create your views here.
+MODEL_TITLES = {
+    'hotel': _('hotels'),
+    'publictransport': _('public transport'),
+    'privatetransport': _('private transport'),
+    'ticket': _('activities'),
+    'transfer': _('transfers'),
+    'localguide': _('local guides'),
+    'staff': _('tour leaders'),
+    'currency':  _('currencies'),
+    'location': _('location'),
+}
 
 
 class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
@@ -39,11 +49,11 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
     def get_model(self):
         model_name = self.kwargs['model_name']
         if model_name not in self.ALLOWED_MODELS:
-            raise Http404(f'Model {model_name} does not exist or is not allowed.')
+            raise Http404(_('Model %(model_name)s does not exist or is not allowed.') % {'model_name': model_name})
         try:
             return apps.get_model(app_label='services', model_name=model_name)
         except LookupError:
-            raise Http404(f'Model {model_name} does not exist')
+            raise Http404(_('Model %m(model_name)s does not exist') % {'model_name': model_name})
 
     def get_queryset(self):
         model = self.get_model()
@@ -53,26 +63,7 @@ class ServiceDashboardView(mixins.LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         model = self.kwargs['model_name']
-        model_title = ''
-
-        if model == 'hotel':
-            model_title = 'hotels'
-        elif model == 'publictransport':
-            model_title = 'public transport'
-        elif model == 'privatetransport':
-            model_title = 'private transport'
-        elif model == 'ticket':
-            model_title = 'activities'
-        elif model == 'transfer':
-            model_title = 'transfers'
-        elif model == 'localguide':
-            model_title = 'local guides'
-        elif model == 'staff':
-            model_title = 'tour leaders'
-        elif model == 'currency':
-            model_title = 'currencies'
-        elif model == 'location':
-            model_title = 'location'
+        model_title = MODEL_TITLES.get(model, model)
 
         search_form = SearchForm(self.request.GET)
 
@@ -123,7 +114,7 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
         try:
             return apps.get_model(app_label='services', model_name=model_name)
         except LookupError:
-            raise Http404(f'Model {model_name} does not exist')
+            raise Http404(_('Model %(model_name)s does not exist') % {'model_name': model_name})
 
     def get_queryset(self):
         model = self.get_model()
@@ -164,9 +155,10 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
                 super().__init__(*args, **kwargs)
                 if 'provider' in self.fields:
                     self.fields['provider'].queryset = eligible_providers
-                    self.fields['provider'].empty_label = "Select an option"
+                    self.fields['provider'].empty_label = _("Select an option")
+                if 'city' in self.fields:
                     self.fields['city'].queryset = cities
-                    self.fields['city'].empty_label = "Select a city"
+                    self.fields['city'].empty_label = _("Select a city")
 
         return DynamicModelForm
 
@@ -175,7 +167,7 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
         instance.created_by_user = self.request.user
         instance.save()
 
-        messages.success(self.request, "Service was successfully created")
+        messages.success(self.request, _("Service was successfully created"))
 
         return super().form_valid(form)
 
@@ -183,26 +175,7 @@ class CreateServiceView(mixins.LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
 
         model = self.kwargs['model_name']
-        model_title = ''
-
-        if model == 'hotel':
-            model_title = 'hotel'
-        elif model == 'publictransport':
-            model_title = 'public transport'
-        elif model == 'privatetransport':
-            model_title = 'private transport'
-        elif model == 'ticket':
-            model_title = 'activity'
-        elif model == 'transfer':
-            model_title = 'transfer'
-        elif model == 'localguide':
-            model_title = 'local guide'
-        elif model == 'staff':
-            model_title = 'tour leader'
-        elif model == 'currency':
-            model_title = 'currency'
-        elif model == 'location':
-            model_title = 'location'
+        model_title = MODEL_TITLES.get(model, model)
 
         context['model_name'] = model
         context['profile'] = get_user_obj(self.request)
@@ -224,7 +197,7 @@ class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
         try:
             return apps.get_model(app_label='services', model_name=model_name)
         except LookupError:
-            raise Http404(f'Model {model_name} does not exist')
+            raise Http404(_('Model %(model_name)s does not exist') % {'model_name': model_name})
 
     def get_queryset(self):
         model = self.get_model()
@@ -263,9 +236,9 @@ class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
                 super().__init__(*args, **kwargs)
                 if 'provider' in self.fields:
                     self.fields['provider'].queryset = eligible_providers
-                    self.fields['provider'].empty_label = "Select an option"
+                    self.fields['provider'].empty_label = _("Select an option")
                     self.fields['city'].queryset = cities
-                    self.fields['city'].empty_label = "Select an option"
+                    self.fields['city'].empty_label = _("Select an option")
 
         return DynamicModelForm
 
@@ -273,26 +246,7 @@ class ServiceEditView(mixins.LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
 
         model = self.kwargs['model_name']
-        model_title = ''
-
-        if model == 'hotel':
-            model_title = 'hotel'
-        elif model == 'publictransport':
-            model_title = 'public transport'
-        elif model == 'privatetransport':
-            model_title = 'private transport'
-        elif model == 'ticket':
-            model_title = 'activity'
-        elif model == 'transfer':
-            model_title = 'transfer'
-        elif model == 'localguide':
-            model_title = 'local guide'
-        elif model == 'staff':
-            model_title = 'tour leader'
-        elif model == 'currency':
-            model_title = 'currency'
-        elif model == 'location':
-            model_title = 'location'
+        model_title = MODEL_TITLES.get(model, model)
 
         context['model_name'] = model
         context['model_title'] = model_title
@@ -313,7 +267,7 @@ class DeleteServiceView(mixins.LoginRequiredMixin, DeleteView):
         try:
             return apps.get_model(app_label='services', model_name=model_name)
         except LookupError:
-            raise Http404(f'Model {model_name} does not exist')
+            raise Http404(_('Model %(model_name)s does not exist') % {'model_name': model_name})
 
     def get_queryset(self):
         model = self.get_model()
@@ -349,7 +303,7 @@ def service_detail_view(request, model_name, pk):
     try:
         model = apps.get_model(app_label='services', model_name=model_name)
     except LookupError:
-        raise Http404(f'Model {model_name} does not exist')
+        raise Http404(_('Model %(model_name) does not exist') % {'model_name': model_name})
 
     service = get_object_or_404(model, pk=pk)
 

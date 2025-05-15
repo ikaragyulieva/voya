@@ -26,5 +26,5 @@ register = template.Library()
 @register.filter
 def placeholder(value, token):
     if isinstance(value, BoundField):
-        value.field.widget.attrs['placeholder'] = token
+        value.as_widget(attrs={'placeholder': token})
     return value

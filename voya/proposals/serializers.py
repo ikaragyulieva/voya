@@ -18,7 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 from rest_framework import serializers
-
+from django.utils.translation import gettext_lazy as _
 from voya.proposals.choices import SectionChoices, StatusChoices
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
@@ -29,15 +29,15 @@ class ProposalSerializer(serializers.ModelSerializer):
     title = serializers.CharField(
         max_length=255,
         error_messages={
-            'blank': 'The proposal title is required.',
-            'max_length': 'The title must not exceed 255 characters.',
+            'blank': _('The proposal title is required.'),
+            'max_length': _('The title must not exceed 255 characters.'),
         }
     )
 
     status = serializers.ChoiceField(
         choices=StatusChoices,
         error_messages={
-            'invalid_choice': 'Invalid status. Please select a valid status from the dropdown.',
+            'invalid_choice': _('Invalid status. Please select a valid status from the dropdown.'),
         }
     )
 
@@ -64,21 +64,21 @@ class ItemSerializer(serializers.ModelSerializer):
         required=False,  # Allow missing service_id
         allow_null=True,  # Allow null value
         default=None,
-        error_messages={'invalid': 'Invalid service ID.'}
+        error_messages={'invalid': _('Invalid service ID.')}
     )
 
     quantity = serializers.IntegerField(
         min_value=1,
         error_messages={
-            'min_value': 'Quantity must be at least 1.',
-            'invalid': 'Quantity must be a number.',
+            'min_value': _('Quantity must be at least 1.'),
+            'invalid': _('Quantity must be a number.'),
         }
     )
     additional_notes = serializers.CharField(allow_blank=True)
     corresponding_trip_date = serializers.DateField(
         error_messages={
-            'invalid': 'Invalid date format. Please use YYYY-MM-DD.',
-            'null': 'Trip date is required.',
+            'invalid': _('Invalid date format. Please use YYYY-MM-DD.'),
+            'null': _('Trip date is required.'),
         }
     )
     price = serializers.DecimalField(max_digits=10, decimal_places=2)
@@ -86,7 +86,7 @@ class ItemSerializer(serializers.ModelSerializer):
     city = serializers.PrimaryKeyRelatedField(
         queryset=Location.objects.all(),
         error_messages={
-            'does_not_exist': 'Invalid city section.'
+            'does_not_exist': _('Invalid city section.')
         }
     )
 

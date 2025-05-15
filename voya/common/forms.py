@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.utils.translation import gettext_lazy as _
 
 
 class SearchForm(forms.Form):
@@ -7,7 +8,7 @@ class SearchForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Search ...'
+                'placeholder': _('Search ...')
             }
         ),
     )
@@ -15,11 +16,11 @@ class SearchForm(forms.Form):
 
 class LogInForm(AuthenticationForm):
     username = forms.EmailField(
-        widget=forms.TextInput(attrs={'placeholder': 'Your email address'}),
+        widget=forms.TextInput(attrs={'placeholder': _('Your email address')}),
         label=""
 
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': _('Password')}),
         label=""
     )

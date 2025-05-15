@@ -14,19 +14,13 @@ from voya.employees.models import EmployeeProfile
 from voya.utils import get_user_obj
 
 
-# Create your views here.
-
 class CompanyCreateView(FormView):
     template_name = 'companies/create-company-page.html'
-    # success_url = reverse_lazy('companies-dashboard')
 
     company_profile_form_class = CompanyProfileForm
     address_form_class = AddressForm
     phone_number_form_class = PhoneNumberForm
 
-    # def get_object(self, queryset=None):
-    #     # Fetch the ClientProfile based on the URL pk
-    #     return EmployeeProfile.objects.get(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

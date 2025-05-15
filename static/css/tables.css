@@ -815,6 +815,14 @@ h2 {
 
 }
 
+.approved-row {
+    background-color: #f0fff4 !important;
+}
+
+.rejected-row {
+    background-color: #fff7f7 !important;
+}
+
 @media all and (max-width: 1100px) {
     .dashboard-table {
         display: flex;

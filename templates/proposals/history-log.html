@@ -21,13 +21,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 {% load tz %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 
 {% block content %}
 
     <main class="dashboard-table">
         <div class="container-table">
 
-            <h2>{{ proposal.title }} Change history</h2>
+            <h2>{{ proposal.title }} {% trans "Change history" %}</h2>
 
             <div class="col-9">
 
@@ -49,17 +50,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                 <ul class="responsive-table requests-table">
 
                     <li class="table-header">
-                        <div class="col col-1">Date</div>
-                        <div class="col col-2">Object</div>
-                        <div class="col col-33">Change</div>
-                        <div class="col col-4">User</div>
+                        <div class="col col-1">{% trans "Date" %}</div>
+                        <div class="col col-2">{% trans "Object" %}</div>
+                        <div class="col col-33">{% trans "Change" %}</div>
+                        <div class="col col-4">{% trans "User" %}</div>
 
                     </li>
                     {% for record in history_entries %}
                         <li class="table-row">
-                            <div class="col col-1" data-label="Date"> {{ record.timestamp|date:"d M Y H:i" }}
-                                ({{ record.timestamp|naturaltime }}) </div>
-                            <div class="col col-2" data-label="Object">{{ record.entry.section_name }}</div>
+                            <div class="col col-1" data-label="Date">
+                                {{ record.timestamp|date:"d M Y H:i" }} ({{ record.timestamp|naturaltime }}) 
+                            </div>
+                        
+                            <div class="col col-2" data-label="Object">
+                                {{ record.entry.section_name }}
+                            </div>
+                            
                             <div class="col col-33"
                                  data-label="Change">{% if record.entry.history_type == "+" %}
                                     {% if record.model_name == "Proposal Section Item" %}
@@ -75,7 +81,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                             on {{ record.entry.corresponding_trip_date }} in {{ record.entry.city.city_name }}
                                         {% endif %}
                                     {% else %}
-                                        Created: {{ record.entry }}
+                                        {% trans "Created:" %} {{ record.entry }}
                                     {% endif %}
 
                                 {% elif record.entry.history_type == "-" %}
@@ -92,10 +98,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                                             on {{ record.entry.corresponding_trip_date }} in {{ record.entry.city.city_name }}
                                         {% endif %}
                                     {% else %}
-                                        Deleted: {{ record.entry }}
+                                        {% trans "Deleted:" %} {{ record.entry }}
                                     {% endif %}
                                 {% elif record.entry.history_type == "~" %}
-                                    <strong>Updated</strong>:
+                                    <strong>{% trans "Updated" %}</strong>:
                                     {% for change in record.changes %}
                                         <div><strong>{{ change.field }}</strong>:
                                             <del>{{ change.old }}</del>
@@ -110,7 +116,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                         </li>
                     {% empty %}
 
-                        <li>No changes found</li>
+                        <li>{% trans "No changes found" %}</li>
 
                     {% endfor %}
                 </ul>

@@ -1,10 +1,30 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Create new {{ model_title }}</h2>
+        <h2>{% trans "Create new" %} {{ model_title }}</h2>
 
         <form method="post" action="">
             {% csrf_token %}
@@ -37,15 +57,15 @@
 
                     {% if model_name != 'hotel' %}
                         <div class="form-section">
-                            <h3>Location </h3>
+                            <h3>{% trans "Location" %} </h3>
                             <div class="form-fields">
-                                <p>Country *</p>
+                                <p>{% trans "Country" %} *</p>
                                 {{ form.country }}
                                 {% if form.country.errors %}
                                     <div class="error">{{ form.country.errors }}</div>
                                 {% endif %}
 
-                                <p>City *</p>
+                                <p>{% trans "City" %} *</p>
                                 {{ form.city }}
                                 {% if form.city.errors %}
                                     <div class="error">{{ form.city.errors }}</div>
@@ -56,22 +76,22 @@
                     {% endif %}
 
                     <div class="form-section">
-                        <h3>Contact Information</h3>
+                        <h3>{% trans "Contact Information" %}</h3>
                         <div class="form-fields">
 
-                            <p>Email</p>
-                            {{ form.email|placeholder:'e-mail@email.com' }}
+                            <p>{% trans "Email" %}</p>
+                            {{ form.email|placeholder:_('e-mail@email.com') }}
                             {% if form.email.errors %}
                                 <div class="error">{{ form.email.errors }}</div>
                             {% endif %}
 
-                            <p>Phone number</p>
-                            {{ form.telephone_number|placeholder:'+1234567890' }}
+                            <p>{% trans "Phone number" %}</p>
+                            {{ form.telephone_number|placeholder:_('+1234567890') }}
                             {% if form.telephone_number.errors %}
                                 <div class="error">{{ form.telephone_number.errors }}</div>
                             {% endif %}
 
-                            <p>Website</p>
+                            <p>{% trans "Website" %}</p>
                             {{ form.website|placeholder:'https://webpage.com' }}
                             {% if form.website.errors %}
                                 <div class="error">{{ form.website.errors }}</div>
@@ -81,11 +101,11 @@
                     </div>
                     
                     <div class="form-section">
-                        <h3>Service Provider</h3>
+                        <h3>{% trans "Service Provider" %}</h3>
                         <div class="form-fields">
 
-                            <p>Provider *</p>
-                            {{ form.provider|placeholder:'Select an option' }}
+                            <p>{% trans "Provider" %} *</p>
+                            {{ form.provider|placeholder:_('Select an option') }}
                             {% if form.provider.errors %}
                                 <div class="error">{{ form.provider.errors }}</div>
                             {% endif %}
@@ -94,10 +114,10 @@
                     </div>
 
                     <div class="form-section">
-                        <h3>Notes</h3>
+                        <h3>{% trans "Notes" %}</h3>
                         <div class="form-fields">
 
-                            <p>Description</p>
+                            <p>{% trans "Description" %}</p>
                             {{ form.description|placeholder:'' }}
                             {% if form.description.errors %}
                                 <div class="error">{{ form.description.errors }}</div>
@@ -108,7 +128,7 @@
 
                 {% endif %}
             </div>
-            <button class="add-btn" type="submit">Create</button>
+            <button class="add-btn" type="submit">{% trans "Create" %}</button>
         </form>
 
     </div>

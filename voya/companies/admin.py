@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import CompanyProfile, Address, PhoneNumber
+from django.utils.translation import gettext_lazy as _
 
 
 class AddressInline(admin.TabularInline):  # Define AddressInline
@@ -36,7 +37,7 @@ class CompanyProfileAdmin(admin.ModelAdmin):
     ordering = ('commercial_name',)
 
     fieldsets = (
-        ('Company Information', {
+        (_('Company Information'), {
             'fields': (
                 'commercial_name',
                 'legal_name',
@@ -45,7 +46,7 @@ class CompanyProfileAdmin(admin.ModelAdmin):
                 'logo',
             )
         }),
-        ('Additional Details', {
+        (_('Additional Details'), {
             'fields': (
                 'notes',
                 'is_active',
@@ -59,14 +60,14 @@ class CompanyProfileAdmin(admin.ModelAdmin):
 
     def activate_companies(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected companies have been activated.")
+        self.message_user(request, _("Selected companies have been activated."))
 
     def deactivate_companies(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected companies have been deactivated.")
+        self.message_user(request, _("Selected companies have been deactivated."))
 
-    activate_companies.short_description = "Activate selected companies"
-    deactivate_companies.short_description = "Deactivate selected companies"
+    activate_companies.short_description = _("Activate selected companies")
+    deactivate_companies.short_description = _("Deactivate selected companies")
 
     readonly_fields = ('logo',)
 
@@ -97,7 +98,7 @@ class AddressAdmin(admin.ModelAdmin):
     ordering = ('company', 'country', 'city')
 
     fieldsets = (
-        ('Address Details', {
+        (_('Address Details'), {
             'fields': (
                 'company',
                 'street_address',
@@ -107,7 +108,7 @@ class AddressAdmin(admin.ModelAdmin):
                 'country',
             )
         }),
-        ('Status', {
+        (_('Status'), {
             'fields': ('is_active',)
         }),
     )
@@ -119,14 +120,14 @@ class AddressAdmin(admin.ModelAdmin):
 
     def activate_addresses(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected addresses have been activated.")
+        self.message_user(request, _("Selected addresses have been activated."))
 
     def deactivate_addresses(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected addresses have been deactivated.")
+        self.message_user(request, _("Selected addresses have been deactivated."))
 
-    activate_addresses.short_description = "Activate selected addresses"
-    deactivate_addresses.short_description = "Deactivate selected addresses"
+    activate_addresses.short_description = _("Activate selected addresses")
+    deactivate_addresses.short_description = _("Deactivate selected addresses")
 
     list_per_page = 10
 
@@ -156,13 +157,13 @@ class PhoneNumberAdmin(admin.ModelAdmin):
 
     def activate_numbers(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected phone numbers have been activated.")
+        self.message_user(request, _("Selected phone numbers have been activated."))
 
     def deactivate_numbers(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected phone numbers have been deactivated.")
+        self.message_user(request, _("Selected phone numbers have been deactivated."))
 
-    activate_numbers.short_description = "Activate selected phone numbers"
-    deactivate_numbers.short_description = "Deactivate selected phone numbers"
+    activate_numbers.short_description = _("Activate selected phone numbers")
+    deactivate_numbers.short_description = _("Deactivate selected phone numbers")
 
     list_per_page = 10

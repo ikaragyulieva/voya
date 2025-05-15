@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -19,36 +19,37 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
     <div class="trip">
-
 
         <div class="trip-title">
             <p>{{ provider.commercial_name }}</p>
         </div>
 
         <hr class="custom-line">
-
+    
+        <!-- General Info section -->
         <div class="trip-section">
-            <h3 class="title">Provider Information</h3>
+            <h3 class="title">{% trans "Provider Information" %}</h3>
             <table>
                 <tbody>
                 <tr>
-                    <th>Services:</th>
+                    <th>{% trans "Services:" %}</th>
                     <td><i> {{ provider.services }} </i></td>
                 </tr>
                 <tr>
-                    <th>Country:</th>
+                    <th>{% trans "Country:" %}</th>
                     <td><i> {{ provider.get_country_display }} </i></td>
                 </tr>
                 <tr>
-                    <th>City:</th>
+                    <th>{% trans "City:" %}</th>
                     <td><i> {{ provider.city.city_name }} </i></td>
                 </tr>
                 <tr>
-                    <th>Website:</th>
+                    <th>{% trans "Website:" %}</th>
                     {% if provider.website == None %}
                         <td><i> - </i></td>
                     {% else %}
@@ -58,12 +59,28 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     {% endif %}
                 </tr>
                 <tr>
-                    <th>Notes:</th>
-                    {% if not provider.description %}
-                        <td><i> - </i></td>
-                    {% else %}
-                        <td><i> {{ provider.description }} </i></td>
-                    {% endif %}
+                    <th>{% trans "Notes:" %}</th>
+                    <td><i> {{ provider.description|default:"-" }} </i></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="custom-line">
+        
+        <!-- Contact Info section -->
+        <div class="trip-section">
+            <h3 class="title">{% trans "Contact Information" %}</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <th>{% trans "Email:" %}</th>
+                    <td><i> {{ provider.email|default:"-" }} </i></td>
+                </tr>
+                <tr>
+                    <th>{% trans "Phone number:" %}</th>
+                    <td><i> {{ provider.telephone_number|default:"-" }} </i></td>
                 </tr>
                 </tbody>
             </table>
@@ -71,60 +88,35 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
         <hr class="custom-line">
 
+        <!-- Entry Info section -->
         <div class="trip-section">
-            <h3 class="title">Contact Information</h3>
+            <h3 class="title">{% trans "Entry Information" %}</h3>
             <table>
                 <tbody>
                 <tr>
-                    <th>Email:</th>
-                    {% if provider.email == None %}
-                        <td><i> - </i></td>
-                    {% else %}
-                        <td><i> {{ provider.email }} </i></td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <th>Phone number:</th>
-                    {% if provider.telephone_number == None %}
-                        <td><i> - </i></td>
-                    {% else %}
-                        <td><i> {{ provider.telephone_number }} </i></td>
-                    {% endif %}
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <hr class="custom-line">
-
-        <div class="trip-section">
-            <h3 class="title">Entry Information</h3>
-            <table>
-                <tbody>
-                <tr>
-                    <th>Last update:</th>
+                    <th>{% trans "Last update:" %}</th>
                     <td><i> {{ provider.updated_at|date:"d-M-Y" }} </i></td>
                 </tr>
                 <tr>
-                    <th>Updated by:</th>
+                    <th>{% trans "Updated by:" %}</th>
                     <td><i>{{ provider.created_by_user.email }}</i></td>
                 </tr>
                 <tr>
-                    <th>Status:</th>
+                    <th>{% trans "Status:" %}</th>
                     <td>
                         <div class="action-btn">
                             {% if provider.is_active %}
-                                <!-- Active Request Status -->
+                                <!-- Active Status -->
                                 <img
                                         src="{% static 'images/green-circle.png' %}"
-                                        alt="Active"
+                                        alt='{% trans "Active" %}'
                                 />
 
                             {% else %}
-                                <!-- Closed Request Status -->
+                                <!-- Inactive Status -->
                                 <img
                                         src="{% static 'images/red-circle.png' %}"
-                                        alt="Closed"
+                                        alt='{% trans "Inactive" %}'
                                 />
                             {% endif %}
                         </div>

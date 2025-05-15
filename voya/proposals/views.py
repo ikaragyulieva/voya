@@ -31,6 +31,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.utils.formats import date_format
 from django.utils.text import capfirst
 from django.views.generic import CreateView, TemplateView, ListView, UpdateView
@@ -48,7 +49,8 @@ from voya.proposals.choices import StatusChoices, MealChoices
 from voya.proposals.forms import CreateProposalForm, CreateItemForm, CreateBudgetForm, PDFOptionsForm
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.proposals.serializers import ProposalSerializer, ItemSerializer, BudgetSerializer
-from voya.proposals.utils import save_proposal, update_proposal
+from voya.proposals.utils import save_proposal, update_proposal, get_section_context, REVERSE_SECTION_KEYS, \
+    SECTION_MODEL_MAP, SECTION_KEYS, group_items_by_section
 from voya.requests.choices import CityChoices
 from voya.requests.models import TripRequests
 from voya.services.models import Location
@@ -80,6 +82,8 @@ class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
         context['budget_form'] = budget_form
         context['meal_options'] = MealChoices
 
+        context.update(get_section_context())
+
         return context
 
 
@@ -92,27 +96,32 @@ class ProposalItemsAPI(APIView):
     def post(self, request, *args, **kwargs):
         """Handles creating a new proposal."""
         data = request.data
+        items = data.get('items', [])
+
+        for item in items:
+            label = item.get("section_name")
+            item["section_name"] = REVERSE_SECTION_KEYS.get(label, label)
 
         # Validate Proposal
         proposal_serializer = ProposalSerializer(data=data.get('proposal'))
         if not proposal_serializer.is_valid():
             return Response({
-                'error': 'Proposal validation failed',
+                'error': _('Proposal validation failed'),
                 'details': proposal_serializer.errors
             }, status=status.HTTP_400_BAD_REQUEST)
 
         # Validate Items
-        items_serializer = ItemSerializer(data=data.get('items', []), many=True)
+        items_serializer = ItemSerializer(data=items, many=True)
         if not items_serializer.is_valid():
             return Response({
-                'error': 'Item validation failed',
+                'error': _('Item validation failed'),
                 'details': items_serializer.errors},
                 status=status.HTTP_400_BAD_REQUEST)
 
         budget_serializer = BudgetSerializer(data=data.get('budget', []), many=True)
         if not budget_serializer.is_valid():
             return Response({
-                'error': 'Budget validation failed',
+                'error': _('Budget validation failed'),
                 'details': budget_serializer.errors},
                 status=status.HTTP_400_BAD_REQUEST)
 
@@ -121,7 +130,7 @@ class ProposalItemsAPI(APIView):
 
             # Return success response
             return JsonResponse({
-                'success': 'Proposal, items, and budget saved successfully!',
+                'success': _('Proposal, items, and budget saved successfully!'),
                 'proposal_id': proposal.id,
                 'item_ids': [item.id for item in created_items],
                 'budget_ids': [budget.id for budget in created_budgets],
@@ -141,18 +150,25 @@ class ProposalUpdateAPI(APIView):
         logger.warning("PUT request received")
         """Handles updating an existing proposal."""
         data = request.data
+        items = data.get('items', [])
         trip_id = data.get('trip_id', '')
+
+        for item in items:
+            label = item.get('section_name')
+            item["section_name"] = REVERSE_SECTION_KEYS.get(label, label)
+
+        data['items'] = items
 
         try:
             proposal = Proposal.objects.get(pk=pk)
         except Proposal.DoesNotExist:
-            return Response({'error': 'Proposal not found. Use Post to create a new one'},
+            return Response({'error': _('Proposal not found. Use Post to create a new one')},
                             status=status.HTTP_404_NOT_FOUND)
 
         try:
             updated_proposal, created_items, created_budgets = update_proposal(proposal, data, request.user)
             return JsonResponse({
-                'success': 'Proposal updated successfully!',
+                'success': _('Proposal updated successfully!'),
                 'proposal_id': updated_proposal.id,
                 'item_ids': [item.id for item in created_items],
                 'budget_ids': [budget.id for budget in created_budgets],
@@ -166,69 +182,9 @@ class ProposalUpdateAPI(APIView):
 def proposal_detail(request, pk):
     proposal = get_object_or_404(Proposal, id=pk)
     items = ProposalSectionItem.objects.filter(proposal=proposal).order_by('order')
+    section_items_map = group_items_by_section(items)
 
-    model_map = {
-        'Accommodations': 'Hotel',
-        'Public Transport': 'PublicTransport',
-        'Private Transport': 'PrivateTransport',
-        'Transfers': 'Transfer',
-        'Extra Activities': 'Ticket',
-        'Activity': 'Ticket',
-        'Local Guides': 'LocalGuide',
-        'Tour Leader': 'Staff',
-        # 'Other Services': 'Other',
-    }
-
-    accommodation_items = []
-    public_transport_items = []
-    private_transport_items = []
-    activity_items = []
-    transfer_items = []
-    guides_items = []
-    tour_leader_items = []
-    other_items = []
-    other_variable_items = []
-    other_fixed_items = []
-    meal_items = []
-
-    for item in items:
-        if item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services - Fixed' or item.section_name == 'Other Services' or item.section_name == 'Meals':
-            pass
-        else:
-            model_name = model_map.get(item.section_name)
-
-            service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
-            if hasattr(service_object, 'name'):
-                item.service_name = service_object.name
-            elif hasattr(service_object, 'type'):
-                item.service_name = service_object.type
-
-        if item.section_name == 'Accommodations':
-            accommodation_items.append(item)
-        elif item.section_name == 'Public Transport':
-            public_transport_items.append(item)
-        elif item.section_name == 'Private Transport':
-            private_transport_items.append(item)
-        elif item.section_name == 'Extra Activities':
-            activity_items.append(item)
-        elif item.section_name == 'Activity':
-            activity_items.append(item)
-        elif item.section_name == 'Local Guides':
-            guides_items.append(item)
-        elif item.section_name == 'Transfers':
-            transfer_items.append(item)
-        elif item.section_name == 'Tour Leader':
-            tour_leader_items.append(item)
-        elif item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
-            other_items.append(item)
-            other_variable_items.append(item)
-        elif item.section_name == 'Other Services - Fixed':
-            other_items.append(item)
-            other_fixed_items.append(item)
-        elif item.section_name == 'Meals':
-            meal_items.append(item)
-
-    budget = ProposalBudget.objects.filter(proposal=proposal)
+    budget = ProposalBudget.objects.filter(proposal=proposal).order_by("pax")
     foc_pax = [budget_option.free_of_charge for budget_option in budget]
 
     user_profile = get_user_obj(request)
@@ -239,16 +195,16 @@ def proposal_detail(request, pk):
             'proposal': proposal,
             'profile': user_profile,
             'items': items,
-            'accommodation_items': accommodation_items,
-            'public_transport_items': public_transport_items,
-            'private_transport_items': private_transport_items,
-            'activity_items': activity_items,
-            'guides_items': guides_items,
-            'tour_leader_items': tour_leader_items,
-            'transfer_items': transfer_items,
-            'other_variable_items': other_variable_items,
-            'other_fixed_items': other_fixed_items,
-            'meal_items': meal_items,
+            'accommodation_items': section_items_map['ACCOMMODATIONS'],
+            'public_transport_items': section_items_map["PUBLIC_TRANSPORT"],
+            'private_transport_items': section_items_map["PRIVATE_TRANSPORT"],
+            'activity_items': section_items_map["ACTIVITY"] + section_items_map["EXTRA_ACTIVITIES"],
+            'guides_items': section_items_map["LOCAL_GUIDES"],
+            'tour_leader_items': section_items_map["TOUR_LEADER"],
+            'transfer_items': section_items_map["TRANSFERS"],
+            'other_variable_items': section_items_map["OTHER_VARIABLE"] + section_items_map["OTHER_SERVICES"],
+            'other_fixed_items': section_items_map["OTHER_FIXED"],
+            'meal_items': section_items_map["MEALS"],
             'budget': budget,
             'current_request': current_request,
             'foc_pax': foc_pax[0] if foc_pax else 0,
@@ -261,15 +217,16 @@ def proposal_detail(request, pk):
             'proposal': proposal,
             'profile': user_profile,
             'items': items,
-            'accommodation_items': accommodation_items,
-            'public_transport_items': public_transport_items,
-            'private_transport_items': private_transport_items,
-            'activity_items': activity_items,
-            'guides_items': guides_items,
-            'tour_leader_items': tour_leader_items,
-            'transfer_items': transfer_items,
-            'other_items': other_items,
-            'meal_items': meal_items,
+            'accommodation_items': section_items_map['ACCOMMODATIONS'],
+            'public_transport_items': section_items_map["PUBLIC_TRANSPORT"],
+            'private_transport_items': section_items_map["PRIVATE_TRANSPORT"],
+            'activity_items': section_items_map["ACTIVITY"] + section_items_map["EXTRA_ACTIVITIES"],
+            'guides_items': section_items_map["LOCAL_GUIDES"],
+            'tour_leader_items': section_items_map["TOUR_LEADER"],
+            'transfer_items': section_items_map["TRANSFERS"],
+            'other_variable_items': section_items_map["OTHER_VARIABLE"] + section_items_map["OTHER_SERVICES"],
+            'other_fixed_items': section_items_map["OTHER_FIXED"],
+            'meal_items': section_items_map["MEALS"],
             'budget': budget,
             'current_request': current_request
         }
@@ -280,23 +237,24 @@ def proposal_detail(request, pk):
 
 
 class DynamicServiceView(APIView):
-    model_map = {
-        'Accommodations': 'Hotel',
-        'Public Transport': 'PublicTransport',
-        'Private Transport': 'PrivateTransport',
-        'Transfers': 'Transfer',
-        'Extra Activities': 'Ticket',
-        'Activity': 'Ticket',
-        'Local Guides': 'LocalGuide',
-        'Tour Leader': 'Staff'
-        # 'Other Services': 'Other',
-    }
+    # model_map = {
+    #     'Accommodations': 'Hotel',
+    #     'Public Transport': 'PublicTransport',
+    #     'Private Transport': 'PrivateTransport',
+    #     'Transfers': 'Transfer',
+    #     'Extra Activities': 'Ticket',
+    #     'Activity': 'Ticket',
+    #     'Local Guides': 'LocalGuide',
+    #     'Tour Leader': 'Staff'
+    #     # 'Other Services': 'Other',
+    # }
 
     def get(self, request, section, city_id=None, *args, **kwargs):
-        model_name = self.model_map.get(section)
-        if not model_name:
+        section_key = REVERSE_SECTION_KEYS.get(section)
+        model_name = SECTION_MODEL_MAP.get(section_key)
+        if not model_name or not section_key:
             return Response(
-                {'error': f"Invalid section '{section}'"},
+                {'error': _("Invalid section '%(section)s'") % {'section': section}},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -311,7 +269,7 @@ class DynamicServiceView(APIView):
                 display_field = 'type'
             else:
                 return Response(
-                    {'error': f'Could not determine display field for {model_name}.'},
+                    {'error': _('Could not determine display field for %(model_name)s.') % {'model_name': model_name}},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
@@ -321,7 +279,7 @@ class DynamicServiceView(APIView):
                 price = 'high_season_price'
             else:
                 return Response(
-                    {'error': f'Could not determine price field for {model_name}.'},
+                    {'error': _('Could not determine price field for %(model_name)s.') % {'model_name': model_name}},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
@@ -427,18 +385,20 @@ def proposal_pdf_view(request, pk):
         budget = ProposalBudget.objects.filter(proposal=proposal).order_by('pax')
         foc_pax = [budget_option.free_of_charge for budget_option in budget][0]
         foc_amount = [budget_option.free_of_charge_amount for budget_option in budget][0]
-        item = {
-            'proposal': proposal,
-            'section_name': 'Other Services - Variable',
-            'quantity': foc_pax,
-            'additional_notes': 'Gratuidad',
-            'corresponding_trip_date': trip_start_date,
-            'city': '-',
-            'price': foc_amount,
 
-        }
+        if foc_pax > 0:
+            item = {
+                'proposal': proposal,
+                'section_name': _('Other Services - Variable'),
+                'quantity': foc_pax,
+                'additional_notes': _('Gratuidad'),
+                'corresponding_trip_date': trip_start_date,
+                'city': '-',
+                'price': foc_amount,
 
-        other_items.append(item)
+            }
+            other_items.append(item)
+
         if form.is_valid():
             logo_option = form.cleaned_data['logo_options']
             commission = form.cleaned_data['commission']
@@ -492,7 +452,6 @@ def proposal_pdf_view(request, pk):
                 })
 
                 previous_paxs.append(budget_option.pax)
-
 
             current_date = timezone.now()
             deposit_due_date = current_date + timedelta(days=7)
@@ -589,69 +548,9 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
 
         proposal = self.get_object()
         items = ProposalSectionItem.objects.filter(proposal=proposal).order_by("order")
+        section_items_map = group_items_by_section(items)
 
-        model_map = {
-            'Accommodations': 'Hotel',
-            'Public Transport': 'PublicTransport',
-            'Private Transport': 'PrivateTransport',
-            'Transfers': 'Transfer',
-            'Extra Activities': 'Ticket',
-            'Activity': 'Ticket',
-            'Local Guides': 'LocalGuide',
-            'Tour Leader': 'Staff',
-            # 'Other Services': 'Other',
-        }
-
-        accommodation_items = []
-        public_transport_items = []
-        private_transport_items = []
-        activity_items = []
-        transfer_items = []
-        guides_items = []
-        tour_leader_items = []
-        other_variable_items = []
-        other_fixed_items = []
-        meals_items = []
-
-        for item in items:
-            if (item.section_name == 'Other Services - Variable'
-                    or item.section_name == 'Other Services - Fixed'
-                    or item.section_name == 'Other Services'
-                    or item.section_name == 'Meals'):
-                pass
-            else:
-                model_name = model_map.get(item.section_name)
-
-                service_object = apps.get_model('services', model_name=model_name).objects.get(id=item.service_id)
-                if hasattr(service_object, 'name'):
-                    item.service_name = service_object.name
-                elif hasattr(service_object, 'type'):
-                    item.service_name = service_object.type
-
-            if item.section_name == 'Accommodations':
-                accommodation_items.append(item)
-            elif item.section_name == 'Public Transport':
-                public_transport_items.append(item)
-            elif item.section_name == 'Private Transport':
-                private_transport_items.append(item)
-            elif item.section_name == 'Extra Activities':
-                activity_items.append(item)
-            elif item.section_name == 'Activity':
-                activity_items.append(item)
-            elif item.section_name == 'Local Guides':
-                guides_items.append(item)
-            elif item.section_name == 'Transfers':
-                transfer_items.append(item)
-            elif item.section_name == 'Tour Leader':
-                tour_leader_items.append(item)
-            elif item.section_name == 'Other Services - Variable' or item.section_name == 'Other Services':
-                other_variable_items.append(item)
-            elif item.section_name == 'Other Services - Fixed':
-                other_fixed_items.append(item)
-            elif item.section_name == 'Meals':
-                meals_items.append(item)
-
-        budget = ProposalBudget.objects.filter(proposal=proposal)
+        budget = ProposalBudget.objects.filter(proposal=proposal).order_by("pax")
         budget_id_min, budget_id_max = [b.id for b in budget]
         foc_pax = [budget_option.free_of_charge for budget_option in budget]
         current_request = TripRequests.objects.get(id=proposal.trip_request.id)
@@ -669,16 +568,16 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['current_request'] = current_request
         context['proposal'] = proposal
         context['items'] = items
-        context['accommodation_items'] = accommodation_items
-        context['public_transport_items'] = public_transport_items
-        context['private_transport_items'] = private_transport_items
-        context['activity_items'] = activity_items
-        context['guides_items'] = guides_items
-        context['tour_leader_items'] = tour_leader_items
-        context['transfer_items'] = transfer_items
-        context['other_variable_items'] = other_variable_items
-        context['other_fixed_items'] = other_fixed_items
-        context['meal_items'] = meals_items
+        context['accommodation_items'] = section_items_map['ACCOMMODATIONS']
+        context['public_transport_items'] = section_items_map["PUBLIC_TRANSPORT"]
+        context['private_transport_items'] = section_items_map["PRIVATE_TRANSPORT"]
+        context['activity_items'] = section_items_map["ACTIVITY"] + section_items_map["EXTRA_ACTIVITIES"]
+        context['guides_items'] = section_items_map["LOCAL_GUIDES"]
+        context['tour_leader_items'] = section_items_map["TOUR_LEADER"]
+        context['transfer_items'] = section_items_map["TRANSFERS"]
+        context['other_variable_items'] = section_items_map["OTHER_VARIABLE"] + section_items_map["OTHER_SERVICES"]
+        context['other_fixed_items'] = section_items_map["OTHER_FIXED"]
+        context['meal_items'] = section_items_map["MEALS"]
         context['budget'] = budget
         context['current_request'] = current_request
         context['foc_pax'] = foc_pax[0] if foc_pax else 0
@@ -687,6 +586,8 @@ class EditProposalView(mixins.LoginRequiredMixin, UpdateView):
         context['meal_options'] = MealChoices
         context['budget_id_min'] = budget_id_min
         context['budget_id_max'] = budget_id_max
+
+        context.update(get_section_context())
 
         return context
 

@@ -1,5 +1,24 @@
+<!--Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -10,14 +29,14 @@
             <div class="profile_img">
                 <div class="image">
                     <!-- Profile Image -->
-                    <img src="{{ company.logo.url }}" alt="Company Logo'"/>
+                    <img src="{{ company.logo.url }}" alt='{% trans "Company Logo" %}'/>
                 </div>
                 <div class="notes">
-                    <h3 class="names">Notes:</h3>
+                    <h3 class="names">{% trans "Notes:" %}</h3>
                     {% if company.notes %}
                         <p class="email">{{ company.notes }}</p>
                     {% else %}
-                        <p class="email">No notes added!</p>
+                        <p class="email">{% trans "No notes added!" %}</p>
                     {% endif %}
                 </div>
                 <div class="status">
@@ -25,18 +44,18 @@
                         <img
                                 class="status-img"
                                 src="{% static 'images/green-circle.png' %}"
-                                alt="bin button"
+                                alt='{% trans "Active Company" %}'
                         />
-                        <p>Active company</p>
+                        <p>{% trans "Active company" %}</p>
 
                     {% else %}
 
                         <img
                                 class="status-img"
                                 src="{% static 'images/red-circle.png' %}"
-                                alt="user-status"
+                                alt='{% trans "Inactive Company" %}'
                         />
-                        <p>Inactive company</p>
+                        <p>{% trans "Inactive Company" %}</p>
 
                     {% endif %}
                 </div>
@@ -83,20 +102,20 @@
                 {#                    <p>Closed</p>#}
                 {#                </div>#}
                 <div class="profile-info">
-                    <h3 class="names">Billing Information:</h3>
-                    <p class="email">Legal Name: {{ company.legal_name }}</p>
-                    <p class="email">Tax ID: {{ company.tax_id }}</p>
-                    <p class="email">Billing Email: {{ company.billing_email }}</p>
-                    <p class="email">Telephone Number: {{ phone_number.number }}</p>
+                    <h3 class="names">{% trans "Billing Information:" %}</h3>
+                    <p class="email">{% trans "Legal Name:" %} {{ company.legal_name }}</p>
+                    <p class="email">{% trans "Tax ID:" %} {{ company.tax_id }}</p>
+                    <p class="email">{% trans "Billing Email:" %} {{ company.billing_email }}</p>
+                    <p class="email">{% trans "Telephone Number:" %} {{ phone_number.number }}</p>
 
                 </div>
                 <div class="profile-info">
-                    <h3 class="names">Address Information:</h3>
-                    <p class="email">Country: {{ address.country }}</p>
-                    <p class="email">City: {{ address.city }}</p>
-                    <p class="email">State: {{ address.state }}</p>
-                    <p class="email">Street: {{ address.street_address }}</p>
-                    <p class="email">Postal Code: {{ address.postal_code }}</p>
+                    <h3 class="names">{% trans "Address Information:" %}</h3>
+                    <p class="email">{% trans "Country:" %} {{ address.country }}</p>
+                    <p class="email">{% trans "City:" %} {{ address.city }}</p>
+                    <p class="email">{% trans "State:" context "address" %} {{ address.state }}</p>
+                    <p class="email">{% trans "Street:" %} {{ address.street_address }}</p>
+                    <p class="email">{% trans "Postal Code:" %} {{ address.postal_code }}</p>
                 </div>
             </div>
         </div>

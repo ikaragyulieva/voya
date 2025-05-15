@@ -2,6 +2,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+from voya import settings
 from voya.clients.choices import TitleChoices
 from voya.common.models import TimestampedModel
 from voya.users.models import CustomUser
@@ -51,6 +52,12 @@ class EmployeeProfile(TimestampedModel):
 
     is_active = models.BooleanField(
         default=True,
+    )
+
+    preferred_language = models.CharField(
+        max_length=10,
+        choices=settings.LANGUAGES,
+        default='en',
     )
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='employee_profile')

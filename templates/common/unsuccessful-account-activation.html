@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -18,6 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
     <div class="edit-delete edit-photo pass-change">
@@ -30,16 +31,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                               autoplay></dotlottie-player>
         </div>
 
-        <h2> Unsuccessful account confirmation! </h2>
+        <h2> {% trans "Unsuccessful account confirmation!" %} </h2>
         {% if user.role == 'client' %}
-            <p> Your account can not be confirmed due to activation link is invalid or has expired. </p>
-            <p>Please try to create your account again or contact Voya support for assistance.</p>
+            <p> {% trans "Your account can not be confirmed due to activation link is invalid or has expired." %} </p>
+            <p>{% trans "Please try to create your account again or contact Voya support for assistance." %}</p>
         {% elif user.role == 'employee' %}
-            <p> This employee account can not be confirmed due to activation link is invalid or has expired. </p>
-            <p>Please create a new account or contact Voya support for assistance.</p>
+            <p> {% trans "This employee account can not be confirmed due to activation link is invalid or has expired." %} </p>
+            <p>{% trans "Please create a new account or contact Voya support for assistance." %}</p>
         {% endif %}
-        <button class="add-btn verify-btn" type="button" onclick="window.location.href='{% url 'create-client' %}'">Create
-            account
+        <button class="add-btn verify-btn" type="button" onclick="window.location.href='{% url 'create-client' %}'">
+            {% trans "Create account" %}
         </button>
 
     </div>

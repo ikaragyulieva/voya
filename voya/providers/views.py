@@ -12,8 +12,6 @@ from voya.providers.models import Providers
 from voya.utils import get_user_obj
 
 
-# Create your views here.
-
 class ProviderCreateView(mixins.LoginRequiredMixin, CreateView):
     model = Providers
     form_class = ProviderCreateForm

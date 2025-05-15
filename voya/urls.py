@@ -15,15 +15,45 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 
 from django.shortcuts import render
 from django.urls import path, include
+from django.views.i18n import set_language
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
+from voya.proposals import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # API URLs
+    path('api/proposals/', include('voya.proposals.api_urls')),
+
+    # path('', include('voya.common.urls')),
+    # path('clients/', include('voya.clients.urls')),
+    # path('companies/', include('voya.companies.urls')),
+    # path('employees/', include('voya.employees.urls')),
+    # path('request/', include('voya.requests.urls')),
+    # path('services/', include('voya.services.urls')),
+    # path('proposals/', include('voya.proposals.urls')),
+    # path('providers/', include('voya.providers.urls')),
+
+    # Swagger URLs
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+
+    # Language Switching
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('i18n/setlang/', set_language, name='set_language'),
+]
+
+# Translatable URLs (frontend)
+urlpatterns += i18n_patterns(
     path('', include('voya.common.urls')),
     path('clients/', include('voya.clients.urls')),
     path('companies/', include('voya.companies.urls')),
@@ -33,16 +63,14 @@ urlpatterns = [
     path('proposals/', include('voya.proposals.urls')),
     path('providers/', include('voya.providers.urls')),
 
-    # Swagger URLs
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Optional UI:
-    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-]
+    prefix_default_language=True  # Skips "/en" for default language
+)
 
+# Serve media files in dev
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
+# Custom Error handler
 def custom_404(request, exception):
     return render(request, '500.html', {
         'previous_page': request.META.get('HTTP_REFERER', '/'),  # Default to '/' if no referrer

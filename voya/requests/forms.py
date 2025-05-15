@@ -1,5 +1,5 @@
 from django import forms
-
+from django.utils.translation import gettext_lazy as _
 from voya.companies.models import CompanyProfile
 from voya.requests import choices
 from voya.requests.models import TripRequests
@@ -9,18 +9,31 @@ class CreateRequestForm(forms.ModelForm):
 
     country_destinations = forms.MultipleChoiceField(
         choices=choices.CountryChoices,
-        widget=forms.SelectMultiple(attrs={'class': 'multi-select', 'placeholder': 'Select Destinations'}),
-        label="Country Destinations",
+        widget=forms.SelectMultiple(
+            attrs={
+                'class': 'multi-select',
+                'placeholder': _('Select Destinations',)
+            }
+        ),
+        label=_("Country Destinations"),
     )
 
-    trip_start_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'flatpickr'}))
-    trip_end_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'flatpickr'}))
+    trip_start_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'class': 'flatpickr'}
+        )
+    )
+    trip_end_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'class': 'flatpickr'}
+        )
+    )
 
     transportation_type = forms.MultipleChoiceField(
         choices=choices.TransportationType,
         widget=forms.SelectMultiple(attrs={
             'class': 'multi-select',
-            'placeholder': 'Select an option'
+            'placeholder': _('Select an option')
         })
         )
 
@@ -28,32 +41,36 @@ class CreateRequestForm(forms.ModelForm):
         queryset=CompanyProfile.objects.filter(is_active=True),
         required=False,  # Optional, if it should only be set by employees
         label="Company",
-        widget=forms.Select(attrs={'placeholder': 'Select Company'}),
-        initial='Select Company',
+        widget=forms.Select(
+            attrs={
+                'placeholder': _('Select Company'),
+            }
+        ),
+        initial=_('Select Company'),
     )
 
     currency = forms.ChoiceField(
-        choices=[('', 'Select an option')] + list(choices.CurrencyChoices.choices),
+        choices=[('', _('Select an option'))] + list(choices.CurrencyChoices.choices),
         widget=forms.Select(),
     )
 
     accommodations = forms.ChoiceField(
-        choices=[('', 'Select an option')] + list(choices.AccommodationsType.choices),
+        choices=[('', _('Select an option'))] + list(choices.AccommodationsType.choices),
         widget=forms.Select(),
     )
 
     meals = forms.ChoiceField(
-        choices=[('', 'Select an option')] + list(choices.MealsType.choices),
+        choices=[('', _('Select an option'))] + list(choices.MealsType.choices),
         widget=forms.Select(),
     )
 
     staff = forms.ChoiceField(
-        choices=[('', 'Select an option')] + list(choices.StaffChoices.choices),
+        choices=[('', _('Select an option'))] + list(choices.StaffChoices.choices),
         widget=forms.Select(),
     )
 
     kind_of_group = forms.ChoiceField(
-        choices=[('', 'Select an option')] + list(choices.GroupChoice.choices),
+        choices=[('', _('Select an option'))] + list(choices.GroupChoice.choices),
         widget=forms.Select(),
     )
 
@@ -85,13 +102,41 @@ class CreateRequestForm(forms.ModelForm):
             'created_by_company',
         ]
         widgets = {
-            'age_range': forms.TextInput(attrs={'placeholder': 'Average travelers age'}),
-            'other_destinations': forms.TextInput(attrs={'placeholder': 'Tell us more about the places you wish to visit.'}),
-            'transportation_details': forms.TextInput(attrs={'placeholder': 'Share any transport details here.'}),
-            'accommodations_details': forms.TextInput(attrs={'placeholder': 'Share any accommodations details here.'}),
-            'meals_details': forms.TextInput(attrs={'placeholder': 'Any meals details we need to have into account?'}),
-            'type_of_trip': forms.TextInput(attrs={'placeholder': 'E.g. family trip, company trip, religious trip'}),
-            'additional_observations': forms.TextInput(attrs={'placeholder': 'Share any details you consider important here'}),
+            'age_range': forms.TextInput(
+                attrs={
+                    'placeholder': _('Average travelers age')
+                }
+            ),
+            'other_destinations': forms.TextInput(
+                attrs={
+                    'placeholder': _('Tell us more about the places you wish to visit.')
+                }
+            ),
+            'transportation_details': forms.TextInput(
+                attrs={
+                    'placeholder': _('Share any transport details here.')
+                }
+            ),
+            'accommodations_details': forms.TextInput(
+                attrs={
+                    'placeholder': _('Share any accommodations details here.')
+                }
+            ),
+            'meals_details': forms.TextInput(
+                attrs={
+                    'placeholder': _('Any meals details we need to have into account?')
+                }
+            ),
+            'type_of_trip': forms.TextInput(
+                attrs={
+                    'placeholder': _('E.g. family trip, company trip, religious trip')
+                }
+            ),
+            'additional_observations': forms.TextInput(
+                attrs={
+                    'placeholder': _('Share any details you consider important here')
+                }
+            ),
 
         }
 

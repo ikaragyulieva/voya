@@ -1,45 +1,66 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Create Request</h2>
+        <h2>{% trans "Create Request" %}</h2>
 
-        <form method="post" action="">
+        <form method="post" translate="no" action="">
             {% csrf_token %}
 
             {{ form.non_field_errors }}
-
+        
+            <!-- Group information section -->
             <div class="form-section">
-                <h3>Travelers Information</h3>
+                <h3>{% trans "Travelers Information" %}</h3>
                 <div class="form-fields">
 
-                    <p>Travelers nationality *</p>
+                    <p>{% trans "Travelers nationality" %} *</p>
                     {{ form.nationality }}
                     {% if form.nationality.errors %}
                         <div class="error">{{ form.nationality.errors }}</div>
                     {% endif %}
 
-                    <p>Country of origin *</p>
+                    <p>{% trans "Country of origin" %} *</p>
                     {{ form.country_origin }}
                     {% if form.country_origin.errors %}
                         <div class="error">{{ form.country_origin.errors }}</div>
                     {% endif %}
 
-                    <p>Travelers average age *</p>
+                    <p>{% trans "Travelers average age" %} *</p>
                     {{ form.age_range }}
                     {% if form.age_range.errors %}
                         <div class="error">{{ form.age_range.errors }}</div>
                     {% endif %}
 
-                    <p>Minimum participants *</p>
+                    <p>{% trans "Minimum participants" %} *</p>
                     {{ form.min_participants }}
                     {% if form.min_participants.errors %}
                         <div class="error">{{ form.min_participants.errors }}</div>
                     {% endif %}
 
-                    <p>Maximum participants *</p>
+                    <p>{% trans "Maximum participants" %} *</p>
                     {{ form.max_participants }}
                     {% if form.max_participants.errors %}
                         <div class="error">{{ form.max_participants.errors }}</div>
@@ -48,42 +69,43 @@
 
             </div>
 
+            <!-- Trip information section -->
             <div class="form-section">
-                <h3>Trip Information</h3>
+                <h3>{% trans "Trip Information" %}</h3>
 
                 <div class="form-fields">
 
-                    <p>Total budget *</p>
+                    <p>{% trans "Total budget" %} *</p>
                     {{ form.budget }}
                     {% if form.budget.errors %}
                         <div class="error">{{ form.budget.errors }}</div>
                     {% endif %}
 
-                    <p>Currency *</p>
+                    <p>{% trans "Currency" %} *</p>
                     {{ form.currency }}
                     {% if form.currency.errors %}
                         <div class="error">{{ form.currency.errors }}</div>
                     {% endif %}
 
-                    <p>Trip duration* (in days)</p>
+                    <p>{% trans "Trip duration" %} * ({% trans "in days" %}) %}</p>
                     {{ form.trip_duration }}
                     {% if form.trip_duration.errors %}
                         <div class="error">{{ form.trip_duration.errors }}</div>
                     {% endif %}
 
-                    <p>Trip start date (approx.) *</p>
+                    <p>{% trans "Trip start date (approx.)" %} *</p>
                     {{ form.trip_start_date }}
                     {% if form.trip_start_date.errors %}
                         <div class="error">{{ form.trip_start_date.errors }}</div>
                     {% endif %}
 
-                    <p>Trip end date (approx.) *</p>
+                    <p>{% trans "Trip end date (approx.)" %} *</p>
                     {{ form.trip_end_date }}
                     {% if form.trip_end_date.errors %}
                         <div class="error">{{ form.trip_end_date.errors }}</div>
                     {% endif %}
 
-                    <p>Destinations *</p>
+                    <p>{% trans "Destinations" %} *</p>
                     {{ form.country_destinations }}
                     {% if form.country_destinations.errors %}
                         <div class="error">{{ form.country_destinations.errors }}</div>
@@ -95,67 +117,67 @@
                     {#                    <div class="error">{{ form.city_destinations.errors }}</div>#}
                     {#                {% endif %}#}
 
-                    <p>Other destinations </p>
+                    <p>{% trans "Other destinations" %} </p>
                     {{ form.other_destinations }}
                     {% if form.other_destinations.errors %}
                         <div class="error">{{ form.other_destinations.errors }}</div>
                     {% endif %}
 
-                    <p>Transportation type *</p>
+                    <p>{% trans "Transportation type" %} *</p>
                     {{ form.transportation_type }}
                     {% if form.transportation_type.errors %}
                         <div class="error">{{ form.transportation_type.errors }}</div>
                     {% endif %}
 
-                    <p>Transportation details</p>
+                    <p>{% trans "Transportation details" %}</p>
                     {{ form.transportation_details }}
                     {% if form.transportation_details.errors %}
                         <div class="error">{{ form.transportation_details.errors }}</div>
                     {% endif %}
 
-                    <p>Accommodations type *</p>
+                    <p>{% trans "Accommodations type" %} *</p>
                     {{ form.accommodations }}
                     {% if form.accommodations.errors %}
                         <div class="error">{{ form.accommodations.errors }}</div>
                     {% endif %}
 
-                    <p>Accommodations details </p>
+                    <p>{% trans "Accommodations details" %} </p>
                     {{ form.accommodations_details }}
                     {% if form.accommodations_details.errors %}
                         <div class="error">{{ form.accommodations_details.errors }}</div>
                     {% endif %}
 
-                    <p>Meals *</p>
+                    <p>{% trans "Meals" %} *</p>
                     {{ form.meals }}
                     {% if form.meals.errors %}
                         <div class="error">{{ form.meals.errors }}</div>
                     {% endif %}
 
-                    <p>Meals details</p>
+                    <p>{% trans "Meals details" %}</p>
                     {{ form.meals_details }}
                     {% if form.meals_details.errors %}
                         <div class="error">{{ form.meals_details.errors }}</div>
                     {% endif %}
 
-                    <p>Staff</p>
+                    <p>{% trans "Staff" %}</p>
                     {{ form.staff }}
                     {% if form.staff.errors %}
                         <div class="error">{{ form.staff.errors }}</div>
                     {% endif %}
 
-                    <p>Group type </p>
+                    <p>{% trans "Group type" %} </p>
                     {{ form.kind_of_group }}
                     {% if form.kind_of_group.errors %}
                         <div class="error">{{ form.kind_of_group.errors }}</div>
                     {% endif %}
 
-                    <p>Trip type</p>
+                    <p>{% trans "Trip type" %}</p>
                     {{ form.type_of_trip }}
                     {% if form.type_of_trip.errors %}
                         <div class="error">{{ form.type_of_trip.errors }}</div>
                     {% endif %}
 
-                    <p>Additional observations</p>
+                    <p>{% trans "Additional observations" %}</p>
                     {{ form.additional_observations }}
                     {% if form.additional_observations.errors %}
                         <div class="error">{{ form.additional_observations.errors }}</div>
@@ -165,9 +187,9 @@
 
                 {% if request.user.role == 'employee' %}
                     <div class="form-section">
-                        <h3>Company Info</h3>
+                        <h3>{% trans "Company Info" %}</h3>
                         <div class="form-fields">
-                            <p>Company *</p>
+                            <p>{% trans "Company" %} *</p>
                             {{ form.created_by_company }}
                             {% if form.created_by_company.errors %}
                                 <div class="error">{{ form.created_by_company.errors }}</div>
@@ -176,7 +198,7 @@
                     </div>
                 {% endif %}
 
-                <button class="add-btn" type="submit">Submit Request</button>
+                <button class="add-btn" type="submit">{% trans "Submit Request" %}</button>
         </form>
 
     </div>

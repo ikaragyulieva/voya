@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -17,17 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
+{% load i18n %}
 
 <div class="trip-section">
-    <h3 class="title">Venue Information</h3>
+    <h3 class="title">{% trans "Venue Information" %}</h3>
     <table>
         <tbody>
         <tr>
-            <th>Category:</th>
+            <th>{% trans "Category:" %}</th>
             <td><i> {{ service.get_category_display }} </i></td>
         </tr>
         <tr>
-            <th>Description:</th>
+            <th>{% trans "Description:" %}</th>
             {% if not service.description %}
                 <td><i> - </i></td>
             {% else %}
@@ -41,28 +42,32 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <hr class="custom-line">
 
 <div class="trip-section">
-    <h3 class="title">Price Information</h3>
+    <h3 class="title">{% trans "Price Information" %}</h3>
     <table>
         <tbody>
         <tr>
-            <th>High season price:</th>
-            <td><i> &#8364 {{ service.high_season_price }} </i></td>
+            <th>{% trans "High season price:" %}</th>
+            <td><i> &#8364 {{ service.high_season_price|floatformat:2 }} </i></td>
         </tr>
         <tr>
-            <th>Low season price:</th>
+            <th>{% trans "Low season price:" %}</th>
             {% if service.low_season_price == None %}
                 <td><i> - </i></td>
             {% else %}
-                <td><i> &#8364 {{ service.low_season_price }} </i></td>
+                <td><i> &#8364 {{ service.low_season_price|floatformat:2 }} </i></td>
             {% endif %}
         </tr>
         <tr>
-            <th>Price for max:</th>
-            {% if service.capacity == 1 %}
-                <td><i> {{ service.capacity }} person </i></td>
-            {% else %}
-                <td><i> {{ service.capacity }} people </i></td>
-            {% endif %}
+            <th>{% trans "Price for max:" %}</th>
+            <td>
+                <i>
+                    {% blocktrans count cap=service.capacity %}
+                        {{ cap }} person
+                    {% plural %}
+                        {{ cap }} people
+                    {% endblocktrans %}
+                </i>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -71,32 +76,28 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 <hr class="custom-line">
 
 <div class="trip-section">
-    <h3 class="title">Location</h3>
+    <h3 class="title">{% trans "Location" %}</h3>
     <table>
         <tbody>
         <tr>
-            <th>Country:</th>
+            <th>{% trans "Country:" %}</th>
             <td><i> {{ service.get_country_display }} </i></td>
         </tr>
         <tr>
-            <th>City:</th>
+            <th>{% trans "City:" %}</th>
             <td><i> {{ service.city }} </i></td>
         </tr>
         <tr>
-            <th>Street:</th>
+            <th>{% trans "Street:" %}</th>
             <td><i> {{ service.street_address }} </i></td>
         </tr>
         <tr>
-            <th>District:</th>
+            <th>{% trans "District:" %}</th>
             <td><i> {{ service.zone }} </i></td>
         </tr>
         <tr>
-            <th>District description:</th>
-            {% if service.zone_description == None %}
-                <td><i> - </i></td>
-            {% else %}
-                <td><i> {{ service.zone_description }} </i></td>
-            {% endif %}
+            <th>{% trans "District description:" %}</th>
+            <td><i>{{ service.description|default:"-" }}</i></td>
         </tr>
         </tbody>
     </table>

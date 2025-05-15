@@ -18,6 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from voya.proposals.choices import StatusChoices, LogoChoices
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
@@ -39,7 +40,7 @@ class CreateProposalForm(forms.ModelForm):
             'internal_comments'
         ]
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Add Proposal Title'}),
+            'title': forms.TextInput(attrs={'placeholder': _('Add Proposal Title')}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -55,14 +56,14 @@ class CreateItemForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'flatpickr',
-                'placeholder': 'Select Date',
+                'placeholder': _('Select Date'),
             }
         )
     )
 
     city = forms.ModelChoiceField(
         queryset=Location.objects.all().order_by("city_name"),
-        empty_label="Select city",
+        empty_label=_("Select city"),
         widget=forms.Select(
             attrs={
                 'id': 'city-dropdown',
@@ -84,6 +85,14 @@ class CreateItemForm(forms.ModelForm):
             attrs={
                 'readonly': 'readonly',
                 'placeholder': '€ 0.00',
+            }
+        )
+    )
+
+    quantity = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': '0',
             }
         )
     )
@@ -122,7 +131,7 @@ class PDFOptionsForm(forms.Form):
     logo_options = forms.ChoiceField(
         choices=LogoChoices,
         label="",
-        widget=forms.Select(attrs={'placeholder': 'Draft'}),
+        # widget=forms.Select(attrs={'placeholder': 'Draft'}),
         initial='Dromo'
     )
 

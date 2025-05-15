@@ -18,6 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 from attr.filters import exclude
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from voya.providers import choices
 from voya.providers.models import Providers
@@ -26,8 +27,13 @@ from voya.providers.models import Providers
 class ProviderCreateForm(forms.ModelForm):
     services = forms.MultipleChoiceField(
         choices=choices.ServiceChoices,
-        widget=forms.SelectMultiple(attrs={'class': 'multi-select', 'placeholder': 'Select an option'}),
-        label="Select an option",
+        widget=forms.SelectMultiple(
+            attrs={
+                'class': 'multi-select',
+                'placeholder': _('Select an option')
+            }
+        ),
+        label=_("Select an option"),
     )
 
     city = forms.Select()

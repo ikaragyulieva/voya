@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from voya.employees.models import EmployeeProfile
+from django.utils.translation import gettext_lazy as _
 
 
 @admin.register(EmployeeProfile)
@@ -28,13 +29,13 @@ class EmployeeProfileAdmin(admin.ModelAdmin):
     ordering = ('last_name', 'first_name')
 
     fieldsets = (
-        ('Personal Information', {
+        (_('Personal Information'), {
             'fields': ('title', 'first_name', 'last_name', 'phone_number')
         }),
-        ('Job Information', {
+        (_('Job Information'), {
             'fields': ('job_title', 'is_active')
         }),
-        ('Related User', {
+        (_('Related User'), {
             'fields': ('user',)
         }),
     )
@@ -46,14 +47,14 @@ class EmployeeProfileAdmin(admin.ModelAdmin):
 
     def activate_employees(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected employees have been activated.")
+        self.message_user(request, _("Selected employees have been activated."))
 
     def deactivate_employees(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected employees have been deactivated.")
+        self.message_user(request, _("Selected employees have been deactivated."))
 
-    activate_employees.short_description = "Activate selected employees"
-    deactivate_employees.short_description = "Deactivate selected employees"
+    activate_employees.short_description = _("Activate selected employees")
+    deactivate_employees.short_description = _("Deactivate selected employees")
 
     readonly_fields = ('user',)
 

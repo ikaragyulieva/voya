@@ -1,6 +1,7 @@
 import cloudinary.api
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
+from django.utils.translation import gettext_lazy as _
 
 
 @deconstructible
@@ -16,7 +17,7 @@ class FileSizeValidator:
     @message.setter
     def message(self, value):
         if value is None:
-            self.__message = f'File size must below or equal to {self.max_size_mb}MB'
+            self.__message = (_('File size must be below or equal to %(max_size_mb)s MB') % {'max_size_mb': self.max_size_mb})
         else:
             self.__message = value
 

@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -20,6 +20,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 {% extends 'base.html' %}
 {% load tz %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -28,10 +29,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
             {% if not all_proposals %}
 
-                <h2>There are no proposals yet!</h2>
+                <h2>{% trans "There are no proposals yet!" %}</h2>
 
             {% else %}
-                <h2>Proposals Dashboard</h2>
+                <h2>{% trans "Proposals Dashboard" %}</h2>
 
                 <div class="col-9">
 
@@ -48,101 +49,120 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     <!-- End Searchbar Form -->
 
                 </div>
+                
                 <div class="table-wrapper table-services">
-                    <!-- Add request button -->
-{#                    <div class="action-btn add-option">#}
-{#                        <a href="#">#}
-{#                            <img#}
-{#                                    src="{% static 'images/new-page.png' %}"#}
-{#                                    alt="Create new proposal"#}
-{#                            />#}
-{#                        </a>#}
-{#                    </div>#}
-
-
+                   
                     <!-- Dashboard Table -->
                     <ul class="responsive-table requests-table">
 
                         <li class="table-header">
-                            <div class="col col-1">Status</div>
-                            <div class="col col-2">Created On</div>
-                            <div class="col col-33">Title</div>
-                            <div class="col col-4">Request</div>
-                            <div class="col col-5">Company</div>
-                            <div class="col col-6">Actions</div>
+                            <div class="col col-1">{% trans "Status" %}</div>
+                            <div class="col col-2">{% trans "Created On" %}</div>
+                            <div class="col col-33">{% trans "Title" %}</div>
+                            <div class="col col-4">{% trans "Request" %}</div>
+                            <div class="col col-5">{% trans "Company" %}</div>
+                            <div class="col col-6">{% trans "Actions" %}</div>
                         </li>
+                    
                         {% for proposal in proposals_list %}
-                            <li class="table-row">
+                            <li class="table-row {% if proposal.status == 'Approved by client' %} approved-row {% elif proposal.status == 'Rejected by client' %} rejected-row {% endif %}">
                                 <div class="col col-1" data-label="Status">
                                     <div class="action-btn">
                                         {% if proposal.status == 'Ready for review' %}
                                             <!-- New Proposal Status-->
                                             <img
                                                     src="{% static 'images/review.png' %}"
-                                                    alt="Ready for review" 
-                                                    title="Ready for review"
+                                                    alt="{% trans 'Ready for review' %}" 
+                                                    title="{% trans 'Ready for review' %}"
                                             />
                                         {% elif proposal.status == 'Not finished' %}
                                             <!-- Active Proposal Status -->
                                             <img
                                                     src="{% static 'images/wip.png' %}"
-                                                    alt="WIP Proposal"
-                                                    title="Not finished"
+                                                    alt="{% trans 'WIP Proposal' %}"
+                                                    title="{% trans 'WIP Proposal' %}"
                                             />
 
                                         {% elif proposal.status == 'Send to client' %}
                                             <!-- Closed Proposal Status -->
                                             <img
                                                     src="{% static 'images/share-with-client-green.png' %}"
-                                                    alt="Shared Proposal"
-                                                    title="Shared with client"
+                                                    alt="{% trans 'Shared Proposal' %}"
+                                                    title="{% trans 'Shared with client' %}"
+                                            />
+                                                
+                                        {% elif proposal.status == 'Approved by client' %}
+                                            <!-- Approved by the client Status -->
+                                            <img
+                                                    src="{% static 'images/approved.png' %}"
+                                                    alt='{% trans "Proposal approved by the client" %}'
+                                                    title='{% trans "Status: Approved by the client" %}'
+                                            />  
+                                        
+                                        {% elif proposal.status == 'Rejected by client' %}
+                                            <!-- Rejected by the client Status -->
+                                            <img
+                                                    src="{% static 'images/rejected.png' %}"
+                                                    alt='{% trans "Rejected by the client" %}'
+                                                    title='{% trans "Status: Rejected by the client" %}'
                                             />
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="col col-2" data-label="Created On">{{ proposal.created_at|date }}</div>
-                                <div class="col col-33" data-label="Title">{{ proposal.title }}</div>
-                                <div class="col col-4"
-                                     data-label="Request">{{ proposal.trip_request.slug }}</div>
-                                <div class="col col-5"
-                                     data-label="Company">{{ proposal.trip_request.created_by_company.commercial_name }}</div>
+                            
+                                <div class="col col-2" data-label="Created On">
+                                    {{ proposal.created_at|date }}
+                                </div>
+                            
+                                <div class="col col-33" data-label="Title">
+                                    {{ proposal.title }}
+                                </div>
+                            
+                                <div class="col col-4" data-label="Request">
+                                    {{ proposal.trip_request.slug }}
+                                </div>
+                            
+                                <div class="col col-5" data-label="Company">
+                                    {{ proposal.trip_request.created_by_company.commercial_name }}
+                                </div>
+                            
                                 <div class="col col-6" data-label="Actions">
+                                    
                                     <div class="action-btn request-action-btn">
                                         <!-- View Proposal Page-->
-                                        <a href="{% url 'proposal-detail' pk=proposal.pk %}"
-                                           class="action-link"
-                                           title="View Proposal">
+                                        <a href="{% url 'proposal-detail' pk=proposal.pk %}" class="action-link">
                                             <img
                                                     src="{% static 'images/view-icon.png' %}"
-                                                    alt="View button"
+                                                    alt="{% trans 'View button' %}"
+                                                    title="{% trans 'View Proposal' %}"
                                             />
                                         </a>
                                         
                                         <!-- Link to Edit Proposal Page -->
-                                        <a href="{% url 'edit-proposal' pk=proposal.pk %}"
-                                           class="action-link"
-                                           title="Edit Proposal">
+                                        <a href="{% url 'edit-proposal' pk=proposal.pk %}" class="action-link">
                                             <img
                                                     src="{% static 'images/edit-icon.png' %}"
-                                                    alt="Edit button"
+                                                    alt="{% trans 'Edit button' %}"
+                                                    title="{% trans 'Edit Proposal' %}"
                                             />
                                         </a>
 
                                         <!-- Link to Delete Proposal Page -->
-                                        <a href="#"
-                                           class="action-link delete-link" title="Disable Proposal">
+                                        <a href="#" class="action-link delete-link" >
                                             <img
                                                     src="{% static 'images/check-mark.png' %}"
-                                                    alt="Delete button"
+                                                    alt="{% trans 'Delete button' %}"
+                                                    title="{% trans 'Disable Proposal' %}"
                                             />
 
                                         </a>
-                                        
+                                        <!-- Link to Download Proposal -->
                                         <a href="{% url 'proposal_download' pk=proposal.pk %}"
-                                           class="action-link delete-link" title="Download">
+                                           class="action-link delete-link" >
                                             <img
                                                     src="{% static 'images/download-file.png' %}"
-                                                    alt="Download button"
+                                                    alt="{% trans 'Download button' %}"
+                                                    title="{% trans 'Download' %}"
                                             />
 
                                         </a>
@@ -152,7 +172,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                             </li>
                         {% empty %}
 
-                            <li>No results found</li>
+                            <li>{% trans "No results found" %}</li>
 
                         {% endfor %}
                     </ul>

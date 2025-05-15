@@ -4,7 +4,9 @@ from django.db.models import Q, Subquery, OuterRef, Value
 from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.translation import activate
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
+from django.utils.translation import gettext_lazy as _
 
 from voya.common.forms import SearchForm
 from voya.companies.models import CompanyProfile
@@ -32,7 +34,7 @@ class CreateEmployeeView(CreateView):
             user=user,
             template_name='emails/employee-account-activation.html',
             activation_link=activation_link,
-            email_subject='New Voya employee account activation',
+            email_subject=_('New Voya employee account activation'),
             send_to=['ivelina@dromo.travel']
         )
 
@@ -126,6 +128,13 @@ class EditEmployeeProfileView(mixins.LoginRequiredMixin, UpdateView):
         return EmployeeProfile.objects.get(user=self.request.user)
 
     def get_success_url(self):
+        profile = self.get_object()
+        preferred_language = profile.preferred_language
+
+        # Activate the new language in the session
+        self.request.session['django_language'] = preferred_language
+        activate(preferred_language)
+
         return reverse_lazy(
             'employee-profile',
             kwargs={

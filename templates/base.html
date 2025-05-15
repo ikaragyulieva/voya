@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,40 +26,47 @@
 <header>
     <nav class="navbar">
         <div class="container">
+        
+         <!-- VOYA Logo section -->
             <div class="logo">
                 <!-- Link to Home Page -->
                 <a href="{% url 'home' %}">
                     <img width="200px" src="{% static 'images/logo-voya-powered by-v2.png' %}" alt="img1">
                 </a>
-
             </div>
 
+         <!-- Menu section -->
             <div class="nav-links">
                 <ul class="nav-group">
                     {% if request.user.is_authenticated and request.user.role == 'client' %}
+                        
+                        <!-- Client Dashboard section -->
                         <li class="nav-item">
-
-                            <!-- Link to Add Pet Page -->
+                            <!-- Link to Client Dashboard Page -->
                             <a href="{% url 'client-dashboard' pk=profile.pk %}">
-                                Dashboard
+                                {% trans "Dashboard" %}
                             </a>
                         </li>
+                        
+                        <!-- Client Create Request section -->
                         <li class="nav-item">
-
-                            <!-- Link to Add Photo Page -->
+                            <!-- Link to Create Request Page -->
                             <a href="{% url 'new-request' %}">
-                                New Request
+                                {% trans "New Request" %}
                             </a>
                         </li>
+                        
+                        <!-- Client Profile section -->
                         <li class="nav-item">
-
-                            <!-- Link to Login Page -->
+                            <!-- Link to Profile Page -->
                             <a href="{% url 'profile-details' pk=profile.pk %}">
-                                Profile
+                                {% trans "Profile" %}
                             </a>
                         </li>
+                        
+                        <!-- Client logout section -->
+                        
                         <li class="nav-item">
-
                             <!-- Log out -->
                             <div class="logo">
                                 <a href="{% url 'logout' %}">
@@ -69,27 +77,21 @@
                                 </a>
 
                             </div>
-{#                            <a href="{% url 'logout' %}">#}
-{#                                Log out#}
-{#                            </a>#}
                         </li>
                     {% elif request.user.is_authenticated and request.user.role == 'employee' or request.user.is_staff %}
-                        <li class="nav-item">
 
-                            <!-- Link to Add Pet Page -->
-                            {#                            <a href="{% url 'employee-dashboard' pk=profile.pk %}">#}
-                            {#                                Dashboard#}
-                            {#                            </a>#}
+                        <!-- Employee Dashboards section -->
+                        <li class="nav-item">
                             <nav>
                                 <menu>
                                     <menuitem>
-                                        <a href="{% url 'employee-dashboard' pk=profile.pk %}">Dashboards</a>
+                                        <a href="{% url 'employee-dashboard' pk=profile.pk %}">{% trans "Dashboards" %}</a>
                                         <menu>
                                             <menuitem>
-                                                <a href="{% url 'employee-dashboard' pk=profile.pk %}">Requests</a>
+                                                <a href="{% url 'employee-dashboard' pk=profile.pk %}">{% trans "Requests" %}</a>
                                             </menuitem>
                                             <menuitem>
-                                                <a href="{% url 'proposal-dashboard' %}">Proposals</a>
+                                                <a href="{% url 'proposal-dashboard' %}">{% trans "Proposals" %}</a>
                                             </menuitem>
                                         </menu>
                                     </menuitem>
@@ -97,97 +99,145 @@
                             </nav>
                         </li>
 
+                        <!-- Employee Companies section -->
                         <li class="nav-item">
 
                             <!-- Link to Login Page -->
                             <a href="{% url 'companies-dashboard' %}">
-                                Companies
+                                {% trans "Companies" %}
                             </a>
                         </li>
 
+                        <!-- Employee Services section -->
                         <li class="nav-item">
-
                             <nav>
                                 <menu>
                                     <menuitem id="demo1">
-                                        <a>Services</a>
+                                        <a>{% trans "Services" %}</a>
                                         <menu>
+                                            
+                                            <!-- Hotels section -->
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='hotel' %}">Hotels</a>
+                                                <a href="{% url 'service-dashboard' model_name='hotel' %}">
+                                                    {% trans "Hotels" %}
+                                                </a>
                                                 <menu>
-                                                    <menuitem><a href="{% url 'create-service' model_name='hotel' %}">Add
-                                                        New Hotel</a></menuitem>
+                                                    <menuitem><a href="{% url 'create-service' model_name='hotel' %}">
+                                                        {% trans "Add New Hotel" %}
+                                                    </a></menuitem>
                                                 </menu>
                                             </menuitem>
-
+                                            
+                                            <!-- Guides section -->
                                             <menuitem id="demo2">
-                                                <a>Guides</a>
+                                                <a>{% trans "Guides" %}</a>
                                                 <menu>
+                                                    
+                                                    <!-- Local Guides sub-section -->
                                                     <menuitem id="demo3">
-                                                        <a href="{% url 'service-dashboard' model_name='localguide' %}">Local
-                                                            guides</a>
+                                                        <a href="{% url 'service-dashboard' model_name='localguide' %}">
+                                                            {% trans "Local guides" %}
+                                                        </a>
                                                         <menu>
-                                                            <menuitem><a
-                                                                    href="{% url 'create-service' model_name='localguide' %}">Add
-                                                                New</a></menuitem>
+                                                            <menuitem>
+                                                                <a href="{% url 'create-service' model_name='localguide' %}">
+                                                                    {% trans "Add New" %}
+                                                                </a>
+                                                            </menuitem>
                                                         </menu>
                                                     </menuitem>
+                                                    
+                                                    <!-- Tour Leader sub-section -->
                                                     <menuitem>
-                                                        <a href="{% url 'service-dashboard' model_name='staff' %}">Tour
-                                                            leaders</a>
+                                                        <a href="{% url 'service-dashboard' model_name='staff' %}">
+                                                            {% trans "Tour leaders" %}
+                                                        </a>
                                                         <menu>
-                                                            <menuitem><a
-                                                                    href="{% url 'create-service' model_name='staff' %}">Add
-                                                                New</a></menuitem>
+                                                            <menuitem>
+                                                                <a href="{% url 'create-service' model_name='staff' %}">
+                                                                    {% trans "Add New" %}
+                                                                </a>
+                                                            </menuitem>
                                                         </menu>
+                                                    </menuitem>
+                                                    
+                                                </menu>
+                                            </menuitem>
+
+                                            <!-- Activities section -->
+                                            <menuitem>
+                                                <a href="{% url 'service-dashboard' model_name='ticket' %}">
+                                                    {% trans "Activities" %}
+                                                </a>
+                                                <menu>
+                                                    <menuitem>
+                                                        <a href="{% url 'create-service' model_name='ticket' %}">
+                                                            {% trans "Add New Activity" %}
+                                                        </a>
                                                     </menuitem>
                                                 </menu>
                                             </menuitem>
 
-                                            <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='ticket' %}">Activities</a>
-                                                <menu>
-                                                    <menuitem><a href="{% url 'create-service' model_name='ticket' %}">Add
-                                                        New Activity</a></menuitem>
-                                                </menu>
-                                            </menuitem>
+                                            <!-- Transport section -->
                                             <menuitem id="demo2">
-                                                <a>Transport</a>
+                                                <a>{% trans "Transport" %}</a>
                                                 <menu>
+                                                    
+                                                    <!-- Private Transport sub-section -->
                                                     <menuitem id="demo3">
-                                                        <a href="{% url 'service-dashboard' model_name='privatetransport' %}">Private
-                                                            Transport</a>
+                                                        <a href="{% url 'service-dashboard' model_name='privatetransport' %}">
+                                                            {% trans "Private Transport" %}
+                                                        </a>
                                                         <menu>
-                                                            <menuitem><a
-                                                                    href="{% url 'create-service' model_name='privatetransport' %}">Add
-                                                                New</a></menuitem>
+                                                            <menuitem>
+                                                                <a href="{% url 'create-service' model_name='privatetransport' %}">
+                                                                    {% trans "Add New" %}
+                                                                </a>
+                                                            </menuitem>
                                                         </menu>
                                                     </menuitem>
+                                                    
+                                                    <!-- Public Transport sub-section -->
                                                     <menuitem>
-                                                        <a href="{% url 'service-dashboard' model_name='publictransport' %}">Public
-                                                            Transport</a>
+                                                        <a href="{% url 'service-dashboard' model_name='publictransport' %}">
+                                                            {% trans "Public Transport" %} </a>
                                                         <menu>
-                                                            <menuitem><a
-                                                                    href="{% url 'create-service' model_name='publictransport' %}">Add
-                                                                New</a></menuitem>
+                                                            <menuitem>
+                                                                <a href="{% url 'create-service' model_name='publictransport' %}">
+                                                                    {% trans "Add New" %}
+                                                                </a>
+                                                            </menuitem>
                                                         </menu>
                                                     </menuitem>
+                                                    
+                                                    <!-- Transfer sub-section -->
                                                     <menuitem>
-                                                        <a href="{% url 'service-dashboard' model_name='transfer' %}">Transfers</a>
+                                                        <a href="{% url 'service-dashboard' model_name='transfer' %}">
+                                                            {% trans "Transfers" %} Transfers
+                                                        </a>
                                                         <menu>
-                                                            <menuitem><a
-                                                                    href="{% url 'create-service' model_name='transfer' %}">Create
-                                                                New Transfer</a></menuitem>
+                                                            <menuitem>
+                                                                <a href="{% url 'create-service' model_name='transfer' %}">
+                                                                    {% trans "Add New" %}
+                                                                </a>
+                                                            </menuitem>
                                                         </menu>
                                                     </menuitem>
+                                                    
                                                 </menu>
                                             </menuitem>
 
+                                            <!-- Providers section -->
                                             <menuitem>
-                                                <a href="{% url 'providers-dashboard' %}">Providers</a>
+                                                <a href="{% url 'providers-dashboard' %}">
+                                                    {% trans "Providers" %}
+                                                </a>
                                                 <menu>
-                                                    <menuitem><a href="{% url 'create-provider' %}">Add
-                                                        New Provider</a></menuitem>
+                                                    <menuitem>
+                                                        <a href="{% url 'create-provider' %}">
+                                                            {% trans "Add New Provider" %}
+                                                        </a>
+                                                    </menuitem>
                                                 </menu>
                                             </menuitem>
 
@@ -197,53 +247,79 @@
                             </nav>
                         </li>
 
-                        <!-- Settings page -->
+                        <!-- Employee Settings section -->
                         <li class="nav-item">
                             <nav>
                                 <menu>
                                     <menuitem id="demo1">
-                                        <a>Settings</a>
+                                        <a>{% trans "Settings" %}</a>
                                         <menu>
+                                            <!-- Payment terms section -->
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='hotel' %}">Payment terms</a>
+                                                <a href="{% url 'service-dashboard' model_name='hotel' %}">
+                                                    {% trans "Payment terms" %}
+                                                </a>
                                                 <menu>
-                                                    <menuitem><a href="{% url 'create-service' model_name='hotel' %}">Add
-                                                        payment term</a></menuitem>
+                                                    <menuitem><a href="{% url 'create-service' model_name='hotel' %}">
+                                                        {% trans "Add payment term" %}
+                                                    </a>
+                                                    </menuitem>
                                                 </menu>
                                             </menuitem>
 
+                                            <!-- Cancellation terms section -->
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='currency' %}">Cancellation terms</a>
+                                                <a href="{% url 'service-dashboard' model_name='currency' %}">
+                                                    {% trans "Cancellation terms" %}
+                                                </a>
                                                 <menu>
-                                                    <menuitem><a
-                                                            href="{% url 'create-service' model_name='currency' %}">Add
-                                                        cancellation terms</a></menuitem>
+                                                    <menuitem>
+                                                        <a href="{% url 'create-service' model_name='currency' %}">
+                                                            {% trans "Add cancellation terms" %}
+                                                        </a>
+                                                    </menuitem>
                                                 </menu>
                                             </menuitem>
 
+                                            <!-- Bank Accounts section -->
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='ticket' %}">Bank account</a>
+                                                <a href="{% url 'service-dashboard' model_name='ticket' %}">
+                                                    {% trans "Bank account" %}
+                                                </a>
                                                 <menu>
-                                                    <menuitem><a href="{% url 'create-service' model_name='ticket' %}">Add
-                                                        bank account</a></menuitem>
+                                                    <menuitem>
+                                                        <a href="{% url 'create-service' model_name='ticket' %}">
+                                                            {% trans "Add bank account" %}
+                                                        </a>
+                                                    </menuitem>
                                                 </menu>
                                             </menuitem>
-                                            
+
+                                            <!-- Location section -->
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='location' %}">Location</a>
+                                                <a href="{% url 'service-dashboard' model_name='location' %}">
+                                                    {% trans "Location" %}
+                                                </a>
                                                 <menu>
-                                                    <menuitem><a
-                                                            href="{% url 'create-service' model_name='location' %}">Add
-                                                        New Location</a></menuitem>
+                                                    <menuitem>
+                                                        <a href="{% url 'create-service' model_name='location' %}">
+                                                            {% trans "Add New Location" %}
+                                                        </a>
+                                                    </menuitem>
                                                 </menu>
                                             </menuitem>
-                                            
+
+                                            <!-- Currency section -->
                                             <menuitem>
-                                                <a href="{% url 'service-dashboard' model_name='currency' %}">Currency</a>
+                                                <a href="{% url 'service-dashboard' model_name='currency' %}">
+                                                    {% trans "Currency" %}
+                                                </a>
                                                 <menu>
                                                     <menuitem><a
-                                                            href="{% url 'create-service' model_name='currency' %}">Add
-                                                        New Currency</a></menuitem>
+                                                            href="{% url 'create-service' model_name='currency' %}">
+                                                        {% trans "Add New Currency" %}
+                                                    </a>
+                                                    </menuitem>
                                                 </menu>
                                             </menuitem>
                                         </menu>
@@ -251,15 +327,16 @@
                                 </menu>
                             </nav>
                         </li>
-                        
+
+                        <!-- Employee Profile section -->
                         <li class="nav-item">
                             <!-- Link to Login Page -->
                             <a href="{% url 'employee-profile' pk=profile.pk %}">
-                                Profile
+                                {% trans "Profile" %}
                             </a>
                         </li>
-                        
-                        <!-- Log out -->
+
+                        <!-- Employee Log out section-->
                         <li class="nav-item">
                             <div class="logo">
                                 <a href="{% url 'logout' %}">
@@ -270,28 +347,34 @@
                                 </a>
                             </div>
                         </li>
+
                     {% else %}
+                        
+                        <!-- Add company section -->
                         <li class="nav-item">
 
-                            <!-- Link to Add Pet Page -->
+                            <!-- Link to Add Comapany Page -->
                             <a href="{% url 'create-company' %}">
-                                New Company
+                                {% trans "New Company" %}
                             </a>
                         </li>
+                        
+                        <!-- Add client section -->
                         <li class="nav-item">
-
-                            <!-- Link to Add Photo Page -->
+                            <!-- Link to create client -->
                             <a href="{% url 'create-client' %}">
-                                New Client
+                                {% trans "New Client" %}
                             </a>
                         </li>
+                        
+                        <!-- Login section -->
                         <li class="nav-item">
-
                             <!-- Link to Login Page -->
                             <a href="{% url 'login' %}">
-                                Login
+                                {% trans "Login" %}
                             </a>
                         </li>
+                        
                     {% endif %}
                 </ul>
             </div>
@@ -317,7 +400,7 @@
                 <img width="150px" src="{% static 'images/logo-voya.png' %}" alt="img1">
             </a>
             <span class="footer-section">
-			© {% now 'Y' %} | Voya SA | All Rights Reserved.
+			© {% now 'Y' %} | Voya SA | {% trans "All Rights Reserved." %}
 		</span>
         </div>
         <!-- End Footer Section -->

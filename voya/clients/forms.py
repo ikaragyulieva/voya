@@ -8,6 +8,7 @@ from phonenumber_field.formfields import PhoneNumberField
 from voya.clients.choices import TitleChoices
 from voya.clients.models import ClientProfile
 from voya.companies.models import CompanyProfile
+from django.utils.translation import gettext_lazy as _
 
 UserModel = get_user_model()
 
@@ -36,17 +37,17 @@ class SignUpClientForm(UserCreationForm):
     )
 
     email = forms.EmailField(
-        widget=forms.TextInput(attrs={'placeholder': 'Email address'}),
+        widget=forms.TextInput(attrs={'placeholder': _('Email address')}),
         label="",
     )
 
     password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': _('Password')}),
         label="",
     )
 
     password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': _('Confirm Password')}),
         label="",
         help_text="",
     )
@@ -74,7 +75,7 @@ class SignUpClientForm(UserCreationForm):
             company = CompanyProfile.objects.get(tax_id=tax_id)
             self.cleaned_data['company'] = company  # Store the company if found
         except CompanyProfile.DoesNotExist:
-            raise ValidationError("No company with this Tax ID exists.")
+            raise ValidationError(_("No company with this Tax ID exists."))
         return tax_id
 
     def save(self, commit=True):
@@ -119,11 +120,11 @@ class ClientEditForm(forms.ModelForm):
 
 class ClientLogInForm(AuthenticationForm):
     username = forms.EmailField(
-        widget=forms.TextInput(attrs={'placeholder': 'Your email address'}),
+        widget=forms.TextInput(attrs={'placeholder': _('Your email address')}),
         label=""
 
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': _('Password')}),
         label=""
     )

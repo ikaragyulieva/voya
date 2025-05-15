@@ -1,181 +1,220 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
+{% load i18n %}
 
 
 {% block content %}
-
-    {% csrf_token %}
+    
     <div class="proposal">
-        <div class="trip-comments-wrapper">
-            <div class="trip trip-proposal">
-                <div class="trip-title">
-                    <!-- Trip title -->
-                    <p>{{ current_request.slug }}</p>
 
+        <!--Request, Internal comments and History -->
+        <div class="trip-comments-wrapper">
+
+            <!-- Request Section -->
+            <div class="trip trip-proposal">
+
+                <!-- Trip title -->
+                <div class="trip-title">
+                    <p>{{ current_request.slug }}</p>
                 </div>
+
                 <hr class="custom-line">
+
+                <!-- Group Information section -->
                 <div class="trip-section">
-                    <h3 class="title">Group Information</h3>
+                    <h3 class="title">{% trans "Group Information" %}</h3>
                     <table>
                         <tbody>
                         <tr>
-                            <th>Nationality:</th>
+                            <th>{% trans "Nationality:" %}</th>
                             <td><i> {{ current_request.get_nationality_display }} </i></td>
                         </tr>
                         <tr>
-                            <th>Age range:</th>
-                            <td><i>{{ current_request.age_range }} years old</i></td>
+                            <th>{% trans "Age range:" %}</th>
+                            <td><i>
+                                {{ current_request.age_range }} {% trans "years old" %}
+                            </i></td>
                         </tr>
                         <tr>
-                            <th>Min participants:</th>
-                            <td><i> {{ current_request.min_participants }} people</i></td>
+                            <th>{% trans "Min participants:" %}</th>
+                            <td><i>
+                                {{ current_request.min_participants }} {% trans "people" %}
+                            </i></td>
                         </tr>
                         <tr>
-                            <th>Max participants:</th>
-                            <td><i> {{ current_request.max_participants }} people</i></td>
+                            <th>{% trans "Max participants:" %}</th>
+                            <td><i>
+                                {{ current_request.max_participants }} {% trans "people" %}</i></td>
                         </tr>
                         <tr>
-                            <th>Group type:</th>
+                            <th>{% trans "Group type:" %}</th>
                             <td><i> {{ current_request.get_kind_of_group_display }} </i></td>
                         </tr>
                         {% if current_request.type_of_trip %}
                             <tr>
-                                <th>Type of trip:</th>
+                                <th>{% trans "Type of trip:" %}</th>
                                 <td><i> {{ current_request.type_of_trip }} </i></td>
                             </tr>
                         {% endif %}
                         {% if current_request.additional_observations %}
                             <tr>
-                                <th>Additional observations:</th>
+                                <th>{% trans "Additional observations:" %}</th>
                                 <td><i> {{ current_request.additional_observations }} </i></td>
                             </tr>
                         {% endif %}
                         </tbody>
                     </table>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Dates Information</h3>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Start date:</th>
-                                <td><i> {{ current_request.trip_start_date|date:"d-M-Y" }} </i></td>
-                            </tr>
-                            <tr>
-                                <th>End date:</th>
-                                <td><i>{{ current_request.trip_end_date|date:"d-M-Y" }}</i></td>
-                            </tr>
-                            <tr>
-                                <th>Trip duration:</th>
-                                <td><i> {{ current_request.trip_duration }} days </i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Destination Information:</h3>
-
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Origin country:</th>
-                                <td><i> {{ current_request.get_country_origin_display }} </i></td>
-                            </tr>
-                            <tr>
-                                <th>Destinations:</th>
-                                <td><i>{{ current_request.get_country_destinations_display }}</i></td>
-                            </tr>
-                            {% if current_request.other_destinations %}
-                                <tr>
-                                    <th>Additional destinations info:</th>
-                                    <td><i> {{ current_request.other_destinations }} </i></td>
-                                </tr>
-                            {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Trip Information:</h3>
-
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Transportation:</th>
-                                <td><i> {{ current_request.get_transportation_type_display }} </i></td>
-                            </tr>
-
-                            {% if current_request.transportation_details %}
-                                <tr>
-                                    <th>Transportation details:</th>
-                                    <td><i>{{ current_request.transportation_details }}</i></td>
-                                </tr>
-                            {% endif %}
-                            <tr>
-                                <th>Accommodation:</th>
-                                <td><i> {{ current_request.get_accommodations_display }} </i></td>
-                            </tr>
-                            {% if current_request.accommodations_details %}
-                                <tr>
-                                    <th>Accommodation details:</th>
-                                    <td><i> {{ current_request.accommodations_details }} </i></td>
-                                </tr>
-                            {% endif %}
-                            <tr>
-                                <th>Meals:</th>
-                                <td><i> {{ current_request.get_meals_display }} </i></td>
-                            </tr>
-                            {% if current_request.meals_details %}
-                                <tr>
-                                    <th>Meals details:</th>
-                                    <td><i> {{ current_request.meals_details }} </i></td>
-                                </tr>
-                            {% endif %}
-                            <tr>
-                                <th>Staff:</th>
-                                <td><i> {{ current_request.get_staff_display }} </i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <hr class="custom-line">
-                    <div class="trip-section">
-                        <h3 class="title">Billing Information:</h3>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Budget:</th>
-                                <td>
-                                    <i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Currency:</th>
-                                <td><i>{{ current_request.get_currency_display }}</i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-
                 </div>
-            </div>
-            <!--Internal comments box -->
 
-            <div class="trip trip-proposal trip-internal-note">
+                <hr class="custom-line">
 
+                <!-- Itinerary Information section -->
                 <div class="trip-section">
-                    <h3 class="title">Internal Comments</h3>
+                    <h3 class="title">{% trans "Itinerary Information" %}</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Start date:" %}</th>
+                            <td><i> {{ current_request.trip_start_date|date:"d-M-Y" }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "End date:" %}</th>
+                            <td><i>{{ current_request.trip_end_date|date:"d-M-Y" }}</i></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Trip duration:" %}</th>
+                            <td><i> {{ current_request.trip_duration }} {% trans "days" %} </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="custom-line">
+
+                <!-- Destination Information section -->
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Destination Information:" %}</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Origin country:" %}</th>
+                            <td><i> {{ current_request.get_country_origin_display }} </i></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Destinations:" %}</th>
+                            <td><i>{{ current_request.get_country_destinations_display }}</i></td>
+                        </tr>
+                        {% if current_request.other_destinations %}
+                            <tr>
+                                <th>{% trans "Additional destinations info:" %}</th>
+                                <td><i> {{ current_request.other_destinations }} </i></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="custom-line">
+
+                <!-- Trip Information section -->
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Trip Information:" %}</h3>
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Transportation:" %}</th>
+                            <td><i> {{ current_request.get_transportation_type_display }} </i></td>
+                        </tr>
+
+                        {% if current_request.transportation_details %}
+                            <tr>
+                                <th>{% trans "Transportation details:" %}</th>
+                                <td><i>{{ current_request.transportation_details }}</i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans "Accommodation:" %}</th>
+                            <td><i> {{ current_request.get_accommodations_display }} </i></td>
+                        </tr>
+                        {% if current_request.accommodations_details %}
+                            <tr>
+                                <th>{% trans "Accommodation details:" %}</th>
+                                <td><i> {{ current_request.accommodations_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans "Meals:" %}</th>
+                            <td><i> {{ current_request.get_meals_display }} </i></td>
+                        </tr>
+                        {% if current_request.meals_details %}
+                            <tr>
+                                <th>{% trans "Meals details:" %}</th>
+                                <td><i> {{ current_request.meals_details }} </i></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans "Staff:" %}</th>
+                            <td><i> {{ current_request.get_staff_display }} </i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="custom-line">
+
+                <!-- Billing Information section -->
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Billing Information:" %}</h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>{% trans "Budget:" %}</th>
+                            <td>
+                                <i> {{ current_request.budget }} {{ current_request.get_currency_display }} </i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Currency:" %}</th>
+                            <td><i>{{ current_request.get_currency_display }}</i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!--Internal comments box -->
+            <div class="trip trip-proposal trip-internal-note">
+                <div class="trip-section">
+                    <h3 class="title">{% trans "Internal Comments" %}</h3>
                 </div>
                 <hr class="custom-line">
                 <form id="proposal-form" method="post" action="#" onsubmit="return false"
                       data-mode="create" data-trip-id="{{ trip_id }}">
                     <div class="internal-note">
-                        {{ proposal.internal_comments|placeholder:'Add internal notes here' }}
+                        {{ proposal.internal_comments|placeholder:_('Add internal notes here') }}
                         {% if proposal.errors.internal_comments %}
                             <div class="error">{{ proposal.errors.internal_comments }}</div>
                         {% endif %}
@@ -184,97 +223,116 @@
             </div>
         </div>
 
+
         <!-- Trip Proposal Template -->
         <form id="proposal-form" method="post" action="#" onsubmit="return false" data-mode="create"
-              data-trip-id="{{ trip_id }}">
+              translate="no" data-trip-id="{{ trip_id }}">
             {% csrf_token %}
             <div class="trip proposal-edit proposal-create">
 
+                <!-- Proposal title -->
                 <div class="trip-title">
-                    <!-- Proposal title -->
                     <p>{{ proposal.title }}</p>
                     {% if proposal.errors.title %}
                         <div class="error">{{ proposal.errors.title }}</div>
                     {% endif %}
-
                 </div>
+
                 <hr class="custom-line">
+
                 <!-- Accommodation -->
                 <div class="trip-section">
-                    <h3 id="section" class="title">Accommodations</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Accommodations">{% trans "Accommodations" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
+
                     <ul class="responsive-table requests-table items-table">
-
+                        <!-- Accommodation headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Accommodation rows -->
                         <li class="table-row">
-                            <div class="col col-1 " data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
-                            <div class="col col-33" data-label="service details"><select id="service-dropdown"
-                                                                                         name="service">
-                                <option value="">Select a Service</option>
-                            </select></div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="variable cost"><input type="text" id="service-price"
-                                                                                     name="service_price"
-                                                                                     placeholder="€ 0.00">
+                            <div class="col col-1 " data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
+                            <div class="col col-33" data-label="service details">
+                                <select id="service-dropdown" name="service">
+                                    <option value="">{% trans "Select a Service" %}</option>
+                                </select>
+                            </div>
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
+                            </div>
+
+                            <div class="col col-5" data-label="variable cost">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
                             </div>
 
                             <!-- Action buttons-->
                             <div class="col col-6" data-label="actions">
+                                <!-- Description button-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Description button-->
                                     <a href="#" class="toggle-description-btn">
                                         <img
                                                 src="{% static 'images/down-arrow.png' %}"
-                                                alt="toggle description"
-                                                title="Add description"
+                                                alt='{% trans "toggle description" %}'
+                                                title='{% trans "Add description" %}'
                                                 data-open="{% static 'images/arrow-up.png' %}"
                                                 data-close="{% static 'images/down-arrow.png' %}"
                                         />
                                     </a>
                                 </div>
+                                <!-- Remove Row-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button" title="Remove row"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
+
                         </li>
+
                         <!-- Hidden description row -->
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
-                                {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                {{ item_form.additional_notes|placeholder:_('Add additional details here...') }}
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -283,66 +341,79 @@
                 <!-- Meals-->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Meals</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Meals">{% trans "Meals" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
 
                     <ul class="responsive-table requests-table items-table">
-
+                        <!-- Meals headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Meals rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33 note" data-label="service details">
                                 <select id="meal-dropdown" name="meal">
-                                    <option value="">Select an option</option>
+                                    <option value="">{% trans "Select an option" %}</option>
                                     {% for meal_value in meal_options %}
                                         <option value="{{ meal_value }}">{{ meal_value }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
+                            </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
                             </div>
 
                             <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn proposal-item-btn">
-
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -351,79 +422,96 @@
                 <!-- Private Transport -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Private Transport</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Private Transport">{% trans "Private Transport" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
+
                     <ul class="responsive-table requests-table items-table">
-
+                        <!-- Private Transport headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Private Transport rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33" data-label="service details">
                                 <select id="service-dropdown" name="service">
-                                    <option value="">Select a Service</option>
+                                    <option value="">{% trans "Select a service" %}</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
                             </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
+                            </div>
+
                             <!-- Action buttons-->
                             <div class="col col-6" data-label="actions">
+                                <!-- Description button-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Description button-->
                                     <a href="#" class="toggle-description-btn">
                                         <img
                                                 src="{% static 'images/down-arrow.png' %}"
-                                                alt="toggle description"
-                                                title="Add description"
+                                                alt='{% trans "toggle description" %}'
+                                                title='{% trans "Add description" %}'
                                                 data-open="{% static 'images/arrow-up.png' %}"
                                                 data-close="{% static 'images/down-arrow.png' %}"
                                         />
                                     </a>
                                 </div>
+                                <!-- Remove Row-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button" title="Remove row"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
+
                         <!-- Hidden description row -->
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
-                                {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                {{ item_form.additional_notes|placeholder:_('Add additional details here...') }}
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -432,79 +520,97 @@
                 <!-- Public Transport -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Public Transport</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Public Transport">{% trans "Public Transport" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
-                    <ul class="responsive-table requests-table items-table">
 
+                    <ul class="responsive-table requests-table items-table">
+                        <!-- Public Transport headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
 
                         </li>
+                        <!-- Public Transport rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33" data-label="service details">
                                 <select id="service-dropdown" name="service">
-                                    <option value="">Select a Service</option>
+                                    <option value="">{% trans "Select a service" %}</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
                             </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
+                            </div>
+
                             <!-- Action buttons-->
                             <div class="col col-6" data-label="actions">
+                                <!-- Description button-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Description button-->
                                     <a href="#" class="toggle-description-btn">
                                         <img
                                                 src="{% static 'images/down-arrow.png' %}"
-                                                alt="toggle description"
-                                                title="Add description"
+                                                alt='{% trans "toggle description" %}'
+                                                title='{% trans "Add description" %}'
                                                 data-open="{% static 'images/arrow-up.png' %}"
                                                 data-close="{% static 'images/down-arrow.png' %}"
                                         />
                                     </a>
                                 </div>
+                                <!-- Remove Row-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button" title="Remove row"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
+
                         <!-- Hidden description row -->
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
-                                {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                {{ item_form.additional_notes|placeholder:_('Add additional details here...') }}
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -513,79 +619,98 @@
                 <!-- Activity -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Extra Activities</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Activity">{% trans "Extra Activities" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
-                    <ul class="responsive-table requests-table items-table">
 
+                    <ul class="responsive-table requests-table items-table">
+                        <!-- Activity headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
 
                         </li>
+                        <!-- Activity rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33" data-label="service details">
                                 <select id="service-dropdown" name="service">
-                                    <option value="">Select a Service</option>
+                                    <option value="">{% trans "Select a service" %}</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
                             </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
+                            </div>
+
                             <!-- Action buttons-->
                             <div class="col col-6" data-label="actions">
+                                <!-- Description button-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Description button-->
                                     <a href="#" class="toggle-description-btn">
                                         <img
                                                 src="{% static 'images/down-arrow.png' %}"
-                                                alt="toggle description"
-                                                title="Add description"
+                                                alt='{% trans "toggle description" %}'
+                                                title='{% trans "Add description" %}'
                                                 data-open="{% static 'images/arrow-up.png' %}"
                                                 data-close="{% static 'images/down-arrow.png' %}"
                                         />
                                     </a>
                                 </div>
+                                <!-- Remove Row-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button" title="Remove row"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
+
                         </li>
+
                         <!-- Hidden description row -->
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
-                                {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                {{ item_form.additional_notes|placeholder:_('Add additional details here...') }}
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -594,79 +719,97 @@
                 <!-- Transfers -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Transfers</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Transfers">{% trans "Transfers" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
-                    <ul class="responsive-table requests-table items-table">
 
+                    <ul class="responsive-table requests-table items-table">
+                        <!-- Transfers headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
 
                         </li>
+                        <!-- Transfers rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33" data-label="service details">
                                 <select id="service-dropdown" name="service">
-                                    <option value="">Select a Service</option>
+                                    <option value="">{% trans "Select a service" %}</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
                             </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
+                            </div>
+
                             <!-- Action buttons-->
                             <div class="col col-6" data-label="actions">
+                                <!-- Description button-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Description button-->
                                     <a href="#" class="toggle-description-btn">
                                         <img
                                                 src="{% static 'images/down-arrow.png' %}"
-                                                alt="toggle description"
-                                                title="Add description"
+                                                alt='{% trans "toggle description" %}'
+                                                title='{% trans "Add description" %}'
                                                 data-open="{% static 'images/arrow-up.png' %}"
                                                 data-close="{% static 'images/down-arrow.png' %}"
                                         />
                                     </a>
                                 </div>
+                                <!-- Remove Row-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button" title="Remove row"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
+
                         <!-- Hidden description row -->
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
-                                {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                {{ item_form.additional_notes|placeholder:_('Add additional details here...') }}
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -675,80 +818,96 @@
                 <!-- Local Guides -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Local Guides</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Local Guides">{% trans "Local Guides" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
 
                     <ul class="responsive-table requests-table items-table">
-
+                        <!-- Local Guides headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Local Guides rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33" data-label="service details">
                                 <select id="service-dropdown" name="service">
-                                    <option value="">Select a Service</option>
+                                    <option value="">{% trans "Select a service" %}</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
                             </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
+                            </div>
+
                             <!-- Action buttons-->
                             <div class="col col-6" data-label="actions">
+                                <!-- Description button-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Description button-->
                                     <a href="#" class="toggle-description-btn">
                                         <img
                                                 src="{% static 'images/down-arrow.png' %}"
-                                                alt="toggle description"
-                                                title="Add description"
+                                                alt='{% trans "toggle description" %}'
+                                                title='{% trans "Add description" %}'
                                                 data-open="{% static 'images/arrow-up.png' %}"
                                                 data-close="{% static 'images/down-arrow.png' %}"
                                         />
                                     </a>
                                 </div>
+                                <!-- Remove Row-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button" title="Remove row"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
+
                         <!-- Hidden description row -->
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
-                                {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                {{ item_form.additional_notes|placeholder:_('Add additional details here...') }}
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -757,81 +916,96 @@
                 <!-- Tour Leader -->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Tour Leader</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Tour Leader">{% trans "Tour Leader" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
 
                     <ul class="responsive-table requests-table items-table">
-
+                        <!-- Tour Leader headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Tour Leader rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33" data-label="service details">
                                 <select id="service-dropdown" name="service">
-                                    <option value="">Select a Service</option>
+                                    <option value="">{% trans "Select a service" %}</option>
                                 </select>
                             </div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
+                            </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
                             </div>
 
                             <!-- Action buttons-->
                             <div class="col col-6" data-label="actions">
+                                <!-- Description button-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Description button-->
                                     <a href="#" class="toggle-description-btn">
                                         <img
                                                 src="{% static 'images/down-arrow.png' %}"
-                                                alt="toggle description"
-                                                title="Add description"
+                                                alt='{% trans "toggle description" %}'
+                                                title='{% trans "Add description" %}'
                                                 data-open="{% static 'images/arrow-up.png' %}"
                                                 data-close="{% static 'images/down-arrow.png' %}"
                                         />
                                     </a>
                                 </div>
+                                <!-- Remove Row-->
                                 <div class="action-btn request-action-btn proposal-item-btn">
-                                    <!-- Remove Row-->
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button" title="Remove row"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
+
                         <!-- Hidden description row -->
                         <li class="table-row description-row" style="display: none;">
                             <div class="col col-full">
-                                {{ item_form.additional_notes|placeholder:'Add additional details here...' }}
+                                {{ item_form.additional_notes|placeholder:_('Add additional details here...') }}
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -840,59 +1014,74 @@
                 <!-- Other Services - Variable-->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Other Services - Variable</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Other Services - Variable">{% trans "Other Services - Variable" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
+
                     <ul class="responsive-table requests-table items-table">
-
+                        <!-- Other Services - Variable headers -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Other Services - Variable rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
-                            <div class="col col-33 note"
-                                 data-label="service details">{{ item_form.additional_notes|placeholder:'Add service' }}</div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
+                            <div class="col col-33 note" data-label="service details">
+                                {{ item_form.additional_notes|placeholder:_('Add service') }}
+                            </div>
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
+                            </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
                             </div>
 
                             <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn proposal-item-btn">
-
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -901,59 +1090,75 @@
                 <!-- Other Services - Fixed-->
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Other Services - Fixed</h3>
-                    <!-- Add row button -->
+                    <h3 class="section-title title" data-section-key="Other Services - Fixed">{% trans "Other Services - Fixed" %}</h3>
 
+                    <!-- Add row button -->
                     <div class="action-btn add-option">
                         <a href="#" class="add-row-button">
                             <img
                                     src="{% static 'images/new-page.png' %}"
-                                    alt="Add row"
+                                    alt='{% trans "Add row" %}'
+                                    title='{% trans "Add row" %}'
                             />
                         </a>
                     </div>
+
                     <ul class="responsive-table requests-table items-table">
-
+                        <!-- Other Services - Fixed headers -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            <div class="col col-5">{% trans "Price" %}</div>
                             <div class="col col-6 empty-space">Btn</div>
-
                         </li>
+                        <!-- Other Services - Fixed rows -->
                         <li class="table-row">
-                            <div class="col col-1" data-label="date">{{ item_form.corresponding_trip_date }}</div>
-                            <div class="col col-2" data-label="city">{{ item_form.city }}</div>
+                            <div class="col col-1" data-label="date">
+                                {{ item_form.corresponding_trip_date }}
+                            </div>
+
+                            <div class="col col-2" data-label="city">
+                                {{ item_form.city }}
+                            </div>
+
                             <div class="col col-33 note"
-                                 data-label="service details">{{ item_form.additional_notes|placeholder:'Add service' }}</div>
-                            <div class="col col-4" data-label="quantity">{{ item_form.quantity|placeholder:'0' }}</div>
-                            <div class="col col-5" data-label="price"><input type="text" id="service-price"
-                                                                             name="service_price" placeholder="€ 0.00">
+                                 data-label="service details">
+                                {{ item_form.additional_notes|placeholder:_('Add service') }}
+                            </div>
+
+                            <div class="col col-4" data-label="quantity">
+                                {{ item_form.quantity|placeholder:'0' }}
+                            </div>
+
+                            <div class="col col-5" data-label="price">
+                                <input type="text" id="service-price" name="service_price" placeholder="€ 0.00">
                             </div>
 
                             <!-- Remove Row-->
                             <div class="col col-6" data-label="remove">
                                 <div class="action-btn request-action-btn proposal-item-btn">
-
                                     <a href="#" class="remove-row-button">
                                         <img
                                                 src="{% static 'images/close.png' %}"
-                                                alt="remove row button"
+                                                alt='{% trans "remove row button" %}'
+                                                title='{% trans "Remove row" %}'
                                         />
                                     </a>
                                 </div>
                             </div>
                         </li>
                     </ul>
+
+                    <!-- Totals row -->
                     <ul class="responsive-table">
                         <li class="table-totals-row">
                             <div class="col col-1"></div>
                             <div class="col col-2"></div>
                             <div class="col col-33"></div>
-                            <div class="col col-4">Total:</div>
-                            <div class="col col-5 table-total">{{item_form.item_totals}}</div>
+                            <div class="col col-4">{% trans "Total:" %}</div>
+                            <div class="col col-5 table-total">{{ item_form.item_totals }}</div>
                             <div class="col col-6"></div>
                         </li>
                     </ul>
@@ -965,33 +1170,37 @@
 
         <!-- Trip Proposal Budget Template -->
         <div class="trip trip-proposal budget">
-
+            
+            <!-- Budget title -->
             <div class="trip-title">
-                <!-- Budget title -->
-                <p>Proposal Budget</p>
-
+                <p>{% trans "Proposal Budget" %}</p>
             </div>
 
             <hr class="custom-line">
 
             <div class="trip-section budget-section">
-                <form id="proposal-form" method="post" action="#" onsubmit="return false">
+                <form id="proposal-form" method="post" action="#" onsubmit="return false" translate="no">
                     {% csrf_token %}
+                    
+                    <!-- Buttons section -->
                     <div class="state-save-btn">
+                        <!-- State -->
                         <div class="prop-status">
-                            <p>State:</p>
+                            <p>{% trans "State:" context "proposal_status"  %}</p>
                             <p id="draft-status">{{ proposal.status }}</p>
-
                         </div>
-
+                        
+                        <!-- Save button -->
                         <button id="submit-proposal-btn" class="top-btn" type="submit">
                             <img
                                     src="{% static 'images/save (1).png' %}"
-                                    alt="Add row"
-                                    title="Save proposal"
+                                    alt='{% trans "Save proposal" %}'
+                                    title='{% trans "Save proposal" %}'
                             />
                         </button>
                     </div>
+                    
+                    <!-- Budget table section -->
                     <div class="budget-container">
                         <table class="budget-table" id="budget-table">
 
@@ -1005,45 +1214,45 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <th>Variable cost:</th>
-                                <td><i> {{ budget_form.variable_cost }} € </i></td>
-                                <td><i> {{ budget_form.variable_cost }} € </i></td>
+                                <th>{% trans "Variable cost:" %}</th>
+                                <td><i> {{ budget_form.variable_cost|floatformat:2 }} € </i></td>
+                                <td><i> {{ budget_form.variable_cost|floatformat:2 }} € </i></td>
                             </tr>
                             <tr>
-                                <th class="fixed-cost">Fixed cost:</th>
-                                <td><i> {{ budget_form.fixed_cost }} € </i></td>
-                                <td><i> {{ budget_form.fixed_cost }} € </i></td>
+                                <th class="fixed-cost">{% trans "Fixed cost:" %}</th>
+                                <td><i> {{ budget_form.fixed_cost|floatformat:2 }} € </i></td>
+                                <td><i> {{ budget_form.fixed_cost|floatformat:2 }} € </i></td>
                             </tr>
 
                             <tr>
                                 <th>
-                                    FOC: &nbsp; &nbsp; <input type="number" id="foc-input" name="free_of_charge" min="0"
+                                    {% trans "FOC:" %} &nbsp; &nbsp; <input type="number" id="foc-input" name="free_of_charge" min="0"
                                                               placeholder="0"
                                                               value="{{ budget_form.free_of_charge.value }}"> &nbsp;pax
                                 </th>
-                                <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
-                                <td><i> {{ budget_form.free_of_charge_amount }} € </i></td>
+                                <td><i> {{ budget_form.free_of_charge_amount|floatformat:2 }} € </i></td>
+                                <td><i> {{ budget_form.free_of_charge_amount|floatformat:2 }} € </i></td>
                             </tr>
 
                             <tr>
-                                <th>Total per pax:</th>
-                                <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
-                                <td><i> {{ budget_form.total_cost_per_person }} € </i></td>
+                                <th>{% trans "Total per pax:" %}</th>
+                                <td><i> {{ budget_form.total_cost_per_person|floatformat:2 }} € </i></td>
+                                <td><i> {{ budget_form.total_cost_per_person|floatformat:2 }} € </i></td>
                             </tr>
 
                             <tr>
-                                <th>Total Cost:</th>
-                                <td><i> {{ budget_form.total_cost }} € </i></td>
-                                <td><i> {{ budget_form.total_cost }} € </i></td>
+                                <th>{% trans "Total cost:" %}</th>
+                                <td><i> {{ budget_form.total_cost|floatformat:2 }} € </i></td>
+                                <td><i> {{ budget_form.total_cost|floatformat:2 }} € </i></td>
                             </tr>
 
                             <tr>
-                                <th>Service fee:</th>
+                                <th>{% trans "Service fee:" %}</th>
                                 <td><i> € {{ budget_form.service_fee }} </i></td>
                                 <td><i> € {{ budget_form.service_fee }} </i></td>
                             </tr>
                             <tr>
-                                <th>Markup:</th>
+                                <th>{% trans "Markup:" %}</th>
                                 <td><i> {{ budget_form.margin }} % </i></td>
                                 <td><i> {{ budget_form.margin }} %</i></td>
                             </tr>
@@ -1053,37 +1262,29 @@
 
                             <tfoot>
                             <tr>
-                                <th>Price per pax:</th>
-                                <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
-                                <td><i> {{ budget_form.fina_price_per_person }} € </i></td>
+                                <th>{% trans "Price per pax:" %}</th>
+                                <td><i> {{ budget_form.fina_price_per_person|floatformat:2 }} € </i></td>
+                                <td><i> {{ budget_form.fina_price_per_person|floatformat:2 }} € </i></td>
                             </tr>
                             <tr>
-                                <th>Final Price:</th>
-                                {#                            <td><i> total € </i></td>#}
-                                <td><i> {{ budget_form.fina_price }} € </i></td>
-                                <td><i> {{ budget_form.fina_price }} € </i></td>
+                                <th>{% trans "Final Price:" %}</th>
+                                <td><i> {{ budget_form.fina_price|floatformat:2 }} € </i></td>
+                                <td><i> {{ budget_form.fina_price|floatformat:2 }} € </i></td>
                             </tr>
                             </tfoot>
 
                         </table>
-                        {#                        <div class="prop-status">#}
-                        {#                            <p>State:</p>#}
-                        {#                            <p id="draft-status">{{ proposal.status }}</p>#}
-                        {##}
-                        {#                        </div>#}
                     </div>
                 </form>
             </div>
-            {#            <button id="submit-proposal-btn" class="add-btn" type="submit">Submit Proposal</button>#}
-
         </div>
-
     </div>
 
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/create-edit-proposal functionalities.js' %}"></script>
+    <script>window.reverseSectionKeys = {{reverse_section_keys|safe}}</script>
+    <script src="{% static 'js/create-edit-proposal-functionalities.js' %}"></script>
     <script src="{% static 'js/toggle-row.js' %}"></script>
     <!-- flatpikr setup-->
     <script src="{% static 'js/date-formatting.js' %}"></script>

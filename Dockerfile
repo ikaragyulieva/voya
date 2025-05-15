@@ -1,11 +1,12 @@
 FROM python:3.12
 
-# Install system packages needed by WeasyPrint
+# Install system packages needed by WeasyPrint and gettext for Django translations
 RUN apt-get update && apt-get install -y \
     libpango-1.0-0  \
     libpangocairo-1.0-0  \
     libcairo2 libffi-dev  \
     libgdk-pixbuf2.0-0 \
+    gettext \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a directory for the Django project (Voya project)

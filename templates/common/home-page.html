@@ -1,5 +1,26 @@
+<!-- 
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see
+<https://www.gnu.org/licenses/>. 
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     <main class="main-home">
@@ -8,21 +29,18 @@
             <section id="home" class="welcome-hero">
                 <div class="container">
                     <div class="welcome-hero-txt">
-                        <h2>Welcome to Voya </h2>
-                        <h2>Redefining Group Travel Management</h2>
+                        <h2>{% trans "Welcome to Voya" %} </h2>
+                        <h2>{% trans "Redefining Group Travel Management" %}</h2>
                         <p>
-                            At Voya, we simplify group travel by turning complex itineraries into seamless, 
-                            unforgettable experiences. Whether you’re a travel agency organizing group tours across 
-                            Europe or a company coordinating corporate travel, Voya is your trusted partner for 
-                            tailored travel solutions that exceed expectations.
+                            {% trans "At Voya, we simplify group travel by turning complex itineraries into seamless, unforgettable experiences. Whether you’re a travel agency organizing group tours across Europe or a company coordinating corporate travel, Voya is your trusted partner for tailored travel solutions that exceed expectations." %}
+                            
                         </p>
                         <p>
-                            Why Choose Voya for Group Travel Management?
+                            {% trans "Why Choose Voya for Group Travel Management?" %}
                         </p>
                         <p>
-                            More than just a travel management platform, we offers a complete ecosystem to streamline 
-                            planning, organizing and managing group travel effortlessly.
-                            Here’s what sets us apart:
+                            {% trans "More than just a travel management platform, we offers a complete ecosystem to streamline planning, organizing and managing group travel effortlessly. Here’s what sets us apart:" %}
+                            
                         </p>
                     </div>
                 </div>
@@ -40,13 +58,13 @@
                                     <div class="home-topic-content action-btn">
                                         <img
                                                 src="{% static 'images/profile.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "New Request" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Personalized Itineraries </a></h2>
-                                    <p>Every trip is customized to reflect the unique preferences and requirements of
-                                        your
-                                        clients.</p>
+                                    <h2><a href="#">{% trans "Personalized Itineraries" %}</a></h2>
+                                    <p>
+                                        {% trans "Every trip is customized to reflect the unique preferences and requirements of your clients." %}
+                                    </p>
                                 </div>
                             </li>
                             <li>
@@ -54,12 +72,13 @@
                                     <div class="home-topic-content action-btn">
                                         <img
                                                 src="{% static 'images/streamlined.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "New Request" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Streamlined Processes</a></h2>
-                                    <p>From quote requests to finalized proposals, Voya simplifies the entire process,
-                                        saving you time and effort.</p>
+                                    <h2><a href="#">{% trans "Streamlined Processes" %}</a></h2>
+                                    <p>
+                                        {% trans "From quote requests to finalized proposals, Voya simplifies the entire process, saving you time and effort." %}
+                                    </p>
                                 </div>
                             </li>
                             <li>
@@ -67,12 +86,13 @@
                                     <div class="home-topic-content action-btn">
                                         <img
                                                 src="{% static 'images/trustworthiness.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Trusted Partnerships" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Trusted Partnerships</a></h2>
-                                    <p>Leverage our extensive network of trusted suppliers to deliver exceptional travel
-                                        experiences.</p>
+                                    <h2><a href="#">{% trans "Trusted Partnerships" %}</a></h2>
+                                    <p>
+                                        {% trans "Leverage our extensive network of trusted suppliers to deliver exceptional travel experiences." %}
+                                    </p>
                                 </div>
                             </li>
                             <li>
@@ -80,12 +100,13 @@
                                     <div class="home-topic-content action-btn">
                                         <img
                                                 src="{% static 'images/tagged.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Transparent Pricing" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Transparent Pricing</a></h2>
-                                    <p>Flexible options cater to every budget, ensuring no compromise on quality and
-                                        experience.</p>
+                                    <h2><a href="#">{% trans "Transparent Pricing" %}</a></h2>
+                                    <p>
+                                        {% trans "Flexible options cater to every budget, ensuring no compromise on quality and experience." %}
+                                    </p>
                                 </div>
                             </li>
                             <li>
@@ -93,13 +114,13 @@
                                     <div class="home-topic-content action-btn">
                                         <img
                                                 src="{% static 'images/influencer.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Expert Support" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Expert Support</a></h2>
-                                    <p>Our team is here to guide you every step of the way, ensuring a smooth journey
-                                        from
-                                        start to finish.</p>
+                                    <h2><a href="#">{% trans "Expert Support" %}</a></h2>
+                                    <p>
+                                        {% trans "Our team is here to guide you every step of the way, ensuring a smooth journey from start to finish." %}
+                                    </p>
                                 </div>
                             </li>
                         </ul>
@@ -112,7 +133,7 @@
             <!--works start -->
             <section id="works" class="works">
                 <div class="section-header">
-                    <h2>How Voya Works?</h2>
+                    <h2>{% trans "How Voya Works?" %}</h2>
                 </div><!--/.section-header-->
                 <div class="container">
                     <div class="works-content">
@@ -122,21 +143,17 @@
                                     <div class="single-how-works-icon">
                                         <img
                                                 src="{% static 'images/one.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Create your company profile" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Create your company profile</a></h2>
-                                    <p>Start your journey by setting up a company profile. This ensures all your
-                                        clients’
-                                        trips are accurately linked to your organization. </p>
-                                    <p>Navigate to the <b>Company section</b>, enter your company's details—including
-                                        the
-                                        Tax ID—and let us take care of the rest.</p>
-
-{#                                    <button class="welcome-hero-btn how-work-btn"#}
-{#                                            onclick="window.location.href='{% url 'create-company' %}'">#}
-{#                                        Create company#}
-{#                                    </button>#}
+                                    <h2><a href="#">{% trans "Create your company profile" %}</a></h2>
+                                    <p>
+                                        {% trans "Start your journey by setting up a company profile. This ensures all your clients’ trips are accurately linked to your organization." %} 
+                                    </p>
+                                    <p>
+                                        {% blocktrans %} "Navigate to the <b>Company section</b>, enter your company's details—including the Tax ID—and let us take care of the rest." {% endblocktrans %}
+                                    </p>
+                                    
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -144,19 +161,16 @@
                                     <div class="single-how-works-icon">
                                         <img
                                                 src="{% static 'images/two.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Create a client account" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Create a client account</a></h2>
-                                    <p>After your company profile is registered, you can create individual client
-                                        profiles
-                                        linked to your organization. </p>
-                                    <p>Use the <b> New Client </b> section to set up these accounts and ensure all
-                                        necessary
-                                        details are captured for seamless trip planning.</p>
-{#                                    <button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
-{#                                        read more#}
-{#                                    </button>#}
+                                    <h2><a href="#">{% trans "Create a client account" %}</a></h2>
+                                    <p>
+                                        {% trans "After your company profile is registered, you can create individual client  profiles linked to your organization." %}
+                                    </p>
+                                    <p>
+                                        {% blocktrans %} "Use the <b> New Client </b> section to set up these accounts and ensure all necessary details are captured for seamless trip planning." {% endblocktrans %}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -164,19 +178,17 @@
                                     <div class="single-how-works-icon">
                                         <img
                                                 src="{% static 'images/three.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Submit a trip request" %}'
                                         />
 
                                     </div>
-                                    <h2><a href="#">Submit a trip request</a></h2>
-                                    <p>Log in to your client account to easily create, review
-                                        and manage travel requests for your clients. </p>
-                                    <p>Provide key details such as travel dates, preferred activities, 
-                                        accommodation choices, destinations, and any special requirements. 
-                                        The more information you share, the better we can design personalized travel packages that perfectly match your clients’ needs.</p>
-{#                                    <button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
-{#                                        read more#}
-{#                                    </button>#}
+                                    <h2><a href="#">{% trans "Submit a trip request" %}</a></h2>
+                                    <p>
+                                        {% trans "Log in to your client account to easily create, review and manage travel requests for your clients." %}
+                                    </p>
+                                    <p>
+                                        {% trans "Provide key details such as travel dates, preferred activities, accommodation choices, destinations, and any special requirements. The more information you share, the better we can design personalized travel packages that perfectly match your clients’ needs." %}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -184,17 +196,13 @@
                                     <div class="single-how-works-icon">
                                         <img
                                                 src="{% static 'images/four.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Proposal will be generated" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Proposal will be generated</a></h2>
+                                    <h2><a href="#">{% trans "Proposal will be generated" %}</a></h2>
                                     <p>
-                                        Once we receive your request, our agents will begin crafting a professional and
-                                        tailored trip proposal, ensuring delivery within 48 hours.
+                                        {% trans "Once we receive your request, our agents will begin crafting a professional and tailored trip proposal, ensuring delivery within 48 hours." %}
                                     </p>
-{#                                    <button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
-{#                                        read more#}
-{#                                    </button>#}
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -202,17 +210,14 @@
                                     <div class="single-how-works-icon">
                                         <img
                                                 src="{% static 'images/five.png' %}"
-                                                alt="New Request"
+                                                alt='{% trans "Collaborate and finalize" %}'
                                         />
                                     </div>
-                                    <h2><a href="#">Collaborate and finalize</a></h2>
+                                    <h2><a href="#">{% trans "Collaborate and finalize" %}</a></h2>
                                     <p>
-                                        Work hand-in-hand with our travel experts to refine every detail of your trip
-                                        proposal. Together, we’ll ensure your clients enjoy an unforgettable journey.
+                                        {% trans "Work hand-in-hand with our travel experts to refine every detail of your trip proposal. Together, we’ll ensure your clients enjoy an unforgettable journey." %}
+                                        
                                     </p>
-{#                                    <button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">#}
-{#                                        read more#}
-{#                                    </button>#}
                                 </div>
                             </div>
                         </div>
@@ -227,12 +232,10 @@
                 <div class="container">
                     <div class="subscribe-title text-center">
                         <h2>
-                            Start Planning with Voya Today
+                            {% trans "Start Planning with Voya Today" %}
                         </h2>
                         <p>
-                            At Voya, we believe that travel is more than just reaching destinations—it’s about creating
-                            connections, fostering experiences, and building memories that last a lifetime. Let us help
-                            you provide your clients with exceptional travel solutions that they'll cherish forever.
+                            {% trans "At Voya, we believe that travel is more than just reaching destinations—it’s about creating connections, fostering experiences, and building memories that last a lifetime. Let us help you provide your clients with exceptional travel solutions that they'll cherish forever." %}
                         </p>
                     </div>
                 </div>

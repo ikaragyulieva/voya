@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -16,18 +16,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
+
 {% load custom_filters %}
+{% load i18n %}
 
 <div class="form-section">
-    <h3>Venue Information </h3>
+    <h3>{% trans "Venue Information" %} </h3>
     <div class="form-fields">
-        <p>Hotel name *</p>
+        <p>{% trans "Hotel name" %} *</p>
         {{ form.name|placeholder:'' }}
         {% if form.name.errors %}
             <div class="error">{{ form.name.errors }}</div>
         {% endif %}
 
-        <p>Category *</p>
+        <p>{% trans "Category" %} *</p>
         {{ form.category }}
         {% if form.category.errors %}
             <div class="error">{{ form.category.errors }}</div>
@@ -37,21 +39,21 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 </div>
 
 <div class="form-section">
-    <h3>Price</h3>
+    <h3>{% trans "Price" %}</h3>
     <div class="form-fields">
-        <p>High season price * (€)</p>
-        {{ form.high_season_price|placeholder:'Price in €' }}
+        <p>{% trans "High season price * (€)" %}</p>
+        {{ form.high_season_price|placeholder:_('Price in €')}}
         {% if form.high_season_price.errors %}
             <div class="error">{{ form.high_season_price.errors }}</div>
         {% endif %}
 
-        <p>Low season price (€)</p>
-        {{ form.low_season_price|placeholder:'Price in €' }}
+        <p>{% trans "Low season price (€)" %}</p>
+        {{ form.low_season_price|placeholder:_('Price in €') }}
         {% if form.low_season_price.errors %}
             <div class="error">{{ form.low_season_price.errors }}</div>
         {% endif %}
 
-        <p>Max capacity * (Room max X pax)</p>
+        <p>{% trans "Max capacity * (Room max X pax)" %}</p>
         {{ form.capacity }}
         {% if form.capacity.errors %}
             <div class="error">{{ form.capacity.errors }}</div>
@@ -60,33 +62,33 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 </div>
 
 <div class="form-section">
-    <h3>Location </h3>
+    <h3>{% trans "Location" %} </h3>
     <div class="form-fields">
-        <p>Country *</p>
+        <p>{% trans "Country" %} *</p>
         {{ form.country }}
         {% if form.country.errors %}
             <div class="error">{{ form.country.errors }}</div>
         {% endif %}
 
-        <p>City *</p>
+        <p>{% trans "City" %} *</p>
         {{ form.city }}
         {% if form.city.errors %}
             <div class="error">{{ form.city.errors }}</div>
         {% endif %}
 
-        <p>Street *</p>
+        <p>{% trans "Street" %} *</p>
         {{ form.street_address|placeholder:'' }}
         {% if form.street_address.errors %}
             <div class="error">{{ form.street_address.errors }}</div>
         {% endif %}
 
-        <p>District *</p>
+        <p>{% trans "District" %} *</p>
         {{ form.zone|placeholder:'' }}
         {% if form.zone.errors %}
             <div class="error">{{ form.zone.errors }}</div>
         {% endif %}
 
-        <p>District description</p>
+        <p>{% trans "District description" %}</p>
         {{ form.zone_description|placeholder:'' }}
         {% if form.zone_description.errors %}
             <div class="error">{{ form.zone_description.errors }}</div>

@@ -1,5 +1,25 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 
@@ -17,7 +37,7 @@
 
             <div class="trip-title">
                 {% if  model_name == 'publictransport' or model_name == 'privatetransport' or model_name == 'transfer' %}
-                    <p>{{ service.get_type_display }} in {{ service.get_city_display }}</p>
+                    <p>{{ service.get_type_display }} {% trans "in" %} {{ service.get_city_display }}</p>
                 {% elif model_name == 'localguide' or model_name == 'staff' %}
                     <p>{{ service.label }}</p>
                 {% else %}
@@ -50,15 +70,15 @@
 
             {% if model_name != 'hotel' %}
                 <div class="trip-section">
-                    <h3 class="title">Location</h3>
+                    <h3 class="title">{% trans "Location" %}</h3>
                     <table>
                         <tbody>
                         <tr>
-                            <th>Country:</th>
+                            <th>{% trans "Country:" %}</th>
                             <td><i> {{ service.get_country_display }} </i></td>
                         </tr>
                         <tr>
-                            <th>City:</th>
+                            <th>{% trans "City:" %}</th>
                             <td><i>{{ service.city }}</i></td>
                         </tr>
                         </tbody>
@@ -69,11 +89,11 @@
             <hr class="custom-line">
 
             <div class="trip-section">
-                <h3 class="title">Contact Information</h3>
+                <h3 class="title">{% trans "Contact Information" %}</h3>
                 <table>
                     <tbody>
                     <tr>
-                        <th>Email:</th>
+                        <th>{% trans "Email:" %}</th>
                         {% if service.email == None %}
                             <td><i> - </i></td>
                         {% else %}
@@ -81,7 +101,7 @@
                         {% endif %}
                     </tr>
                     <tr>
-                        <th>Phone number:</th>
+                        <th>{% trans "Phone number:" %}</th>
                         {% if service.telephone_number == None %}
                             <td><i> - </i></td>
                         {% else %}
@@ -89,11 +109,11 @@
                         {% endif %}
                     </tr>
                     <tr>
-                        <th>Website:</th>
+                        <th>{% trans "Website:" %}</th>
                         {% if service.website == None %}
                             <td><i> - </i></td>
                         {% else %}
-                            <td><i><a href="{{ service.website }}" target=”_blank”>
+                            <td><i><a href="{{ service.website }}" target="_blank">
                                 {{ service.website }}
                             </a></i></td>
                         {% endif %}
@@ -105,27 +125,27 @@
             <hr class="custom-line">
 
             <div class="trip-section">
-                <h3 class="title">Provider</h3>
+                <h3 class="title">{% trans "Provider" %}</h3>
                 <table>
                     <tbody>
                     <tr>
-                        <th>Name:</th>
+                        <th>{% trans "Name:" %}</th>
                         <td><i> {{ service.provider.commercial_name }} </i></td>
                     </tr>
                     <tr>
-                        <th>Country:</th>
+                        <th>{% trans "Country:" %}</th>
                         <td><i> {{ service.provider.get_country_display }} </i></td>
                     </tr>
                     <tr>
-                        <th>Telephone number:</th>
+                        <th>{% trans "Telephone number:" %}</th>
                         <td><i> {{ service.provider.telephone_number }} </i></td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th>{% trans "Email:" %}</th>
                         <td><i> {{ service.provider.email }} </i></td>
                     </tr>
                     <tr>
-                        <th>Website:</th>
+                        <th>{% trans "Website:" %}</th>
                         {% if service.provider.website == None %}
                             <td><i> - </i></td>
                         {% else %}
@@ -142,33 +162,33 @@
             <hr class="custom-line">
 
             <div class="trip-section">
-                <h3 class="title">Entry Information</h3>
+                <h3 class="title">{% trans "Entry Information" %}</h3>
                 <table>
                     <tbody>
                     <tr>
-                        <th>Last update:</th>
+                        <th>{% trans "Last update:" %}</th>
                         <td><i> {{ service.updated_at|date:"d-M-Y" }} </i></td>
                     </tr>
                     <tr>
-                        <th>Updated by:</th>
+                        <th>{% trans "Updated by:" %}</th>
                         <td><i>{{ service.created_by_user.email }}</i></td>
                     </tr>
                     <tr>
-                        <th>Status:</th>
+                        <th>{% trans "Status:" %}</th>
                         <td>
                             <div class="action-btn">
                                 {% if service.is_active %}
-                                    <!-- Active Request Status -->
+                                    <!-- Active Status -->
                                     <img
                                             src="{% static 'images/green-circle.png' %}"
-                                            alt="Active"
+                                            alt='{% trans "Active" %}'
                                     />
 
                                 {% else %}
-                                    <!-- Closed Request Status -->
+                                    <!-- Inactive Status -->
                                     <img
                                             src="{% static 'images/red-circle.png' %}"
-                                            alt="Closed"
+                                            alt='{% trans "Inactive" %}'
                                     />
                                 {% endif %}
                             </div>

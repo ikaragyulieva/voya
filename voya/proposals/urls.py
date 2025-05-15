@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -34,8 +34,5 @@ urlpatterns = [
     ])),
 
 
-    path('api/services/<str:section>/', views.DynamicServiceView.as_view(), name='dynamic-services'),
-    path('api/create/<int:trip_id>/', views.ProposalItemsAPI.as_view(), name='proposal-create-api'),
-    path('api/edit/<int:pk>/', views.ProposalUpdateAPI.as_view(), name='proposal-edit-api'),
 
 ]

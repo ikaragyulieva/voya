@@ -1,6 +1,6 @@
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
-
+from django.utils.translation import gettext_lazy as _
 from voya.requests.models import TripRequests
 
 
@@ -31,7 +31,7 @@ class TripRequestsAdmin(SimpleHistoryAdmin):
     ordering = ('trip_start_date', 'budget')
 
     fieldsets = (
-        ("Trip Information", {
+        (_("Trip Information"), {
             "fields": (
                 'country_origin',
                 'nationality',
@@ -45,7 +45,7 @@ class TripRequestsAdmin(SimpleHistoryAdmin):
                 'currency',
             ),
         }),
-        ("Accommodations and Meals", {
+        (_("Accommodations and Meals"), {
             "fields": (
                 'accommodations',
                 'accommodations_details',
@@ -53,13 +53,13 @@ class TripRequestsAdmin(SimpleHistoryAdmin):
                 'meals_details',
             ),
         }),
-        ("Transportation", {
+        (_("Transportation"), {
             "fields": (
                 'transportation_type',
                 'transportation_details',
             ),
         }),
-        ("Group Details", {
+        (_("Group Details"), {
             "fields": (
                 'age_range',
                 'min_participants',
@@ -69,7 +69,7 @@ class TripRequestsAdmin(SimpleHistoryAdmin):
                 'staff',
             ),
         }),
-        ("Administrative", {
+        (_("Administrative"), {
             "fields": (
                 'is_active',
                 'created_by_user',
@@ -83,15 +83,15 @@ class TripRequestsAdmin(SimpleHistoryAdmin):
 
     def mark_as_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected requests were marked as inactive.")
+        self.message_user(request, _("Selected requests were marked as inactive."))
 
-    mark_as_inactive.short_description = "Mark selected requests as inactive"
+    mark_as_inactive.short_description = _("Mark selected requests as inactive")
 
     def mark_as_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected requests were marked as active.")
+        self.message_user(request, _("Selected requests were marked as active."))
 
-    mark_as_active.short_description = "Mark selected requests as active"
+    mark_as_active.short_description = _("Mark selected requests as active")
 
     readonly_fields = ('slug',)
 
@@ -100,7 +100,7 @@ class TripRequestsAdmin(SimpleHistoryAdmin):
     # Display latest historical record timestamp
     def history_latest(self, obj):
         latest_record = obj.history.first()
-        return latest_record.history_date if latest_record else "No history"
+        return latest_record.history_date if latest_record else _("No history")
 
     history_latest.admin_order_field = 'history__history_date'
     history_latest.short_description = "Last Modified"

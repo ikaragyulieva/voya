@@ -1,70 +1,90 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     
     <div class="proposal">
 
         <!-- Trip Proposal Template -->
-
         <div class="trip proposal-edit">
+             <!-- Proposal title -->
             <div class="trip-title">
-                <!-- Proposal title -->
                 <p>{{ proposal.title }}</p>
-
             </div>
+        
             <hr class="custom-line">
+        
+            <!-- Accommodation section -->
             {% if accommodation_items %}
                 <div class="trip-section">
-                    <h3 id="section" class="title">Accommodations</h3>
-
+                    <h3 id="section" class="title">{% trans "Accommodations" %}</h3>
+                
                     <ul class="responsive-table requests-table">
-
+                        <!-- Accommodation header -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
-
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
                         </li>
+                    
                         {% for item in accommodation_items %}
-
+                            <!-- Accommodation rows -->
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
                             </li>
 
                         {% endfor %}
                     </ul>
                 </div>
             {% endif %}
+        
+            <!-- Transport section -->
             {% if transport_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Transport</h3>
+                    <h3 id="section" class="title">{% trans "Transport" %}</h3>
+                
                     <ul class="responsive-table requests-table">
-
+                        <!-- Transport header -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
-                            <div class="col col-6 empty-space">Btn</div>
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
+                            
 
                         </li>
                         {% for item in transport_items %}
-
+                            <!-- Transport rows -->
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
                             </li>
 
                         {% endfor %}
@@ -72,30 +92,29 @@
 
                 </div>
             {% endif %}
+        
+            <!-- Activities section -->
             {% if activity_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Extra Activities</h3>
+                    <h3 id="section" class="title">{% trans "Extra Activities" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Activities header -->
                         <li class="table-header variable-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
-                            <div class="col col-6 empty-space">Btn</div>
-
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
                         </li>
+                    
                         {% for item in activity_items %}
-
+                            <!-- Activities rows -->
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
                             </li>
 
                         {% endfor %}
@@ -103,21 +122,24 @@
 
                 </div>
             {% endif %}
+        
+            <!-- Transfers section -->
             {% if transfer_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Transfers</h3>
+                    <h3 id="section" class="title">{% trans "Transfers" %}</h3>
+                    
                     <ul class="responsive-table requests-table">
-
+                        <!-- Transfers header -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
-
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
                         </li>
+                    
                         {% for item in transfer_items %}
+                            <!-- Transfers rows -->
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
@@ -130,57 +152,58 @@
 
                 </div>
             {% endif %}
+        
+            <!-- Local Guides section -->
             {% if guides_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Guides</h3>
+                    <h3 id="section" class="title">{% trans "Local Guides" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Local Guides header -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
-
-
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
                         </li>
+                    
                         {% for item in guides_items %}
+                            <!-- Local Guides rows -->
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
                             </li>
                         {% endfor %}
                     </ul>
 
                 </div>
             {% endif %}
+        
+            <!-- Other Services section -->
             {% if other_items %}
                 <hr class="custom-line">
                 <div class="trip-section">
-                    <h3 id="section" class="title">Other Services</h3>
+                    <h3 id="section" class="title">{% trans "Other Services" %}</h3>
 
                     <ul class="responsive-table requests-table">
-
+                        <!-- Other Services header -->
                         <li class="table-header fixed-cost">
-                            <div class="col col-1">Date</div>
-                            <div class="col col-2">City</div>
-                            <div class="col col-33">Service</div>
-                            <div class="col col-4">Units</div>
-                            <div class="col col-5">Price</div>
-
+                            <div class="col col-1">{% trans "Date" %}</div>
+                            <div class="col col-2">{% trans "City" %}</div>
+                            <div class="col col-33">{% trans "Service" %}</div>
+                            <div class="col col-4">{% trans "Units" %}</div>
                         </li>
+                    
                         {% for item in other_items %}
+                            <!-- Other Services rows -->
                             <li class="table-row">
                                 <div class="col col-1 " data-label="date">{{ item.corresponding_trip_date }}</div>
                                 <div class="col col-2" data-label="city">{{ item.city }}</div>
                                 <div class="col col-33" data-label="service details">{{ item.service_name }}</div>
                                 <div class="col col-4" data-label="quantity">{{ item.quantity }}</div>
-                                <div class="col col-5" data-label="variable cost">{{ item.price }}</div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -191,22 +214,21 @@
 
         </div>
 
+    
         <!-- Trip Proposal Budget Template -->
-
-
         <div class="trip trip-proposal budget">
-
+        
+             <!-- Budget title -->
             <div class="trip-title">
-                <!-- Budget title -->
-                <p>Proposal Budget</p>
-
+                <p>{% trans "Proposal Budget" %}</p>
             </div>
 
+            <!-- Budget table -->
             <hr class="custom-line">
             <div class="trip-section">
                 <div class="budget-container">
                     <table class="budget-table" id="budget-table">
-                        
+                        <!-- Budget headers -->
                         <thead>
                         <tr>
                             <th></th>
@@ -216,16 +238,16 @@
                         </tr>
                         </thead>
 
-
+                        <!-- Budget footers -->
                         <tfoot>
                         <tr>
-                            <th>Price per person:</th>
+                            <th>{% trans "Price per person:" %}</th>
                             {% for budget_option in budget %}
                             <td><i> {{ budget_option.fina_price_per_person }} € </i></td>
                             {% endfor %}
                         </tr>
                         <tr>
-                            <th>Final Price:</th>
+                            <th>{% trans "Final Price:" %}</th>
                             {% for budget_option in budget %}
                             <td><i> {{ budget_option.final_price }} € </i></td>
                             {% endfor %}

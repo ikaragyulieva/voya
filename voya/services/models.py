@@ -2,15 +2,12 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django_countries.fields import CountryField
 from simple_history.models import HistoricalRecords
-
+from django.utils.translation import gettext_lazy as _
 from voya.common.models import TimestampedModel, ServiceBaseModel
 from voya.proposals.choices import TransferTypeChoices
 from voya.requests import choices
 from voya.users.models import CustomUser
 from phonenumber_field.modelfields import PhoneNumberField
-
-
-# Create your models here.
 
 
 class Hotel(ServiceBaseModel):
@@ -254,7 +251,7 @@ class Location(TimestampedModel):
         unique=True,
     )
     country = CountryField(
-        blank_label='Select country',
+        blank_label=_('Select country'),
         null=False,
         blank=False,
     )

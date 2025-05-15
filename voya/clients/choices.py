@@ -1,8 +1,9 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class TitleChoices(models.TextChoices):
-    Title = 'title', 'Select your title'
-    Miss = 'miss', 'Miss'
-    Mrs = 'mrs', 'Mrs'
-    Mr = 'mr', 'Mr'
+    Title = 'title', _('Select your title')
+    Miss = 'miss', _('Miss')
+    Mrs = 'mrs', _('Mrs')
+    Mr = 'mr', _('Mr')

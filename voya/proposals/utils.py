@@ -18,7 +18,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 import logging
 
+from django.apps import apps
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 from rest_framework.response import Response
 from simple_history.utils import update_change_reason
@@ -29,6 +31,73 @@ from voya.requests.models import TripRequests
 from voya.services.models import Location
 
 logger = logging.getLogger(__name__)
+
+# SECTION KEYS (internal identifiers)
+SECTION_KEYS = {
+    "ACCOMMODATIONS": _("Accommodations"),
+    "PUBLIC_TRANSPORT": _("Public Transport"),
+    "PRIVATE_TRANSPORT": _("Private Transport"),
+    "TRANSFERS": _("Transfers"),
+    "EXTRA_ACTIVITIES": _("Extra Activities"),
+    "ACTIVITY": _("Activity"),
+    "LOCAL_GUIDES": _("Local Guides"),
+    "TOUR_LEADER": _("Tour Leader"),
+    "MEALS": _("Meals"),
+    "OTHER_VARIABLE": _("Other Services - Variable"),
+    "OTHER_SERVICES": _("Other Services"),
+    "OTHER_FIXED": _("Other Services - Fixed"),
+
+}
+
+# Reverse translated label to key
+REVERSE_SECTION_KEYS = {str(v): k for k, v in SECTION_KEYS.items()}
+
+# MODEL MAP based on SECTION KEY
+SECTION_MODEL_MAP = {
+    "ACCOMMODATIONS": "Hotel",
+    "PUBLIC_TRANSPORT": "PublicTransport",
+    "PRIVATE_TRANSPORT": "PrivateTransport",
+    "TRANSFERS": "Transfer",
+    "EXTRA_ACTIVITIES": "Ticket",
+    "ACTIVITY": "Ticket",
+    "LOCAL_GUIDES": "LocalGuide",
+    "TOUR_LEADER": "Staff",
+    # MEALS / OTHER_FIXED / OTHER_VARIABLE don't map to services directly
+}
+
+
+# JS Injection helper (in context processors and views)
+def get_section_context():
+    return {
+        "section_keys": SECTION_KEYS,
+        "reverse_section_keys": REVERSE_SECTION_KEYS,
+        "section_model_map": SECTION_MODEL_MAP,
+    }
+
+
+def group_items_by_section(items):
+    section_items_map = {key: [] for key in SECTION_KEYS.keys()}
+
+    for item in items:
+        section_key = item.section_name
+
+        # Handel model lookup only for service-related sections
+        if section_key in SECTION_MODEL_MAP:
+            model_name = SECTION_MODEL_MAP[section_key]
+            try:
+                service_model = apps.get_model("services", model_name)
+                service_object = service_model.objects.get(id=item.service_id)
+
+                # Fetch the name based on the service label
+                item.service_name = getattr(service_object, "name", None) or getattr(service_object, "type", None)
+            except Exception:
+                item.section_name = None
+
+        # Append item to its appropriate group
+        if section_key in section_items_map:
+            section_items_map[section_key].append(item)
+
+    return section_items_map
 
 
 def save_proposal(data, user):
@@ -49,7 +118,7 @@ def save_proposal(data, user):
         proposal.history_user = user
         update_change_reason(
             proposal,
-            "Proposal created via API"
+            _("Proposal created via API")
         )
 
         # Save items and budget
@@ -70,7 +139,7 @@ def update_proposal(proposal, data, user):
         if has_changes(proposal, proposal_serializer.validated_data):
             proposal = proposal_serializer.save()
 
-            update_change_reason(proposal, "Proposal updated via API")
+            update_change_reason(proposal, _("Proposal updated via API"))
             proposal.history_user = user
             logger.warning(f"✅ Proposal updated")
         else:
@@ -92,11 +161,11 @@ def update_proposal(proposal, data, user):
             if instance:
                 #  Update existing item
                 serializer = ItemSerializer(instance, data=item_data, partial=True)
-                action = "updated"
+                action = _("updated")
             else:
                 #  Create new item if it doesn't exist
                 serializer = ItemSerializer(data=item_data)
-                action = "created"
+                action = _("created")
                 logger.warning("🟢 Creating new item")
 
             serializer.is_valid(raise_exception=True)
@@ -111,7 +180,16 @@ def update_proposal(proposal, data, user):
                 item.history_user = user
                 update_change_reason(
                     item,
-                    f"Item {action}: {item.section_name} - “{item.additional_notes or 'No notes'}” – €{item.price} x {item.quantity} on {item.corresponding_trip_date} in {item.city}")
+                    _("Item %(action)s: %(section_name)s - “%(additional_notes)s” – €%(price)s x %(quantity)s on %(corresponding_trip_date)s in %(city)s") % {
+                        'action': action,
+                        'section_name': item.section_name,
+                        'additional_notes': item.additional_notes or _('No notes'),
+                        'price': item.price,
+                        'quantity': item.quantity,
+                        'corresponding_trip_date': item.corresponding_trip_date,
+                        'city': item.city,
+                    }
+                )
                 # item.save()
                 logger.warning(f"✅ Item {action}: ID {item.id}")
 
@@ -125,7 +203,14 @@ def update_proposal(proposal, data, user):
             item.history_user = user
             update_change_reason(
                 item,
-                f"Item deleted: {item.section_name} – “{item.additional_notes or 'No notes'}” – €{item.price} x {item.quantity} on {item.corresponding_trip_date} in {item.city}"
+                _("Item deleted: %(section_name)s – “%(additional_notes)s” – €%(price)s x %(quantity)s on %(corresponding_trip_date)s in %(city)s") % {
+                    'section_name': item.section_name,
+                    'additional_notes': item.additional_notes or _('No notes'),
+                    'price': item.price,
+                    'quantity': item.quantity,
+                    'corresponding_trip_date': item.corresponding_trip_date,
+                    'city': item.city,
+                }
             )
 
         logger.warning(f"🗑️ Deleting {to_delete_items.count()} items: {[i.id for i in to_delete_items]}")
@@ -148,11 +233,11 @@ def update_proposal(proposal, data, user):
                 # Update existing budget
 
                 serializer = BudgetSerializer(instance, data=budget_data, partial=True)
-                action = "updated"
+                action = _("updated")
             else:
                 # Create new budget if it doesn’t exist
                 serializer = BudgetSerializer(data=budget_data)
-                action = "created"
+                action = _("created")
                 logger.warning("🟢 Creating new budget")
 
             serializer.is_valid(raise_exception=True)
@@ -164,7 +249,7 @@ def update_proposal(proposal, data, user):
                 budget = serializer.save(proposal=proposal)
                 if budget:
                     budget.history_user = user
-                    update_change_reason(budget, f"Budget {action} via API")
+                    update_change_reason(budget, _("Budget %(action)s via API") % {'action': action})
                     # budget.save()
                     logger.warning(f"✅ Budget {action}: ID {budget.id}")
 
@@ -237,9 +322,9 @@ def save_items(proposal, items_data):
             try:
                 city = Location.objects.get(id=city_id)
             except Location.DoesNotExist:
-                return Response({'error': 'Invalid city ID'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': _('Invalid city ID')}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error': 'City ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': _('City ID is required')}, status=status.HTTP_400_BAD_REQUEST)
 
         # Create the item
         new_item = ProposalSectionItem.objects.create(
@@ -256,7 +341,14 @@ def save_items(proposal, items_data):
         new_item.history_user = proposal.user
         update_change_reason(
             new_item,
-            f"Item created: {new_item.section_name} – “{new_item.additional_notes or 'No notes'}” – €{new_item.price} x {new_item.quantity} on {new_item.corresponding_trip_date} in {new_item.city}"
+            _("Item created: %(section_name)s – “%(additional_notes)s” – €%(price)s x %(quantity)s on %(corresponding_trip_date)s in %(city)s") % {
+                'section_name': new_item.section_name,
+                'additional_notes': new_item.additional_notes or _('No notes'),
+                'price': new_item.price,
+                'quantity': new_item.quantity,
+                'corresponding_trip_date': new_item.corresponding_trip_date,
+                'city': new_item.city,
+            }
         )
         new_item.save()
         created_items.append(new_item)
@@ -283,10 +375,15 @@ def save_budget(proposal, budget_data):
             final_price=budget_entry.get('final_price'),
         )
 
-        budget.bistory_user = proposal.user
+        budget.history_user = proposal.user
         update_change_reason(
             budget,
-            f"Budget created: {budget.pax} pax – Total: €{budget.total_cost} – Price/pp: €{budget.fina_price_per_person} – Margin: {budget.margin}%"
+            _("Budget created: %(pax)s pax – Total: €%(total_cost)s – Price/pp: €%(fina_price_per_person)s – Margin: %(margin)s%%") % {
+                'pax': budget.pax,
+                'total_cost': budget.total_cost,
+                'fina_price_per_person': budget.fina_price_per_person,
+                'margin': budget.margin,
+            }
         )
         budget.save()
         created_budgets.append(budget)

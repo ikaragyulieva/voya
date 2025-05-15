@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from voya.clients.models import ClientProfile
+from django.utils.translation import gettext_lazy as _
 
 
 @admin.register(ClientProfile)
@@ -39,10 +40,10 @@ class ClientProfileAdmin(admin.ModelAdmin):
                 'phone_number',
             )
         }),
-        ('Company Information', {
+        (_('Company Information'), {
             'fields': ('company',)
         }),
-        ('Account Information', {
+        (_('Account Information'), {
             'fields': ('user', 'is_active')
         }),
     )
@@ -51,14 +52,14 @@ class ClientProfileAdmin(admin.ModelAdmin):
 
     def mark_active(self, request, queryset):
         queryset.update(is_active=True)
-        self.message_user(request, "Selected profiles have been marked as active.")
+        self.message_user(request, _("Selected profiles have been marked as active."))
 
     def mark_inactive(self, request, queryset):
         queryset.update(is_active=False)
-        self.message_user(request, "Selected profiles have been marked as inactive.")
+        self.message_user(request, _("Selected profiles have been marked as inactive."))
 
-    mark_active.short_description = "Mark selected profiles as active"
-    mark_inactive.short_description = "Mark selected profiles as inactive"
+    mark_active.short_description = _("Mark selected profiles as active")
+    mark_inactive.short_description = _("Mark selected profiles as inactive")
 
     readonly_fields = ('user',)
 

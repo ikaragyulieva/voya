@@ -1,16 +1,42 @@
+<!-- 
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see
+<https://www.gnu.org/licenses/>. 
+-->
+
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Disable Account</h2>
+        <h2>{% trans "Disable Account" %}</h2>
 
-        <p>Are you sure you want to disable this account?</p>
+        <p>{% trans "Are you sure you want to disable this account?" %}</p>
 
         <form method="post" action="{% url 'delete-client-profile' pk=profile.pk %}">
             {% csrf_token %}
             <div class="action-btns">
-                <button class="add-btn" type="submit">Delete Profile</button>
-                <button class="add-btn" type="button" onclick="window.location.href='{% url 'profile-details' pk=profile.pk %}'">Cancel</button>
+                <button class="add-btn" type="submit">{% trans "Delete Profile" %}</button>
+                <button 
+                        class="add-btn" 
+                        type="button" 
+                        onclick="window.location.href='{% url 'profile-details' pk=profile.pk %}'">
+                    {% trans "Cancel" %}
+                </button>
             </div>
         </form>
 

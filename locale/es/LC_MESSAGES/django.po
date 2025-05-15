@@ -1,0 +1,3960 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-15 11:04+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+
+#: templates/500.html:210
+msgid "We can't find that page"
+msgstr "No podemos encontrar esa página"
+
+#: templates/500.html:212
+msgid ""
+"We're fairly sure that page used to be here, but seems to have gone missing."
+msgstr ""
+"Estamos bastante seguros de que esa página solía estar aquí, pero parece que "
+"ha desaparecido."
+
+#: templates/500.html:214
+msgid "We do apologise on its behalf."
+msgstr "Lamentamos lo sucedido."
+
+#: templates/500.html:216
+msgid "Back to Home"
+msgstr "Volver al inicio"
+
+#: templates/base.html:47
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: templates/base.html:55 templates/common/dashboard-page.html:95
+#: templates/common/home-page.html:61 templates/common/home-page.html:75
+msgid "New Request"
+msgstr "Nueva solicitud"
+
+#: templates/base.html:63 templates/base.html:335
+msgid "Profile"
+msgstr "Perfil"
+
+#: templates/base.html:88
+msgid "Dashboards"
+msgstr "Dashboards"
+
+#: templates/base.html:91
+msgid "Requests"
+msgstr "Solicitudes"
+
+#: templates/base.html:94
+msgid "Proposals"
+msgstr "Propuestas"
+
+#: templates/base.html:107
+msgid "Companies"
+msgstr "Empresas"
+
+#: templates/base.html:116 templates/providers/providers-dashboard.html:71
+msgid "Services"
+msgstr "Servicios"
+
+#: templates/base.html:122
+msgid "Hotels"
+msgstr "Hoteles"
+
+#: templates/base.html:126
+msgid "Add New Hotel"
+msgstr "Agregar nuevo hotel"
+
+#: templates/base.html:133
+msgid "Guides"
+msgstr "Guías"
+
+#: templates/base.html:139 voya/providers/choices.py:30
+msgid "Local guides"
+msgstr "Guías locales"
+
+#: templates/base.html:144 templates/base.html:158 templates/base.html:194
+#: templates/base.html:207 templates/base.html:221
+msgid "Add New"
+msgstr "Agregar nuevo"
+
+#: templates/base.html:153 voya/providers/choices.py:31
+msgid "Tour leaders"
+msgstr "Tour leaders"
+
+#: templates/base.html:170
+msgid "Activities"
+msgstr "Actividades"
+
+#: templates/base.html:175
+msgid "Add New Activity"
+msgstr "Agregar nueva actividad"
+
+#: templates/base.html:183
+#: templates/proposals/client-proposal-details-page.html:69
+msgid "Transport"
+msgstr "Transporte"
+
+#: templates/base.html:189 templates/proposals/create-proposal-page.html:425
+#: templates/proposals/edit-proposal-page.html:565
+#: templates/proposals/proposal-detail-page.html:408
+#: voya/proposals/choices.py:27 voya/proposals/utils.py:39
+#: voya/providers/choices.py:33
+msgid "Private Transport"
+msgstr "Transporte privado"
+
+#: templates/base.html:203 templates/proposals/create-proposal-page.html:523
+#: templates/proposals/edit-proposal-page.html:746
+#: templates/proposals/proposal-detail-page.html:341
+#: voya/proposals/choices.py:26 voya/proposals/utils.py:38
+#: voya/providers/choices.py:32
+msgid "Public Transport"
+msgstr "Transporte público"
+
+#: templates/base.html:216
+#: templates/proposals/client-proposal-details-page.html:130
+#: templates/proposals/create-proposal-page.html:722
+#: templates/proposals/edit-proposal-page.html:1105
+#: templates/proposals/proposal-detail-page.html:541
+#: voya/proposals/choices.py:28 voya/proposals/utils.py:40
+#: voya/providers/choices.py:26
+msgid "Transfers"
+msgstr "Traslados"
+
+#: templates/base.html:233
+msgid "Providers"
+msgstr "Proveedores"
+
+#: templates/base.html:238
+msgid "Add New Provider"
+msgstr "Agregar nuevo proveedor"
+
+#: templates/base.html:255
+msgid "Settings"
+msgstr "Configuraciones"
+
+#: templates/base.html:260
+msgid "Payment terms"
+msgstr "Términos de pago"
+
+#: templates/base.html:264
+msgid "Add payment term"
+msgstr "Agregar término de pago"
+
+#: templates/base.html:273
+msgid "Cancellation terms"
+msgstr "Términos de cancelación"
+
+#: templates/base.html:278
+msgid "Add cancellation terms"
+msgstr "Agregar términos de cancelación"
+
+#: templates/base.html:287
+msgid "Bank account"
+msgstr "Cuenta bancaria"
+
+#: templates/base.html:292
+msgid "Add bank account"
+msgstr "Agregar cuenta bancaria"
+
+#: templates/base.html:301 templates/providers/create-provider.html:55
+#: templates/providers/edit-provider.html:55
+#: templates/services/create-edit-partials/hotel-form.html:65
+#: templates/services/create-service.html:60
+#: templates/services/edit-service-page.html:61
+#: templates/services/service-details-page.html:73
+#: templates/services/service-details-partials/hotel-details.html:79
+msgid "Location"
+msgstr ""
+
+#: templates/base.html:306
+msgid "Add New Location"
+msgstr "Agregar nueva ubicación"
+
+#: templates/base.html:315 templates/requests/create-new-request-page.html:84
+#: templates/requests/edit-request-page.html:86
+msgid "Currency"
+msgstr "Moneda"
+
+#: templates/base.html:320
+msgid "Add New Currency"
+msgstr "Agregar nueva moneda"
+
+#: templates/base.html:358
+msgid "New Company"
+msgstr "Nueva Empresa"
+
+#: templates/base.html:366
+msgid "New Client"
+msgstr "Nuevo Cliente"
+
+#: templates/base.html:374 templates/common/password_reset_complete.html:41
+#: templates/common/successful-account-activation.html:40
+msgid "Login"
+msgstr "Login"
+
+#: templates/base.html:403
+msgid "All Rights Reserved."
+msgstr "Todos los derechos reservados."
+
+#: templates/clients/client-create-page.html:27
+msgid "Create New Account"
+msgstr "Crear nueva cuenta"
+
+#: templates/clients/client-create-page.html:35
+#: templates/companies/company-edit-page.html:33
+#: templates/companies/create-company-page.html:33 voya/clients/admin.py:43
+#: voya/companies/admin.py:40
+msgid "Company Information"
+msgstr "Información de la empresa"
+
+#: templates/clients/client-create-page.html:38
+msgid "Company VAT/Tax ID"
+msgstr "CIF/NIF de la empresa"
+
+#: templates/clients/client-create-page.html:47
+#: templates/clients/client-edit-page.html:33
+#: templates/employees/employee-create-page.html:34
+#: templates/employees/employee-edit-page.html:32 voya/employees/admin.py:32
+msgid "Personal Information"
+msgstr "Información personal"
+
+#: templates/clients/client-create-page.html:50
+#: templates/clients/client-edit-page.html:36
+#: templates/common/dashboard-page.html:72
+#: templates/employees/employee-create-page.html:37
+#: templates/employees/employee-edit-page.html:35
+#: templates/proposals/proposal-dashboard.html:61 voya/employees/forms.py:22
+msgid "Title"
+msgstr "Título"
+
+#: templates/clients/client-create-page.html:56
+#: templates/clients/client-edit-page.html:42
+#: templates/employees/employee-create-page.html:43
+#: templates/employees/employee-edit-page.html:41 voya/employees/forms.py:28
+msgid "First name"
+msgstr "Nombre"
+
+#: templates/clients/client-create-page.html:62
+#: templates/clients/client-edit-page.html:48
+#: templates/employees/employee-create-page.html:49
+#: templates/employees/employee-edit-page.html:47 voya/employees/forms.py:34
+msgid "Last name"
+msgstr "Apellido"
+
+#: templates/clients/client-create-page.html:68
+#: templates/clients/client-edit-page.html:54
+#: templates/employees/employee-create-page.html:55
+#: templates/employees/employee-edit-page.html:53 voya/employees/forms.py:40
+msgid "Job title"
+msgstr "Puesto de trabajo"
+
+#: templates/clients/client-create-page.html:74
+#: templates/clients/client-edit-page.html:60
+#: templates/companies/company-edit-page.html:61
+#: templates/companies/create-company-page.html:62
+#: templates/employees/employee-create-page.html:61
+#: templates/employees/employee-edit-page.html:59
+msgid "Whatsapp number"
+msgstr "Número de Whatsapp"
+
+#: templates/clients/client-create-page.html:75
+#: templates/clients/client-edit-page.html:61
+#: templates/companies/company-edit-page.html:62
+#: templates/companies/create-company-page.html:63
+#: templates/employees/employee-create-page.html:62
+#: templates/employees/employee-edit-page.html:60
+#: templates/services/edit-service-page.html:90
+msgid "e.g. +1234567890"
+msgstr "p. ej. +1234567890"
+
+#: templates/clients/client-create-page.html:84
+#: templates/employees/employee-create-page.html:70
+msgid "Account Details"
+msgstr "Detalles de la cuenta"
+
+#: templates/clients/client-create-page.html:87
+msgid "E-mail address"
+msgstr "Correo electrónico"
+
+#: templates/clients/client-create-page.html:93
+#: templates/common/login-page.html:36
+#: templates/employees/employee-create-page.html:79 voya/clients/forms.py:45
+#: voya/clients/forms.py:128 voya/common/forms.py:24 voya/employees/forms.py:54
+msgid "Password"
+msgstr "Contraseña"
+
+#: templates/clients/client-create-page.html:99
+#: templates/employees/employee-create-page.html:85
+msgid "Confirm password"
+msgstr "Confirmar contraseña"
+
+#: templates/clients/client-create-page.html:107
+msgid "Create Account"
+msgstr "Crear cuenta"
+
+#: templates/clients/client-create-page.html:112
+#: templates/employees/employee-create-page.html:96
+msgid "Already have an account?"
+msgstr "¿Ya tienes una cuenta?"
+
+#: templates/clients/client-create-page.html:112
+#: templates/employees/employee-create-page.html:96
+msgid "Login here!"
+msgstr "¡Inicia sesión aquí!"
+
+#: templates/clients/client-delete-page.html:26
+#: templates/employees/employee-delete-page.html:24
+msgid "Disable Account"
+msgstr "Desactivar cuenta"
+
+#: templates/clients/client-delete-page.html:28
+#: templates/employees/employee-delete-page.html:26
+msgid "Are you sure you want to disable this account?"
+msgstr "¿Estás seguro de que deseas desactivar esta cuenta?"
+
+#: templates/clients/client-delete-page.html:33
+msgid "Delete Profile"
+msgstr "Eliminar perfil"
+
+#: templates/clients/client-delete-page.html:38
+#: templates/clients/client-edit-page.html:73
+#: templates/companies/company-delete-page.html:33
+#: templates/companies/company-edit-page.html:118
+#: templates/employees/employee-delete-page.html:35
+#: templates/employees/employee-edit-page.html:78
+#: templates/providers/edit-provider.html:119
+#: templates/requests/edit-request-page.html:211
+#: templates/services/edit-service-page.html:136
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/clients/client-edit-page.html:27
+#: templates/employees/employee-edit-page.html:25
+msgid "Edit Profile"
+msgstr "Editar perfil"
+
+#: templates/clients/client-edit-page.html:69
+#: templates/companies/company-edit-page.html:116
+#: templates/employees/employee-edit-page.html:75
+#: templates/providers/edit-provider.html:115
+#: templates/requests/edit-request-page.html:204
+#: templates/services/edit-service-page.html:134
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: templates/clients/client-profile-details-page.html:34
+msgid "Company logo"
+msgstr "Logo de la empresa"
+
+#: templates/clients/client-profile-details-page.html:51
+#: templates/companies/companies-dashboard-page.html:122
+#: templates/employees/employee-profile-details-page.html:49
+#: templates/proposals/proposal-dashboard.html:145
+#: templates/proposals/proposal-detail-page.html:888
+#: templates/providers/providers-dashboard.html:130
+#: templates/services/services-dashboard-page.html:166
+msgid "Edit button"
+msgstr "Botón de edición"
+
+#: templates/clients/client-profile-details-page.html:60
+msgid "Bin button"
+msgstr "Botón de borrar"
+
+#: templates/clients/client-profile-details-page.html:73
+msgid "Active account"
+msgstr "Cuenta activa"
+
+#: templates/clients/client-profile-details-page.html:75
+#: templates/employees/employee-profile-details-page.html:101
+#: templates/employees/employee-profile-details-page.html:103
+msgid "Active User"
+msgstr "Usuario activo"
+
+#: templates/clients/client-profile-details-page.html:82
+msgid "Inactive account"
+msgstr "Cuenta inactiva"
+
+#: templates/clients/client-profile-details-page.html:85
+#: templates/employees/employee-profile-details-page.html:112
+#: templates/employees/employee-profile-details-page.html:115
+msgid "Inactive User"
+msgstr "Usuario inactivo"
+
+#: templates/clients/client-profile-details-page.html:90
+#: templates/common/password-change-form.html:26
+#: templates/common/password-change-form.html:38
+#: templates/common/password_reset_confirm.html:38
+#: templates/employees/employee-profile-details-page.html:123
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+#: templates/common/check-email-page.html:29
+msgid "Verify your email address"
+msgstr "Verifica tu dirección de correo electrónico"
+
+#: templates/common/check-email-page.html:31
+msgid "Almost there! An email with account activation instructions was sent to"
+msgstr ""
+"¡Casi está! Se ha enviado un correo con instrucciones de activación de la "
+"cuenta a"
+
+#: templates/common/check-email-page.html:32
+msgid ""
+"Please confirm your email in the next 24h, otherwise your account will be "
+"removed automatically."
+msgstr ""
+"Por favor, confirma tu correo en las próximas 24 horas, de lo contrario tu "
+"cuenta será eliminada automáticamente."
+
+#: templates/common/check-email-page.html:34
+msgid "Your account needs to be verified"
+msgstr "Tu cuenta necesita ser verificada"
+
+#: templates/common/check-email-page.html:36
+msgid ""
+"Almost there! An account activation email was sent to our onboarding team."
+msgstr ""
+"¡Casi está! Un correo de activación ha sido enviado a nuestro equipo de "
+"incorporación."
+
+#: templates/common/check-email-page.html:37
+msgid ""
+"Once your account is activated, you will be able to make use of your account."
+msgstr "Una vez que tu cuenta esté activada, podrás empezar a utilizarla."
+
+#: templates/common/check-email-page.html:40
+#: templates/common/password_reset_done.html:38
+msgid "Go to home"
+msgstr "Ir al inicio"
+
+#: templates/common/dashboard-page.html:33
+msgid "You have no requests yet!"
+msgstr "¡Aún no tienes solicitudes!"
+
+#: templates/common/dashboard-page.html:36
+msgid "Requests Dashboard"
+msgstr "Panel de Solicitudes"
+
+#: templates/common/dashboard-page.html:57
+#: templates/common/dashboard-page.html:60
+msgid "Create new request"
+msgstr "Crear nueva solicitud"
+
+#: templates/common/dashboard-page.html:69
+msgid "Submitted On"
+msgstr "Recibido el"
+
+#: templates/common/dashboard-page.html:70
+#: templates/proposals/proposal-dashboard.html:59
+#: templates/providers/providers-dashboard.html:69
+#: templates/services/services-dashboard-page.html:75
+#: voya/companies/admin.py:111 voya/providers/admin.py:51
+#: voya/services/admin.py:37 voya/services/admin.py:83
+#: voya/services/admin.py:129 voya/services/admin.py:175
+#: voya/services/admin.py:221 voya/services/admin.py:255
+#: voya/services/admin.py:283 voya/services/admin.py:328
+msgid "Status"
+msgstr "Estado"
+
+#: templates/common/dashboard-page.html:71
+msgid "ID"
+msgstr "ID"
+
+#: templates/common/dashboard-page.html:73
+#: templates/requests/create-new-request-page.html:108
+#: templates/requests/edit-request-page.html:110
+msgid "Destinations"
+msgstr "Destinos"
+
+#: templates/common/dashboard-page.html:74
+msgid "Starts At"
+msgstr "Empieza el"
+
+#: templates/common/dashboard-page.html:75
+msgid "Submitted By"
+msgstr "Enviado por"
+
+#: templates/common/dashboard-page.html:77
+#: templates/proposals/proposal-dashboard.html:63
+#: templates/requests/create-new-request-page.html:192
+#: templates/requests/edit-request-page.html:195
+msgid "Company"
+msgstr "Empresa"
+
+#: templates/common/dashboard-page.html:79
+#: templates/companies/companies-dashboard-page.html:74
+#: templates/proposals/proposal-dashboard.html:64
+#: templates/providers/providers-dashboard.html:74
+#: templates/services/services-dashboard-page.html:93
+msgid "Actions"
+msgstr "Acciones"
+
+#: templates/common/dashboard-page.html:101
+msgid "Active Request"
+msgstr "Solicitud activa"
+
+#: templates/common/dashboard-page.html:108
+msgid "Closed Request"
+msgstr "Solicitud cerrada"
+
+#: templates/common/dashboard-page.html:121
+#: templates/common/dashboard-page.html:166
+msgid "View Request"
+msgstr "Ver solicitud"
+
+#: templates/common/dashboard-page.html:153
+#: templates/common/dashboard-page.html:236
+msgid "Check Proposal"
+msgstr "Ver propuesta"
+
+#: templates/common/dashboard-page.html:156
+msgid "Check proposal"
+msgstr "Revisar propuesta"
+
+#: templates/common/dashboard-page.html:169
+msgid "view button"
+msgstr "botón ver"
+
+#: templates/common/dashboard-page.html:176
+#: templates/common/dashboard-page.html:203
+msgid "Duplicate Request"
+msgstr "Duplicar solicitud"
+
+#: templates/common/dashboard-page.html:179
+#: templates/common/dashboard-page.html:206
+msgid "duplicate button"
+msgstr "botón duplicar"
+
+#: templates/common/dashboard-page.html:186
+#: templates/common/dashboard-page.html:213
+#: templates/requests/edit-request-page.html:27
+msgid "Edit Request"
+msgstr "Editar solicitud"
+
+#: templates/common/dashboard-page.html:189
+#: templates/common/dashboard-page.html:216
+msgid "edit button"
+msgstr "botón editar"
+
+#: templates/common/dashboard-page.html:223
+msgid "Request Completed"
+msgstr "Solicitud completada"
+
+#: templates/common/dashboard-page.html:226
+#: templates/services/services-dashboard-page.html:174
+msgid "delete button"
+msgstr "botón eliminar"
+
+#: templates/common/dashboard-page.html:242
+#: templates/common/dashboard-page.html:243
+#: templates/proposals/proposal-dashboard.html:75
+#: templates/proposals/proposal-dashboard.html:76
+#: templates/proposals/proposal-detail-page.html:847
+#: voya/proposals/choices.py:52
+msgid "Ready for review"
+msgstr "Lista para revisión"
+
+#: templates/common/dashboard-page.html:251
+#: templates/common/dashboard-page.html:252 voya/proposals/choices.py:51
+msgid "Not finished"
+msgstr "No finalizada"
+
+#: templates/common/dashboard-page.html:260
+#: templates/common/dashboard-page.html:261
+#: templates/proposals/proposal-dashboard.html:91
+msgid "Shared with client"
+msgstr "Compartida con el cliente"
+
+#: templates/common/dashboard-page.html:268
+#: templates/proposals/proposal-dashboard.html:98
+#: templates/proposals/proposal-detail-page.html:870
+msgid "Proposal approved by the client"
+msgstr ""
+
+#: templates/common/dashboard-page.html:269
+#: templates/proposals/proposal-dashboard.html:99
+#: templates/proposals/proposal-detail-page.html:871
+#, fuzzy
+#| msgid "Status: Shared with client"
+msgid "Status: Approved by the client"
+msgstr "Estado: Compartida con el cliente"
+
+#: templates/common/dashboard-page.html:276
+#: templates/proposals/proposal-dashboard.html:106
+#: templates/proposals/proposal-detail-page.html:878
+#, fuzzy
+#| msgid "Send to client"
+msgid "Rejected by the client"
+msgstr "Enviar al cliente"
+
+#: templates/common/dashboard-page.html:277
+#: templates/proposals/proposal-dashboard.html:107
+#: templates/proposals/proposal-detail-page.html:879
+#, fuzzy
+#| msgid "Status: Shared with client"
+msgid "Status: Rejected by the client"
+msgstr "Estado: Compartida con el cliente"
+
+#: templates/common/dashboard-page.html:287
+#: templates/common/dashboard-page.html:290
+msgid "Create Proposal"
+msgstr "Crear propuesta"
+
+#: templates/common/dashboard-page.html:301
+#: templates/proposals/proposal-dashboard.html:175
+#: templates/services/services-dashboard-page.html:182
+msgid "No results found"
+msgstr "No se encontraron resultados"
+
+#: templates/common/home-page.html:32
+msgid "Welcome to Voya"
+msgstr "Bienvenido a Voya"
+
+#: templates/common/home-page.html:33
+msgid "Redefining Group Travel Management"
+msgstr "Redefiniendo la gestión de viajes en grupo"
+
+#: templates/common/home-page.html:35
+msgid ""
+"At Voya, we simplify group travel by turning complex itineraries into "
+"seamless, unforgettable experiences. Whether you’re a travel agency "
+"organizing group tours across Europe or a company coordinating corporate "
+"travel, Voya is your trusted partner for tailored travel solutions that "
+"exceed expectations."
+msgstr ""
+"En Voya, simplificamos los viajes en grupo convirtiendo itinerarios "
+"complejos en experiencias fluidas e inolvidables. Ya seas una agencia de "
+"viajes organizando tours por Europa o una empresa coordinando viajes "
+"corporativos, Voya es tu socio de confianza para soluciones de viaje "
+"personalizadas que superan las expectativas."
+
+#: templates/common/home-page.html:39
+msgid "Why Choose Voya for Group Travel Management?"
+msgstr "¿Por qué elegir Voya para la gestión de viajes en grupo?"
+
+#: templates/common/home-page.html:42
+msgid ""
+"More than just a travel management platform, we offers a complete ecosystem "
+"to streamline planning, organizing and managing group travel effortlessly. "
+"Here’s what sets us apart:"
+msgstr ""
+"Más que una plataforma de gestión de viajes, ofrecemos un ecosistema "
+"completo para planificar, organizar y gestionar viajes en grupo sin "
+"esfuerzo. Esto es lo que nos diferencia:"
+
+#: templates/common/home-page.html:64
+msgid "Personalized Itineraries"
+msgstr "Itinerarios personalizados"
+
+#: templates/common/home-page.html:66
+msgid ""
+"Every trip is customized to reflect the unique preferences and requirements "
+"of your clients."
+msgstr ""
+"Cada viaje se personaliza para reflejar las preferencias y necesidades "
+"únicas de tus clientes."
+
+#: templates/common/home-page.html:78
+msgid "Streamlined Processes"
+msgstr "Procesos simplificados"
+
+#: templates/common/home-page.html:80
+msgid ""
+"From quote requests to finalized proposals, Voya simplifies the entire "
+"process, saving you time and effort."
+msgstr ""
+"Desde la solicitud de presupuestos hasta la propuesta final, Voya simplifica "
+"todo el proceso, ahorrándote tiempo y esfuerzo."
+
+#: templates/common/home-page.html:89 templates/common/home-page.html:92
+msgid "Trusted Partnerships"
+msgstr "Colaboraciones de confianza"
+
+#: templates/common/home-page.html:94
+msgid ""
+"Leverage our extensive network of trusted suppliers to deliver exceptional "
+"travel experiences."
+msgstr ""
+"Aprovecha nuestra amplia red de proveedores de confianza para ofrecer "
+"experiencias de viaje excepcionales."
+
+#: templates/common/home-page.html:103 templates/common/home-page.html:106
+msgid "Transparent Pricing"
+msgstr "Precios transparentes"
+
+#: templates/common/home-page.html:108
+msgid ""
+"Flexible options cater to every budget, ensuring no compromise on quality "
+"and experience."
+msgstr ""
+"Opciones flexibles para cada presupuesto, sin comprometer la calidad ni la "
+"experiencia."
+
+#: templates/common/home-page.html:117 templates/common/home-page.html:120
+msgid "Expert Support"
+msgstr "Soporte experto"
+
+#: templates/common/home-page.html:122
+msgid ""
+"Our team is here to guide you every step of the way, ensuring a smooth "
+"journey from start to finish."
+msgstr ""
+"Nuestro equipo está aquí para guiarte en cada paso, asegurando un viaje sin "
+"contratiempos de principio a fin."
+
+#: templates/common/home-page.html:136
+msgid "How Voya Works?"
+msgstr "¿Cómo funciona Voya?"
+
+#: templates/common/home-page.html:146 templates/common/home-page.html:149
+msgid "Create your company profile"
+msgstr "Crea el perfil de tu empresa"
+
+#: templates/common/home-page.html:151
+msgid ""
+"Start your journey by setting up a company profile. This ensures all your "
+"clients’ trips are accurately linked to your organization."
+msgstr ""
+"Comienza creando el perfil de tu empresa. Esto garantiza que todos los "
+"viajes de tus clientes estén correctamente vinculados a tu organización."
+
+#: templates/common/home-page.html:154
+msgid ""
+" \"Navigate to the <b>Company section</b>, enter your company's details—"
+"including the Tax ID—and let us take care of the rest.\" "
+msgstr ""
+"\"Ve a la <b>sección de Empresa</b>, introduce los datos de tu empresa —"
+"incluyendo el CIF/NIF— y déjanos encargarnos del resto.\""
+
+#: templates/common/home-page.html:164 templates/common/home-page.html:167
+msgid "Create a client account"
+msgstr "Crea una cuenta de cliente"
+
+#: templates/common/home-page.html:169
+msgid ""
+"After your company profile is registered, you can create individual client  "
+"profiles linked to your organization."
+msgstr ""
+"Una vez registrado el perfil de tu empresa, puedes crear perfiles de "
+"clientes vinculados a tu organización."
+
+#: templates/common/home-page.html:172
+msgid ""
+" \"Use the <b> New Client </b> section to set up these accounts and ensure "
+"all necessary details are captured for seamless trip planning.\" "
+msgstr ""
+"\"Usa la sección de <b>Nuevo Cliente</b> para crear estas cuentas y "
+"asegurarte de incluir toda la información necesaria para una planificación "
+"eficiente.\""
+
+#: templates/common/home-page.html:181 templates/common/home-page.html:185
+msgid "Submit a trip request"
+msgstr "Enviar una solicitud de viaje"
+
+#: templates/common/home-page.html:187
+msgid ""
+"Log in to your client account to easily create, review and manage travel "
+"requests for your clients."
+msgstr ""
+"Inicia sesión en tu cuenta de cliente para crear, revisar y gestionar "
+"solicitudes de viaje fácilmente."
+
+#: templates/common/home-page.html:190
+msgid ""
+"Provide key details such as travel dates, preferred activities, "
+"accommodation choices, destinations, and any special requirements. The more "
+"information you share, the better we can design personalized travel packages "
+"that perfectly match your clients’ needs."
+msgstr ""
+"Proporciona detalles clave como fechas de viaje, actividades preferidas, "
+"tipo de alojamiento, destinos y requisitos especiales. Cuanta más "
+"información compartas, mejor podremos diseñar paquetes personalizados que se "
+"ajusten a las necesidades de tus clientes."
+
+#: templates/common/home-page.html:199 templates/common/home-page.html:202
+msgid "Proposal will be generated"
+msgstr "Se generará una propuesta"
+
+#: templates/common/home-page.html:204
+msgid ""
+"Once we receive your request, our agents will begin crafting a professional "
+"and tailored trip proposal, ensuring delivery within 48 hours."
+msgstr ""
+"Una vez recibida tu solicitud, nuestros agentes empezarán a elaborar una "
+"propuesta profesional y personalizada, asegurando su entrega en 48 horas."
+
+#: templates/common/home-page.html:213 templates/common/home-page.html:216
+msgid "Collaborate and finalize"
+msgstr "Colabora y finaliza"
+
+#: templates/common/home-page.html:218
+msgid ""
+"Work hand-in-hand with our travel experts to refine every detail of your "
+"trip proposal. Together, we’ll ensure your clients enjoy an unforgettable "
+"journey."
+msgstr ""
+"Trabaja codo a codo con nuestros expertos para perfeccionar cada detalle de "
+"la propuesta. Juntos garantizaremos que tus clientes vivan un viaje "
+"inolvidable."
+
+#: templates/common/home-page.html:235
+msgid "Start Planning with Voya Today"
+msgstr "Empieza a planificar con Voya hoy"
+
+#: templates/common/home-page.html:238
+msgid ""
+"At Voya, we believe that travel is more than just reaching destinations—it’s "
+"about creating connections, fostering experiences, and building memories "
+"that last a lifetime. Let us help you provide your clients with exceptional "
+"travel solutions that they'll cherish forever."
+msgstr ""
+"En Voya creemos que viajar es mucho más que llegar a un destino: se trata de "
+"crear conexiones, fomentar experiencias y construir recuerdos que perduren. "
+"Permítenos ayudarte a ofrecer a tus clientes soluciones de viaje "
+"excepcionales que recordarán para siempre."
+
+#: templates/common/login-page.html:28
+msgid "Log In"
+msgstr "Iniciar sesión"
+
+#: templates/common/login-page.html:34
+#: templates/common/password_reset_form.html:31
+#: templates/providers/create-provider.html:77
+#: templates/providers/edit-provider.html:77
+#: templates/services/create-service.html:82
+#: templates/services/edit-service-page.html:83
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: templates/common/login-page.html:41
+msgid "Forgot password?"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: templates/common/login-page.html:43
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: templates/common/login-page.html:46
+msgid "Still don't have an account?"
+msgstr "¿Aún no tienes una cuenta?"
+
+#: templates/common/login-page.html:46
+msgid "Sign up here!"
+msgstr "¡Regístrate aquí!"
+
+#: templates/common/password-change-form.html:31
+msgid "Current password"
+msgstr "Contraseña actual"
+
+#: templates/common/password-change-form.html:33
+#: templates/common/password_reset_confirm.html:33
+msgid "New password"
+msgstr "Nueva contraseña"
+
+#: templates/common/password-change-form.html:35
+#: templates/common/password_reset_confirm.html:35
+msgid "Confirm the new password"
+msgstr "Confirma la nueva contraseña"
+
+#: templates/common/password_reset_complete.html:33
+msgid "Password changed!"
+msgstr "¡Contraseña cambiada!"
+
+#: templates/common/password_reset_complete.html:34
+msgid "Your password has been changed successfully!"
+msgstr "Tu contraseña se ha cambiado correctamente."
+
+#: templates/common/password_reset_complete.html:37
+#: templates/common/password_reset_complete.html:39
+msgid "Go to profile"
+msgstr "Ir al perfil"
+
+#: templates/common/password_reset_confirm.html:29
+msgid "Reset your password"
+msgstr "Restablecer tu contraseña"
+
+#: templates/common/password_reset_confirm.html:53
+msgid "Invalid password reset link"
+msgstr "Enlace para restablecer contraseña no válido"
+
+#: templates/common/password_reset_confirm.html:54
+msgid "It looks like your link has expired or is invalid."
+msgstr "Parece que tu enlace ha caducado o no es válido."
+
+#: templates/common/password_reset_confirm.html:56
+msgid "Request a"
+msgstr "Solicita un"
+
+#: templates/common/password_reset_confirm.html:57
+msgid "new password reset link"
+msgstr "nuevo enlace para restablecer contraseña"
+
+#: templates/common/password_reset_confirm.html:58
+msgid "or return to"
+msgstr "o vuelve a"
+
+#: templates/common/password_reset_confirm.html:59
+msgid "home"
+msgstr "inicio"
+
+#: templates/common/password_reset_done.html:33
+msgid "Email sent"
+msgstr "Correo enviado"
+
+#: templates/common/password_reset_done.html:35
+#, python-format
+msgid " An email with instructions was sent to &nbsp; <b>%(reset_email)s</b> "
+msgstr ""
+"Se ha enviado un correo con instrucciones a &nbsp; <b>%(reset_email)s</b>"
+
+#: templates/common/password_reset_done.html:36
+msgid "Please follow them in order to complete the change."
+msgstr "Por favor, sigue las instrucciones para completar el cambio."
+
+#: templates/common/password_reset_done.html:40
+msgid ""
+" <i>Have not received an email? <u>Resend password reset email!</u></i> "
+msgstr ""
+" <i>¿No has recibido el correo? <u>¡Reenviar correo de restablecimiento!</"
+"u></i>"
+
+#: templates/common/password_reset_form.html:26
+msgid "Forgot password"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: templates/common/password_reset_form.html:34
+msgid "Submit"
+msgstr "Enviar"
+
+#: templates/common/password_reset_form.html:39
+msgid ""
+"\n"
+"                    <i>Still don't have an account? <u>Sign up here!</u></"
+"i> \n"
+"                "
+msgstr ""
+"\n"
+"                    <i>¿Aún no tienes una cuenta? <u>¡Regístrate aquí!</u></"
+"i> \n"
+"                "
+
+#: templates/common/successful-account-activation.html:36
+msgid "Account confirmed successfully!"
+msgstr "¡Cuenta confirmada con éxito!"
+
+#: templates/common/successful-account-activation.html:38
+#: voya/common/views.py:69
+msgid "Your account has been confirmed successfully. You can now log in."
+msgstr ""
+"Tu cuenta ha sido confirmada correctamente. Ahora puedes iniciar sesión."
+
+#: templates/common/successful-account-activation.html:43
+msgid "The employee account has been confirmed successfully."
+msgstr "La cuenta del empleado ha sido confirmada correctamente."
+
+#: templates/common/successful-account-activation.html:44
+msgid "can now log in."
+msgstr "puede iniciar sesión ahora."
+
+#: templates/common/successful-account-activation.html:46
+msgid "Close"
+msgstr "Cerrar"
+
+#: templates/common/unsuccessful-account-activation.html:34
+msgid "Unsuccessful account confirmation!"
+msgstr "¡Confirmación de cuenta fallida!"
+
+#: templates/common/unsuccessful-account-activation.html:36
+msgid ""
+"Your account can not be confirmed due to activation link is invalid or has "
+"expired."
+msgstr ""
+"Tu cuenta no puede ser confirmada porque el enlace de activación no es "
+"válido o ha caducado."
+
+#: templates/common/unsuccessful-account-activation.html:37
+msgid ""
+"Please try to create your account again or contact Voya support for "
+"assistance."
+msgstr ""
+"Por favor, intenta crear tu cuenta de nuevo o contacta con el soporte de "
+"Voya para obtener ayuda."
+
+#: templates/common/unsuccessful-account-activation.html:39
+msgid ""
+"This employee account can not be confirmed due to activation link is invalid "
+"or has expired."
+msgstr ""
+"Esta cuenta de empleado no puede ser confirmada porque el enlace de "
+"activación no es válido o ha caducado."
+
+#: templates/common/unsuccessful-account-activation.html:40
+msgid "Please create a new account or contact Voya support for assistance."
+msgstr ""
+"Por favor, crea una nueva cuenta o contacta con el soporte de Voya para "
+"obtener ayuda."
+
+#: templates/common/unsuccessful-account-activation.html:43
+msgid "Create account"
+msgstr "Crear cuenta"
+
+#: templates/companies/companies-dashboard-page.html:29
+msgid "Active Companies"
+msgstr "Empresas activas"
+
+#: templates/companies/companies-dashboard-page.html:33
+msgid "No Active Companies"
+msgstr "No hay empresas activas"
+
+#: templates/companies/companies-dashboard-page.html:59
+msgid "Create new company"
+msgstr "Crear nueva empresa"
+
+#: templates/companies/companies-dashboard-page.html:69
+#: templates/proposals/pdf-proposal-form.html:34
+msgid "Logo"
+msgstr "Logo"
+
+#: templates/companies/companies-dashboard-page.html:70
+#: templates/providers/providers-dashboard.html:70
+msgid "Commercial Name"
+msgstr "Nombre comercial"
+
+#: templates/companies/companies-dashboard-page.html:71
+msgid "Legal Name"
+msgstr "Nombre legal"
+
+#: templates/companies/companies-dashboard-page.html:72
+#: templates/companies/company-edit-page.html:88
+#: templates/companies/create-company-page.html:87
+#: templates/proposals/client-proposal-details-page.html:46
+#: templates/proposals/client-proposal-details-page.html:75
+#: templates/proposals/client-proposal-details-page.html:106
+#: templates/proposals/client-proposal-details-page.html:136
+#: templates/proposals/client-proposal-details-page.html:166
+#: templates/proposals/client-proposal-details-page.html:195
+#: templates/proposals/create-proposal-page.html:262
+#: templates/proposals/create-proposal-page.html:361
+#: templates/proposals/create-proposal-page.html:442
+#: templates/proposals/create-proposal-page.html:540
+#: templates/proposals/create-proposal-page.html:639
+#: templates/proposals/create-proposal-page.html:739
+#: templates/proposals/create-proposal-page.html:838
+#: templates/proposals/create-proposal-page.html:936
+#: templates/proposals/create-proposal-page.html:1034
+#: templates/proposals/create-proposal-page.html:1110
+#: templates/proposals/edit-proposal-page.html:255
+#: templates/proposals/edit-proposal-page.html:433
+#: templates/proposals/edit-proposal-page.html:581
+#: templates/proposals/edit-proposal-page.html:763
+#: templates/proposals/edit-proposal-page.html:942
+#: templates/proposals/edit-proposal-page.html:1121
+#: templates/proposals/edit-proposal-page.html:1302
+#: templates/proposals/edit-proposal-page.html:1483
+#: templates/proposals/edit-proposal-page.html:1668
+#: templates/proposals/edit-proposal-page.html:1806
+#: templates/proposals/proposal-detail-page.html:234
+#: templates/proposals/proposal-detail-page.html:302
+#: templates/proposals/proposal-detail-page.html:347
+#: templates/proposals/proposal-detail-page.html:413
+#: templates/proposals/proposal-detail-page.html:480
+#: templates/proposals/proposal-detail-page.html:547
+#: templates/proposals/proposal-detail-page.html:613
+#: templates/proposals/proposal-detail-page.html:679
+#: templates/proposals/proposal-detail-page.html:745
+#: templates/proposals/proposal-detail-page.html:790
+#: templates/providers/create-provider.html:64
+#: templates/providers/edit-provider.html:64
+#: templates/providers/providers-dashboard.html:72
+#: templates/services/create-edit-partials/hotel-form.html:73
+#: templates/services/create-service.html:68
+#: templates/services/edit-service-page.html:69
+#: templates/services/services-dashboard-page.html:83
+#: templates/services/services-dashboard-page.html:87
+msgid "City"
+msgstr "Ciudad"
+
+#: templates/companies/companies-dashboard-page.html:73
+#: templates/companies/company-edit-page.html:82
+#: templates/companies/create-company-page.html:81
+#: templates/providers/create-provider.html:58
+#: templates/providers/edit-provider.html:58
+#: templates/providers/providers-dashboard.html:73
+#: templates/services/create-edit-partials/hotel-form.html:67
+#: templates/services/create-edit-partials/location-form.html:29
+#: templates/services/create-service.html:62
+#: templates/services/edit-service-page.html:63
+#: templates/services/services-dashboard-page.html:84
+#: templates/services/services-dashboard-page.html:86
+msgid "Country"
+msgstr "País"
+
+#: templates/companies/companies-dashboard-page.html:86
+#: templates/companies/company-details-page.html:32
+msgid "Company Logo"
+msgstr "Logo de la empresa"
+
+#: templates/companies/companies-dashboard-page.html:114
+#: templates/providers/providers-dashboard.html:122
+msgid "View Profile"
+msgstr "Ver perfil"
+
+#: templates/companies/companies-dashboard-page.html:130
+#: templates/employees/employee-profile-details-page.html:58
+#: templates/proposals/proposal-dashboard.html:154
+#: templates/providers/providers-dashboard.html:138
+msgid "Delete button"
+msgstr "Botón eliminar"
+
+#: templates/companies/company-delete-page.html:24
+msgid "Disable Company Account"
+msgstr "Desactivar cuenta de empresa"
+
+#: templates/companies/company-delete-page.html:26
+msgid "Are you sure you want to disable this company account?"
+msgstr "¿Estás seguro de que quieres desactivar esta cuenta de empresa?"
+
+#: templates/companies/company-delete-page.html:31
+msgid "Delete Company"
+msgstr "Eliminar empresa"
+
+#: templates/companies/company-details-page.html:35
+#: templates/providers/provider-details-page.html:62
+msgid "Notes:"
+msgstr "Notas:"
+
+#: templates/companies/company-details-page.html:39
+msgid "No notes added!"
+msgstr "¡No se han añadido notas!"
+
+#: templates/companies/company-details-page.html:47
+msgid "Active Company"
+msgstr "Empresa activa"
+
+#: templates/companies/company-details-page.html:49
+msgid "Active company"
+msgstr "Empresa activa"
+
+#: templates/companies/company-details-page.html:56
+#: templates/companies/company-details-page.html:58
+msgid "Inactive Company"
+msgstr "Empresa inactiva"
+
+#: templates/companies/company-details-page.html:105
+#: templates/proposals/create-proposal-page.html:189
+#: templates/proposals/edit-proposal-page.html:185
+#: templates/proposals/proposal-detail-page.html:182
+msgid "Billing Information:"
+msgstr "Información de facturación:"
+
+#: templates/companies/company-details-page.html:106
+msgid "Legal Name:"
+msgstr "Nombre legal:"
+
+#: templates/companies/company-details-page.html:107
+msgid "Tax ID:"
+msgstr "CIF/NIF:"
+
+#: templates/companies/company-details-page.html:108
+msgid "Billing Email:"
+msgstr "Correo de facturación:"
+
+#: templates/companies/company-details-page.html:109
+msgid "Telephone Number:"
+msgstr "Número de teléfono:"
+
+#: templates/companies/company-details-page.html:113
+msgid "Address Information:"
+msgstr "Dirección:"
+
+#: templates/companies/company-details-page.html:114
+#: templates/providers/provider-details-page.html:44
+#: templates/services/service-details-page.html:77
+#: templates/services/service-details-page.html:136
+#: templates/services/service-details-partials/hotel-details.html:83
+#: templates/services/service-details-partials/location-details.html:38
+msgid "Country:"
+msgstr "País:"
+
+#: templates/companies/company-details-page.html:115
+#: templates/providers/provider-details-page.html:48
+#: templates/services/service-details-page.html:81
+#: templates/services/service-details-partials/hotel-details.html:87
+#: templates/services/service-details-partials/location-details.html:34
+msgid "City:"
+msgstr "Ciudad:"
+
+#: templates/companies/company-details-page.html:116
+#, fuzzy
+#| msgid "State:"
+msgctxt "address"
+msgid "State:"
+msgstr "Provincia:"
+
+#: templates/companies/company-details-page.html:117
+#: templates/services/service-details-partials/hotel-details.html:91
+msgid "Street:"
+msgstr "Calle:"
+
+#: templates/companies/company-details-page.html:118
+msgid "Postal Code:"
+msgstr "Código postal:"
+
+#: templates/companies/company-edit-page.html:25
+msgid "Edit Company"
+msgstr "Editar empresa"
+
+#: templates/companies/company-edit-page.html:37
+#: templates/companies/create-company-page.html:37
+#: templates/providers/create-provider.html:39
+#: templates/providers/edit-provider.html:39
+msgid "Commercial name"
+msgstr "Nombre comercial"
+
+#: templates/companies/company-edit-page.html:43
+#: templates/companies/create-company-page.html:44
+msgid "Legal name"
+msgstr "Nombre legal"
+
+#: templates/companies/company-edit-page.html:49
+#: templates/companies/create-company-page.html:50
+msgid "VAT / Tax ID"
+msgstr "CIF / NIF"
+
+#: templates/companies/company-edit-page.html:55
+#: templates/companies/create-company-page.html:56
+msgid "Billing e-mail"
+msgstr "Correo de facturación"
+
+#: templates/companies/company-edit-page.html:68
+#: templates/providers/create-provider.html:99
+#: templates/providers/edit-provider.html:100
+#: templates/services/create-service.html:117
+#: templates/services/edit-service-page.html:118
+msgid "Notes"
+msgstr "Notas"
+
+#: templates/companies/company-edit-page.html:79
+#: templates/companies/create-company-page.html:78
+msgid "Address Information"
+msgstr "Dirección"
+
+#: templates/companies/company-edit-page.html:94
+#: templates/companies/create-company-page.html:93
+msgid "State"
+msgstr "Provincia"
+
+#: templates/companies/company-edit-page.html:100
+#: templates/companies/create-company-page.html:99
+#: templates/services/create-edit-partials/hotel-form.html:79
+#: voya/global_settings/models.py:45
+msgid "Street"
+msgstr "Calle"
+
+#: templates/companies/company-edit-page.html:106
+#: templates/companies/create-company-page.html:105
+msgid "Postal code"
+msgstr "Código postal"
+
+#: templates/companies/create-company-page.html:68
+msgid "Company logo (max 5MB)"
+msgstr "Logo de la empresa (máx 5MB)"
+
+#: templates/companies/create-company-page.html:114
+msgid "Create Company"
+msgstr "Crear empresa"
+
+#: templates/employees/employee-create-page.html:26
+msgid "New Employee Account"
+msgstr "Nueva cuenta de empleado"
+
+#: templates/employees/employee-create-page.html:73
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+#: templates/employees/employee-create-page.html:93
+msgid "Create New Employee"
+msgstr "Crear nuevo empleado"
+
+#: templates/employees/employee-delete-page.html:31
+msgid "Disable Profile"
+msgstr "Desactivar perfil"
+
+#: templates/employees/employee-edit-page.html:65
+msgid "Language"
+msgstr ""
+
+#: templates/employees/employee-edit-page.html:66
+#, fuzzy
+#| msgid "Select date"
+msgid "Select language"
+msgstr "Seleccionar fecha"
+
+#: templates/proposals/client-proposal-details-page.html:40
+#: templates/proposals/create-proposal-page.html:245
+#: templates/proposals/edit-proposal-page.html:238
+#: templates/proposals/proposal-detail-page.html:228
+#: voya/proposals/choices.py:25 voya/proposals/utils.py:37
+msgid "Accommodations"
+msgstr "Alojamientos"
+
+#: templates/proposals/client-proposal-details-page.html:45
+#: templates/proposals/client-proposal-details-page.html:74
+#: templates/proposals/client-proposal-details-page.html:105
+#: templates/proposals/client-proposal-details-page.html:135
+#: templates/proposals/client-proposal-details-page.html:165
+#: templates/proposals/client-proposal-details-page.html:194
+#: templates/proposals/create-proposal-page.html:261
+#: templates/proposals/create-proposal-page.html:360
+#: templates/proposals/create-proposal-page.html:441
+#: templates/proposals/create-proposal-page.html:539
+#: templates/proposals/create-proposal-page.html:638
+#: templates/proposals/create-proposal-page.html:738
+#: templates/proposals/create-proposal-page.html:837
+#: templates/proposals/create-proposal-page.html:935
+#: templates/proposals/create-proposal-page.html:1033
+#: templates/proposals/create-proposal-page.html:1109
+#: templates/proposals/edit-proposal-page.html:254
+#: templates/proposals/edit-proposal-page.html:432
+#: templates/proposals/edit-proposal-page.html:580
+#: templates/proposals/edit-proposal-page.html:762
+#: templates/proposals/edit-proposal-page.html:941
+#: templates/proposals/edit-proposal-page.html:1120
+#: templates/proposals/edit-proposal-page.html:1301
+#: templates/proposals/edit-proposal-page.html:1482
+#: templates/proposals/edit-proposal-page.html:1667
+#: templates/proposals/edit-proposal-page.html:1805
+#: templates/proposals/history-log.html:53
+#: templates/proposals/proposal-detail-page.html:233
+#: templates/proposals/proposal-detail-page.html:301
+#: templates/proposals/proposal-detail-page.html:346
+#: templates/proposals/proposal-detail-page.html:412
+#: templates/proposals/proposal-detail-page.html:479
+#: templates/proposals/proposal-detail-page.html:546
+#: templates/proposals/proposal-detail-page.html:612
+#: templates/proposals/proposal-detail-page.html:678
+#: templates/proposals/proposal-detail-page.html:744
+#: templates/proposals/proposal-detail-page.html:789
+msgid "Date"
+msgstr "Fecha"
+
+#: templates/proposals/client-proposal-details-page.html:47
+#: templates/proposals/client-proposal-details-page.html:76
+#: templates/proposals/client-proposal-details-page.html:107
+#: templates/proposals/client-proposal-details-page.html:137
+#: templates/proposals/client-proposal-details-page.html:167
+#: templates/proposals/client-proposal-details-page.html:196
+#: templates/proposals/create-proposal-page.html:263
+#: templates/proposals/create-proposal-page.html:362
+#: templates/proposals/create-proposal-page.html:443
+#: templates/proposals/create-proposal-page.html:541
+#: templates/proposals/create-proposal-page.html:640
+#: templates/proposals/create-proposal-page.html:740
+#: templates/proposals/create-proposal-page.html:839
+#: templates/proposals/create-proposal-page.html:937
+#: templates/proposals/create-proposal-page.html:1035
+#: templates/proposals/create-proposal-page.html:1111
+#: templates/proposals/edit-proposal-page.html:256
+#: templates/proposals/edit-proposal-page.html:434
+#: templates/proposals/edit-proposal-page.html:582
+#: templates/proposals/edit-proposal-page.html:764
+#: templates/proposals/edit-proposal-page.html:943
+#: templates/proposals/edit-proposal-page.html:1122
+#: templates/proposals/edit-proposal-page.html:1303
+#: templates/proposals/edit-proposal-page.html:1484
+#: templates/proposals/edit-proposal-page.html:1669
+#: templates/proposals/edit-proposal-page.html:1807
+#: templates/proposals/proposal-detail-page.html:235
+#: templates/proposals/proposal-detail-page.html:303
+#: templates/proposals/proposal-detail-page.html:348
+#: templates/proposals/proposal-detail-page.html:414
+#: templates/proposals/proposal-detail-page.html:481
+#: templates/proposals/proposal-detail-page.html:548
+#: templates/proposals/proposal-detail-page.html:614
+#: templates/proposals/proposal-detail-page.html:680
+#: templates/proposals/proposal-detail-page.html:746
+#: templates/proposals/proposal-detail-page.html:791
+msgid "Service"
+msgstr "Servicio"
+
+#: templates/proposals/client-proposal-details-page.html:48
+#: templates/proposals/client-proposal-details-page.html:77
+#: templates/proposals/client-proposal-details-page.html:108
+#: templates/proposals/client-proposal-details-page.html:138
+#: templates/proposals/client-proposal-details-page.html:168
+#: templates/proposals/client-proposal-details-page.html:197
+#: templates/proposals/create-proposal-page.html:264
+#: templates/proposals/create-proposal-page.html:363
+#: templates/proposals/create-proposal-page.html:444
+#: templates/proposals/create-proposal-page.html:542
+#: templates/proposals/create-proposal-page.html:641
+#: templates/proposals/create-proposal-page.html:741
+#: templates/proposals/create-proposal-page.html:840
+#: templates/proposals/create-proposal-page.html:938
+#: templates/proposals/create-proposal-page.html:1036
+#: templates/proposals/create-proposal-page.html:1112
+#: templates/proposals/edit-proposal-page.html:257
+#: templates/proposals/edit-proposal-page.html:435
+#: templates/proposals/edit-proposal-page.html:583
+#: templates/proposals/edit-proposal-page.html:765
+#: templates/proposals/edit-proposal-page.html:944
+#: templates/proposals/edit-proposal-page.html:1123
+#: templates/proposals/edit-proposal-page.html:1304
+#: templates/proposals/edit-proposal-page.html:1485
+#: templates/proposals/edit-proposal-page.html:1670
+#: templates/proposals/edit-proposal-page.html:1808
+#: templates/proposals/proposal-detail-page.html:236
+#: templates/proposals/proposal-detail-page.html:304
+#: templates/proposals/proposal-detail-page.html:349
+#: templates/proposals/proposal-detail-page.html:415
+#: templates/proposals/proposal-detail-page.html:482
+#: templates/proposals/proposal-detail-page.html:549
+#: templates/proposals/proposal-detail-page.html:615
+#: templates/proposals/proposal-detail-page.html:681
+#: templates/proposals/proposal-detail-page.html:747
+#: templates/proposals/proposal-detail-page.html:792
+msgid "Units"
+msgstr "Uds."
+
+#: templates/proposals/client-proposal-details-page.html:100
+#: templates/proposals/create-proposal-page.html:622
+#: templates/proposals/edit-proposal-page.html:925
+#: templates/proposals/proposal-detail-page.html:474 voya/proposals/utils.py:41
+msgid "Extra Activities"
+msgstr "Actividades extra"
+
+#: templates/proposals/client-proposal-details-page.html:160
+#: templates/proposals/create-proposal-page.html:821
+#: templates/proposals/edit-proposal-page.html:1285
+#: templates/proposals/proposal-detail-page.html:607
+#: voya/proposals/choices.py:30 voya/proposals/utils.py:43
+msgid "Local Guides"
+msgstr "Guías locales"
+
+#: templates/proposals/client-proposal-details-page.html:189
+#: voya/proposals/utils.py:47
+msgid "Other Services"
+msgstr "Otros servicios"
+
+#: templates/proposals/client-proposal-details-page.html:223
+#: templates/proposals/create-proposal-page.html:1176
+#: templates/proposals/edit-proposal-page.html:1933
+msgid "Proposal Budget"
+msgstr "Budget"
+
+#: templates/proposals/client-proposal-details-page.html:244
+msgid "Price per person:"
+msgstr "Precio por persona:"
+
+#: templates/proposals/client-proposal-details-page.html:250
+#: templates/proposals/create-proposal-page.html:1270
+#: templates/proposals/edit-proposal-page.html:2060
+#: templates/proposals/proposal-detail-page.html:979
+msgid "Final Price:"
+msgstr "Precio final:"
+
+#: templates/proposals/create-proposal-page.html:45
+#: templates/proposals/edit-proposal-page.html:44
+#: templates/proposals/proposal-detail-page.html:43
+#: templates/requests/request-details-page.html:36
+msgid "Group Information"
+msgstr "Información del grupo"
+
+#: templates/proposals/create-proposal-page.html:49
+#: templates/proposals/edit-proposal-page.html:48
+#: templates/proposals/proposal-detail-page.html:47
+#: templates/requests/request-details-page.html:40
+msgid "Nationality:"
+msgstr "Nacionalidad:"
+
+#: templates/proposals/create-proposal-page.html:53
+#: templates/proposals/edit-proposal-page.html:52
+#: templates/proposals/proposal-detail-page.html:51
+#: templates/requests/request-details-page.html:44
+msgid "Age range:"
+msgstr "Rango de edad:"
+
+#: templates/proposals/create-proposal-page.html:55
+#: templates/proposals/edit-proposal-page.html:53
+#: templates/proposals/proposal-detail-page.html:52
+#: templates/requests/request-details-page.html:45
+msgid "years old"
+msgstr "años"
+
+#: templates/proposals/create-proposal-page.html:59
+#: templates/proposals/edit-proposal-page.html:56
+#: templates/proposals/proposal-detail-page.html:55
+#: templates/requests/request-details-page.html:48
+msgid "Min participants:"
+msgstr "Mínimo de participantes:"
+
+#: templates/proposals/create-proposal-page.html:61
+#: templates/proposals/create-proposal-page.html:67
+#: templates/proposals/edit-proposal-page.html:57
+#: templates/proposals/edit-proposal-page.html:61
+#: templates/proposals/proposal-detail-page.html:56
+#: templates/proposals/proposal-detail-page.html:60
+msgid "people"
+msgstr "personas"
+
+#: templates/proposals/create-proposal-page.html:65
+#: templates/proposals/edit-proposal-page.html:60
+#: templates/proposals/proposal-detail-page.html:59
+#: templates/requests/request-details-page.html:58
+msgid "Max participants:"
+msgstr "Máximo de participantes:"
+
+#: templates/proposals/create-proposal-page.html:70
+#: templates/proposals/edit-proposal-page.html:64
+#: templates/proposals/proposal-detail-page.html:63
+#: templates/requests/request-details-page.html:68
+msgid "Group type:"
+msgstr "Tipo de grupo:"
+
+#: templates/proposals/create-proposal-page.html:75
+#: templates/proposals/edit-proposal-page.html:69
+#: templates/proposals/proposal-detail-page.html:68
+#: templates/requests/request-details-page.html:73
+msgid "Type of trip:"
+msgstr "Tipo de viaje:"
+
+#: templates/proposals/create-proposal-page.html:81
+#: templates/proposals/edit-proposal-page.html:75
+#: templates/proposals/proposal-detail-page.html:74
+#: templates/requests/request-details-page.html:79
+msgid "Additional observations:"
+msgstr "Observaciones adicionales:"
+
+#: templates/proposals/create-proposal-page.html:93
+#: templates/proposals/proposal-detail-page.html:86
+msgid "Itinerary Information"
+msgstr "Información del itinerario"
+
+#: templates/proposals/create-proposal-page.html:97
+#: templates/proposals/edit-proposal-page.html:91
+#: templates/proposals/proposal-detail-page.html:90
+#: templates/requests/request-details-page.html:95
+msgid "Start date:"
+msgstr "Fecha de inicio:"
+
+#: templates/proposals/create-proposal-page.html:101
+#: templates/proposals/edit-proposal-page.html:95
+#: templates/proposals/proposal-detail-page.html:94
+#: templates/requests/request-details-page.html:99
+msgid "End date:"
+msgstr "Fecha de fin:"
+
+#: templates/proposals/create-proposal-page.html:105
+#: templates/proposals/edit-proposal-page.html:99
+#: templates/proposals/proposal-detail-page.html:98
+#: templates/requests/request-details-page.html:103
+msgid "Trip duration:"
+msgstr "Duración del viaje:"
+
+#: templates/proposals/create-proposal-page.html:106
+#: templates/proposals/edit-proposal-page.html:100
+#: templates/proposals/proposal-detail-page.html:99
+#: templates/requests/request-details-page.html:104
+msgid "days"
+msgstr "días"
+
+#: templates/proposals/create-proposal-page.html:116
+#: templates/proposals/edit-proposal-page.html:111
+#: templates/proposals/proposal-detail-page.html:109
+msgid "Destination Information:"
+msgstr "Información del destino:"
+
+#: templates/proposals/create-proposal-page.html:121
+#: templates/proposals/edit-proposal-page.html:116
+#: templates/proposals/proposal-detail-page.html:114
+#: templates/requests/request-details-page.html:119
+msgid "Origin country:"
+msgstr "País de origen:"
+
+#: templates/proposals/create-proposal-page.html:125
+#: templates/proposals/edit-proposal-page.html:120
+#: templates/proposals/proposal-detail-page.html:118
+#: templates/requests/request-details-page.html:123
+msgid "Destinations:"
+msgstr "Destinos:"
+
+#: templates/proposals/create-proposal-page.html:130
+#: templates/proposals/edit-proposal-page.html:125
+#: templates/proposals/proposal-detail-page.html:123
+#: templates/requests/request-details-page.html:128
+msgid "Additional destinations info:"
+msgstr "Información adicional sobre destinos:"
+
+#: templates/proposals/create-proposal-page.html:142
+#: templates/proposals/edit-proposal-page.html:137
+#: templates/proposals/proposal-detail-page.html:135
+#: templates/requests/request-details-page.html:140
+msgid "Trip Information:"
+msgstr "Información del viaje:"
+
+#: templates/proposals/create-proposal-page.html:147
+#: templates/proposals/edit-proposal-page.html:142
+#: templates/proposals/proposal-detail-page.html:140
+#: templates/requests/request-details-page.html:145
+msgid "Transportation:"
+msgstr "Transporte:"
+
+#: templates/proposals/create-proposal-page.html:153
+#: templates/proposals/edit-proposal-page.html:148
+#: templates/proposals/proposal-detail-page.html:146
+#: templates/requests/request-details-page.html:151
+msgid "Transportation details:"
+msgstr "Detalles del transporte:"
+
+#: templates/proposals/create-proposal-page.html:158
+#: templates/proposals/edit-proposal-page.html:153
+#: templates/proposals/proposal-detail-page.html:151
+#: templates/requests/request-details-page.html:156
+msgid "Accommodation:"
+msgstr "Alojamiento:"
+
+#: templates/proposals/create-proposal-page.html:163
+#: templates/proposals/edit-proposal-page.html:158
+#: templates/proposals/proposal-detail-page.html:156
+#: templates/requests/request-details-page.html:161
+msgid "Accommodation details:"
+msgstr "Detalles del alojamiento:"
+
+#: templates/proposals/create-proposal-page.html:168
+#: templates/proposals/edit-proposal-page.html:163
+#: templates/proposals/proposal-detail-page.html:161
+#: templates/requests/request-details-page.html:166
+msgid "Meals:"
+msgstr "Comidas:"
+
+#: templates/proposals/create-proposal-page.html:173
+#: templates/proposals/edit-proposal-page.html:168
+#: templates/proposals/proposal-detail-page.html:166
+#: templates/requests/request-details-page.html:171
+msgid "Meals details:"
+msgstr "Detalles de las comidas:"
+
+#: templates/proposals/create-proposal-page.html:178
+#: templates/proposals/edit-proposal-page.html:173
+#: templates/proposals/proposal-detail-page.html:171
+#: templates/requests/request-details-page.html:176
+msgid "Staff:"
+msgstr "Personal:"
+
+#: templates/proposals/create-proposal-page.html:193
+#: templates/proposals/edit-proposal-page.html:189
+#: templates/proposals/proposal-detail-page.html:186
+#: templates/requests/request-details-page.html:191
+msgid "Budget:"
+msgstr "Presupuesto:"
+
+#: templates/proposals/create-proposal-page.html:199
+#: templates/proposals/edit-proposal-page.html:195
+#: templates/proposals/proposal-detail-page.html:191
+#: templates/requests/request-details-page.html:195
+msgid "Currency:"
+msgstr "Moneda:"
+
+#: templates/proposals/create-proposal-page.html:211
+#: templates/proposals/edit-proposal-page.html:210
+#: templates/proposals/proposal-detail-page.html:204
+msgid "Internal Comments"
+msgstr "Comentarios internos"
+
+#: templates/proposals/create-proposal-page.html:217
+#: templates/proposals/edit-proposal-page.html:217
+#: templates/proposals/proposal-detail-page.html:209
+msgid "Add internal notes here"
+msgstr "Añadir notas internas aquí"
+
+#: templates/proposals/create-proposal-page.html:252
+#: templates/proposals/create-proposal-page.html:253
+#: templates/proposals/create-proposal-page.html:351
+#: templates/proposals/create-proposal-page.html:352
+#: templates/proposals/create-proposal-page.html:432
+#: templates/proposals/create-proposal-page.html:433
+#: templates/proposals/create-proposal-page.html:530
+#: templates/proposals/create-proposal-page.html:531
+#: templates/proposals/create-proposal-page.html:629
+#: templates/proposals/create-proposal-page.html:630
+#: templates/proposals/create-proposal-page.html:729
+#: templates/proposals/create-proposal-page.html:730
+#: templates/proposals/create-proposal-page.html:828
+#: templates/proposals/create-proposal-page.html:829
+#: templates/proposals/create-proposal-page.html:926
+#: templates/proposals/create-proposal-page.html:927
+#: templates/proposals/create-proposal-page.html:1024
+#: templates/proposals/create-proposal-page.html:1025
+#: templates/proposals/create-proposal-page.html:1100
+#: templates/proposals/create-proposal-page.html:1101
+#: templates/proposals/edit-proposal-page.html:245
+#: templates/proposals/edit-proposal-page.html:246
+#: templates/proposals/edit-proposal-page.html:423
+#: templates/proposals/edit-proposal-page.html:424
+#: templates/proposals/edit-proposal-page.html:572
+#: templates/proposals/edit-proposal-page.html:573
+#: templates/proposals/edit-proposal-page.html:753
+#: templates/proposals/edit-proposal-page.html:754
+#: templates/proposals/edit-proposal-page.html:932
+#: templates/proposals/edit-proposal-page.html:933
+#: templates/proposals/edit-proposal-page.html:1112
+#: templates/proposals/edit-proposal-page.html:1113
+#: templates/proposals/edit-proposal-page.html:1292
+#: templates/proposals/edit-proposal-page.html:1293
+#: templates/proposals/edit-proposal-page.html:1473
+#: templates/proposals/edit-proposal-page.html:1474
+#: templates/proposals/edit-proposal-page.html:1658
+#: templates/proposals/edit-proposal-page.html:1659
+#: templates/proposals/edit-proposal-page.html:1796
+#: templates/proposals/edit-proposal-page.html:1797
+msgid "Add row"
+msgstr "Añadir fila"
+
+#: templates/proposals/create-proposal-page.html:265
+#: templates/proposals/create-proposal-page.html:364
+#: templates/proposals/create-proposal-page.html:445
+#: templates/proposals/create-proposal-page.html:543
+#: templates/proposals/create-proposal-page.html:642
+#: templates/proposals/create-proposal-page.html:742
+#: templates/proposals/create-proposal-page.html:841
+#: templates/proposals/create-proposal-page.html:939
+#: templates/proposals/create-proposal-page.html:1037
+#: templates/proposals/create-proposal-page.html:1113
+#: templates/proposals/edit-proposal-page.html:258
+#: templates/proposals/edit-proposal-page.html:436
+#: templates/proposals/edit-proposal-page.html:584
+#: templates/proposals/edit-proposal-page.html:766
+#: templates/proposals/edit-proposal-page.html:945
+#: templates/proposals/edit-proposal-page.html:1124
+#: templates/proposals/edit-proposal-page.html:1305
+#: templates/proposals/edit-proposal-page.html:1486
+#: templates/proposals/edit-proposal-page.html:1671
+#: templates/proposals/edit-proposal-page.html:1809
+#: templates/proposals/proposal-detail-page.html:237
+#: templates/proposals/proposal-detail-page.html:305
+#: templates/proposals/proposal-detail-page.html:350
+#: templates/proposals/proposal-detail-page.html:416
+#: templates/proposals/proposal-detail-page.html:483
+#: templates/proposals/proposal-detail-page.html:550
+#: templates/proposals/proposal-detail-page.html:616
+#: templates/proposals/proposal-detail-page.html:682
+#: templates/proposals/proposal-detail-page.html:748
+#: templates/proposals/proposal-detail-page.html:793
+#: templates/services/create-edit-partials/activity-form.html:32
+#: templates/services/create-edit-partials/guides-form.html:32
+#: templates/services/create-edit-partials/hotel-form.html:42
+#: templates/services/create-edit-partials/staff-form.html:38
+#: templates/services/services-dashboard-page.html:90
+msgid "Price"
+msgstr "Precio"
+
+#: templates/proposals/create-proposal-page.html:280
+#: templates/proposals/edit-proposal-page.html:353
+#: templates/proposals/edit-proposal-page.html:682
+#: templates/proposals/edit-proposal-page.html:862
+#: templates/proposals/edit-proposal-page.html:1042
+#: templates/proposals/edit-proposal-page.html:1221
+#: templates/proposals/edit-proposal-page.html:1403
+#: templates/proposals/edit-proposal-page.html:1586
+msgid "Select a Service"
+msgstr "Selecciona un servicio"
+
+#: templates/proposals/create-proposal-page.html:299
+#: templates/proposals/create-proposal-page.html:479
+#: templates/proposals/create-proposal-page.html:578
+#: templates/proposals/create-proposal-page.html:677
+#: templates/proposals/create-proposal-page.html:777
+#: templates/proposals/create-proposal-page.html:875
+#: templates/proposals/create-proposal-page.html:973
+#: templates/proposals/edit-proposal-page.html:314
+#: templates/proposals/edit-proposal-page.html:371
+#: templates/proposals/edit-proposal-page.html:640
+#: templates/proposals/edit-proposal-page.html:701
+#: templates/proposals/edit-proposal-page.html:822
+#: templates/proposals/edit-proposal-page.html:881
+#: templates/proposals/edit-proposal-page.html:1001
+#: templates/proposals/edit-proposal-page.html:1060
+#: templates/proposals/edit-proposal-page.html:1181
+#: templates/proposals/edit-proposal-page.html:1240
+#: templates/proposals/edit-proposal-page.html:1362
+#: templates/proposals/edit-proposal-page.html:1421
+#: templates/proposals/edit-proposal-page.html:1545
+#: templates/proposals/edit-proposal-page.html:1605
+#: templates/proposals/proposal-detail-page.html:271
+#: templates/proposals/proposal-detail-page.html:382
+#: templates/proposals/proposal-detail-page.html:448
+#: templates/proposals/proposal-detail-page.html:515
+#: templates/proposals/proposal-detail-page.html:582
+#: templates/proposals/proposal-detail-page.html:648
+#: templates/proposals/proposal-detail-page.html:714
+msgid "toggle description"
+msgstr "mostrar descripción"
+
+#: templates/proposals/create-proposal-page.html:300
+#: templates/proposals/create-proposal-page.html:480
+#: templates/proposals/create-proposal-page.html:579
+#: templates/proposals/create-proposal-page.html:678
+#: templates/proposals/create-proposal-page.html:778
+#: templates/proposals/create-proposal-page.html:876
+#: templates/proposals/create-proposal-page.html:974
+#: templates/proposals/edit-proposal-page.html:315
+#: templates/proposals/edit-proposal-page.html:372
+#: templates/proposals/edit-proposal-page.html:641
+#: templates/proposals/edit-proposal-page.html:702
+#: templates/proposals/edit-proposal-page.html:823
+#: templates/proposals/edit-proposal-page.html:882
+#: templates/proposals/edit-proposal-page.html:1002
+#: templates/proposals/edit-proposal-page.html:1061
+#: templates/proposals/edit-proposal-page.html:1182
+#: templates/proposals/edit-proposal-page.html:1241
+#: templates/proposals/edit-proposal-page.html:1363
+#: templates/proposals/edit-proposal-page.html:1422
+#: templates/proposals/edit-proposal-page.html:1546
+#: templates/proposals/edit-proposal-page.html:1606
+#: templates/proposals/proposal-detail-page.html:272
+#: templates/proposals/proposal-detail-page.html:383
+#: templates/proposals/proposal-detail-page.html:449
+#: templates/proposals/proposal-detail-page.html:516
+#: templates/proposals/proposal-detail-page.html:583
+#: templates/proposals/proposal-detail-page.html:649
+#: templates/proposals/proposal-detail-page.html:715
+msgid "Add description"
+msgstr "Añadir descripción"
+
+#: templates/proposals/create-proposal-page.html:311
+#: templates/proposals/create-proposal-page.html:400
+#: templates/proposals/create-proposal-page.html:491
+#: templates/proposals/create-proposal-page.html:590
+#: templates/proposals/create-proposal-page.html:689
+#: templates/proposals/create-proposal-page.html:789
+#: templates/proposals/create-proposal-page.html:887
+#: templates/proposals/create-proposal-page.html:985
+#: templates/proposals/create-proposal-page.html:1068
+#: templates/proposals/create-proposal-page.html:1145
+#: templates/proposals/edit-proposal-page.html:326
+#: templates/proposals/edit-proposal-page.html:383
+#: templates/proposals/edit-proposal-page.html:497
+#: templates/proposals/edit-proposal-page.html:539
+#: templates/proposals/edit-proposal-page.html:652
+#: templates/proposals/edit-proposal-page.html:713
+#: templates/proposals/edit-proposal-page.html:834
+#: templates/proposals/edit-proposal-page.html:893
+#: templates/proposals/edit-proposal-page.html:1013
+#: templates/proposals/edit-proposal-page.html:1072
+#: templates/proposals/edit-proposal-page.html:1193
+#: templates/proposals/edit-proposal-page.html:1252
+#: templates/proposals/edit-proposal-page.html:1374
+#: templates/proposals/edit-proposal-page.html:1433
+#: templates/proposals/edit-proposal-page.html:1557
+#: templates/proposals/edit-proposal-page.html:1617
+#: templates/proposals/edit-proposal-page.html:1726
+#: templates/proposals/edit-proposal-page.html:1762
+#: templates/proposals/edit-proposal-page.html:1864
+#: templates/proposals/edit-proposal-page.html:1901
+msgid "remove row button"
+msgstr "botón eliminar fila"
+
+#: templates/proposals/create-proposal-page.html:312
+#: templates/proposals/create-proposal-page.html:401
+#: templates/proposals/create-proposal-page.html:492
+#: templates/proposals/create-proposal-page.html:591
+#: templates/proposals/create-proposal-page.html:690
+#: templates/proposals/create-proposal-page.html:790
+#: templates/proposals/create-proposal-page.html:888
+#: templates/proposals/create-proposal-page.html:986
+#: templates/proposals/create-proposal-page.html:1069
+#: templates/proposals/create-proposal-page.html:1146
+#: templates/proposals/edit-proposal-page.html:327
+#: templates/proposals/edit-proposal-page.html:384
+#: templates/proposals/edit-proposal-page.html:498
+#: templates/proposals/edit-proposal-page.html:540
+#: templates/proposals/edit-proposal-page.html:653
+#: templates/proposals/edit-proposal-page.html:714
+#: templates/proposals/edit-proposal-page.html:835
+#: templates/proposals/edit-proposal-page.html:894
+#: templates/proposals/edit-proposal-page.html:1014
+#: templates/proposals/edit-proposal-page.html:1073
+#: templates/proposals/edit-proposal-page.html:1194
+#: templates/proposals/edit-proposal-page.html:1253
+#: templates/proposals/edit-proposal-page.html:1375
+#: templates/proposals/edit-proposal-page.html:1434
+#: templates/proposals/edit-proposal-page.html:1558
+#: templates/proposals/edit-proposal-page.html:1618
+#: templates/proposals/edit-proposal-page.html:1727
+#: templates/proposals/edit-proposal-page.html:1763
+#: templates/proposals/edit-proposal-page.html:1865
+#: templates/proposals/edit-proposal-page.html:1902
+msgid "Remove row"
+msgstr "Eliminar fila"
+
+#: templates/proposals/create-proposal-page.html:323
+#: templates/proposals/create-proposal-page.html:502
+#: templates/proposals/create-proposal-page.html:601
+#: templates/proposals/create-proposal-page.html:701
+#: templates/proposals/create-proposal-page.html:800
+#: templates/proposals/create-proposal-page.html:898
+#: templates/proposals/create-proposal-page.html:996
+#: templates/proposals/edit-proposal-page.html:338
+#: templates/proposals/edit-proposal-page.html:664
+#: templates/proposals/edit-proposal-page.html:724
+#: templates/proposals/edit-proposal-page.html:846
+#: templates/proposals/edit-proposal-page.html:903
+#: templates/proposals/edit-proposal-page.html:1025
+#: templates/proposals/edit-proposal-page.html:1083
+#: templates/proposals/edit-proposal-page.html:1205
+#: templates/proposals/edit-proposal-page.html:1263
+#: templates/proposals/edit-proposal-page.html:1386
+#: templates/proposals/edit-proposal-page.html:1444
+#: templates/proposals/edit-proposal-page.html:1569
+#: templates/proposals/edit-proposal-page.html:1628
+msgid "Add additional details here..."
+msgstr "Añadir detalles adicionales aquí..."
+
+#: templates/proposals/create-proposal-page.html:334
+#: templates/proposals/create-proposal-page.html:415
+#: templates/proposals/create-proposal-page.html:513
+#: templates/proposals/create-proposal-page.html:612
+#: templates/proposals/create-proposal-page.html:712
+#: templates/proposals/create-proposal-page.html:811
+#: templates/proposals/create-proposal-page.html:909
+#: templates/proposals/create-proposal-page.html:1007
+#: templates/proposals/create-proposal-page.html:1083
+#: templates/proposals/create-proposal-page.html:1160
+#: templates/proposals/edit-proposal-page.html:406
+#: templates/proposals/edit-proposal-page.html:555
+#: templates/proposals/edit-proposal-page.html:736
+#: templates/proposals/edit-proposal-page.html:915
+#: templates/proposals/edit-proposal-page.html:1095
+#: templates/proposals/edit-proposal-page.html:1275
+#: templates/proposals/edit-proposal-page.html:1456
+#: templates/proposals/edit-proposal-page.html:1640
+#: templates/proposals/edit-proposal-page.html:1778
+#: templates/proposals/edit-proposal-page.html:1917
+msgid "Total:"
+msgstr "Total:"
+
+#: templates/proposals/create-proposal-page.html:344
+#: templates/proposals/edit-proposal-page.html:416
+#: templates/proposals/proposal-detail-page.html:296
+#: templates/requests/create-new-request-page.html:150
+#: templates/requests/edit-request-page.html:152 voya/proposals/choices.py:32
+#: voya/proposals/utils.py:45
+msgid "Meals"
+msgstr "Comidas"
+
+#: templates/proposals/create-proposal-page.html:379
+#: templates/proposals/edit-proposal-page.html:518
+#: templates/services/create-service.html:108
+#: templates/services/edit-service-page.html:109 voya/proposals/choices.py:38
+#: voya/proposals/choices.py:50 voya/providers/choices.py:25
+#: voya/providers/forms.py:33 voya/providers/forms.py:36
+#: voya/requests/forms.py:36 voya/requests/forms.py:53
+#: voya/requests/forms.py:58 voya/requests/forms.py:63
+#: voya/requests/forms.py:68 voya/requests/forms.py:73
+#: voya/services/views.py:158 voya/services/views.py:239
+#: voya/services/views.py:241
+msgid "Select an option"
+msgstr "Selecciona una opción"
+
+#: templates/proposals/create-proposal-page.html:460
+#: templates/proposals/create-proposal-page.html:559
+#: templates/proposals/create-proposal-page.html:658
+#: templates/proposals/create-proposal-page.html:758
+#: templates/proposals/create-proposal-page.html:856
+#: templates/proposals/create-proposal-page.html:954
+#: voya/providers/models.py:28
+msgid "Select a service"
+msgstr "Selecciona un servicio"
+
+#: templates/proposals/create-proposal-page.html:919
+#: templates/proposals/edit-proposal-page.html:1466
+#: templates/proposals/proposal-detail-page.html:673
+#: voya/proposals/choices.py:31 voya/proposals/utils.py:44
+msgid "Tour Leader"
+msgstr "Tour Leader"
+
+#: templates/proposals/create-proposal-page.html:1017
+#: templates/proposals/edit-proposal-page.html:1651
+#: templates/proposals/proposal-detail-page.html:739
+#: voya/proposals/choices.py:33 voya/proposals/utils.py:46
+#: voya/proposals/views.py:392
+msgid "Other Services - Variable"
+msgstr "Otros servicios - Variables"
+
+#: templates/proposals/create-proposal-page.html:1051
+#: templates/proposals/create-proposal-page.html:1128
+#: templates/proposals/edit-proposal-page.html:1702
+#: templates/proposals/edit-proposal-page.html:1747
+#: templates/proposals/edit-proposal-page.html:1840
+#: templates/proposals/edit-proposal-page.html:1884
+msgid "Add service"
+msgstr "Añadir servicio"
+
+#: templates/proposals/create-proposal-page.html:1093
+#: templates/proposals/edit-proposal-page.html:1789
+#: templates/proposals/proposal-detail-page.html:784
+#: voya/proposals/choices.py:34 voya/proposals/utils.py:48
+msgid "Other Services - Fixed"
+msgstr "Otros servicios - Fijos"
+
+#: templates/proposals/create-proposal-page.html:1189
+#: templates/proposals/edit-proposal-page.html:1946
+#, fuzzy
+#| msgid "State:"
+msgctxt "proposal_status"
+msgid "State:"
+msgstr "Status:"
+
+#: templates/proposals/create-proposal-page.html:1197
+#: templates/proposals/create-proposal-page.html:1198
+#: templates/proposals/edit-proposal-page.html:1974
+#: templates/proposals/edit-proposal-page.html:1975
+msgid "Save proposal"
+msgstr "Guardar propuesta"
+
+#: templates/proposals/create-proposal-page.html:1217
+#: templates/proposals/edit-proposal-page.html:1994
+#: templates/proposals/proposal-detail-page.html:922
+msgid "Variable cost:"
+msgstr "Coste variable:"
+
+#: templates/proposals/create-proposal-page.html:1222
+#: templates/proposals/edit-proposal-page.html:1999
+#: templates/proposals/proposal-detail-page.html:928
+msgid "Fixed cost:"
+msgstr "Coste fijo:"
+
+#: templates/proposals/create-proposal-page.html:1229
+#: templates/proposals/edit-proposal-page.html:2006
+#: templates/proposals/proposal-detail-page.html:935
+msgid "FOC:"
+msgstr ""
+
+#: templates/proposals/create-proposal-page.html:1238
+#: templates/proposals/proposal-detail-page.html:942
+msgid "Total per pax:"
+msgstr "Total por persona:"
+
+#: templates/proposals/create-proposal-page.html:1244
+#: templates/proposals/proposal-detail-page.html:949
+msgid "Total cost:"
+msgstr "Coste total:"
+
+#: templates/proposals/create-proposal-page.html:1250
+#: templates/proposals/edit-proposal-page.html:2028
+#: templates/proposals/proposal-detail-page.html:956
+msgid "Service fee:"
+msgstr "Gastos de gestión"
+
+#: templates/proposals/create-proposal-page.html:1255
+#: templates/proposals/edit-proposal-page.html:2039
+#: templates/proposals/proposal-detail-page.html:962
+msgid "Markup:"
+msgstr "Markup:"
+
+#: templates/proposals/create-proposal-page.html:1265
+#: templates/proposals/proposal-detail-page.html:973
+msgid "Price per pax:"
+msgstr "Precio por pax:"
+
+#: templates/proposals/edit-proposal-page.html:87
+msgid "Dates Information"
+msgstr "Fechas"
+
+#: templates/proposals/edit-proposal-page.html:231
+msgid "Add a title"
+msgstr "Añadir un título"
+
+#: templates/proposals/edit-proposal-page.html:269
+#: templates/proposals/edit-proposal-page.html:448
+#: templates/proposals/edit-proposal-page.html:595
+#: templates/proposals/edit-proposal-page.html:777
+#: templates/proposals/edit-proposal-page.html:957
+#: templates/proposals/edit-proposal-page.html:1136
+#: templates/proposals/edit-proposal-page.html:1317
+#: templates/proposals/edit-proposal-page.html:1499
+#: templates/proposals/edit-proposal-page.html:1683
+#: templates/proposals/edit-proposal-page.html:1821
+msgid "Select date"
+msgstr "Seleccionar fecha"
+
+#: templates/proposals/edit-proposal-page.html:1965
+#: templates/proposals/proposal-dashboard.html:164
+#: templates/proposals/proposal-detail-page.html:898
+msgid "Download button"
+msgstr "Botón de descarga"
+
+#: templates/proposals/edit-proposal-page.html:1966
+#: templates/proposals/proposal-dashboard.html:165
+#: templates/proposals/proposal-detail-page.html:899
+msgid "Download"
+msgstr "Descargar"
+
+#: templates/proposals/edit-proposal-page.html:2016
+msgid "Total per PAX:"
+msgstr "Total por pax:"
+
+#: templates/proposals/edit-proposal-page.html:2022
+msgid "Total Cost:"
+msgstr "Coste total:"
+
+#: templates/proposals/edit-proposal-page.html:2055
+msgid "Price per PAX:"
+msgstr "Precio por pax"
+
+#: templates/proposals/history-log.html:31
+msgid "Change history"
+msgstr "Historial de cambios"
+
+#: templates/proposals/history-log.html:54
+msgid "Object"
+msgstr "Objeto"
+
+#: templates/proposals/history-log.html:55
+msgid "Change"
+msgstr "Cambio"
+
+#: templates/proposals/history-log.html:56
+msgid "User"
+msgstr "Usuario"
+
+#: templates/proposals/history-log.html:84
+msgid "Created:"
+msgstr "Creado:"
+
+#: templates/proposals/history-log.html:101
+msgid "Deleted:"
+msgstr "Eliminado:"
+
+#: templates/proposals/history-log.html:104
+msgid "Updated"
+msgstr "Actualizado"
+
+#: templates/proposals/history-log.html:119
+msgid "No changes found"
+msgstr "No se encontraron cambios"
+
+#: templates/proposals/pdf-proposal-form.html:27
+msgid "Generate PDF Proposal"
+msgstr "Generar propuesta en PDF"
+
+#: templates/proposals/pdf-proposal-form.html:40
+msgid "Markup"
+msgstr "Markup"
+
+#: templates/proposals/pdf-proposal-form.html:46
+msgid "Generate PDF"
+msgstr "Generar PDF"
+
+#: templates/proposals/proposal-dashboard.html:32
+msgid "There are no proposals yet!"
+msgstr "¡Aún no hay propuestas!"
+
+#: templates/proposals/proposal-dashboard.html:35
+msgid "Proposals Dashboard"
+msgstr "Dashboard de propuestas"
+
+#: templates/proposals/proposal-dashboard.html:60
+msgid "Created On"
+msgstr "Creado el"
+
+#: templates/proposals/proposal-dashboard.html:62
+msgid "Request"
+msgstr "Solicitud"
+
+#: templates/proposals/proposal-dashboard.html:82
+#: templates/proposals/proposal-dashboard.html:83
+#: templates/proposals/proposal-detail-page.html:854
+msgid "WIP Proposal"
+msgstr "Propuesta en progreso"
+
+#: templates/proposals/proposal-dashboard.html:90
+#: templates/proposals/proposal-detail-page.html:862
+msgid "Shared Proposal"
+msgstr "Propuesta compartida"
+
+#: templates/proposals/proposal-dashboard.html:136
+msgid "View button"
+msgstr "Botón de ver"
+
+#: templates/proposals/proposal-dashboard.html:137
+msgid "View Proposal"
+msgstr "Ver propuesta"
+
+#: templates/proposals/proposal-dashboard.html:146
+#: templates/proposals/proposal-detail-page.html:889
+msgid "Edit Proposal"
+msgstr "Editar propuesta"
+
+#: templates/proposals/proposal-dashboard.html:155
+msgid "Disable Proposal"
+msgstr "Desactivar propuesta"
+
+#: templates/proposals/proposal-detail-page.html:848
+msgid "Status: Ready for review"
+msgstr "Estado: Lista para revisión"
+
+#: templates/proposals/proposal-detail-page.html:855
+msgid "Status: Not finished"
+msgstr "Estado: Incompleta"
+
+#: templates/proposals/proposal-detail-page.html:863
+msgid "Status: Shared with client"
+msgstr "Estado: Compartida con el cliente"
+
+#: templates/providers/create-provider.html:27
+#: templates/providers/providers-dashboard.html:60
+msgid "Create new provider"
+msgstr "Crear nuevo proveedor"
+
+#: templates/providers/create-provider.html:36
+#: templates/providers/edit-provider.html:36
+#: templates/services/service-details-partials/local-guide-details.html:23
+#: templates/services/service-details-partials/staff-details.html:23
+#: voya/providers/admin.py:35
+msgid "General Information"
+msgstr "Información general"
+
+#: templates/providers/create-provider.html:45
+#: templates/providers/edit-provider.html:45
+msgid "Services provided"
+msgstr "Servicios ofrecidos"
+
+#: templates/providers/create-provider.html:74
+#: templates/providers/edit-provider.html:74
+#: templates/providers/provider-details-page.html:74
+#: templates/services/create-service.html:79
+#: templates/services/edit-service-page.html:80
+#: templates/services/service-details-page.html:92 voya/providers/admin.py:42
+msgid "Contact Information"
+msgstr "Información de contacto"
+
+#: templates/providers/create-provider.html:78
+#: templates/providers/edit-provider.html:78
+#: templates/services/create-service.html:83
+#: templates/services/edit-service-page.html:84
+msgid "e-mail@email.com"
+msgstr "correo@correo.com"
+
+#: templates/providers/create-provider.html:83
+#: templates/providers/edit-provider.html:83
+#: templates/services/create-service.html:88
+#: templates/services/edit-service-page.html:89
+msgid "Phone number"
+msgstr "Número de teléfono"
+
+#: templates/providers/create-provider.html:84
+#: templates/providers/edit-provider.html:84
+#: templates/services/create-service.html:89
+msgid "+1234567890"
+msgstr "+1234567890"
+
+#: templates/providers/create-provider.html:89
+#: templates/providers/edit-provider.html:89
+#: templates/services/create-service.html:94
+#: templates/services/edit-service-page.html:95
+msgid "Website"
+msgstr "Sitio web"
+
+#: templates/providers/create-provider.html:90
+#: templates/providers/edit-provider.html:90
+msgid "https://webpage.com"
+msgstr "https://páginaweb.com"
+
+#: templates/providers/create-provider.html:102
+#: templates/providers/edit-provider.html:103
+#: templates/services/create-service.html:120
+#: templates/services/edit-service-page.html:121
+msgid "Description"
+msgstr "Descripción"
+
+#: templates/providers/create-provider.html:113
+#: templates/services/create-service.html:131
+msgid "Create"
+msgstr "Crear"
+
+#: templates/providers/edit-provider.html:27
+msgid "Edit provider"
+msgstr "Editar proveedor"
+
+#: templates/providers/provider-details-page.html:36
+msgid "Provider Information"
+msgstr "Información del proveedor"
+
+#: templates/providers/provider-details-page.html:40
+msgid "Services:"
+msgstr "Servicios:"
+
+#: templates/providers/provider-details-page.html:52
+#: templates/services/service-details-page.html:112
+#: templates/services/service-details-page.html:148
+msgid "Website:"
+msgstr "Sitio web:"
+
+#: templates/providers/provider-details-page.html:78
+#: templates/services/service-details-page.html:96
+#: templates/services/service-details-page.html:144
+msgid "Email:"
+msgstr "Correo electrónico:"
+
+#: templates/providers/provider-details-page.html:82
+#: templates/services/service-details-page.html:104
+msgid "Phone number:"
+msgstr "Número de teléfono:"
+
+#: templates/providers/provider-details-page.html:93
+#: templates/services/service-details-page.html:165
+#: templates/services/service-details-partials/currency-details.html:43
+#: templates/services/service-details-partials/location-details.html:48
+msgid "Entry Information"
+msgstr "Información de entrada"
+
+#: templates/providers/provider-details-page.html:97
+#: templates/services/service-details-page.html:169
+#: templates/services/service-details-partials/currency-details.html:47
+#: templates/services/service-details-partials/location-details.html:52
+msgid "Last update:"
+msgstr "Última actualización:"
+
+#: templates/providers/provider-details-page.html:101
+#: templates/services/service-details-page.html:173
+#: templates/services/service-details-partials/currency-details.html:51
+#: templates/services/service-details-partials/location-details.html:56
+msgid "Updated by:"
+msgstr "Actualizado por:"
+
+#: templates/providers/provider-details-page.html:105
+#: templates/services/service-details-page.html:177
+#: templates/services/service-details-partials/currency-details.html:55
+#: templates/services/service-details-partials/location-details.html:60
+msgid "Status:"
+msgstr "Estado:"
+
+#: templates/providers/provider-details-page.html:112
+#: templates/services/service-details-page.html:184
+#: templates/services/service-details-partials/currency-details.html:62
+#: templates/services/service-details-partials/location-details.html:67
+#: templates/services/services-dashboard-page.html:105
+msgid "Active"
+msgstr "Activo"
+
+#: templates/providers/provider-details-page.html:119
+#: templates/services/service-details-page.html:191
+#: templates/services/service-details-partials/currency-details.html:69
+#: templates/services/service-details-partials/location-details.html:74
+#: templates/services/services-dashboard-page.html:112
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: templates/providers/providers-dashboard.html:29
+msgid "Active Providers"
+msgstr "Proveedores activos"
+
+#: templates/providers/providers-dashboard.html:33
+msgid "No Active Providers"
+msgstr "No hay proveedores activos"
+
+#: templates/providers/providers-dashboard.html:86
+msgid "Active provider"
+msgstr "Proveedor activo"
+
+#: templates/providers/providers-dashboard.html:93
+msgid "Inactive provider"
+msgstr "Proveedor inactivo"
+
+#: templates/requests/create-new-request-page.html:27
+msgid "Create Request"
+msgstr "Crear solicitud"
+
+#: templates/requests/create-new-request-page.html:36
+#: templates/requests/edit-request-page.html:37
+msgid "Travelers Information"
+msgstr "Información de los viajeros"
+
+#: templates/requests/create-new-request-page.html:39
+#: templates/requests/edit-request-page.html:41
+msgid "Travelers nationality"
+msgstr "Nacionalidad de los viajeros"
+
+#: templates/requests/create-new-request-page.html:45
+#: templates/requests/edit-request-page.html:47
+msgid "Country of origin"
+msgstr "País de origen"
+
+#: templates/requests/create-new-request-page.html:51
+#: templates/requests/edit-request-page.html:53
+msgid "Travelers average age"
+msgstr "Edad media de los viajeros"
+
+#: templates/requests/create-new-request-page.html:57
+#: templates/requests/edit-request-page.html:59
+msgid "Minimum participants"
+msgstr "Participantes mínimos"
+
+#: templates/requests/create-new-request-page.html:63
+#: templates/requests/edit-request-page.html:65
+msgid "Maximum participants"
+msgstr "Participantes máximos"
+
+#: templates/requests/create-new-request-page.html:74
+#: templates/requests/edit-request-page.html:76 voya/requests/admin.py:34
+msgid "Trip Information"
+msgstr "Información del viaje"
+
+#: templates/requests/create-new-request-page.html:78
+#: templates/requests/edit-request-page.html:80
+msgid "Total budget"
+msgstr "Presupuesto total"
+
+#: templates/requests/create-new-request-page.html:90
+#: templates/requests/edit-request-page.html:92
+msgid "Trip duration"
+msgstr "Duración del viaje"
+
+#: templates/requests/create-new-request-page.html:90
+#: templates/requests/edit-request-page.html:92
+msgid "in days"
+msgstr "en días"
+
+#: templates/requests/create-new-request-page.html:96
+#: templates/requests/edit-request-page.html:98
+msgid "Trip start date (approx.)"
+msgstr "Fecha de inicio del viaje (aprox.)"
+
+#: templates/requests/create-new-request-page.html:102
+#: templates/requests/edit-request-page.html:104
+msgid "Trip end date (approx.)"
+msgstr "Fecha de finalización del viaje (aprox.)"
+
+#: templates/requests/create-new-request-page.html:120
+#: templates/requests/edit-request-page.html:122
+msgid "Other destinations"
+msgstr "Otros destinos"
+
+#: templates/requests/create-new-request-page.html:126
+#: templates/requests/edit-request-page.html:128
+msgid "Transportation type"
+msgstr "Tipo de transporte"
+
+#: templates/requests/create-new-request-page.html:132
+#: templates/requests/edit-request-page.html:134
+msgid "Transportation details"
+msgstr "Detalles del transporte"
+
+#: templates/requests/create-new-request-page.html:138
+#: templates/requests/edit-request-page.html:140
+msgid "Accommodations type"
+msgstr "Tipo de alojamiento"
+
+#: templates/requests/create-new-request-page.html:144
+#: templates/requests/edit-request-page.html:146
+msgid "Accommodations details"
+msgstr "Detalles del alojamiento"
+
+#: templates/requests/create-new-request-page.html:156
+#: templates/requests/edit-request-page.html:158
+msgid "Meals details"
+msgstr "Detalles de las comidas"
+
+#: templates/requests/create-new-request-page.html:162
+#: templates/requests/edit-request-page.html:164
+msgid "Staff"
+msgstr "Personal"
+
+#: templates/requests/create-new-request-page.html:168
+#: templates/requests/edit-request-page.html:170
+msgid "Group type"
+msgstr "Tipo de grupo"
+
+#: templates/requests/create-new-request-page.html:174
+#: templates/requests/edit-request-page.html:176
+msgid "Trip type"
+msgstr "Tipo de viaje"
+
+#: templates/requests/create-new-request-page.html:180
+#: templates/requests/edit-request-page.html:182
+msgid "Additional observations"
+msgstr "Observaciones adicionales"
+
+#: templates/requests/create-new-request-page.html:190
+#: templates/requests/edit-request-page.html:193
+msgid "Company Info"
+msgstr "Información de la empresa"
+
+#: templates/requests/create-new-request-page.html:201
+msgid "Submit Request"
+msgstr "Enviar solicitud"
+
+#: templates/requests/request-details-page.html:50
+#: templates/requests/request-details-page.html:60
+#, python-format
+msgid ""
+"\n"
+"                            %(people)s person\n"
+"                        "
+msgid_plural ""
+"\n"
+"                            %(people)s people\n"
+"                        "
+msgstr[0] ""
+"\n"
+"                            %(people)s persona\n"
+"                        "
+msgstr[1] ""
+"\n"
+"                            %(people)s personas\n"
+"                        "
+
+#: templates/requests/request-details-page.html:91
+msgid "Itinerary Dates"
+msgstr "Fechas del itinerario"
+
+#: templates/requests/request-details-page.html:114
+msgid "Itinerary Information:"
+msgstr "Información del itinerario:"
+
+#: templates/requests/request-details-page.html:187
+msgid "Budget Information:"
+msgstr "Información del presupuesto:"
+
+#: templates/services/create-edit-partials/activity-form.html:24
+#: templates/services/service-details-partials/activity-details.html:23
+msgid "Activity Information"
+msgstr "Información de la actividad"
+
+#: templates/services/create-edit-partials/activity-form.html:26
+msgid "Activity name"
+msgstr "Nombre de la actividad"
+
+#: templates/services/create-edit-partials/activity-form.html:33
+#: templates/services/create-edit-partials/public-private-transport-form.html:37
+msgid "Price per person"
+msgstr "Precio por persona"
+
+#: templates/services/create-edit-partials/activity-form.html:38
+msgid "Capacity"
+msgstr "Capacidad"
+
+#: templates/services/create-edit-partials/activity-form.html:44
+msgid "Type"
+msgstr "Tipo"
+
+#: templates/services/create-edit-partials/currency-form.html:23
+#: templates/services/services-dashboard-page.html:78
+msgid "From"
+msgstr "De"
+
+#: templates/services/create-edit-partials/currency-form.html:29
+#: templates/services/services-dashboard-page.html:79
+msgid "To"
+msgstr "A"
+
+#: templates/services/create-edit-partials/currency-form.html:35
+#: templates/services/services-dashboard-page.html:80
+msgid "Exchange rate"
+msgstr "Tipo de cambio"
+
+#: templates/services/create-edit-partials/guides-form.html:24
+#: voya/services/admin.py:126
+msgid "Guide Information"
+msgstr "Información del guía"
+
+#: templates/services/create-edit-partials/guides-form.html:26
+msgid "Guide name"
+msgstr "Nombre del guía"
+
+#: templates/services/create-edit-partials/guides-form.html:33
+#: templates/services/create-edit-partials/hotel-form.html:45
+#: templates/services/create-edit-partials/hotel-form.html:51
+#: templates/services/create-edit-partials/transfer-form.html:39
+msgid "Price in €"
+msgstr "Precio en €"
+
+#: templates/services/create-edit-partials/guides-form.html:38
+#: templates/services/create-edit-partials/staff-form.html:44
+msgid "Max group capacity * (e.g. 30 pax)"
+msgstr "Capacidad máxima del grupo * (ej. 30 pax)"
+
+#: templates/services/create-edit-partials/guides-form.html:44
+#: templates/services/create-edit-partials/staff-form.html:50
+msgid "Price includes"
+msgstr "El precio incluye"
+
+#: templates/services/create-edit-partials/guides-form.html:45
+msgid "e.g. 1 hour visit around Paris"
+msgstr "ej. Visita de 1 hora por París"
+
+#: templates/services/create-edit-partials/guides-form.html:50
+#: templates/services/create-edit-partials/staff-form.html:56
+msgid "Tour description/duration"
+msgstr "Descripción/duración del tour"
+
+#: templates/services/create-edit-partials/guides-form.html:51
+msgid ""
+"e.g. Visit - Place de la Concorde - Avenue des Champs Elysees - Arc de "
+"Triomphe - Place du Trocadero - Eiffel Tower "
+msgstr ""
+"ej. Visita - Plaza de la Concordia - Avenida de los Campos Elíseos - Arco "
+"del Triunfo - Plaza del Trocadero - Torre Eiffel"
+
+#: templates/services/create-edit-partials/guides-form.html:56
+#: templates/services/create-edit-partials/staff-form.html:62
+msgid "Label"
+msgstr "Etiqueta"
+
+#: templates/services/create-edit-partials/guides-form.html:57
+#: templates/services/create-edit-partials/staff-form.html:63
+msgid "Text that the client will see"
+msgstr "Texto que verá el cliente"
+
+#: templates/services/create-edit-partials/hotel-form.html:24
+#: templates/services/service-details-partials/hotel-details.html:23
+msgid "Venue Information"
+msgstr "Información del alojamiento"
+
+#: templates/services/create-edit-partials/hotel-form.html:26
+msgid "Hotel name"
+msgstr "Nombre del hotel"
+
+#: templates/services/create-edit-partials/hotel-form.html:32
+msgid "Category"
+msgstr "Categoría"
+
+#: templates/services/create-edit-partials/hotel-form.html:44
+msgid "High season price * (€)"
+msgstr "Precio en temporada alta * (€)"
+
+#: templates/services/create-edit-partials/hotel-form.html:50
+msgid "Low season price (€)"
+msgstr "Precio en temporada baja (€)"
+
+#: templates/services/create-edit-partials/hotel-form.html:56
+msgid "Max capacity * (Room max X pax)"
+msgstr "Capacidad máxima * (Hab. máx. X pax)"
+
+#: templates/services/create-edit-partials/hotel-form.html:85
+msgid "District"
+msgstr "Distrito"
+
+#: templates/services/create-edit-partials/hotel-form.html:91
+msgid "District description"
+msgstr "Descripción del distrito"
+
+#: templates/services/create-edit-partials/location-form.html:23
+msgid "City name"
+msgstr "Ciudad"
+
+#: templates/services/create-edit-partials/public-private-transport-form.html:24
+#: voya/services/admin.py:280 voya/services/admin.py:325
+msgid "Transport Information"
+msgstr "Información del transporte"
+
+#: templates/services/create-edit-partials/public-private-transport-form.html:26
+msgid "Transport type"
+msgstr "Tipo de transporte"
+
+#: templates/services/create-edit-partials/public-private-transport-form.html:33
+msgid "Transport price"
+msgstr "Precio del transporte"
+
+#: templates/services/create-edit-partials/public-private-transport-form.html:35
+msgid "Price per unit"
+msgstr "Precio por unidad"
+
+#: templates/services/create-edit-partials/public-private-transport-form.html:43
+#: templates/services/create-edit-partials/transfer-form.html:44
+msgid "Max capacity"
+msgstr "Capacidad máxima"
+
+#: templates/services/create-edit-partials/staff-form.html:24
+msgid "Information"
+msgstr "Información"
+
+#: templates/services/create-edit-partials/staff-form.html:26
+#: templates/services/services-dashboard-page.html:89
+msgid "Name"
+msgstr "Nombre"
+
+#: templates/services/create-edit-partials/staff-form.html:32
+msgid "Mansion"
+msgstr "Cargo"
+
+#: templates/services/create-edit-partials/transfer-form.html:23
+#: templates/services/service-details-partials/public-private-transport-details.html:23
+#: templates/services/service-details-partials/transfer-details.html:23
+msgid "Service Information"
+msgstr "Información del servicio"
+
+#: templates/services/create-edit-partials/transfer-form.html:26
+msgid "Transfer name"
+msgstr "Nombre del traslado"
+
+#: templates/services/create-edit-partials/transfer-form.html:32
+msgid "Transfer type"
+msgstr "Tipo de traslado"
+
+#: templates/services/create-edit-partials/transfer-form.html:38
+msgid "Transfer price"
+msgstr "Precio del traslado"
+
+#: templates/services/create-service.html:27
+msgid "Create new"
+msgstr "Crear nuevo"
+
+#: templates/services/create-service.html:104
+#: templates/services/edit-service-page.html:105
+msgid "Service Provider"
+msgstr "Proveedor del servicio"
+
+#: templates/services/create-service.html:107
+#: templates/services/edit-service-page.html:108
+#: templates/services/service-details-page.html:128
+msgid "Provider"
+msgstr "Proveedor"
+
+#: templates/services/edit-service-page.html:28
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/services/edit-service-page.html:96
+msgid "https://your-webpage.com"
+msgstr "https://tu-pagina.com"
+
+#: templates/services/service-details-page.html:40
+msgid "in"
+msgstr "en"
+
+#: templates/services/service-details-page.html:132
+#: templates/services/service-details-partials/activity-details.html:27
+#: templates/services/service-details-partials/local-guide-details.html:27
+#: templates/services/service-details-partials/staff-details.html:27
+msgid "Name:"
+msgstr "Nombre:"
+
+#: templates/services/service-details-page.html:140
+msgid "Telephone number:"
+msgstr "Número de teléfono:"
+
+#: templates/services/service-details-partials/activity-details.html:31
+msgid "Service type:"
+msgstr "Tipo de servicio:"
+
+#: templates/services/service-details-partials/activity-details.html:35
+#: templates/services/service-details-partials/hotel-details.html:31
+#: templates/services/service-details-partials/local-guide-details.html:43
+#: templates/services/service-details-partials/public-private-transport-details.html:31
+#: templates/services/service-details-partials/staff-details.html:49
+#: templates/services/service-details-partials/transfer-details.html:35
+msgid "Description:"
+msgstr "Descripción:"
+
+#: templates/services/service-details-partials/activity-details.html:45
+#: templates/services/service-details-partials/hotel-details.html:45
+#: templates/services/service-details-partials/local-guide-details.html:54
+#: templates/services/service-details-partials/public-private-transport-details.html:41
+#: templates/services/service-details-partials/staff-details.html:60
+#: templates/services/service-details-partials/transfer-details.html:45
+msgid "Price Information"
+msgstr "Información del precio"
+
+#: templates/services/service-details-partials/activity-details.html:49
+#: templates/services/service-details-partials/local-guide-details.html:58
+#: templates/services/service-details-partials/public-private-transport-details.html:45
+#: templates/services/service-details-partials/staff-details.html:64
+#: templates/services/service-details-partials/transfer-details.html:49
+msgid "Price:"
+msgstr "Precio:"
+
+#: templates/services/service-details-partials/activity-details.html:53
+msgid "Price per:"
+msgstr "Precio por:"
+
+#: templates/services/service-details-partials/activity-details.html:56
+#: templates/services/service-details-partials/hotel-details.html:64
+#: templates/services/service-details-partials/local-guide-details.html:65
+#: templates/services/service-details-partials/public-private-transport-details.html:52
+#: templates/services/service-details-partials/staff-details.html:71
+#: templates/services/service-details-partials/transfer-details.html:56
+#, python-format
+msgid ""
+"\n"
+"                        %(cap)s person\n"
+"                    "
+msgid_plural ""
+"\n"
+"                        %(cap)s people\n"
+"                    "
+msgstr[0] ""
+"\n"
+"                        %(cap)s persona\n"
+"                    "
+msgstr[1] ""
+"\n"
+"                        %(cap)s personas\n"
+"                    "
+
+#: templates/services/service-details-partials/currency-details.html:29
+msgid "Exchange Information"
+msgstr "Información de cambio"
+
+#: templates/services/service-details-partials/hotel-details.html:27
+msgid "Category:"
+msgstr "Categoría:"
+
+#: templates/services/service-details-partials/hotel-details.html:49
+msgid "High season price:"
+msgstr "Precio temporada alta:"
+
+#: templates/services/service-details-partials/hotel-details.html:53
+msgid "Low season price:"
+msgstr "Precio temporada baja:"
+
+#: templates/services/service-details-partials/hotel-details.html:61
+#: templates/services/service-details-partials/public-private-transport-details.html:49
+#: templates/services/service-details-partials/transfer-details.html:53
+msgid "Price for max:"
+msgstr "Precio para máx.:"
+
+#: templates/services/service-details-partials/hotel-details.html:95
+msgid "District:"
+msgstr "Distrito:"
+
+#: templates/services/service-details-partials/hotel-details.html:99
+msgid "District description:"
+msgstr "Descripción del distrito:"
+
+#: templates/services/service-details-partials/local-guide-details.html:32
+#: templates/services/service-details-partials/staff-details.html:37
+msgid "Tour description:"
+msgstr "Descripción del tour:"
+
+#: templates/services/service-details-partials/local-guide-details.html:37
+#: templates/services/service-details-partials/staff-details.html:43
+msgid "Client label:"
+msgstr "Etiqueta para el cliente:"
+
+#: templates/services/service-details-partials/local-guide-details.html:62
+#: templates/services/service-details-partials/staff-details.html:68
+msgid "Max group capacity:"
+msgstr "Capacidad máxima del grupo:"
+
+#: templates/services/service-details-partials/local-guide-details.html:74
+#: templates/services/service-details-partials/staff-details.html:80
+msgid "Price includes:"
+msgstr "El precio incluye:"
+
+#: templates/services/service-details-partials/location-details.html:30
+msgid "City Information"
+msgstr "Información de la ciudad"
+
+#: templates/services/service-details-partials/public-private-transport-details.html:27
+msgid "Transport type:"
+msgstr "Tipo de transporte:"
+
+#: templates/services/service-details-partials/staff-details.html:32
+msgid "Mansion:"
+msgstr "Cargo:"
+
+#: templates/services/service-details-partials/transfer-details.html:27
+msgid "Transfer name:"
+msgstr "Nombre del traslado:"
+
+#: templates/services/service-details-partials/transfer-details.html:31
+msgid "Transfer type:"
+msgstr "Tipo de traslado:"
+
+#: templates/services/services-dashboard-page.html:40
+#, python-format
+msgid "No %(model_title)s yet"
+msgstr "No hay %(model_title)s aún"
+
+#: templates/services/services-dashboard-page.html:67
+msgid "create new"
+msgstr "crear nuevo"
+
+#: templates/services/services-dashboard-page.html:81
+msgid "Date added"
+msgstr "Fecha añadido"
+
+#: templates/services/services-dashboard-page.html:158
+msgid "View page"
+msgstr "Ver página"
+
+#: voya/clients/admin.py:46
+msgid "Account Information"
+msgstr "Información de la cuenta"
+
+#: voya/clients/admin.py:55
+msgid "Selected profiles have been marked as active."
+msgstr "Los perfiles seleccionados han sido marcados como activos."
+
+#: voya/clients/admin.py:59
+msgid "Selected profiles have been marked as inactive."
+msgstr "Los perfiles seleccionados han sido marcados como inactivos."
+
+#: voya/clients/admin.py:61
+msgid "Mark selected profiles as active"
+msgstr "Marcar los perfiles seleccionados como activos"
+
+#: voya/clients/admin.py:62
+msgid "Mark selected profiles as inactive"
+msgstr "Marcar los perfiles seleccionados como inactivos"
+
+#: voya/clients/choices.py:6
+msgid "Select your title"
+msgstr "Selecciona tu título"
+
+#: voya/clients/choices.py:7
+msgid "Miss"
+msgstr "Srta."
+
+#: voya/clients/choices.py:8
+msgid "Mrs"
+msgstr "Sra."
+
+#: voya/clients/choices.py:9
+msgid "Mr"
+msgstr "Sr."
+
+#: voya/clients/forms.py:40 voya/employees/forms.py:49
+msgid "Email address"
+msgstr "Correo electrónico"
+
+#: voya/clients/forms.py:50 voya/employees/forms.py:59
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"
+
+#: voya/clients/forms.py:78
+msgid "No company with this Tax ID exists."
+msgstr "No existe una empresa con este CIF/NIF."
+
+#: voya/clients/forms.py:123 voya/common/forms.py:19
+msgid "Your email address"
+msgstr "Tu dirección de correo electrónico"
+
+#: voya/common/forms.py:11
+msgid "Search ..."
+msgstr "Buscar ..."
+
+#: voya/common/models.py:50 voya/companies/models.py:128
+#: voya/providers/models.py:48
+msgid "Enter phone number in international format. Example: +123456789"
+msgstr ""
+"Introduce el número de teléfono en formato internacional. Ejemplo: +123456789"
+
+#: voya/common/views.py:72
+msgid "Activation link is invalid or has expired."
+msgstr "El enlace de activación no es válido o ha caducado."
+
+#: voya/common/views.py:114
+msgid "Your Voya password has been changed successfully"
+msgstr "Tu contraseña de Voya ha sido cambiada con éxito"
+
+#: voya/companies/admin.py:49
+msgid "Additional Details"
+msgstr "Detalles adicionales"
+
+#: voya/companies/admin.py:63
+msgid "Selected companies have been activated."
+msgstr "Las empresas seleccionadas han sido activadas."
+
+#: voya/companies/admin.py:67
+msgid "Selected companies have been deactivated."
+msgstr "Las empresas seleccionadas han sido desactivadas."
+
+#: voya/companies/admin.py:69
+msgid "Activate selected companies"
+msgstr "Activar empresas seleccionadas"
+
+#: voya/companies/admin.py:70
+msgid "Deactivate selected companies"
+msgstr "Desactivar empresas seleccionadas"
+
+#: voya/companies/admin.py:101
+msgid "Address Details"
+msgstr "Detalles de dirección"
+
+#: voya/companies/admin.py:123
+msgid "Selected addresses have been activated."
+msgstr "Las direcciones seleccionadas han sido activadas."
+
+#: voya/companies/admin.py:127
+msgid "Selected addresses have been deactivated."
+msgstr "Las direcciones seleccionadas han sido desactivadas."
+
+#: voya/companies/admin.py:129
+msgid "Activate selected addresses"
+msgstr "Activar direcciones seleccionadas"
+
+#: voya/companies/admin.py:130
+msgid "Deactivate selected addresses"
+msgstr "Desactivar direcciones seleccionadas"
+
+#: voya/companies/admin.py:160
+msgid "Selected phone numbers have been activated."
+msgstr "Los números de teléfono seleccionados han sido activados."
+
+#: voya/companies/admin.py:164
+msgid "Selected phone numbers have been deactivated."
+msgstr "Los números de teléfono seleccionados han sido desactivados."
+
+#: voya/companies/admin.py:166
+msgid "Activate selected phone numbers"
+msgstr "Activar números de teléfono seleccionados"
+
+#: voya/companies/admin.py:167
+msgid "Deactivate selected phone numbers"
+msgstr "Desactivar números de teléfono seleccionados"
+
+#: voya/companies/forms.py:19
+msgid "Please upload your logo here"
+msgstr "Por favor, sube tu logotipo aquí"
+
+#: voya/companies/models.py:106 voya/providers/models.py:34
+#: voya/requests/models.py:23 voya/services/models.py:254
+msgid "Select country"
+msgstr "Selecciona un país"
+
+#: voya/companies/validators.py:20
+#, python-format
+msgid "File size must be below or equal to %(max_size_mb)s MB"
+msgstr "El tamaño del archivo debe ser inferior o igual a %(max_size_mb)s MB"
+
+#: voya/employees/admin.py:35
+msgid "Job Information"
+msgstr "Información laboral"
+
+#: voya/employees/admin.py:38
+msgid "Related User"
+msgstr "Usuario relacionado"
+
+#: voya/employees/admin.py:50
+msgid "Selected employees have been activated."
+msgstr "Los empleados seleccionados han sido activados."
+
+#: voya/employees/admin.py:54
+msgid "Selected employees have been deactivated."
+msgstr "Los empleados seleccionados han sido desactivados."
+
+#: voya/employees/admin.py:56
+msgid "Activate selected employees"
+msgstr "Activar empleados seleccionados"
+
+#: voya/employees/admin.py:57
+msgid "Deactivate selected employees"
+msgstr "Desactivar empleados seleccionados"
+
+#: voya/employees/forms.py:45
+msgid "Whatsapp number in format: +1234567890"
+msgstr "Número de Whatsapp en formato: +1234567890"
+
+#: voya/employees/views.py:37
+msgid "New Voya employee account activation"
+msgstr "Activación de nueva cuenta de empleado en Voya"
+
+#: voya/global_settings/models.py:16
+msgid "IBAN"
+msgstr "IBAN"
+
+#: voya/global_settings/models.py:23
+msgid "SWIFT/BIC Code"
+msgstr "Código SWIFT/BIC"
+
+#: voya/global_settings/models.py:30
+msgid "Beneficiary Name"
+msgstr "Nombre del beneficiario"
+
+#: voya/global_settings/models.py:52
+msgid "Postal Code (CP)"
+msgstr "Código Postal (CP)"
+
+#: voya/global_settings/models.py:56
+msgid "Bank Account"
+msgstr "Cuentas bancaria"
+
+#: voya/global_settings/models.py:57
+msgid "Bank Accounts"
+msgstr "Cuentas bancarias"
+
+#: voya/proposals/admin.py:51
+msgid "Basic Information"
+msgstr "Información básica"
+
+#: voya/proposals/admin.py:80 voya/proposals/admin.py:126
+#: voya/proposals/admin.py:175 voya/requests/admin.py:103
+#: voya/services/admin.py:57 voya/services/admin.py:103
+#: voya/services/admin.py:149 voya/services/admin.py:195
+#: voya/services/admin.py:232 voya/services/admin.py:303
+#: voya/services/admin.py:348
+msgid "No history"
+msgstr "Sin historial"
+
+#: voya/proposals/admin.py:109
+msgid "Section Item Details"
+msgstr "Detalles del ítem de sección"
+
+#: voya/proposals/admin.py:154
+msgid "Budget Details"
+msgstr "Detalles del presupuesto"
+
+#: voya/proposals/choices.py:29 voya/proposals/utils.py:42
+#: voya/providers/choices.py:27
+msgid "Activity"
+msgstr "Actividad"
+
+#: voya/proposals/choices.py:39
+msgid "Car around the city"
+msgstr "Coche por la ciudad"
+
+#: voya/proposals/choices.py:40
+msgid "Car to the airport"
+msgstr "Coche al aeropuerto"
+
+#: voya/proposals/choices.py:41
+msgid "Bus around the city"
+msgstr "Autobús por la ciudad"
+
+#: voya/proposals/choices.py:42
+msgid "Bus to the airport"
+msgstr "Autobús al aeropuerto"
+
+#: voya/proposals/choices.py:43 voya/requests/choices.py:193
+msgid "Private boat"
+msgstr "Barco privado"
+
+#: voya/proposals/choices.py:44 voya/requests/choices.py:194
+msgid "Luxury car (4 pax)"
+msgstr "Coche de lujo (4 pax)"
+
+#: voya/proposals/choices.py:45 voya/requests/choices.py:195
+msgid "Luxury van (7 pax)"
+msgstr "Furgoneta de lujo (7 pax)"
+
+#: voya/proposals/choices.py:46 voya/requests/choices.py:196
+msgid "Luxury bus (8+ pax)"
+msgstr "Autobús de lujo (8+ pax)"
+
+#: voya/proposals/choices.py:53
+msgid "Send to client"
+msgstr "Enviar al cliente"
+
+#: voya/proposals/choices.py:54
+#, fuzzy
+#| msgid "Send to client"
+msgid "Approved by client"
+msgstr "Enviar al cliente"
+
+#: voya/proposals/choices.py:55
+#, fuzzy
+#| msgid "Send to client"
+msgid "Rejected by client"
+msgstr "Enviar al cliente"
+
+#: voya/proposals/choices.py:59
+msgid "None"
+msgstr "Ninguno"
+
+#: voya/proposals/choices.py:60
+msgid "Dromo"
+msgstr ""
+
+#: voya/proposals/choices.py:61
+msgid "My company's logo"
+msgstr "El logotipo de mi empresa"
+
+#: voya/proposals/choices.py:65
+msgid "Breakfast"
+msgstr "Desayuno"
+
+#: voya/proposals/choices.py:66
+msgid "Lunch"
+msgstr "Almuerzo"
+
+#: voya/proposals/choices.py:67
+msgid "Dinner"
+msgstr "Cena"
+
+#: voya/proposals/choices.py:68 voya/providers/choices.py:34
+#: voya/requests/choices.py:175 voya/requests/choices.py:185
+#: voya/requests/choices.py:201 voya/requests/choices.py:213
+#: voya/requests/choices.py:233 voya/requests/choices.py:241
+#: voya/requests/choices.py:278
+msgid "Other"
+msgstr "Otro"
+
+#: voya/proposals/forms.py:43
+msgid "Add Proposal Title"
+msgstr "Añadir título de propuesta"
+
+#: voya/proposals/forms.py:59
+msgid "Select Date"
+msgstr "Seleccionar fecha"
+
+#: voya/proposals/forms.py:66
+msgid "Select city"
+msgstr "Seleccionar ciudad"
+
+#: voya/proposals/serializers.py:32
+msgid "The proposal title is required."
+msgstr "El título de la propuesta es obligatorio."
+
+#: voya/proposals/serializers.py:33
+msgid "The title must not exceed 255 characters."
+msgstr "El título no debe exceder los 255 caracteres."
+
+#: voya/proposals/serializers.py:40
+msgid "Invalid status. Please select a valid status from the dropdown."
+msgstr ""
+"Estado no válido. Por favor, selecciona un estado válido del desplegable."
+
+#: voya/proposals/serializers.py:67
+msgid "Invalid service ID."
+msgstr "ID de servicio no válido."
+
+#: voya/proposals/serializers.py:73
+msgid "Quantity must be at least 1."
+msgstr "La cantidad debe ser al menos 1."
+
+#: voya/proposals/serializers.py:74
+msgid "Quantity must be a number."
+msgstr "La cantidad debe ser un número."
+
+#: voya/proposals/serializers.py:80
+msgid "Invalid date format. Please use YYYY-MM-DD."
+msgstr "Formato de fecha no válido. Por favor, usa AAAA-MM-DD."
+
+#: voya/proposals/serializers.py:81
+msgid "Trip date is required."
+msgstr "La fecha del viaje es obligatoria."
+
+#: voya/proposals/serializers.py:89
+msgid "Invalid city section."
+msgstr "Sección de ciudad no válida."
+
+#: voya/proposals/utils.py:121
+msgid "Proposal created via API"
+msgstr "Propuesta creada mediante la API"
+
+#: voya/proposals/utils.py:142
+msgid "Proposal updated via API"
+msgstr "Propuesta actualizada mediante la API"
+
+#: voya/proposals/utils.py:164 voya/proposals/utils.py:236
+msgid "updated"
+msgstr "actualizado"
+
+#: voya/proposals/utils.py:168 voya/proposals/utils.py:240
+msgid "created"
+msgstr "creado"
+
+#: voya/proposals/utils.py:183
+#, python-format
+msgid ""
+"Item %(action)s: %(section_name)s - “%(additional_notes)s” – €%(price)s x "
+"%(quantity)s on %(corresponding_trip_date)s in %(city)s"
+msgstr ""
+"Elemento %(action)s: %(section_name)s - “%(additional_notes)s” – €%(price)s "
+"x %(quantity)s el %(corresponding_trip_date)s en %(city)s"
+
+#: voya/proposals/utils.py:186 voya/proposals/utils.py:208
+#: voya/proposals/utils.py:346
+msgid "No notes"
+msgstr "Sin notas"
+
+#: voya/proposals/utils.py:206
+#, python-format
+msgid ""
+"Item deleted: %(section_name)s – “%(additional_notes)s” – €%(price)s x "
+"%(quantity)s on %(corresponding_trip_date)s in %(city)s"
+msgstr ""
+"Elemento eliminado: %(section_name)s – “%(additional_notes)s” – €%(price)s x "
+"%(quantity)s el %(corresponding_trip_date)s en %(city)s"
+
+#: voya/proposals/utils.py:252
+#, python-format
+msgid "Budget %(action)s via API"
+msgstr "Presupuesto %(action)s vía API"
+
+#: voya/proposals/utils.py:325
+msgid "Invalid city ID"
+msgstr "ID de ciudad no válido"
+
+#: voya/proposals/utils.py:327
+msgid "City ID is required"
+msgstr "El ID de la ciudad es obligatorio"
+
+#: voya/proposals/utils.py:344
+#, fuzzy, python-format
+#| msgid ""
+#| "Item deleted: %(section_name)s – “%(additional_notes)s” – €%(price)s x "
+#| "%(quantity)s on %(corresponding_trip_date)s in %(city)s"
+msgid ""
+"Item created: %(section_name)s – “%(additional_notes)s” – €%(price)s x "
+"%(quantity)s on %(corresponding_trip_date)s in %(city)s"
+msgstr ""
+"Elemento eliminado: %(section_name)s – “%(additional_notes)s” – €%(price)s x "
+"%(quantity)s el %(corresponding_trip_date)s en %(city)s"
+
+#: voya/proposals/utils.py:381
+#, fuzzy, python-format
+#| msgid ""
+#| "Budget created: $(pax)s pax – Total: €%(total_cost)s – Price/pp: €"
+#| "%(fina_price_per_person)s – Margin: %(margin)s%"
+msgid ""
+"Budget created: %(pax)s pax – Total: €%(total_cost)s – Price/pp: €"
+"%(fina_price_per_person)s – Margin: %(margin)s%%"
+msgstr ""
+"Budget creado: $(pax)s pax – Total: €%(total_cost)s – Precio/pp: €"
+"%(fina_price_per_person)s – Margen: %(margin)s%%"
+
+#: voya/proposals/views.py:109
+msgid "Proposal validation failed"
+msgstr "Falló la validación de la propuesta"
+
+#: voya/proposals/views.py:117
+msgid "Item validation failed"
+msgstr "Falló la validación del ítem"
+
+#: voya/proposals/views.py:124
+msgid "Budget validation failed"
+msgstr "Falló la validación del budget"
+
+#: voya/proposals/views.py:133
+msgid "Proposal, items, and budget saved successfully!"
+msgstr "¡Propuesta, ítems y budget guardados con éxito!"
+
+#: voya/proposals/views.py:165
+msgid "Proposal not found. Use Post to create a new one"
+msgstr "Propuesta no encontrada. Usa POST para crear una nueva"
+
+#: voya/proposals/views.py:171
+msgid "Proposal updated successfully!"
+msgstr "¡Propuesta actualizada con éxito!"
+
+#: voya/proposals/views.py:257
+#, python-format
+msgid "Invalid section '%(section)s'"
+msgstr "Sección no válida '%(section)s'"
+
+#: voya/proposals/views.py:272
+#, python-format
+msgid "Could not determine display field for %(model_name)s."
+msgstr "No se pudo determinar el campo de visualización para %(model_name)s."
+
+#: voya/proposals/views.py:282
+#, python-format
+msgid "Could not determine price field for %(model_name)s."
+msgstr "No se pudo determinar el campo de precio para %(model_name)s."
+
+#: voya/proposals/views.py:394
+msgid "Gratuidad"
+msgstr "Gratuidad"
+
+#: voya/providers/admin.py:65
+msgid "Selected providers have been marked as active."
+msgstr "Los proveedores seleccionados han sido marcados como activos."
+
+#: voya/providers/admin.py:66
+msgid "Mark selected providers as active"
+msgstr "Marcar proveedores seleccionados como activos"
+
+#: voya/providers/admin.py:70
+msgid "Selected providers have been marked as inactive."
+msgstr "Los proveedores seleccionados han sido marcados como inactivos."
+
+#: voya/providers/admin.py:71
+msgid "Mark selected providers as inactive"
+msgstr "Marcar proveedores seleccionados como inactivos"
+
+#: voya/providers/choices.py:28
+msgid "Accommodation"
+msgstr "Alojamiento"
+
+#: voya/providers/choices.py:29
+msgid "Food & Beverage"
+msgstr "Comida y bebida"
+
+#: voya/requests/admin.py:48
+msgid "Accommodations and Meals"
+msgstr "Alojamientos y comidas"
+
+#: voya/requests/admin.py:56
+msgid "Transportation"
+msgstr "Transporte"
+
+#: voya/requests/admin.py:62
+msgid "Group Details"
+msgstr "Detalles del grupo"
+
+#: voya/requests/admin.py:72
+msgid "Administrative"
+msgstr "Administrativo"
+
+#: voya/requests/admin.py:86
+msgid "Selected requests were marked as inactive."
+msgstr "Las solicitudes seleccionadas han sido marcadas como inactivas."
+
+#: voya/requests/admin.py:88
+msgid "Mark selected requests as inactive"
+msgstr "Marcar solicitudes seleccionadas como inactivas"
+
+#: voya/requests/admin.py:92
+msgid "Selected requests were marked as active."
+msgstr "Las solicitudes seleccionadas han sido marcadas como activas."
+
+#: voya/requests/admin.py:94
+msgid "Mark selected requests as active"
+msgstr "Marcar solicitudes seleccionadas como activas"
+
+#: voya/requests/choices.py:168 voya/requests/choices.py:190
+msgid "Private bus"
+msgstr "Autobús privado"
+
+#: voya/requests/choices.py:169
+msgid "Public buses"
+msgstr "Autobuses públicos"
+
+#: voya/requests/choices.py:170
+msgid "Trains"
+msgstr "Trenes"
+
+#: voya/requests/choices.py:171 voya/requests/choices.py:182
+msgid "Flights"
+msgstr "Vuelos"
+
+#: voya/requests/choices.py:172
+msgid "Taxi"
+msgstr "Taxi"
+
+#: voya/requests/choices.py:173
+msgid "Airport/Station transfers"
+msgstr "Traslados aeropuerto/estación"
+
+#: voya/requests/choices.py:174
+msgid "No transportation"
+msgstr "Sin transporte"
+
+#: voya/requests/choices.py:180
+msgid "Public bus"
+msgstr "Autobús público"
+
+#: voya/requests/choices.py:181
+msgid "Train"
+msgstr "Tren"
+
+#: voya/requests/choices.py:183
+msgid "Ferry"
+msgstr "Ferry"
+
+#: voya/requests/choices.py:184
+msgid "Metro"
+msgstr "Metro"
+
+#: voya/requests/choices.py:191
+msgid "Private car"
+msgstr "Coche privado"
+
+#: voya/requests/choices.py:192
+msgid "Private van"
+msgstr "Furgoneta privada"
+
+#: voya/requests/choices.py:197
+msgid "Check point"
+msgstr "Check point"
+
+#: voya/requests/choices.py:198
+msgid "Driver accommodation"
+msgstr "Alojamiento del conductor"
+
+#: voya/requests/choices.py:199
+msgid "Driver meals"
+msgstr "Comidas del conductor"
+
+#: voya/requests/choices.py:200
+msgid "Motorways and parkings"
+msgstr "Autopistas y aparcamientos"
+
+#: voya/requests/choices.py:206
+msgid "2-3 Star Hotels"
+msgstr "Hoteles de 2-3 estrellas"
+
+#: voya/requests/choices.py:207
+msgid "3-4 Star Hotels"
+msgstr "Hoteles de 3-4 estrellas"
+
+#: voya/requests/choices.py:208
+msgid "4-5 Star Hotels"
+msgstr "Hoteles de 4-5 estrellas"
+
+#: voya/requests/choices.py:209
+msgid "Hostels with private bathroom"
+msgstr "Hostales con baño privado"
+
+#: voya/requests/choices.py:210 voya/requests/choices.py:223
+msgid "Apartment"
+msgstr "Apartamento"
+
+#: voya/requests/choices.py:211 voya/requests/choices.py:224
+msgid "Camping"
+msgstr "Camping"
+
+#: voya/requests/choices.py:212
+msgid "None -  I'll take care of it"
+msgstr "Ninguno - Me encargaré yo"
+
+#: voya/requests/choices.py:218
+msgid "2 Stars hotel"
+msgstr "Hotel de 2 estrellas"
+
+#: voya/requests/choices.py:219
+msgid "3 Stars hotel"
+msgstr "Hotel de 3 estrellas"
+
+#: voya/requests/choices.py:220
+msgid "4 Stars hotel"
+msgstr "Hotel de 4 estrellas"
+
+#: voya/requests/choices.py:221
+msgid "5 Stars hotel"
+msgstr "Hotel de 5 estrellas"
+
+#: voya/requests/choices.py:222
+msgid "Hostel with private bathroom"
+msgstr "Hostal con baño privado"
+
+#: voya/requests/choices.py:229
+msgid "Breakfast only (BB)"
+msgstr "Solo desayuno (BB)"
+
+#: voya/requests/choices.py:230
+msgid "Breakfast & dinner (HB)"
+msgstr "Desayuno y cena (HB)"
+
+#: voya/requests/choices.py:231
+msgid "Breakfast, lunch & dinner (FB)"
+msgstr "Desayuno, almuerzo y cena (FB)"
+
+#: voya/requests/choices.py:232
+msgid "No meals included"
+msgstr "Sin comidas incluidas"
+
+#: voya/requests/choices.py:238
+msgid "Tour leader during the entire trip"
+msgstr "Tour leader durante todo el viaje"
+
+#: voya/requests/choices.py:239
+msgid "Official tourist guides in each city"
+msgstr "Guías oficiales en cada ciudad"
+
+#: voya/requests/choices.py:240
+msgid "No staff needed"
+msgstr "No se necesita personal"
+
+#: voya/requests/choices.py:246
+msgid "Cultural Group - Sightseeing"
+msgstr "Grupo cultural - Turismo"
+
+#: voya/requests/choices.py:247
+msgid "Schools, Students or Youth"
+msgstr "Colegios, estudiantes o jóvenes"
+
+#: voya/requests/choices.py:248
+msgid "Backpackers"
+msgstr "Mochileros"
+
+#: voya/requests/choices.py:249
+msgid ""
+"Theme Parks (Eurodisney, Pinocchio, Mirabilandia, Puerto Aventura, Harry "
+"Potter...)"
+msgstr ""
+"Parques temáticos (Eurodisney, Pinocho, Mirabilandia, PortAventura, Harry "
+"Potter...)"
+
+#: voya/requests/choices.py:250
+msgid "Study or Language Package"
+msgstr "Programa de estudios o idiomas"
+
+#: voya/requests/choices.py:251
+msgid "Festivals or Events"
+msgstr "Festivales o eventos"
+
+#: voya/requests/choices.py:252
+msgid "Sport"
+msgstr "Deporte"
+
+#: voya/requests/choices.py:253
+msgid "Family"
+msgstr "Familia"
+
+#: voya/requests/choices.py:254
+msgid "Religious"
+msgstr "Religioso"
+
+#: voya/requests/choices.py:255
+msgid "Relax, Health, and SPAs"
+msgstr "Relajación, salud y SPAs"
+
+#: voya/requests/choices.py:256
+msgid "Adventure, Nature, Eco-tourism"
+msgstr "Aventura, naturaleza, ecoturismo"
+
+#: voya/requests/choices.py:257
+msgid "Foodies - Gastro Tours - Wine Tours"
+msgstr "Gastronomía - Tours Gastronómicos - Enoturismo"
+
+#: voya/requests/choices.py:258
+msgid "Shopping Tours"
+msgstr "Tours de compras"
+
+#: voya/requests/choices.py:259
+msgid "Yoga or Meditation"
+msgstr "Yoga o meditación"
+
+#: voya/requests/choices.py:260
+msgid "Theme Tour (Urban Art, Architecture, Science, Cinema...)"
+msgstr "Tour temático (Arte urbano, arquitectura, ciencia, cine...)"
+
+#: voya/requests/choices.py:261
+msgid "Photo Tours"
+msgstr "Tours fotográficos"
+
+#: voya/requests/choices.py:262
+msgid "Cruises"
+msgstr "Cruceros"
+
+#: voya/requests/choices.py:263
+msgid "Vacation"
+msgstr "Vacaciones"
+
+#: voya/requests/choices.py:276
+msgid "Ticket"
+msgstr "Entrada"
+
+#: voya/requests/choices.py:277
+msgid "Package"
+msgstr "Paquete"
+
+#: voya/requests/forms.py:15
+msgid "Select Destinations"
+msgstr "Seleccionar destinos"
+
+#: voya/requests/forms.py:18
+msgid "Country Destinations"
+msgstr "Destinos por país"
+
+#: voya/requests/forms.py:46 voya/requests/forms.py:49
+msgid "Select Company"
+msgstr "Seleccionar empresa"
+
+#: voya/requests/forms.py:107
+msgid "Average travelers age"
+msgstr "Edad media de los viajeros"
+
+#: voya/requests/forms.py:112
+msgid "Tell us more about the places you wish to visit."
+msgstr "Cuéntanos más sobre los lugares que deseas visitar."
+
+#: voya/requests/forms.py:117
+msgid "Share any transport details here."
+msgstr "Comparte aquí cualquier detalle sobre el transporte."
+
+#: voya/requests/forms.py:122
+msgid "Share any accommodations details here."
+msgstr "Comparte aquí cualquier detalle sobre el alojamiento."
+
+#: voya/requests/forms.py:127
+msgid "Any meals details we need to have into account?"
+msgstr "¿Hay algún detalle sobre las comidas que debamos tener en cuenta?"
+
+#: voya/requests/forms.py:132
+msgid "E.g. family trip, company trip, religious trip"
+msgstr "¿Hay algún detalle sobre las comidas que debamos tener en cuenta?"
+
+#: voya/requests/forms.py:137
+msgid "Share any details you consider important here"
+msgstr "Comparte aquí cualquier detalle que consideres importante"
+
+#: voya/requests/models.py:29
+msgid "Select nationality"
+msgstr "Seleccionar nacionalidad"
+
+#: voya/requests/models.py:37
+msgid "Choose the countries you would like to visit"
+msgstr "Elige los países que te gustaría visitar"
+
+#: voya/requests/models.py:195
+msgid "End date must be after the start date."
+msgstr "La fecha de finalización debe ser posterior a la fecha de inicio."
+
+#: voya/requests/models.py:199
+msgid "Start date must be in the future."
+msgstr "La fecha de inicio debe estar en el futuro."
+
+#: voya/requests/models.py:202
+msgid "Both start and end dates must be specified."
+msgstr "Debes especificar tanto la fecha de inicio como la de finalización."
+
+#: voya/services/admin.py:29
+msgid "Hotel Information"
+msgstr "Información del hotel"
+
+#: voya/services/admin.py:46
+msgid "Selected hotels have been marked as active."
+msgstr "Los hoteles seleccionados han sido marcados como activos."
+
+#: voya/services/admin.py:47
+msgid "Mark selected hotels as active"
+msgstr "Marcar hoteles seleccionados como activos"
+
+#: voya/services/admin.py:51
+msgid "Selected hotels have been marked as inactive."
+msgstr "Los hoteles seleccionados han sido marcados como inactivos."
+
+#: voya/services/admin.py:52
+msgid "Mark selected hotels as inactive"
+msgstr "Marcar hoteles seleccionados como inactivos"
+
+#: voya/services/admin.py:60 voya/services/admin.py:106
+#: voya/services/admin.py:152 voya/services/admin.py:198
+#: voya/services/admin.py:235 voya/services/admin.py:306
+#: voya/services/admin.py:351
+msgid "Last Modified"
+msgstr "Última modificación"
+
+#: voya/services/admin.py:80
+msgid "Transfer Information"
+msgstr "Información de traslados"
+
+#: voya/services/admin.py:92
+msgid "Selected transfers have been marked as active."
+msgstr "Los traslados seleccionados han sido marcados como activos."
+
+#: voya/services/admin.py:93
+msgid "Mark selected transfers as active"
+msgstr "Marcar traslados seleccionados como activos"
+
+#: voya/services/admin.py:97
+msgid "Selected transfers have been marked as inactive."
+msgstr "Los traslados seleccionados han sido marcados como inactivos."
+
+#: voya/services/admin.py:98
+msgid "Mark selected transfers as inactive"
+msgstr "Marcar traslados seleccionados como inactivos"
+
+#: voya/services/admin.py:138
+msgid "Selected guides have been marked as active."
+msgstr "Los guías seleccionados han sido marcados como activos."
+
+#: voya/services/admin.py:139
+msgid "Mark selected guides as active"
+msgstr "Marcar guías seleccionados como activos"
+
+#: voya/services/admin.py:143
+msgid "Selected guides have been marked as inactive."
+msgstr "Los guías seleccionados han sido marcados como inactivos."
+
+#: voya/services/admin.py:144
+msgid "Mark selected guides as inactive"
+msgstr "Marcar guías seleccionados como inactivos."
+
+#: voya/services/admin.py:172
+msgid "Ticket Information"
+msgstr "Información de entradas"
+
+#: voya/services/admin.py:184
+msgid "Selected tickets have been marked as active."
+msgstr "Las entradas seleccionadas han sido marcadas como activas."
+
+#: voya/services/admin.py:185
+msgid "Mark selected tickets as active"
+msgstr "Marcar entradas seleccionadas como activas"
+
+#: voya/services/admin.py:189
+msgid "Selected tickets have been marked as inactive."
+msgstr "Las entradas seleccionadas han sido marcadas como inactivas."
+
+#: voya/services/admin.py:190
+msgid "Mark selected tickets as inactive"
+msgstr "Marcar entradas seleccionadas como inactivas"
+
+#: voya/services/admin.py:218
+msgid "Currency Information"
+msgstr "Información de moneda"
+
+#: voya/services/admin.py:224 voya/services/admin.py:258
+msgid "Created By"
+msgstr "Creado por"
+
+#: voya/services/admin.py:252
+msgid "Location Information"
+msgstr "Información de ubicación"
+
+#: voya/services/admin.py:292
+msgid "Selected public transport options have been marked as active."
+msgstr "Las opciones de transporte público seleccionadas han sido activadas."
+
+#: voya/services/admin.py:293
+msgid "Mark selected public transport as active"
+msgstr "Marcar transporte público seleccionado como activo"
+
+#: voya/services/admin.py:297
+msgid "Selected public transport options have been marked as inactive."
+msgstr ""
+"Las opciones de transporte público seleccionadas han sido desactivadas."
+
+#: voya/services/admin.py:298
+msgid "Mark selected public transport as inactive"
+msgstr "Marcar transporte público seleccionado como inactivo"
+
+#: voya/services/admin.py:337
+msgid "Selected private transport options have been marked as active."
+msgstr "Las opciones de transporte privado seleccionadas han sido activadas."
+
+#: voya/services/admin.py:338
+msgid "Mark selected private transport as active"
+msgstr "Marcar transporte privado seleccionado como activo"
+
+#: voya/services/admin.py:342
+msgid "Selected private transport options have been marked as inactive."
+msgstr ""
+"Las opciones de transporte privado seleccionadas han sido desactivadas."
+
+#: voya/services/admin.py:343
+msgid "Mark selected private transport as inactive"
+msgstr "Marcar transporte privado seleccionado como inactivo"
+
+#: voya/services/views.py:22
+msgid "hotels"
+msgstr "hoteles"
+
+#: voya/services/views.py:23
+msgid "public transport"
+msgstr "transporte público"
+
+#: voya/services/views.py:24
+msgid "private transport"
+msgstr "transporte privado"
+
+#: voya/services/views.py:25
+msgid "activities"
+msgstr "actividades"
+
+#: voya/services/views.py:26
+msgid "transfers"
+msgstr "traslados"
+
+#: voya/services/views.py:27
+msgid "local guides"
+msgstr "guías locales"
+
+#: voya/services/views.py:28
+msgid "tour leaders"
+msgstr "tour leaders"
+
+#: voya/services/views.py:29
+msgid "currencies"
+msgstr "monedas"
+
+#: voya/services/views.py:30
+msgid "location"
+msgstr "ubicación"
+
+#: voya/services/views.py:52
+#, python-format
+msgid "Model %(model_name)s does not exist or is not allowed."
+msgstr "El modelo %(model_name)s no existe o no está permitido."
+
+#: voya/services/views.py:56
+msgid "Model %m(model_name)s does not exist"
+msgstr "El modelo %m(model_name)s no existe"
+
+#: voya/services/views.py:117 voya/services/views.py:200
+#: voya/services/views.py:270 voya/services/views.py:306
+#, python-format
+msgid "Model %(model_name)s does not exist"
+msgstr "El modelo %(model_name)s no existe"
+
+#: voya/services/views.py:161
+msgid "Select a city"
+msgstr "Seleccionar una ciudad"
+
+#: voya/services/views.py:170
+msgid "Service was successfully created"
+msgstr "El servicio se ha creado con éxito"
+
+#: voya/settings.py:163
+msgid "English"
+msgstr "Inglés"
+
+#: voya/settings.py:164
+msgid "Spanish"
+msgstr "Español"
+
+#: voya/settings.py:165
+msgid "French"
+msgstr "Francés"
+
+#: voya/settings.py:166
+msgid "Portuguese"
+msgstr "Portugués"
+
+#: voya/users/models.py:12
+msgid "email address"
+msgstr "correo electrónico"
+
+#: voya/users/models.py:15
+msgid "A user with that email already exists."
+msgstr "Ya existe un usuario con ese correo electrónico."
+
+#: voya/users/models.py:20
+msgid "staff status"
+msgstr "estado"
+
+#: voya/users/models.py:22
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+"Indica si el usuario puede iniciar sesión en este sitio de administración."
+
+#: voya/users/models.py:26
+msgid "active"
+msgstr "activo"
+
+#: voya/users/models.py:29
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Indica si este usuario debe considerarse activo. Desmarque esta opción en "
+"lugar de eliminar cuentas."
+
+#: voya/users/models.py:35
+msgid "date joined"
+msgstr "fecha de registro"
+
+#, python-format
+#~ msgid ""
+#~ "Item created: %(section_name)s – “%(additional_notes)s” – €"
+#~ "%(new_item.price)s x %(quantity)s on %(corresponding_trip_date)s in "
+#~ "%(city)s"
+#~ msgstr ""
+#~ "Elemento creado: %(section_name)s – “%(additional_notes)s” – €"
+#~ "%(new_item.price)s x %(quantity)s el %(corresponding_trip_date)s en "
+#~ "%(city)s"
+
+#~ msgid "Unknown model"
+#~ msgstr "Modelo desconocido"

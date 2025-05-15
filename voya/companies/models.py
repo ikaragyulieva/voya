@@ -6,6 +6,7 @@ from cloudinary.models import CloudinaryField
 
 from voya.common.models import TimestampedModel
 from voya.companies.validators import FileSizeValidator
+from django.utils.translation import gettext_lazy as _
 
 
 class CompanyProfile(TimestampedModel):
@@ -102,7 +103,7 @@ class Address(TimestampedModel):
     )
 
     country = CountryField(
-        blank_label="Select country",
+        blank_label=_("Select country"),
         blank=False,
         null=False,
     )
@@ -124,7 +125,7 @@ class PhoneNumber(TimestampedModel):
     number = PhoneNumberField(
         blank=False,
         null=False,
-        help_text="Enter phone number in international format. Example: +123456789"
+        help_text=_("Enter phone number in international format. Example: +123456789")
     )
 
     is_active = models.BooleanField(

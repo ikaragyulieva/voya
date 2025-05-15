@@ -8,7 +8,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-[Project Name] is distributed in the hope that it will be useful,
+VOYA is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
@@ -20,26 +20,29 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
     <div class="edit-delete edit-photo">
-        <h2>Create new provider</h2>
+        <h2>{% trans "Create new provider" %}</h2>
 
-        <form method="post" action="">
+        <form method="post" translate="no" action="">
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div class="form-fields">
 
+                <!-- General Information section -->
                 <div class="form-section">
-                    <h3>General Information </h3>
+                    <h3>{% trans "General Information" %} </h3>
+                    
                     <div class="form-fields">
-                        <p>Commercial name *</p>
+                        <p>{% trans "Commercial name" %} *</p>
                         {{ form.commercial_name }}
                         {% if form.commercial_name.errors %}
                             <div class="error">{{ form.commercial_name.errors }}</div>
                         {% endif %}
 
-                        <p>Services provided *</p>
+                        <p>{% trans "Services provided" %} *</p>
                         {{ form.services }}
                         {% if form.services.errors %}
                             <div class="error">{{ form.services.errors }}</div>
@@ -47,16 +50,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     </div>
                 </div>
 
+                <!-- Location section -->
                 <div class="form-section">
-                    <h3>Location </h3>
+                    <h3>{% trans "Location" %} </h3>
+                
                     <div class="form-fields">
-                        <p>Country *</p>
+                        <p>{% trans "Country" %} *</p>
                         {{ form.country }}
                         {% if form.country.errors %}
                             <div class="error">{{ form.country.errors }}</div>
                         {% endif %}
 
-                        <p>City *</p>
+                        <p>{% trans "City" %} *</p>
                         {{ form.city }}
                         {% if form.city.errors %}
                             <div class="error">{{ form.city.errors }}</div>
@@ -64,36 +69,37 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
                     </div>
                 </div>
 
+                <!-- Contacts section -->
                 <div class="form-section">
-                    <h3>Contact Information</h3>
+                    <h3>{% trans "Contact Information" %}</h3>
+                    
                     <div class="form-fields">
-
-                        <p>Email *</p>
-                        {{ form.email|placeholder:'e-mail@email.com' }}
+                        <p>{% trans "Email" %} *</p>
+                        {{ form.email|placeholder:_('e-mail@email.com') }}
                         {% if form.email.errors %}
                             <div class="error">{{ form.email.errors }}</div>
                         {% endif %}
 
-                        <p>Phone number *</p>
-                        {{ form.telephone_number|placeholder:'+1234567890' }}
+                        <p>{% trans "Phone number" %} *</p>
+                        {{ form.telephone_number|placeholder:_('+1234567890') }}
                         {% if form.telephone_number.errors %}
                             <div class="error">{{ form.telephone_number.errors }}</div>
                         {% endif %}
 
-                        <p>Website</p>
-                        {{ form.website|placeholder:'https://webpage.com' }}
+                        <p>{% trans "Website" %}</p>
+                        {{ form.website|placeholder:_('https://webpage.com') }}
                         {% if form.website.errors %}
                             <div class="error">{{ form.website.errors }}</div>
                         {% endif %}
-
                     </div>
                 </div>
 
+                <!-- Notes section -->
                 <div class="form-section">
-                    <h3>Notes</h3>
+                    <h3>{% trans "Notes" %}</h3>
                     <div class="form-fields">
 
-                        <p>Description</p>
+                        <p>{% trans "Description" %}</p>
                         {{ form.description|placeholder:'' }}
                         {% if form.description.errors %}
                             <div class="error">{{ form.description.errors }}</div>
@@ -104,7 +110,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
             </div>
         
         
-            <button class="add-btn" type="submit">Create</button>
+            <button class="add-btn" type="submit">{% trans "Create" %}</button>
         </form>
 
     </div>

@@ -1,4 +1,24 @@
+<!--
+Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
@@ -8,186 +28,177 @@
             <p>{{ trip.slug }}</p>
 
         </div>
+
         <hr class="custom-line">
+
+        <!-- Group information section -->
         <div class="trip-section">
-            <h3 class="title">Group Information</h3>
+            <h3 class="title">{% trans "Group Information" %}</h3>
             <table>
                 <tbody>
                 <tr>
-                    <th>Nationality:</th>
+                    <th>{% trans "Nationality:" %}</th>
                     <td><i> {{ trip.get_nationality_display }} </i></td>
                 </tr>
                 <tr>
-                    <th>Age range:</th>
-                    <td><i>{{ trip.age_range }} years old</i></td>
+                    <th>{% trans "Age range:" %}</th>
+                    <td><i>{{ trip.age_range }} {% trans "years old" %}</i></td>
                 </tr>
                 <tr>
-                    <th>Min participants:</th>
-                    <td><i> {{ trip.min_participants }} people</i></td>
+                    <th>{% trans "Min participants:" %}</th>
+                    <td><i>
+                        {% blocktrans count people=trip.min_participants %}
+                            {{ people }} person
+                        {% plural %}
+                            {{ people }} people
+                        {% endblocktrans %}
+                    </i></td>
                 </tr>
                 <tr>
-                    <th>Max participants:</th>
-                    <td><i> {{ trip.max_participants }} people</i></td>
+                    <th>{% trans "Max participants:" %}</th>
+                    <td><i>
+                        {% blocktrans count people=trip.max_participants %}
+                            {{ people }} person
+                        {% plural %}
+                            {{ people }} people
+                        {% endblocktrans %}
+                    </i></td>
                 </tr>
                 <tr>
-                    <th>Group type:</th>
+                    <th>{% trans "Group type:" %}</th>
                     <td><i> {{ trip.get_kind_of_group_display }} </i></td>
                 </tr>
                 {% if trip.type_of_trip %}
                     <tr>
-                        <th>Type of trip:</th>
+                        <th>{% trans "Type of trip:" %}</th>
                         <td><i> {{ trip.type_of_trip }} </i></td>
                     </tr>
                 {% endif %}
                 {% if trip.additional_observations %}
                     <tr>
-                        <th>Additional observations:</th>
+                        <th>{% trans "Additional observations:" %}</th>
                         <td><i> {{ trip.additional_observations }} </i></td>
                     </tr>
                 {% endif %}
                 </tbody>
             </table>
-
-            {#            <p class="trip-option">Nationality: <i> {{ trip.get_nationality_display }} </i></p>#}
-            {#            <p class="trip-option">Age range: <i>{{ trip.age_range }}</i></p>#}
-            {#            <p class="trip-option">Min participants: <i>{{ trip.min_participants }}</i></p>#}
-            {#            <p class="trip-option">Max participants: <i>{{ trip.max_participants }}</i></p>#}
-            {#            <p class="trip-option">Group type: <i>{{ trip.get_kind_of_group_display }}</i></p>#}
-            {#            {% if trip.type_of_trip %}#}
-            {#                <p class="trip-option">Type of trip: <i>{{ trip.type_of_trip }}</i></p>#}
-            {#            {% endif %}#}
-            {#            {% if trip.additional_observations %}#}
-            {#                <p class="trip-option">Additional observations: <i>{{ trip.additional_observations }}</i></p>#}
-            {#            {% endif %}#}
         </div>
+
         <hr class="custom-line">
+
+        <!-- Itinerary dates section -->
         <div class="trip-section">
-            <h3 class="title">Dates Information</h3>
+            <h3 class="title">{% trans "Itinerary Dates" %}</h3>
             <table>
                 <tbody>
                 <tr>
-                    <th>Start date:</th>
+                    <th>{% trans "Start date:" %}</th>
                     <td><i> {{ trip.trip_start_date }} </i></td>
                 </tr>
                 <tr>
-                    <th>End date:</th>
+                    <th>{% trans "End date:" %}</th>
                     <td><i>{{ trip.trip_end_date }}</i></td>
                 </tr>
                 <tr>
-                    <th>Trip duration:</th>
-                    <td><i> {{ trip.trip_duration }} days </i></td>
+                    <th>{% trans "Trip duration:" %}</th>
+                    <td><i> {{ trip.trip_duration }} {% trans "days" %} </i></td>
                 </tr>
                 </tbody>
             </table>
-            {#            <p class="trip-option">Start date: <i>{{ trip.trip_start_date }}</i></p>#}
-            {#            <p class="trip-option">End date: <i>{{ trip.trip_end_date }}</i></p>#}
-            {#            <p class="trip-option">Trip duration: <i>{{ trip.trip_duration }}</i></p>#}
         </div>
+
         <hr class="custom-line">
+
+        <!-- Itinerary information section -->
         <div class="trip-section">
-            <h3 class="title">Destination Information:</h3>
+            <h3 class="title">{% trans "Itinerary Information:" %}</h3>
 
             <table>
                 <tbody>
                 <tr>
-                    <th>Origin country:</th>
+                    <th>{% trans "Origin country:" %}</th>
                     <td><i> {{ trip.get_country_origin_display }} </i></td>
                 </tr>
                 <tr>
-                    <th>Destinations:</th>
+                    <th>{% trans "Destinations:" %}</th>
                     <td><i>{{ trip.get_country_destinations_display }}</i></td>
                 </tr>
                 {% if trip.other_destinations %}
                     <tr>
-                        <th>Additional destinations info:</th>
+                        <th>{% trans "Additional destinations info:" %}</th>
                         <td><i> {{ trip.other_destinations }} </i></td>
                     </tr>
                 {% endif %}
                 </tbody>
             </table>
-
-            {#            <p class="trip-option">Origin country: <i>{{ trip.get_country_origin_display }}</i></p>#}
-            {#            <p class="trip-option">Destinations: <i>{{ trip.get_country_destinations_display }}</i></p>#}
-            {#            {% if trip.other_destinations %}#}
-            {#                <p class="trip-option"><i>Additional destinations info: {{ trip.other_destinations }}</i></p>#}
-            {#            {% endif %}#}
         </div>
+
         <hr class="custom-line">
+
+        <!-- Trip information section -->
         <div class="trip-section">
-            <h3 class="title">Trip Information:</h3>
+            <h3 class="title">{% trans "Trip Information:" %}</h3>
 
             <table>
                 <tbody>
                 <tr>
-                    <th>Transportation:</th>
+                    <th>{% trans "Transportation:" %}</th>
                     <td><i> {{ trip.get_transportation_type_display }} </i></td>
                 </tr>
 
                 {% if trip.transportation_details %}
                     <tr>
-                        <th>Transportation details:</th>
+                        <th>{% trans "Transportation details:" %}</th>
                         <td><i>{{ trip.transportation_details }}</i></td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Accommodation:</th>
+                    <th>{% trans "Accommodation:" %}</th>
                     <td><i> {{ trip.get_accommodations_display }} </i></td>
                 </tr>
                 {% if trip.accommodations_details %}
                     <tr>
-                        <th>Accommodation details:</th>
+                        <th>{% trans "Accommodation details:" %}</th>
                         <td><i> {{ trip.accommodations_details }} </i></td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Meals:</th>
+                    <th>{% trans "Meals:" %}</th>
                     <td><i> {{ trip.get_meals_display }} </i></td>
                 </tr>
                 {% if trip.meals_details %}
                     <tr>
-                        <th>Meals details:</th>
+                        <th>{% trans "Meals details:" %}</th>
                         <td><i> {{ trip.meals_details }} </i></td>
                     </tr>
                 {% endif %}
                 <tr>
-                    <th>Staff:</th>
+                    <th>{% trans "Staff:" %}</th>
                     <td><i> {{ trip.get_staff_display }} </i></td>
                 </tr>
                 </tbody>
             </table>
-            {#            <p class="trip-option">Transportation: <i>{{ trip.get_transportation_type_display }}</i></p>#}
-            {#            {% if trip.transportation_details %}#}
-            {#                <p class="trip-option">Transportation details: <i>{{ trip.transportation_details }}</i></p>#}
-            {#            {% endif %}#}
-            {#            <p class="trip-option">Accommodation: <i>{{ trip.get_accommodations_display }}</i></p>#}
-            {#            {% if trip.accommodations_details %}#}
-            {#                <p class="trip-option">Accommodation details: <i>{{ trip.accommodations_details }}</i></p>#}
-            {#            {% endif %}#}
-            {#            <p class="trip-option">Meals: <i>{{ trip.get_meals_display }}</i></p>#}
-            {#            {% if trip.meals_details %}#}
-            {#                <p class="trip-option">Meals details: <i>{{ trip.meals_details }}</i></p>#}
-            {#            {% endif %}#}
-            {#            <p class="trip-option">Staff: <i>{{ trip.get_staff_display }}</i></p>#}
         </div>
+
         <hr class="custom-line">
+
+        <!-- Billing information section -->
         <div class="trip-section">
-            <h3 class="title">Billing Information:</h3>
+            <h3 class="title">{% trans "Budget Information:" %}</h3>
             <table>
                 <tbody>
                 <tr>
-                    <th>Budget:</th>
+                    <th>{% trans "Budget:" %}</th>
                     <td><i> {{ trip.budget }} {{ trip.get_currency_display }} </i></td>
                 </tr>
                 <tr>
-                    <th>Currency:</th>
+                    <th>{% trans "Currency:" %}</th>
                     <td><i>{{ trip.get_currency_display }}</i></td>
                 </tr>
                 </tbody>
             </table>
-            {#            <p class="trip-option">Bidget: <i>{{ trip.budget }} {{ trip.get_currency_display }} </i></p>#}
-            {#            <p class="trip-option">Currency: <i>{{ trip.get_currency_display }}</i></p>#}
         </div>
-    
+
     </div>
 
 {% endblock %}

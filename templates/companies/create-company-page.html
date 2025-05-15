@@ -1,5 +1,24 @@
+<!-- Copyright (C) 2025 DROMO SA
+
+This file is part of VOYA.
+
+VOYA is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VOYA is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+-->
+
 {% extends 'base.html' %}
 {% load custom_filters %}
+{% load i18n %}
 
 {% block content %}
     <div class="edit-delete edit-photo">
@@ -11,43 +30,43 @@
             {{ form.non_field_errors }}
 
             <div class="form-section">
-                <h3>Company Information</h3>
+                <h3>{% trans "Company Information" %}</h3>
 
                 <div class="form-fields">
 
-                    <p>Commercial name *</p>
-                    {{ company_profile_form.status }}
+                    <p>{% trans "Commercial name" %} *</p>
+{#                    {{ company_profile_form.status }}#}
                     {{ company_profile_form.commercial_name }}
                     {% if company_profile_form.commercial_name.errors %}
                         <div class="error">{{ company_profile_form.commercial_name.errors }}</div>
                     {% endif %}
 
-                    <p>Legal name *</p>
+                    <p>{% trans "Legal name" %} *</p>
                     {{ company_profile_form.legal_name }}
                     {% if company_profile_form.legal_name.errors %}
                         <div class="error">{{ company_profile_form.legal_name.errors }}</div>
                     {% endif %}
 
-                    <p>VAT / Tax ID *</p>
+                    <p>{% trans "VAT / Tax ID" %} *</p>
                     {{ company_profile_form.tax_id }}
                     {% if company_profile_form.tax_id.errors %}
                         <div class="error">{{ company_profile_form.tax_id.errors }}</div>
                     {% endif %}
 
-                    <p>Billing e-mail *</p>
+                    <p>{% trans "Billing e-mail" %} *</p>
                     {{ company_profile_form.billing_email }}
                     {% if company_profile_form.billing_email.errors %}
                         <div class="error">{{ company_profile_form.billing_email.errors }}</div>
                     {% endif %}
 
-                    <p>Whatsapp number *</p>
-                    {{ phone_number_form.number|placeholder:'e.g. +1234567890' }}
+                    <p>{% trans "Whatsapp number" %} *</p>
+                    {{ phone_number_form.number|placeholder:_('e.g. +1234567890') }}
                     {% if phone_number_form.number.errors %}
                         <div class="error">{{ phone_number_form.number.errors }}</div>
                     {% endif %}
 
-                    <p>Company logo (max 5MB) *</p>
-                    {{ company_profile_form.logo|placeholder:'Email' }}
+                    <p>{% trans "Company logo (max 5MB)" %} *</p>
+                    {{ company_profile_form.logo }}
                     {% if company_profile_form.logo.errors %}
                         <div class="error">{{ company_profile_form.logo.errors }}</div>
                     {% endif %}
@@ -56,34 +75,34 @@
             </div>
 
             <div class="form-section">
-                <h3>Address Information</h3>
+                <h3>{% trans "Address Information" %}</h3>
                 <div class="form-fields">
                 
-                    <p>Country *</p>
+                    <p>{% trans "Country" %} *</p>
                     {{ address_form.country }}
                     {% if address_form.country.errors %}
                         <div class="error">{{ address_form.country.errors }}</div>
                     {% endif %}
                 
-                    <p>City *</p>
+                    <p>{% trans "City" %} *</p>
                     {{ address_form.city }}
                     {% if address_form.city.errors %}
                         <div class="error">{{ address_form.city.errors }}</div>
                     {% endif %}
                 
-                    <p>State</p>
+                    <p>{% trans "State" %}</p>
                     {{ address_form.state }}
                     {% if address_form.state.errors %}
                         <div class="error">{{ address_form.state.errors }}</div>
                     {% endif %}
                 
-                    <p>Street *</p>
+                    <p>{% trans "Street" %} *</p>
                     {{ address_form.street_address }}
                     {% if address_form.street_address.errors %}
                         <div class="error">{{ address_form.street_address.errors }}</div>
                     {% endif %}
                 
-                    <p>Postal code *</p>
+                    <p>{% trans "Postal code" %} *</p>
                     {{ address_form.postal_code }}
                     {% if address_form.postal_code.errors %}
                         <div class="error">{{ address_form.postal_code.errors }}</div>
@@ -92,7 +111,7 @@
                 </div>
             </div>
 
-            <button class="add-btn" type="submit">Create Company</button>
+            <button class="add-btn" type="submit">{% trans "Create Company" %}</button>
         </form>
 
     </div>
