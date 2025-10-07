@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.db import models
+from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from simple_history.models import HistoricalRecords
 
@@ -22,12 +23,10 @@ class TimestampedModel(models.Model):
 
 
 class ServiceBaseModel(TimestampedModel):
-    country = models.CharField(
-        max_length=100,
-        choices=choices.CountryChoices,
-        blank=False,
+    country = CountryField(
+        blank_label=_('Select country'),
         null=False,
-        default='cc',
+        blank=False,
     )
 
     city = models.ForeignKey(
