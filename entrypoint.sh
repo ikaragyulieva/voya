@@ -4,9 +4,11 @@ set -e
 DB_HOST="${DB_HOST}"
 DB_PORT="${DB_PORT}"
 
-echo "Waiting for DNS: $DB_PORT ..."
+echo "Waiting for DNS: $DB_HOST ..."
 for i in $(seq 1 60); do
-  getent hosts "$DB_HOST" >/dev/null 2>&1 && break
+  if getent hosts "$DB_HOST" >/dev/null 2>&1; then
+    break
+  fi
   echo " [$i] still resolving... "
   sleep 1
 done
