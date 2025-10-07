@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'rest_framework',
     'drf_spectacular',
+    # 'drf_spectacular_sidecar',
     'cloudinary',
     'cloudinary_storage',
     'simple_history',
@@ -72,8 +73,11 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Voya App',
-    'DESCRIPTION': 'Application for trip planning',
+    'DESCRIPTION': 'Voya API Documentation',
     'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': '/api',
 }
 
 MIDDLEWARE = [

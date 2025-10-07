@@ -16,12 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
-
+from django.db import transaction
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
 from voya.proposals.choices import SectionChoices, StatusChoices
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
+from voya.requests.models import TripRequests
 from voya.services.models import Location
 
 
@@ -58,6 +59,7 @@ class ProposalSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     section_name = serializers.CharField()
 
     service_id = serializers.IntegerField(
@@ -74,7 +76,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'invalid': _('Quantity must be a number.'),
         }
     )
-    additional_notes = serializers.CharField(allow_blank=True)
+    additional_notes = serializers.CharField(allow_blank=True, required=False, default='')
     corresponding_trip_date = serializers.DateField(
         error_messages={
             'invalid': _('Invalid date format. Please use YYYY-MM-DD.'),
@@ -95,6 +97,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProposalSectionItem
         fields = [
+            "id",
             "section_name",
             "service_id",
             "quantity",
@@ -105,17 +108,18 @@ class ItemSerializer(serializers.ModelSerializer):
             "order",
         ]
 
-    def create(self, validated_data):
-        return ProposalSectionItem.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-        return instance
+    # def create(self, validated_data):
+    #     return ProposalSectionItem.objects.create(**validated_data)
+    #
+    # def update(self, instance, validated_data):
+    #     for attr, value in validated_data.items():
+    #         setattr(instance, attr, value)
+    #     instance.save()
+    #     return instance
 
 
 class BudgetSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     pax = serializers.IntegerField()
     variable_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
     fixed_cost = serializers.DecimalField(max_digits=10, decimal_places=2)
@@ -131,6 +135,7 @@ class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProposalBudget
         fields = [
+            "id",
             "pax",
             "variable_cost",
             "fixed_cost",
@@ -144,11 +149,106 @@ class BudgetSerializer(serializers.ModelSerializer):
             "final_price",
         ]
 
-    def create(self, validated_data):
-        return ProposalBudget.objects.create(**validated_data)
+    # def create(self, validated_data):
+    #     return ProposalBudget.objects.create(**validated_data)
+    #
+    # def update(self, instance, validated_data):
+    #     for attr, value in validated_data.items():
+    #         setattr(instance, attr, value)
+    #     instance.save()
+    #     return instance
 
-    def update(self, instance, validated_data):
-        for attr, value in validated_data.items():
+
+class ProposalCreateUpdateSerializer(serializers.Serializer):
+    trip_id = serializers.IntegerField()
+    proposal = ProposalSerializer()
+    items = ItemSerializer(many=True)
+    budget = BudgetSerializer(many=True)
+
+    class Meta:
+        ref_name = "ProposalCreateUpdate"
+
+    #     model = Proposal
+    #     fields = ["title", "status", "internal_comments", "trip_id", "items", "budget"]
+
+    def _apply_proposal_fields(self, instance: Proposal, data: dict):
+        for attr, value in data.items():
             setattr(instance, attr, value)
         instance.save()
+        return instance
+
+    @transaction.atomic
+    def create(self, validated_data):
+        user = self.context["request"].user
+        trip = TripRequests.objects.get(id=validated_data['trip_id'])
+
+        # Create proposal
+        prop_data = validated_data["proposal"]
+        proposal = Proposal.objects.create(
+            trip_request=trip,
+            user=user,
+            **prop_data,
+        )
+
+        # items
+        items_data = validated_data.get("items", [])
+        for item in items_data:
+            ProposalSectionItem.objects.create(proposal=proposal, **item)
+
+        # budget
+        budgets_data = validated_data.get("budget", [])
+        for b in budgets_data:
+            ProposalBudget.objects.create(proposal=proposal, **b)
+
+        return proposal
+
+    @transaction.atomic
+    def update(self, instance: Proposal, validated_data):
+        user = self.context["request"].user
+
+        # update proposal fields
+        self._apply_proposal_fields(instance, validated_data["proposal"])
+
+        # --- Upsert ITEMS by id ---
+        existing_items = {i.id: i for i in instance.items.all()}
+        seen_items_id = set()
+        for item_data in validated_data.get("items", []):
+            item_id = item_data.pop("id", None)
+
+            if item_id and item_id in existing_items:
+                # update existing
+                item = existing_items[item_id]
+                for k, v in item_data.items():
+                    setattr(item, k, v)
+                item.save()
+                seen_items_id.add(item_id)
+            else:
+                new_item = ProposalSectionItem.objects.create(proposal=instance, **item_data)
+                seen_items_id.add(new_item.id)
+
+        # delete removed items
+        to_delete = [obj for _id, obj in existing_items.items() if _id not in seen_items_id]
+        for obj in to_delete:
+            obj.delete()
+
+        # --- Upsert BUDGET by id ---
+        existing_budgets = {b.id: b for b in instance.budget.all()}
+        seen_budget_ids = set()
+        for b_data in validated_data.get("budget", []):
+            b_id = b_data.pop("id", None)
+            if b_id and b_id in existing_budgets:
+                b = existing_budgets[b_id]
+                for k, v in b_data.items():
+                    setattr(b, k, v)
+                b.save()
+                seen_budget_ids.add(b_id)
+            else:
+                new_b = ProposalBudget.objects.create(proposal=instance, **b_data)
+                seen_budget_ids.add(new_b.id)
+
+        # delete removed budgets
+        for _id, b in list(existing_budgets.items()):
+            if _id not in seen_budget_ids:
+                b.delete()
+
         return instance

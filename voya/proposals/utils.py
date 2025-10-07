@@ -21,12 +21,15 @@ import logging
 from django.apps import apps
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
-from rest_framework import status
+from datetime import timedelta, datetime
+
+
+from rest_framework import status, serializers
 from rest_framework.response import Response
 from simple_history.utils import update_change_reason
 
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
-from voya.proposals.serializers import ProposalSerializer, ItemSerializer, BudgetSerializer
+from voya.proposals.api.serializers import ProposalSerializer, ItemSerializer, BudgetSerializer
 from voya.requests.models import TripRequests
 from voya.services.models import Location
 
@@ -311,20 +314,73 @@ def clone_proposal_data(original_proposal, new_request, user):
     save_proposal(payload, user)
 
 
+def proposal_validations(proposal):
+    items = ProposalSectionItem.objects.filter(proposal=proposal)
+    trip = proposal.trip_request
+    results = []
+    section_items_map = group_items_by_section(items)
+
+    # 1. Accommodations: nights = days-1 and check for duplicated dates
+
+    accommodations = section_items_map['Accommodations']
+    unique_dates = sorted(set(i["corresponding_trip_date"] for i in accommodations))
+    nights = (trip.trip_end_date - trip.trip_start_date).days
+    if len(unique_dates) != accommodations:
+        results.append({
+            'type': "warning",
+            'check': 'Duplicated Accommodation dates',
+            'message': f"You have duplicated dates for one or various accommodation items"
+        })
+
+    if len(unique_dates) != nights:
+        results.append({
+            'type': "warning",
+            'check': 'Accommodation nights',
+            'message': f"Expected {nights} nights, currently set {len(unique_dates)}"
+        })
+
+    # 2. Global: Dates of each item in inside the trip dates range
+    for item in items:
+        date = datetime.fromisoformat(item['corresponding_trip_date']).date()
+        if not (trip.trip_start_date <= date <= trip.trip_end_date):
+            results.append({
+                'type': "error",
+                'check': 'Date  range',
+                'message': f"{item.section_name}"
+            })
+
+    return {
+        "warnings": sum(1 for r in results if r["type"] == "warning"),
+        "error": sum(1 for r in results if r["type"] == "error"),
+        "details": results,
+    }
+
+
 def save_items(proposal, items_data):
     """Creates and saves proposal items."""
     created_items = []
     for item_data in items_data:
         # Fetch linked services
-        city_id = item_data.get('city') if isinstance(item_data.get('city'), int) else None
+        # city_id = item_data.get('city') if isinstance(item_data.get('city'), int) else None
+        #
+        # if city_id:
+        #     try:
+        #         city = Location.objects.get(id=city_id)
+        #     except Location.DoesNotExist:
+        #         return Response({'error': _('Invalid city ID')}, status=status.HTTP_400_BAD_REQUEST)
+        # else:
+        #     return Response({'error': _('City ID is required')}, status=status.HTTP_400_BAD_REQUEST)
 
-        if city_id:
+        city_data = item_data.get("city")
+        if isinstance(city_data, Location):
+            city = city_data
+        elif isinstance(city_data, int):
             try:
-                city = Location.objects.get(id=city_id)
+                city = Location.objects.get(id=city_data)
             except Location.DoesNotExist:
-                return Response({'error': _('Invalid city ID')}, status=status.HTTP_400_BAD_REQUEST)
+                raise serializers.ValidationError({'city': _('Invalid city ID')})
         else:
-            return Response({'error': _('City ID is required')}, status=status.HTTP_400_BAD_REQUEST)
+            raise serializers.ValidationError({'city': _('Invalid type for city')})
 
         # Create the item
         new_item = ProposalSectionItem.objects.create(

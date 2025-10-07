@@ -725,7 +725,7 @@ document.addEventListener("DOMContentLoaded", function () {
             apiURL = `/api/proposals/create/${tripId}/`;
             apiMethod = 'POST';
         } else if (mode === "edit" && proposalId) {
-            apiURL = `/api/proposals/edit/${proposalId}/`;
+            apiURL = `/api/proposals/${proposalId}/`;
             apiMethod = 'PUT';
         } else {
             console.error("Invalid page mode or missing proposal ID.");

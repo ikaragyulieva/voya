@@ -23,14 +23,23 @@ from django.shortcuts import render
 from django.urls import path, include
 from django.views.i18n import set_language
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from rest_framework.routers import DefaultRouter
 
 from voya.proposals import views
+from voya.proposals.api.views import ProposalViewSet
+
+router = DefaultRouter()
+router.register(r'proposals', ProposalViewSet, basename='proposal')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # API URLs
-    path('api/proposals/', include('voya.proposals.api_urls')),
+    path('api/proposals/', include('voya.proposals.api.api_urls')),
+
+    # API Routes
+    path('api/', include(router.urls)),
 
     # path('', include('voya.common.urls')),
     # path('clients/', include('voya.clients.urls')),
@@ -44,7 +53,7 @@ urlpatterns = [
     # Swagger URLs
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # UI:
-    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
     # Language Switching

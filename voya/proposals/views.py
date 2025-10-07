@@ -17,29 +17,20 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 import logging
-from datetime import timedelta, datetime
+from datetime import timedelta
 from itertools import chain
 from operator import attrgetter
 
 from django.apps import apps
 from django.contrib.auth import mixins
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
-from django.db.models import Q
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.utils.formats import date_format
-from django.utils.text import capfirst
-from django.views.generic import CreateView, TemplateView, ListView, UpdateView
-from drf_spectacular.utils import extend_schema
-from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.views.generic import TemplateView, ListView, UpdateView
 from decimal import Decimal
 from weasyprint import HTML
 
@@ -48,10 +39,7 @@ from voya.employees.models import EmployeeProfile
 from voya.proposals.choices import StatusChoices, MealChoices
 from voya.proposals.forms import CreateProposalForm, CreateItemForm, CreateBudgetForm, PDFOptionsForm
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
-from voya.proposals.serializers import ProposalSerializer, ItemSerializer, BudgetSerializer
-from voya.proposals.utils import save_proposal, update_proposal, get_section_context, REVERSE_SECTION_KEYS, \
-    SECTION_MODEL_MAP, SECTION_KEYS, group_items_by_section
-from voya.requests.choices import CityChoices
+from voya.proposals.utils import get_section_context, group_items_by_section
 from voya.requests.models import TripRequests
 from voya.services.models import Location
 from voya.utils import get_user_obj, get_dashboard_multiple_search
@@ -87,95 +75,95 @@ class CreateProposalView(mixins.LoginRequiredMixin, TemplateView):
         return context
 
 
-class ProposalItemsAPI(APIView):
-    """
-    Unified API endpoint to handle proposals, items, and budget.
-    """
-    permission_classes = [IsAuthenticated]
+# class ProposalItemsAPI(APIView):
+#     """
+#     Unified API endpoint to handle proposals, items, and budget.
+#     """
+#     permission_classes = [IsAuthenticated]
+#
+#     def post(self, request, *args, **kwargs):
+#         """Handles creating a new proposal."""
+#         data = request.data
+#         items = data.get('items', [])
+#
+#         for item in items:
+#             label = item.get("section_name")
+#             item["section_name"] = REVERSE_SECTION_KEYS.get(label)
+#
+#         # Validate Proposal
+#         proposal_serializer = ProposalSerializer(data=data.get('proposal'))
+#         if not proposal_serializer.is_valid():
+#             return Response({
+#                 'error': _('Proposal validation failed'),
+#                 'details': proposal_serializer.errors
+#             }, status=status.HTTP_400_BAD_REQUEST)
+#
+#         # Validate Items
+#         items_serializer = ItemSerializer(data=items, many=True)
+#         if not items_serializer.is_valid():
+#             return Response({
+#                 'error': _('Item validation failed'),
+#                 'details': items_serializer.errors},
+#                 status=status.HTTP_400_BAD_REQUEST)
+#
+#         budget_serializer = BudgetSerializer(data=data.get('budget', []), many=True)
+#         if not budget_serializer.is_valid():
+#             return Response({
+#                 'error': _('Budget validation failed'),
+#                 'details': budget_serializer.errors},
+#                 status=status.HTTP_400_BAD_REQUEST)
+#
+#         try:
+#             proposal, created_items, created_budgets = save_proposal(data, request.user)
+#
+#             # Return success response
+#             return JsonResponse({
+#                 'success': _('Proposal, items, and budget saved successfully!'),
+#                 'proposal_id': proposal.id,
+#                 'item_ids': [item.id for item in created_items],
+#                 'budget_ids': [budget.id for budget in created_budgets],
+#             }, status=status.HTTP_201_CREATED)
+#
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    def post(self, request, *args, **kwargs):
-        """Handles creating a new proposal."""
-        data = request.data
-        items = data.get('items', [])
 
-        for item in items:
-            label = item.get("section_name")
-            item["section_name"] = REVERSE_SECTION_KEYS.get(label)
-
-        # Validate Proposal
-        proposal_serializer = ProposalSerializer(data=data.get('proposal'))
-        if not proposal_serializer.is_valid():
-            return Response({
-                'error': _('Proposal validation failed'),
-                'details': proposal_serializer.errors
-            }, status=status.HTTP_400_BAD_REQUEST)
-
-        # Validate Items
-        items_serializer = ItemSerializer(data=items, many=True)
-        if not items_serializer.is_valid():
-            return Response({
-                'error': _('Item validation failed'),
-                'details': items_serializer.errors},
-                status=status.HTTP_400_BAD_REQUEST)
-
-        budget_serializer = BudgetSerializer(data=data.get('budget', []), many=True)
-        if not budget_serializer.is_valid():
-            return Response({
-                'error': _('Budget validation failed'),
-                'details': budget_serializer.errors},
-                status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            proposal, created_items, created_budgets = save_proposal(data, request.user)
-
-            # Return success response
-            return JsonResponse({
-                'success': _('Proposal, items, and budget saved successfully!'),
-                'proposal_id': proposal.id,
-                'item_ids': [item.id for item in created_items],
-                'budget_ids': [budget.id for budget in created_budgets],
-            }, status=status.HTTP_201_CREATED)
-
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class ProposalUpdateAPI(APIView):
-    """
-       API to handle updating an existing proposal, items, and budget.
-    """
-    permission_classes = [IsAuthenticated]
-
-    def put(self, request, pk, *args, **kwargs):
-        logger.warning("PUT request received")
-        """Handles updating an existing proposal."""
-        data = request.data
-        items = data.get('items', [])
-        trip_id = data.get('trip_id', '')
-
-        for item in items:
-            label = item.get('section_name')
-            item["section_name"] = REVERSE_SECTION_KEYS.get(label)
-
-        data['items'] = items
-
-        try:
-            proposal = Proposal.objects.get(pk=pk)
-        except Proposal.DoesNotExist:
-            return Response({'error': _('Proposal not found. Use Post to create a new one')},
-                            status=status.HTTP_404_NOT_FOUND)
-
-        try:
-            updated_proposal, created_items, created_budgets = update_proposal(proposal, data, request.user)
-            return JsonResponse({
-                'success': _('Proposal updated successfully!'),
-                'proposal_id': updated_proposal.id,
-                'item_ids': [item.id for item in created_items],
-                'budget_ids': [budget.id for budget in created_budgets],
-            }, status=status.HTTP_200_OK)
-
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+# class ProposalUpdateAPI(APIView):
+#     """
+#        API to handle updating an existing proposal, items, and budget.
+#     """
+#     permission_classes = [IsAuthenticated]
+#
+#     def put(self, request, pk, *args, **kwargs):
+#         logger.warning("PUT request received")
+#         """Handles updating an existing proposal."""
+#         data = request.data
+#         items = data.get('items', [])
+#         trip_id = data.get('trip_id', '')
+#
+#         for item in items:
+#             label = item.get('section_name')
+#             item["section_name"] = REVERSE_SECTION_KEYS.get(label)
+#
+#         data['items'] = items
+#
+#         try:
+#             proposal = Proposal.objects.get(pk=pk)
+#         except Proposal.DoesNotExist:
+#             return Response({'error': _('Proposal not found. Use Post to create a new one')},
+#                             status=status.HTTP_404_NOT_FOUND)
+#
+#         try:
+#             updated_proposal, created_items, created_budgets = update_proposal(proposal, data, request.user)
+#             return JsonResponse({
+#                 'success': _('Proposal updated successfully!'),
+#                 'proposal_id': updated_proposal.id,
+#                 'item_ids': [item.id for item in created_items],
+#                 'budget_ids': [budget.id for budget in created_budgets],
+#             }, status=status.HTTP_200_OK)
+#
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required
@@ -236,70 +224,70 @@ def proposal_detail(request, pk):
         return render(request, 'common/home-page.html')
 
 
-class DynamicServiceView(APIView):
-    # model_map = {
-    #     'Accommodations': 'Hotel',
-    #     'Public Transport': 'PublicTransport',
-    #     'Private Transport': 'PrivateTransport',
-    #     'Transfers': 'Transfer',
-    #     'Extra Activities': 'Ticket',
-    #     'Activity': 'Ticket',
-    #     'Local Guides': 'LocalGuide',
-    #     'Tour Leader': 'Staff'
-    #     # 'Other Services': 'Other',
-    # }
-
-    def get(self, request, section, city_id=None, *args, **kwargs):
-        section_key = REVERSE_SECTION_KEYS.get(section)
-        model_name = SECTION_MODEL_MAP.get(section_key)
-        if not model_name or not section_key:
-            return Response(
-                {'error': _("Invalid section '%(section)s'") % {'section': section}},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        try:
-            model = apps.get_model(app_label='services', model_name=model_name)
-            queryset = model.objects.filter(is_active=True)
-
-            # Determine the field to use for display (e.g., `name`, `guide_name`)
-            if hasattr(model, 'name'):
-                display_field = 'name'
-            elif hasattr(model, 'type'):
-                display_field = 'type'
-            else:
-                return Response(
-                    {'error': _('Could not determine display field for %(model_name)s.') % {'model_name': model_name}},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-            if hasattr(model, 'price'):
-                price = 'price'
-            elif hasattr(model, 'high_season_price'):
-                price = 'high_season_price'
-            else:
-                return Response(
-                    {'error': _('Could not determine price field for %(model_name)s.') % {'model_name': model_name}},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-            data = [
-                {
-                    'id': obj.id,
-                    'display_field': getattr(obj, display_field),
-                    'city': obj.city.city_name,
-                    'city_id': obj.city.id,
-                    'price': getattr(obj, price),
-                } for obj in queryset
-            ]
-
-            return Response(data, status=status.HTTP_200_OK)
-
-        except Exception as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+# class DynamicServiceView(APIView):
+#     # model_map = {
+#     #     'Accommodations': 'Hotel',
+#     #     'Public Transport': 'PublicTransport',
+#     #     'Private Transport': 'PrivateTransport',
+#     #     'Transfers': 'Transfer',
+#     #     'Extra Activities': 'Ticket',
+#     #     'Activity': 'Ticket',
+#     #     'Local Guides': 'LocalGuide',
+#     #     'Tour Leader': 'Staff'
+#     #     # 'Other Services': 'Other',
+#     # }
+#
+#     def get(self, request, section, city_id=None, *args, **kwargs):
+#         section_key = REVERSE_SECTION_KEYS.get(section)
+#         model_name = SECTION_MODEL_MAP.get(section_key)
+#         if not model_name or not section_key:
+#             return Response(
+#                 {'error': _("Invalid section '%(section)s'") % {'section': section}},
+#                 status=status.HTTP_400_BAD_REQUEST
+#             )
+#
+#         try:
+#             model = apps.get_model(app_label='services', model_name=model_name)
+#             queryset = model.objects.filter(is_active=True)
+#
+#             # Determine the field to use for display (e.g., `name`, `guide_name`)
+#             if hasattr(model, 'name'):
+#                 display_field = 'name'
+#             elif hasattr(model, 'type'):
+#                 display_field = 'type'
+#             else:
+#                 return Response(
+#                     {'error': _('Could not determine display field for %(model_name)s.') % {'model_name': model_name}},
+#                     status=status.HTTP_400_BAD_REQUEST
+#                 )
+#
+#             if hasattr(model, 'price'):
+#                 price = 'price'
+#             elif hasattr(model, 'high_season_price'):
+#                 price = 'high_season_price'
+#             else:
+#                 return Response(
+#                     {'error': _('Could not determine price field for %(model_name)s.') % {'model_name': model_name}},
+#                     status=status.HTTP_400_BAD_REQUEST
+#                 )
+#
+#             data = [
+#                 {
+#                     'id': obj.id,
+#                     'display_field': getattr(obj, display_field),
+#                     'city': obj.city.city_name,
+#                     'city_id': obj.city.id,
+#                     'price': getattr(obj, price),
+#                 } for obj in queryset
+#             ]
+#
+#             return Response(data, status=status.HTTP_200_OK)
+#
+#         except Exception as e:
+#             return Response(
+#                 {"error": str(e)},
+#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+#             )
 
 
 @login_required
@@ -402,6 +390,7 @@ def proposal_pdf_view(request, pk):
         if form.is_valid():
             logo_option = form.cleaned_data['logo_options']
             commission = form.cleaned_data['commission']
+            pdf_language = form.cleaned_data['language_options']
 
             company_name = 'Dromo S.A.'
             company_address = 'Rue de Madame de Stael 5'
@@ -465,8 +454,10 @@ def proposal_pdf_view(request, pk):
 
             }
 
+            template_name = 'proposals/pdf-proposal.html' if pdf_language == "Spanish" else 'proposals/pdf-proposal-eng.html'
+
             # Render template to HTML with the user's choices
-            html_string = render_to_string('proposals/pdf-proposal.html', {
+            html_string = render_to_string(template_name, {
                 'logo_option': logo_option,
                 'logo': logo,
                 'commission': commission,

@@ -357,8 +357,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
         {% for item in accommodation_items %}
             <tr>
                 <td>{{ item.corresponding_trip_date|date:"j M y" }}</td>
-                <td>Accommodation</td>
-                <td>{{ item.service_name }}</td>
+                <td>Accommodations</td>
+                <td>{{ item.service_name }} or similar</td>
                 <td>{{ item.category }}
                     {% if item.additional_notes %}
                         - {{ item.additional_notes }}

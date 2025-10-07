@@ -19,7 +19,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from voya.proposals.choices import StatusChoices, LogoChoices
+from voya.proposals.choices import StatusChoices, LogoChoices, PDFLanguageChoices
 from voya.proposals.models import Proposal, ProposalSectionItem, ProposalBudget
 from voya.requests import choices
 from voya.services.models import Location
@@ -141,4 +141,10 @@ class PDFOptionsForm(forms.Form):
         decimal_places=2,
         initial=0,
         # help_text='Commission should be added as percentage'
+    )
+
+    language_options = forms.ChoiceField(
+        choices=PDFLanguageChoices,
+        label="",
+        initial="Spanish"
     )

@@ -66,3 +66,8 @@ class MealChoices(models.TextChoices):
     LUNCH = "Lunch", _("Lunch")
     DINNER = "Dinner", _("Dinner")
     OTHER = "Other", _("Other")
+
+
+class PDFLanguageChoices(models.TextChoices):
+    ES = "Spanish", _("Spanish")
+    EN = "English", _("English")
