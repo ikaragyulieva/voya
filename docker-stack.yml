@@ -69,7 +69,7 @@ services:
 
 
   db:
-    image: postgres:16
+    image: postgres:17
 #    container_name: voya_db
     environment:
       - POSTGRES_DB=${DB_NAME}

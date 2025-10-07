@@ -5,7 +5,7 @@ DB_HOST="${DB_HOST}"
 DB_PORT="${DB_PORT}"
 
 echo "Waiting for DNS: $DB_PORT ..."
-for i in %(seq 1 60); do
+for i in $(seq 1 60); do
   getent hosts "$DB_HOST" >/dev/null 2>&1 && break
   echo " [$i] still resolving... "
   sleep 1
