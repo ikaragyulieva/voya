@@ -1,28 +1,28 @@
 FROM python:3.12
 
 # Install system packages needed by WeasyPrint and gettext for Django translations
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libpango-1.0-0  \
     libpangocairo-1.0-0  \
-    libcairo2 libffi-dev  \
-    libgdk-pixbuf2.0-0 \
+    libcairo2 \
+    libffi-dev  \
+    libgdk-pixbuf-2.0-0 \
     gettext \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a directory for the Django project (Voya project)
 WORKDIR /voya
 
-# Copy the requirements.txt file and installing the dependencies
+# Copy the requirements.txt file and installing the dependencies + Install Gunicorn (when in Production)
 COPY requirements.txt /voya/
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Install Gunicorn (when in Production)
-RUN pip install gunicorn gevent  # gevent included as asynchronous workers will be used
+RUN pip install --no-cache-dir -r requirements.txt \
+  && pip install --no-cache-dir gunicorn gevent # gevent included as asynchronous workers will be used
 
 # Copy the rest of the project code into the container
 COPY . /voya/
 
-# **Copy the run_gunicorn.py to the container root**
+# **Copy the run_gunicorn.py to the container root** and launch it
 COPY run_gunicorn.py /run_gunicorn.py
 RUN chmod +x /run_gunicorn.py
 
@@ -31,7 +31,9 @@ RUN chmod +x /run_gunicorn.py
 # 2) collect static
 # 3) start Gunicorn
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+#RUN chmod +x /entrypoint.sh
+
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
 
 # Expose the port voya app is running on (using default Django port)
 EXPOSE 8000
