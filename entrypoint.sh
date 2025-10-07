@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
-DB_HOST="${DB_HOST:-db}"
-DB_PORT="${DB_PORT:-5432}"
+DB_HOST="${DB_HOST}"
+DB_PORT="${DB_PORT}"
 
 echo "Waiting for DNS: $DB_HOST ..."
 for i in $(seq 1 60); do
