@@ -59,6 +59,12 @@ services:
       - dokploy-network
 #        aliases:
 #          - web
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import socket; s=socket.socket(); s.connect(('127.0.01',8000)); s.close()\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     deploy:
       replicas: 1
       restart_policy:
